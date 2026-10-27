@@ -680,6 +680,7 @@ export default function ${title.replace(/[^a-zA-Z0-9]/g, '')}() {
           <li><a href="#governance" onClick={() => setActiveView('governance')}>Governance</a></li>
           <li><a href="#import-export" onClick={() => setActiveView('import-export')}>Import/Export</a></li>
           <li><a href="#prompt" onClick={() => setActiveView('prompt')}>Prompt Builder</a></li>
+          <li><a href="#after-humanity" onClick={() => setActiveView('sample')}>After Humanity Sample</a></li>
         </ul>
         <button
           className="nav-cta"
@@ -708,6 +709,76 @@ export default function ${title.replace(/[^a-zA-Z0-9]/g, '')}() {
           <div className="hero-buttons">
             <a href="#dashboard" className="btn btn-primary">Open Dashboard &rarr;</a>
             <a href="#worlds" className="btn btn-secondary">Browse Worlds</a>
+            <a href="#after-humanity" className="btn btn-secondary">Explore Sample World</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="after-humanity" className="sample-world-section">
+        <div className="container">
+          <div className="sample-world-hero">
+            <p className="sample-world-kicker">WorldForge sample universe · post-collapse science fiction</p>
+            <h2>AFTER HUMANITY</h2>
+            <p className="sample-world-tagline">The network went silent. The world kept turning.</p>
+            <p className="sample-world-intro">Eighty-three years after the Blackout, scattered communities are rebuilding along a changed coast. Old machines still wake during storm season, and every map is an argument about what the world has become.</p>
+            <div className="sample-world-actions">
+              <a href="#after-humanity-records" className="btn btn-primary">Explore the world</a>
+              <a href="#prompt" className="btn btn-secondary">Open Prompt Builder</a>
+            </div>
+            <div className="sample-world-metrics" aria-label="Sample world facts">
+              <div><strong>83</strong><span>years since the Blackout</span></div>
+              <div><strong>6</strong><span>charted coastal routes</span></div>
+              <div><strong>0</strong><span>global networks online</span></div>
+            </div>
+          </div>
+
+          <div className="sample-world-overview">
+            <div>
+              <p className="sample-world-eyebrow">THE SETTING</p>
+              <h3>A future made from fragments</h3>
+              <p>The Blackout began when the orbital relay lattice failed during a solar storm. Power grids and automated systems fell in a matter of days. Generations later, the survivors know the old world mostly through salvaged archives, half-working devices, and stories that disagree.</p>
+            </div>
+            <aside className="sample-world-note">
+              <span className="sample-world-eyebrow">SAMPLE CANON</span>
+              <p><span className="sample-canon approved">Approved</span> The Blackout ended global communications.</p>
+              <p><span className="sample-canon proposed">Proposed</span> Something still answers from the northern relay.</p>
+            </aside>
+          </div>
+
+          <div id="after-humanity-records" className="sample-world-grid">
+            <article className="sample-world-card">
+              <span className="sample-world-type">LOCATION</span>
+              <h3>Meridian Reach</h3>
+              <p>A harbor built through the terminal of a drowned airport. Tidekeepers maintain its route charts and keep a lantern lit for ships that have not yet been seen.</p>
+              <span className="sample-world-meta">Coastal settlement · Proposed routes</span>
+            </article>
+            <article className="sample-world-card">
+              <span className="sample-world-type">REGION</span>
+              <h3>The Glass Belt</h3>
+              <p>A stretch of fused sand and leaning towers where lightning storms reveal the outlines of roads buried beneath the dust.</p>
+              <span className="sample-world-meta">Inland ruins · Unmapped</span>
+            </article>
+            <article className="sample-world-card">
+              <span className="sample-world-type">FACTION</span>
+              <h3>The Tidekeepers</h3>
+              <p>Cartographers, pilots, and harbor engineers who preserve safe passages between isolated settlements. Their maps are copied by hand and reviewed in public.</p>
+              <span className="sample-world-meta">Maintains 6 known routes</span>
+            </article>
+            <article className="sample-world-card">
+              <span className="sample-world-type">CHARACTER</span>
+              <h3>Mara Venn</h3>
+              <p>A Tidekeeper surveyor who found a repeating signal in an archive of weather reports. Her evidence is incomplete; her coordinates are not.</p>
+              <span className="sample-world-meta">Claim: a relay is still active · Proposed</span>
+            </article>
+          </div>
+
+          <div className="sample-world-lineage">
+            <div>
+              <p className="sample-world-eyebrow">CONNECTED LORE</p>
+              <h3>One discovery. Three open questions.</h3>
+            </div>
+            <p><strong>Mara Venn</strong> discovered a signal → <strong>northern relay</strong> may be active → <strong>Tidekeepers</strong> debate whether to publish the route.</p>
+            <a href="#worlds">See how records are modeled in WorldForge →</a>
           </div>
         </div>
       </section>
