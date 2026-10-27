@@ -818,6 +818,27 @@ export default function ${title.replace(/[^a-zA-Z0-9]/g, '')}() {
         </div>
       </section>
 
+      <section id="after-humanity-video" className="after-humanity-video-section" aria-labelledby="after-humanity-video-title">
+        <div className="container">
+          <div className="after-humanity-video-heading">
+            <span className="eyebrow">AFTER HUMANITY · FEATURED VIDEO</span>
+            <h2 id="after-humanity-video-title">AH The Refraction of the Four Nines</h2>
+            <p>Watch the universe unfold on the After Humanity YouTube channel.</p>
+          </div>
+          <div className="after-humanity-video-frame">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/TGheUWZQ43s"
+              title="AH The Refraction of the Four Nines"
+              loading="lazy"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          </div>
+          <a className="after-humanity-video-link" href="https://www.youtube.com/watch?v=TGheUWZQ43s" target="_blank" rel="noreferrer">Watch on YouTube ↗</a>
+        </div>
+      </section>
+
       <section id="home" className="hero">
         <div className="container">
           <aside className="data-notice" aria-label="Local data notice">
