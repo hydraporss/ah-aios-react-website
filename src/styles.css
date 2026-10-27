@@ -833,6 +833,10 @@ a:hover {
 }
 
 /* Prompt builder */
+.prompt-builder-notice {
+  max-width: var(--max-width);
+}
+
 .prompt-builder {
   display: grid;
   grid-template-columns: 1fr 1fr;
