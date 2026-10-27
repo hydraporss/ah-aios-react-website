@@ -1,0 +1,21 @@
+{
+  "name": "ah-aios-worldforge-react-website",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "AH-AIOS WorldForge React Website - Structured worldbuilding workflows, dashboard-driven creation experiences, and deterministic prompt-to-page generation",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.7.0",
+    "vite": "^6.4.5"
+  }
+}
+
