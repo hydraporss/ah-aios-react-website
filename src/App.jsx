@@ -1550,7 +1550,7 @@ export default function ${title.replace(/[^a-zA-Z0-9]/g, '')}() {
       <section id="prompt" className="dashboard-section">
         <div className="container">
           <h2>Prompt Builder</h2>
-          <p>Enter a world brief. The deterministic template generates a landing-page component.</p>
+          <aside className="data-notice prompt-builder-notice" role="note" aria-label="Prompt Builder notice"><div><strong>Notice: This does not generate images or use AI.</strong><p>Enter a brief to preview a deterministic landing page and generate React component code. Copy or download the .jsx output below.</p></div></aside>
 
           <div className="prompt-builder">
             <div className="prompt-form">
