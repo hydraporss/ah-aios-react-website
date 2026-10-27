@@ -691,29 +691,6 @@ export default function ${title.replace(/[^a-zA-Z0-9]/g, '')}() {
         </button>
       </nav>
 
-      <section id="home" className="hero">
-        <div className="container">
-          <aside className="data-notice" aria-label="Local data notice">
-            <div>
-              <strong>Your world data is stored in this browser.</strong>
-              <p>It is not synced or backed up online. Export a workspace backup regularly; clearing this browser’s site data can erase it.</p>
-            </div>
-            <a href="#import-export" className="data-notice-link">Back up workspace</a>
-          </aside>
-          <h1>WorldForge</h1>
-          <p className="subtitle">Worldbuilding for narrative and game development.</p>
-          <p className="lede">
-            Design worlds, people, and stories. Track decisions. Explore relationships.
-            All local, all yours.
-          </p>
-          <div className="hero-buttons">
-            <a href="#dashboard" className="btn btn-primary">Open Dashboard &rarr;</a>
-            <a href="#worlds" className="btn btn-secondary">Browse Worlds</a>
-            <a href="#after-humanity" className="btn btn-secondary">Explore Sample World</a>
-          </div>
-        </div>
-      </section>
-
       <section id="after-humanity" className="sample-world-section">
         <div className="sample-portal">
           <header className="sample-portal-header">
@@ -837,6 +814,29 @@ export default function ${title.replace(/[^a-zA-Z0-9]/g, '')}() {
                 <a href="#relationships">Open Relationship Explorer →</a>
               </div>
             </main>
+          </div>
+        </div>
+      </section>
+
+      <section id="home" className="hero">
+        <div className="container">
+          <aside className="data-notice" aria-label="Local data notice">
+            <div>
+              <strong>Your world data is stored in this browser.</strong>
+              <p>It is not synced or backed up online. Export a workspace backup regularly; clearing this browser’s site data can erase it.</p>
+            </div>
+            <a href="#import-export" className="data-notice-link">Back up workspace</a>
+          </aside>
+          <h1>WorldForge</h1>
+          <p className="subtitle">Worldbuilding for narrative and game development.</p>
+          <p className="lede">
+            Design worlds, people, and stories. Track decisions. Explore relationships.
+            All local, all yours.
+          </p>
+          <div className="hero-buttons">
+            <a href="#dashboard" className="btn btn-primary">Open Dashboard &rarr;</a>
+            <a href="#worlds" className="btn btn-secondary">Browse Worlds</a>
+            <a href="#after-humanity" className="btn btn-secondary">Explore Sample World</a>
           </div>
         </div>
       </section>
