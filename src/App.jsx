@@ -41,6 +41,7 @@ function App() {
   const [expandedRecords, setExpandedRecords] = useState({});
   const [promptInput, setPromptInput] = useState('');
   const [copyStatus, setCopyStatus] = useState('');
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('ah-aios-worldforge', JSON.stringify(workspaceData));
