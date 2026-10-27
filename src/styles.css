@@ -1737,3 +1737,22 @@ a:hover {
   }
 }
 
+
+
+.after-humanity-video-section {
+  padding: 3.5rem 0;
+  background: linear-gradient(180deg, #0b1222 0%, #111a2d 100%);
+  border-bottom: 1px solid rgba(117, 149, 188, 0.2);
+}
+.after-humanity-video-heading { margin: 0 auto 1.5rem; max-width: 900px; text-align: center; }
+.after-humanity-video-heading .eyebrow { color: #59d1ff; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; }
+.after-humanity-video-heading h2 { margin: 0.65rem 0; color: #edf4ff; font-size: clamp(1.5rem, 3vw, 2.3rem); }
+.after-humanity-video-heading p { color: #aab8cd; }
+.after-humanity-video-frame { position: relative; width: min(100%, 960px); aspect-ratio: 16 / 9; margin: 0 auto; overflow: hidden; border: 1px solid rgba(94, 211, 255, 0.35); border-radius: 18px; background: #050914; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.38); }
+.after-humanity-video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.after-humanity-video-link { display: block; width: fit-content; margin: 1rem auto 0; color: #61d6ff; font-weight: 700; text-decoration: none; }
+.after-humanity-video-link:hover { text-decoration: underline; }
+@media (max-width: 640px) {
+  .after-humanity-video-section { padding: 2.5rem 1rem; }
+  .after-humanity-video-frame { border-radius: 12px; }
+}
