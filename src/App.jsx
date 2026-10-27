@@ -827,7 +827,7 @@ export default function ${title.replace(/[^a-zA-Z0-9]/g, '')}() {
           </div>
           <div className="after-humanity-video-frame">
             <iframe
-              src="https://www.youtube-nocookie.com/embed/TGheUWZQ43s"
+              src="https://www.youtube-nocookie.com/embed/TGheUWZO43s"
               title="AH The Refraction of the Four Nines"
               loading="lazy"
               referrerPolicy="strict-origin-when-cross-origin"
@@ -835,7 +835,7 @@ export default function ${title.replace(/[^a-zA-Z0-9]/g, '')}() {
               allowFullScreen
             />
           </div>
-          <a className="after-humanity-video-link" href="https://www.youtube.com/watch?v=TGheUWZQ43s" target="_blank" rel="noreferrer">Watch on YouTube ↗</a>
+          <a className="after-humanity-video-link" href="https://www.youtube.com/watch?v=TGheUWZO43s" target="_blank" rel="noreferrer">Watch on YouTube ↗</a>
         </div>
       </section>
 
