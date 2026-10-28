@@ -6,6 +6,7 @@ This file records the deployed After Humanity page structure and the files neede
 
 - **Current page:** [AH-AIOS WorldForge — After Humanity](https://hydraporss.github.io/ah-aios-react-website/?v=118da62#after-humanity)
 - **Repository:** [hydraporss/ah-aios-react-website](https://github.com/hydraporss/ah-aios-react-website)
+- **Preserved HTML code:** [View HTML source](https://github.com/hydraporss/ah-aios-react-website/blob/main/public/worldforge/after-humanity-source.html) · [Raw HTML](https://raw.githubusercontent.com/hydraporss/ah-aios-react-website/main/public/worldforge/after-humanity-source.html) · [Hosted HTML copy](https://hydraporss.github.io/ah-aios-react-website/worldforge/after-humanity-source.html)
 - **Recorded source revision:** `118da62`
 - **Deployment workflow:** [GitHub Pages build and deployment](https://github.com/hydraporss/ah-aios-react-website/actions/runs/40628824210)
 
@@ -26,6 +27,7 @@ The supplied After Humanity cover artwork belongs in the hero of the embedded ar
 ## Source files and artwork
 
 - `src/App.jsx` — contains the embedded After Humanity page, its hero image reference, and the parent page sections.
+- `public/worldforge/after-humanity-source.html` — standalone, readable HTML source extracted from the embedded page for preservation.
 - `src/styles.css` — styles the React application and the featured YouTube section.
 - `public/worldforge/after-humanity-cover.jpg` — cropped cover artwork supplied for the After Humanity hero.
 - `.github/workflows/deploy.yml` — builds and publishes the site to GitHub Pages when changes are pushed to `main`.
