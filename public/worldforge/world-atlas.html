@@ -31,8 +31,7 @@ function render(){list();showDetail()}
 document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>switchView(t.dataset.view));document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{filter=b.dataset.filter;document.querySelectorAll('.chip').forEach(x=>x.classList.toggle('active',x===b));render();renderRecords()});$('#search').oninput=e=>{query=e.target.value.trim().toLowerCase();render();renderRecords()};$('#sort').onchange=render;
 document.querySelectorAll('[data-soon]').forEach(a=>a.onclick=e=>{e.preventDefault();notify(a.dataset.soon+' — prototype section')});
 $('#addWorld').onclick=()=>{$('#modal').classList.add('open');$('#worldName').focus()};$('#cancel').onclick=()=>$('#modal').classList.remove('open');$('#modal').onclick=e=>{if(e.target===$('#modal'))$('#modal').classList.remove('open')};document.addEventListener('keydown',e=>{if(e.key==='Escape')$('#modal').classList.remove('open')});$('#worldForm').onsubmit=e=>{e.preventDefault();const name=$('#worldName').value.trim();const id='draft-'+Date.now();worlds.push({id,name,type:$('#worldType').value,region:$('#worldRegion').value.trim()||'Unassigned region',population:$('#worldPopulation').value.trim()||'Unknown',locations:0,updated:new Date().toISOString().slice(0,10),scene:'radial-gradient(ellipse at 35% 100%,#7db4c5,#39466d 48%,#0a1428)',terrain:'linear-gradient(135deg,#acd5d4,#475d8b)',description:$('#worldDescription').value.trim()||'New draft world awaiting an introduction.',places:['Location pending'],era:'Unassigned · Draft',events:[[new Date().getFullYear(),'Draft created','World record created in this browser prototype.']]});selected=id;filter='All';$('#filters').querySelectorAll('.chip').forEach(x=>x.classList.toggle('active',x.dataset.filter==='All'));$('#modal').classList.remove('open');e.target.reset();render();notify('World draft added to this prototype')};render();
-</script><script src="worldforge-shared.js"></script>
-</body></html>
+</script></body></html>
 
 
 

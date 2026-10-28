@@ -24,8 +24,7 @@ function switchView(v){document.querySelectorAll('.tab').forEach(t=>t.classList.
 function render(){renderGrid();renderDetail()}function choose(id){selected=id;render()}
 document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>switchView(t.dataset.view));document.querySelectorAll('.chip').forEach(b=>b.onclick=()=>{filter=b.dataset.filter;document.querySelectorAll('.chip').forEach(x=>x.classList.toggle('active',x===b));render();renderTable()});$('#search').oninput=e=>{query=e.target.value.trim().toLowerCase();render();renderTable()};$('#sort').onchange=render;
 $('#addRace').onclick=()=>{$('#modal').classList.add('open');$('#name').focus()};$('#cancel').onclick=()=>$('#modal').classList.remove('open');$('#modal').onclick=e=>{if(e.target===$('#modal'))$('#modal').classList.remove('open')};document.addEventListener('keydown',e=>{if(e.key==='Escape')$('#modal').classList.remove('open')});$('#raceForm').onsubmit=e=>{e.preventDefault();let name=$('#name').value.trim(),id='draft-'+Date.now();races.push({id,name,status:$('#origin').value,home:$('#home').value.trim()||'Unassigned',population:$('#population').value.trim()||'Unknown',updated:new Date().toISOString().slice(0,10),glyph:'✧',scene:'radial-gradient(ellipse at center,#b4c9dd,#536487 52%,#12182e)',overview:$('#description').value.trim()||'New draft species record awaiting an overview.',traits:['New record'],culture:'Culture notes pending.',biology:'Unspecified',origin:'Origin pending',history:[[new Date().getFullYear(),'Draft created','Species record created in this browser prototype.']]});selected=id;filter='All';document.querySelectorAll('.chip').forEach(x=>x.classList.toggle('active',x.dataset.filter==='All'));$('#modal').classList.remove('open');e.target.reset();render();notify('Species draft added to this prototype')};render();
-</script><script src="worldforge-shared.js"></script>
-</body></html>
+</script></body></html>
 
 
 
