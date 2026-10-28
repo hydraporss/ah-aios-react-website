@@ -1,1773 +1,657 @@
+import React, { useEffect, useMemo, useState } from 'react';
+import { applyCanonTransition, CANON_TRANSITIONS, GOVERNANCE_ACTORS, requireGovernanceCapability } from './governance.js';
+import ServerGovernancePage from './ServerGovernancePage.jsx';
 
-import React, { useState, useEffect } from 'react';
-import './styles.css';
+const starters = [
+  { name: 'Aetherfall', kind: 'Floating civilization', detail: 'Scholar-engineers · 8 regions · 42 records', hue: 'violet', mark: '✧' },
+  { name: 'The Verdant Reach', kind: 'Living planet', detail: 'Symbiotic cultures · 5 regions · 31 records', hue: 'green', mark: '❋' },
+  { name: 'Nacre Expanse', kind: 'Oceanic federation', detail: 'Tidal cities · 7 regions · 28 records', hue: 'blue', mark: '◉' },
+];
+
+const metrics = [
+  { label: 'Worlds in progress', value: '12', delta: '+3 this cycle', color: 'gold' },
+  { label: 'Linked records', value: '1,284', delta: '+18.6%', color: 'cyan' },
+  { label: 'Reviews completed', value: '86', delta: '+12.4%', color: 'violet' },
+  { label: 'Portals published', value: '08', delta: '+2 this cycle', color: 'green' },
+];
+
+const trend = [34, 44, 40, 54, 47, 62, 58, 72, 69, 85, 78, 96];
+const bars = [42, 61, 48, 76, 57, 86, 67];
+const activity = [
+  ['Aetherfall', 'World draft reviewed', '12 min ago', 'Review'],
+  ['Nacre Expanse', 'New region connected', '48 min ago', 'Graph'],
+  ['The Verdant Reach', 'Portal preview updated', '2 hours ago', 'Portal'],
+  ['Aetherfall', 'Character evidence linked', 'Yesterday', 'Evidence'],
+];
+
+const initialRecords = [
+  { id: 'wf-001', world: 'Aetherfall', type: 'World', name: 'Aetherfall', summary: 'A floating ocean civilization governed by scholar-engineers.', status: 'Draft', canonState: 'Proposed', createdBy: 'Atlas Researcher', createdAt: '2026-10-27' },
+  { id: 'wf-002', world: 'Aetherfall', type: 'Nation', name: 'Veyr Concord', summary: 'A coalition of sky-island communities coordinated by elected stewards.', status: 'Draft', canonState: 'Proposed', createdBy: 'Atlas Researcher', createdAt: '2026-10-27' },
+  { id: 'wf-003', world: 'Aetherfall', type: 'Character', name: 'High Chancellor of Veyr', summary: 'A public office held by a rotating scholar-engineer elected for one term.', status: 'In review', canonState: 'Proposed', createdBy: 'Atlas Researcher', createdAt: '2026-10-27' },
+  { id: 'wf-004', world: 'Aetherfall', type: 'Faction', name: 'The Tidemap Guild', summary: 'Navigators who chart changing currents between the floating settlements.', status: 'Draft', canonState: 'Proposed', createdBy: 'Atlas Researcher', createdAt: '2026-10-27' },
+  { id: 'wf-005', world: 'Aetherfall', type: 'Location', name: 'The Glass Current', summary: 'A luminous ocean passage beneath the oldest inhabited platforms.', status: 'Draft', canonState: 'Proposed', createdBy: 'Atlas Researcher', createdAt: '2026-10-27' },
+  { id: 'wf-006', world: 'Aetherfall', type: 'Historical Event', name: 'The First Lift', summary: 'The first recorded joining of settlements into a shared floating city.', status: 'In review', canonState: 'Proposed', createdBy: 'Atlas Researcher', createdAt: '2026-10-27' },
+];
+const initialSources = [
+  { id:'src-001', title:'Aetherfall concept brief', kind:'Creative brief', reference:'local://fixtures/aetherfall-brief', note:'Synthetic starter source supplied with this prototype.', addedAt:'2026-10-27' },
+  { id:'src-002', title:'The First Lift — author note', kind:'Author note', reference:'local://fixtures/first-lift', note:'Illustrative note; not canon evidence.', addedAt:'2026-10-27' },
+];
+const RELATIONSHIP_TYPES = {
+  ALLIED_WITH:{category:'Political',inverse:'ALLIED_WITH'}, ENEMY_OF:{category:'Political',inverse:'ENEMY_OF'}, VASSAL_OF:{category:'Political',inverse:'HAS_VASSAL'}, HAS_VASSAL:{category:'Political',inverse:'VASSAL_OF'}, RULES:{category:'Political',inverse:'RULED_BY'}, RULED_BY:{category:'Political',inverse:'RULES'},
+  MEMBER_OF:{category:'Membership',inverse:'HAS_MEMBER'}, HAS_MEMBER:{category:'Membership',inverse:'MEMBER_OF'}, LEADS:{category:'Membership',inverse:'LED_BY'}, LED_BY:{category:'Membership',inverse:'LEADS'}, FOUNDED:{category:'Membership',inverse:'FOUNDED_BY'}, FOUNDED_BY:{category:'Membership',inverse:'FOUNDED'},
+  LOCATED_IN:{category:'Geographic',inverse:'CONTAINS'}, CONTAINS:{category:'Geographic',inverse:'LOCATED_IN'}, CONTROLS:{category:'Geographic',inverse:'CONTROLLED_BY'}, CONTROLLED_BY:{category:'Geographic',inverse:'CONTROLS'},
+  PARTICIPATED_IN:{category:'Historical',inverse:'HAD_PARTICIPANT'}, HAD_PARTICIPANT:{category:'Historical',inverse:'PARTICIPATED_IN'}, CAUSED:{category:'Historical',inverse:'WAS_CAUSED_BY'}, WAS_CAUSED_BY:{category:'Historical',inverse:'CAUSED'}, RESULTED_IN:{category:'Historical',inverse:'RESULTED_FROM'}, RESULTED_FROM:{category:'Historical',inverse:'RESULTED_IN'}, CREATED_BY:{category:'Historical',inverse:'CREATED'}, CREATED:{category:'Historical',inverse:'CREATED_BY'}, RELATED_TO:{category:'General',inverse:'RELATED_TO'},
+};
+const RELATIONSHIP_ENDPOINTS = {
+  ALLIED_WITH:{source:['Nation','Faction'],target:['Nation','Faction']},ENEMY_OF:{source:['Nation','Faction'],target:['Nation','Faction']},VASSAL_OF:{source:['Nation'],target:['Nation']},HAS_VASSAL:{source:['Nation'],target:['Nation']},
+  RULES:{source:['Character','Faction','Nation'],target:['Nation','Faction']},RULED_BY:{source:['Nation','Faction'],target:['Character','Faction','Nation']},
+  MEMBER_OF:{source:['Character','Faction'],target:['Nation','Faction']},HAS_MEMBER:{source:['Nation','Faction'],target:['Character','Faction']},LEADS:{source:['Character'],target:['Nation','Faction']},LED_BY:{source:['Nation','Faction'],target:['Character']},
+  FOUNDED:{source:['Character','Faction'],target:['Nation','Faction','Location']},FOUNDED_BY:{source:['Nation','Faction','Location'],target:['Character','Faction']},
+  LOCATED_IN:{source:['Nation','Character','Faction','Location'],target:['World','Nation','Location']},CONTAINS:{source:['World','Nation','Location'],target:['Nation','Character','Faction','Location']},
+  CONTROLS:{source:['Nation','Faction','Character'],target:['Nation','Location']},CONTROLLED_BY:{source:['Nation','Location'],target:['Nation','Faction','Character']},
+  PARTICIPATED_IN:{source:['Character','Faction','Nation'],target:['Historical Event']},HAD_PARTICIPANT:{source:['Historical Event'],target:['Character','Faction','Nation']},
+  CAUSED:{source:['Historical Event'],target:['Historical Event']},WAS_CAUSED_BY:{source:['Historical Event'],target:['Historical Event']},RESULTED_IN:{source:['Historical Event'],target:['Historical Event']},RESULTED_FROM:{source:['Historical Event'],target:['Historical Event']},
+  CREATED_BY:{source:['Nation','Character','Faction','Location','Historical Event'],target:['Character','Faction','Nation']},CREATED:{source:['Character','Faction','Nation'],target:['Nation','Character','Faction','Location','Historical Event']},
+  RELATED_TO:{source:['World','Nation','Character','Faction','Location','Historical Event'],target:['World','Nation','Character','Faction','Location','Historical Event']},
+};
+const CLAIM_TRANSITIONS = { Draft:['Proposed'], Proposed:['Investigated','Rejected'], Investigated:['Validated','Rejected'], Validated:['Superseded'], Rejected:[], Superseded:[] };
+const RELATIONSHIP_REVIEW_TRANSITIONS = { Draft:['Validated','Rejected'], Validated:['Superseded'], Rejected:['Draft'], Superseded:[] };
+const readLocal = (key, fallback) => { try { const value = localStorage.getItem(key); return value ? JSON.parse(value) : fallback; } catch { return fallback; } };
+const copyValue = value => value == null ? value : JSON.parse(JSON.stringify(value));
+const EVIDENCE_ASSESSMENTS = ['Supports','Contradicts','Contextual','Unassessed'];
+const normalizeClaim = claim => {
+  const currentVersion=Number.isInteger(claim.version)&&claim.version>0?claim.version:1;
+  const legacy=(claim.previousVersions||[]).map(v=>({...copyValue(v),status:v.status||claim.status||claim.canonState||'Draft',canonState:v.canonState||v.status||claim.canonState||'Draft',sourceIds:copyValue(v.sourceIds||claim.sourceIds||[]),evidenceLinks:copyValue(v.evidenceLinks||[]),createdAt:v.recordedAt||claim.createdAt,createdBy:v.createdBy||claim.createdBy||'Legacy import',createdByEventId:v.createdByEventId||`evt-migrated-${claim.id}-v${v.version||1}`,changeType:v.changeType||'DirectEdit',changeProposalId:v.changeProposalId||null,reviewId:v.reviewId||null,restoredFromVersion:v.restoredFromVersion||null}));
+  const versions=Array.isArray(claim.versions)&&claim.versions.length?copyValue(claim.versions):[...legacy,{version:currentVersion,entityId:claim.entityId,statement:claim.statement,status:claim.status||claim.canonState||'Draft',canonState:claim.canonState||claim.status||'Draft',sourceIds:copyValue(claim.sourceIds||[]),evidenceLinks:copyValue(claim.evidenceLinks||[]),createdAt:claim.updatedAt||claim.createdAt,createdBy:claim.createdBy||'Legacy import',createdByEventId:`evt-migrated-${claim.id}-v${currentVersion}`,changeType:legacy.length?'DirectEdit':'Created',changeProposalId:null,reviewId:null,restoredFromVersion:null}].sort((a,b)=>a.version-b.version);
+  return {...claim,version:currentVersion,previousVersion:claim.previousVersion??(currentVersion>1?currentVersion-1:null),versions};
+};
+const normalizeEvidence = evidence => {
+  const version=Number.isInteger(evidence.version)&&evidence.version>0?evidence.version:1;
+  const versions=Array.isArray(evidence.versions)&&evidence.versions.length?copyValue(evidence.versions).map(item=>({...item,eventId:item.eventId||item.createdByEventId})): [{version,assessment:EVIDENCE_ASSESSMENTS.includes(evidence.assessment)?evidence.assessment:'Unassessed',notes:evidence.notes||'',createdAt:evidence.updatedAt||evidence.createdAt||new Date().toISOString(),createdBy:evidence.createdBy||'Legacy import',eventId:evidence.createdByEventId||`evt-migrated-${evidence.id}-v${version}`,changeType:'Created',reviewId:null}];
+  return {...evidence,assessment:EVIDENCE_ASSESSMENTS.includes(evidence.assessment)?evidence.assessment:'Unassessed',status:evidence.status||'Draft',version,previousVersion:evidence.previousVersion??(version>1?version-1:null),versions};
+};
+const normalizeRelation = r => ({...r,sourceId:r.sourceId||r.from,targetId:r.targetId||r.to,status:r.status||'Draft',canonState:r.canonState||'Proposed',updatedAt:r.updatedAt||r.createdAt||new Date().toISOString(),sourceEvidenceIds:r.sourceEvidenceIds||[],notes:r.notes||''});
+const relationValidationError = (source,target,type) => {
+  if(!source||!target)return 'Both relationship endpoints must exist.';
+  if(!RELATIONSHIP_TYPES[type]||!RELATIONSHIP_ENDPOINTS[type])return 'Choose a registered relationship type.';
+  if(source.id===target.id)return 'A record cannot relate to itself.';
+  const rule=RELATIONSHIP_ENDPOINTS[type];
+  if(!rule.source.includes(source.type)||!rule.target.includes(target.type))return `${type.replaceAll('_',' ')} does not allow ${source.type} → ${target.type}.`;
+  return '';
+};
+
+function Icon({ children }) { return <span className="icon" aria-hidden="true">{children}</span>; }
+function Spark({ color = 'var(--gold)' }) {
+  const points = trend.map((v, i) => `${i * 24},${110 - v}`).join(' ');
+  return <svg className="spark" viewBox="0 0 264 120" role="img" aria-label="Rising world creation activity over twelve periods"><defs><linearGradient id="sparkFill" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stopColor={color} stopOpacity=".28"/><stop offset="1" stopColor={color} stopOpacity="0"/></linearGradient></defs><path d={`M0,120 ${points} 264,120 Z`} fill="url(#sparkFill)"/><polyline points={points} fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>{trend.map((v,i)=><circle key={i} cx={i*24} cy={110-v} r="2.5" fill={color}/>)}</svg>;
+}
+function BarChart() { return <div className="bars" role="img" aria-label="Records created per weekday">{bars.map((h,i)=><div className="bar-wrap" key={i}><i style={{height:`${h}%`}}/><small>{['M','T','W','T','F','S','S'][i]}</small></div>)}</div>; }
 
 function App() {
-  const [workspaceData, setWorkspaceData] = useState(() => {
-    try {
-      const saved = localStorage.getItem('ah-aios-worldforge');
-      const parsed = saved ? JSON.parse(saved) : {};
-      return {
-        records: parsed.records || [],
-        relationships: parsed.relationships || [],
-        sources: parsed.sources || [],
-        decisions: parsed.decisions || [],
-        changeRequests: parsed.changeRequests || [],
-        reviews: parsed.reviews || [],
-        changeProposals: parsed.changeProposals || [],
-        claims: parsed.claims || [],
-        activityLog: parsed.activityLog || [],
-        exports: parsed.exports || []
-      };
-    } catch {
-      return {
-        records: [],
-        relationships: [],
-        sources: [],
-        decisions: [],
-        changeRequests: [],
-        reviews: [],
-        changeProposals: [],
-        claims: [],
-        activityLog: [],
-        exports: []
-      };
-    }
-  });
-
-  const [activeView, setActiveView] = useState('dashboard');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filterType, setFilterType] = useState('all');
-  const [expandedRecords, setExpandedRecords] = useState({});
-  const [promptInput, setPromptInput] = useState('');
-  const [copyStatus, setCopyStatus] = useState('');
+  const [page, setPage] = useState('Overview');
+  const [prompt, setPrompt] = useState('Create a floating ocean civilization governed by scholar-engineers.');
+  const [site, setSite] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [notice, setNotice] = useState('');
+  const [governanceActorKey, setGovernanceActorKey] = useState('creator');
+  const [storageWarning, setStorageWarning] = useState(false);
+  const [range, setRange] = useState('12 months');
+  const [records, setRecords] = useState(() => readLocal('worldforge.records.v1', initialRecords));
+  const [relations, setRelations] = useState(() => readLocal('worldforge.relations.v1', []).map(normalizeRelation));
+  const [sources, setSources] = useState(() => readLocal('worldforge.sources.v1', initialSources));
+  const [decisions, setDecisions] = useState(() => readLocal('worldforge.decisions.v1', []));
+  const [audit, setAudit] = useState(() => {
+    const existing=readLocal('worldforge.audit.v1',[]),known=new Set(existing.map(event=>event.id)),legacyClaims=readLocal('worldforge.claims.v1',[]).map(normalizeClaim);
+    const migrated=legacyClaims.flatMap(claim=>(claim.versions||[]).filter(version=>version.createdByEventId&&!known.has(version.createdByEventId)).map(version=>({id:version.createdByEventId,at:version.createdAt||claim.createdAt||new Date().toISOString(),actor:version.createdBy||'Legacy import',action:'Legacy claim version normalized',targetType:'Claim',targetId:claim.id,claimId:claim.id,claimVersion:version.version,detail:`Migrated claim ${claim.id} version ${version.version} into the versioned schema.`})));
+    return [...migrated,...existing];
+  });
+  const [reviews, setReviews] = useState(() => readLocal('worldforge.reviews.v1', []));
+  const [changeRequests, setChangeRequests] = useState(() => readLocal('worldforge.changes.v1', []));
+  const [claims, setClaims] = useState(() => readLocal('worldforge.claims.v1', []).map(normalizeClaim));
+  const [claimChangeProposals, setClaimChangeProposals] = useState(() => readLocal('worldforge.claim-change-proposals.v1', []));
+  const [evidence, setEvidence] = useState(() => readLocal('worldforge.evidence.v1', []).map(normalizeEvidence));
+  const [evidenceReviews, setEvidenceReviews] = useState(() => readLocal('worldforge.evidence-reviews.v1', []));
+  const [selectedEntityId, setSelectedEntityId] = useState('');
+  const [selectedEvidenceId, setSelectedEvidenceId] = useState('');
+  const [claimFocusId, setClaimFocusId] = useState('');
+  const [sourceFocusId, setSourceFocusId] = useState('');
+  const [editingRelationId, setEditingRelationId] = useState('');
+  const [decisionClaimFilter, setDecisionClaimFilter] = useState('');
+  const [comparisonTarget,setComparisonTarget]=useState({type:'Claim',id:''});
+  const [relationFilter, setRelationFilter] = useState('All categories');
+  const [relationQuery, setRelationQuery] = useState('');
+  const [recordQuery, setRecordQuery] = useState('');
+  const [recordType, setRecordType] = useState('All types');
+  const [recordFormOpen, setRecordFormOpen] = useState(false);
+  const [generatorPrompt, setGeneratorPrompt] = useState('Create a floating ocean civilization governed by scholar-engineers.');
+  const [exchangeStatus, setExchangeStatus] = useState('');
+  useEffect(() => {
+    let failed = false;
+    for (const [key, value] of Object.entries({ 'worldforge.records.v1':records, 'worldforge.relations.v1':relations, 'worldforge.sources.v1':sources, 'worldforge.decisions.v1':decisions, 'worldforge.audit.v1':audit, 'worldforge.reviews.v1':reviews, 'worldforge.changes.v1':changeRequests, 'worldforge.claims.v1':claims, 'worldforge.claim-change-proposals.v1':claimChangeProposals, 'worldforge.evidence.v1':evidence, 'worldforge.evidence-reviews.v1':evidenceReviews })) {
+      try { localStorage.setItem(key, JSON.stringify(value)); } catch { failed = true; }
+    }
+    setStorageWarning(current => current === failed ? current : failed);
+  }, [records, relations, sources, decisions, audit, reviews, changeRequests, claims, claimChangeProposals, evidence, evidenceReviews]);
 
   useEffect(() => {
-    localStorage.setItem('ah-aios-worldforge', JSON.stringify(workspaceData));
-  }, [workspaceData]);
+    const knownPairs=new Map();
+    for(const item of evidence){const key=`${item.claimId}\u0000${item.sourceId}`;knownPairs.set(key,(knownPairs.get(key)||0)+1);}
+    const additions=[];
+    for(const claim of claims){const seen=new Map(),legacyLinks=claim.evidenceLinks||(claim.sourceIds||[]).map(sourceId=>({sourceId,assessment:'Unassessed',notes:''}));for(const [index,link] of legacyLinks.entries()){
+      if(!link?.sourceId)continue;const key=`${claim.id}\u0000${link.sourceId}`,occurrence=(seen.get(key)||0)+1;seen.set(key,occurrence);
+      if(occurrence<=(knownPairs.get(key)||0))continue;
+      const id=`ev-migr-${encodeURIComponent(claim.id)}-${encodeURIComponent(link.sourceId)}-${occurrence}`,createdAt=claim.createdAt||new Date().toISOString(),eventId=`evt-${id}-v1`,assessment=EVIDENCE_ASSESSMENTS.includes(link.assessment)?link.assessment:'Unassessed',record={id,claimId:claim.id,sourceId:link.sourceId,assessment,status:'Draft',version:1,previousVersion:null,notes:link.notes||'',createdAt,createdBy:claim.createdBy||'Legacy migration',updatedAt:createdAt,createdByEventId:eventId,versions:[{version:1,assessment,notes:link.notes||'',createdAt,createdBy:claim.createdBy||'Legacy migration',eventId,changeType:'Created',reviewId:null}]};
+      additions.push(record);
+    }}
+    if(additions.length){const events=additions.flatMap(item=>[{id:item.createdByEventId,at:item.createdAt,actor:`${item.createdBy} (prototype)`,action:'Evidence Created',targetType:'Evidence',targetId:item.id,evidenceId:item.id,claimId:item.claimId,sourceId:item.sourceId,evidenceVersion:1},{id:`evt-${item.id}-linked`,at:item.createdAt,actor:`${item.createdBy} (prototype)`,action:'Evidence Linked',targetType:'Evidence',targetId:item.id,evidenceId:item.id,claimId:item.claimId,sourceId:item.sourceId,evidenceVersion:1}]);setEvidence(current=>[...additions,...current]);setAudit(current=>[...events,...current]);}
+    const auditIds=new Set(audit.map(item=>item.id)),missingEvents=evidence.flatMap(item=>(item.versions||[]).filter(version=>(version.eventId||version.createdByEventId)&&!auditIds.has(version.eventId||version.createdByEventId)).map(version=>({id:version.eventId||version.createdByEventId,at:version.createdAt||item.createdAt||new Date().toISOString(),actor:`${version.createdBy||item.createdBy||'Legacy import'} (prototype)`,action:'Evidence version event normalized',targetType:'Evidence',targetId:item.id,evidenceId:item.id,claimId:item.claimId,sourceId:item.sourceId,evidenceVersion:version.version})));
+    if(missingEvents.length)setAudit(current=>[...missingEvents,...current]);
+  }, [claims, evidence, audit]);
 
-  const addRecord = (e) => {
-    e.preventDefault();
-    const title = document.getElementById('record-title').value;
-    const description = document.getElementById('record-description').value;
-    const type = document.getElementById('record-type').value;
-    const canon = document.getElementById('canon-label').value;
-    const status = document.getElementById('record-status').value;
+  // The GitHub Pages build has no Django service. Keep the API-backed page in
+  // local development for acceptance work, but do not present it as live in a
+  // static production deployment.
+  const serverGovernanceEnabled = import.meta.env.DEV;
+  const nav = [
+    { group: 'CREATE', items: [['Overview','⌂'],['Worlds','◉'],['World Model','▤'],['Prompt Generator','✦'],['Site Builder','⌘']] },
+    { group: 'UNDERSTAND', items: [['Knowledge Graph','⌘'],['Claims','§'],['Evidence Registry','◈'],['Sources & Provenance','⌁'],['Provenance Timeline','↳'],['Version Comparison','⇄'],['Analytics','▥']] },
+    { group: 'GOVERN', items: [['Canon Governance','◇'],['Refraction Reviews','◈'],['Decision Register','☷'],['Hermes Exchange','⇄'],...(serverGovernanceEnabled ? [['Server Governance','✓']] : [])] },
+  ];
 
-    if (!title) return;
+  const generatedSections = useMemo(() => site ? [
+    { title: 'World overview', text: `Discover ${site.title}, its defining ideas, and the forces shaping its future.` },
+    { title: 'Places & peoples', text: 'Explore regions, communities, characters, and the relationships that connect them.' },
+    { title: 'History & discovery', text: 'Follow a living timeline of turning points, open questions, and newly reviewed stories.' },
+  ] : [], [site]);
 
+  function generateSite(event) {
+    event?.preventDefault();
+    const text = prompt.trim();
+    if (!text) { setNotice('Add a short world brief to build a site preview.'); return; }
+    const clean = text.replace(/^(please\s+)?(create|build|generate|imagine)\s+(a|an|the)\s+/i, '').split(/\s+(?:governed by|ruled by|with|where|that has)\b|[.!?]/i)[0].trim();
+    const title = clean.split(/\s+/).slice(0, 5).map(w => w[0]?.toUpperCase()+w.slice(1)).join(' ') || 'Untitled World';
+    setSite({title, prompt:text}); setPage('Site Builder'); setNotice(`Built a responsive draft site for ${title}.`);
+  }
+
+  function saveRecord(event) {
+    event.preventDefault();
+    const form = new FormData(event.currentTarget);
     const record = {
-      id: Date.now().toString(36),
-      version: 1,
-      type,
-      title,
-      description,
-      canon,
-      status,
-      createdAt: new Date().toISOString(),
-      tags: ['synthetic', 'draft']
+      id: `wf-${Date.now()}`,
+      world: 'Aetherfall',
+      type: form.get('type'),
+      name: String(form.get('name')).trim(),
+      summary: String(form.get('summary')).trim(),
+      status: 'Draft',
+      canonState: 'Draft',
+      createdBy: 'Atlas Researcher',
+      createdAt: new Date().toISOString().slice(0, 10),
+      sourceIds: [],
+      history: [{ at: new Date().toISOString(), action: 'Created as proposed draft', actor: 'Atlas Researcher' }],
     };
+    if (!record.name) return;
+    setRecords(current => [record, ...current]);
+    logEvent('Record created', record.id, `${record.type}: ${record.name}`);
+    event.currentTarget.reset();
+    setRecordFormOpen(false);
+    setNotice(`Added ${record.name} as a proposed ${record.type.toLowerCase()} record.`);
+  }
 
-    setWorkspaceData({
-      ...workspaceData,
-      records: [...workspaceData.records, record],
-      activityLog: [
-        ...workspaceData.activityLog,
-        {
-          id: Date.now(),
-          timestamp: new Date().toISOString(),
-          action: 'Record created',
-          target: record.title,
-          type: record.type
-        }
-      ]
-    });
+  function logEvent(action, targetId, detail, targetType='Workspace', claimVersion=null, claimRef=null) {
+    const id=`evt-${Date.now()}-${Math.random().toString(16).slice(2,6)}`,claimId=claimRef||(targetType==='Claim'?targetId:undefined);
+    setAudit(current => [{ id, at:new Date().toISOString(), actor:'Atlas Researcher (prototype)', action, targetType, targetId, ...(claimId?{claimId}:{}), ...(claimVersion?{claimVersion}:{}), detail }, ...current]);
+    return id;
+  }
 
-    document.getElementById('record-form').reset();
-    setExpandedRecords(prev => ({...prev, [record.id]: true}));
-  };
-
-  const findRecordTitle = (id) => {
-    return workspaceData.records.find(r => r.id === id)?.title || 'Unknown';
-  };
-
-  const resolveClaimVersion = (claimId, version) => {
-    const claim = workspaceData.claims.find(c => c.id === claimId);
-    if (!claim) return null;
-    const versions = claim.versions || [];
-    if (version !== undefined) {
-      return versions.find(v => v.version === version) || null;
+  function changeCanon(id, nextState) {
+    const record = records.find(r=>r.id===id); if (!record) return;
+    const data = new FormData(document.getElementById(`canon-form-${id}`));
+    const actor=GOVERNANCE_ACTORS[governanceActorKey],rationale=String(data.get('rationale')||'').trim(),reviewId=`rev-${Date.now()}`,at=new Date().toISOString();
+    try {
+      const result=applyCanonTransition({record,nextState,actor,rationale,at,reviewId});
+      setReviews(current=>[result.review,...current]);
+      setRecords(current=>current.map(r=>r.id===id?result.record:r));
+      logEvent('Canon state transition', id, `${record.name}: ${result.review.fromState} → ${nextState} · ${actor.name} (${actor.role}) · ${rationale}`);
+      setNotice(`${record.name}: transition to ${nextState} recorded for ${actor.name}.`);
+    } catch(error) {
+      setNotice(error.message || 'Canon transition was rejected.');
     }
-    return versions.length > 0 ? versions[versions.length - 1] : null;
-  };
+  }
 
-  const findClaimById = (claimId) => {
-    return workspaceData.claims.find(c => c.id === claimId);
-  };
+  function addRelation(event) {
+    event.preventDefault(); const data=new FormData(event.currentTarget); const from=data.get('from'); const to=data.get('to'); const type=data.get('type');
+    const source=records.find(r=>r.id===from),target=records.find(r=>r.id===to),validation=relationValidationError(source,target,type),editing=relations.find(r=>r.id===editingRelationId);
+    if(validation){setNotice(validation);return;}
+    if (relations.some(r=>r.id!==editingRelationId&&r.sourceId===from&&r.targetId===to&&r.type===type)) { setNotice('That directed relationship already exists.'); return; }
+    const evidenceIds=[...new Set(data.getAll('sourceEvidenceIds').filter(id=>sources.some(s=>s.id===id)))];
+    const now=new Date().toISOString(),notes=String(data.get('notes')||'').trim(),sourceName=source.name,targetName=target.name,evidenceTitles=evidenceIds.map(id=>sources.find(s=>s.id===id)?.title||id);
+    if(editing){const prior={sourceId:editing.sourceId,targetId:editing.targetId,type:editing.type,notes:editing.notes,sourceEvidenceIds:editing.sourceEvidenceIds||[],version:editing.version||1,status:editing.status||'Draft'};const updated={...editing,sourceId:from,targetId:to,type,notes,sourceEvidenceIds:evidenceIds,status:'Draft',updatedAt:now,version:(editing.version||1)+1,previousVersions:[...(editing.previousVersions||[]),{...prior,recordedAt:now}],history:[...(editing.history||[]),{at:now,action:'Relationship edited and revalidated',actor:'Atlas Researcher',validation:'Passed semantic endpoint constraints',statusReset:'Draft pending review'}]};setRelations(current=>current.map(r=>r.id===editing.id?updated:r));logEvent('Relationship edited and revalidated',editing.id,`${sourceName} — ${type} → ${targetName}${evidenceTitles.length?` · Evidence: ${evidenceTitles.join(', ')}`:''}`);setEditingRelationId('');setNotice('Relationship updated, validated, and saved as a new local version.');}
+    else {const relation={id:`rel-${Date.now()}`,sourceId:from,targetId:to,type,status:'Draft',canonState:'Proposed',createdAt:now,updatedAt:now,version:1,previousVersions:[],history:[{at:now,action:'Relationship created and validated',actor:'Atlas Researcher'}],sourceEvidenceIds:evidenceIds,notes,createdBy:'Atlas Researcher'};setRelations(current=>[relation,...current]);logEvent('Relationship created',relation.id,`${sourceName} — ${type} → ${targetName}${evidenceTitles.length?` · Evidence: ${evidenceTitles.join(', ')}`:''}`);setNotice('Relationship added and validated in the local graph.');}
+    event.currentTarget.reset();
+  }
 
-  const findCurrentClaimVersion = (claimId) => {
-    const claim = findClaimById(claimId);
-    if (!claim) return null;
-    const versions = claim.versions || [];
-    return versions.length > 0 ? versions[versions.length - 1] : null;
-  };
+  function deleteRelation(id) { const rel=relations.find(r=>r.id===id); if(!rel)return; const from=records.find(r=>r.id===rel.sourceId)?.name||rel.sourceId,to=records.find(r=>r.id===rel.targetId)?.name||rel.targetId;setRelations(current=>current.filter(r=>r.id!==id)); logEvent('Relationship deleted',id,`${from} — ${rel.type} → ${to}`); }
 
-  const getNextClaimVersion = (claim) => {
-    const versions = claim.versions || [];
-    return versions.length > 0 ? versions[versions.length - 1].version + 1 : 1;
-  };
+  function reviewRelation(id,nextState) {
+    const relation=relations.find(r=>r.id===id);if(!relation)return;
+    const source=records.find(r=>r.id===relation.sourceId),target=records.find(r=>r.id===relation.targetId),validation=relationValidationError(source,target,relation.type),currentState=relation.status||'Draft';
+    if(validation){setNotice(`Relationship cannot be reviewed: ${validation}`);return;}
+    if(!(RELATIONSHIP_REVIEW_TRANSITIONS[currentState]||[]).includes(nextState)){setNotice(`Invalid relationship review transition: ${currentState} → ${nextState}.`);return;}
+    const form=document.getElementById(`relation-review-${id}`),data=form&&new FormData(form),reviewer=String(data?.get('reviewer')||'').trim(),rationale=String(data?.get('rationale')||'').trim();
+    if(!reviewer||!rationale){setNotice('Enter a reviewer and rationale before reviewing this relationship.');return;}
+    const now=new Date().toISOString(),review={id:`rev-${Date.now()}`,targetType:'Relationship',targetId:id,decision:nextState,fromState:currentState,toState:nextState,reviewer,rationale,createdAt:now};
+    setReviews(current=>[review,...current]);setRelations(current=>current.map(r=>r.id===id?{...r,status:nextState,updatedAt:now,history:[...(r.history||[]),{at:now,action:`Relationship review moved to ${nextState}`,actor:reviewer,reviewId:review.id,rationale}]}:r));
+    logEvent('Relationship review transition',id,`${currentState} → ${nextState} · ${reviewer} · ${rationale}`);setNotice(`Relationship marked ${nextState}; review details recorded.`);
+  }
 
-  const createClaim = (e) => {
-    e.preventDefault();
-    const entityId = document.getElementById('claim-entity').value;
-    const statement = document.getElementById('claim-statement').value;
-    const status = document.getElementById('claim-status').value || 'Proposed';
-
-    if (!entityId || !statement) return;
-
-    const claimId = `claim_${Date.now().toString(36)}`;
-    const version = 1;
-    const now = new Date().toISOString();
-
-    const claim = {
-      id: claimId,
-      entityId,
-      statement,
-      status: status || 'Proposed',
-      canonState: status || 'Proposed',
-      version,
-      previousVersion: null,
-      versions: [{
-        version: 1,
-        entityId,
-        statement,
-        status: status || 'Proposed',
-        canonState: status || 'Proposed',
-        sourceIds: [],
-        evidenceLinks: [],
-        createdAt: now,
-        createdBy: 'local-user',
-        changeType: 'Created',
-        changeProposalId: null,
-        reviewId: null,
-        restoredFromVersion: null
-      }],
-      createdAt: now,
-      updatedAt: now
-    };
-
-    setWorkspaceData({
-      ...workspaceData,
-      claims: [...workspaceData.claims, claim],
-      activityLog: [
-        ...workspaceData.activityLog,
-        {
-          id: Date.now(),
-          timestamp: now,
-          action: 'Claim created',
-          target: statement,
-          type: 'claim'
-        }
-      ]
-    });
-
-    document.getElementById('claim-form').reset();
-  };
-
-  const createClaimChangeProposal = (e) => {
-    e.preventDefault();
-    const claimId = document.getElementById('proposal-claim').value;
-    const statement = document.getElementById('proposal-statement').value;
-    const reason = document.getElementById('proposal-reason').value;
-    const proposedBy = document.getElementById('proposal-by').value || 'local-user';
-
-    const claim = findClaimById(claimId);
-    if (!claim) {
-      alert('Target claim not found.');
-      return;
+  function addClaim(event) {
+    event.preventDefault(); const data=new FormData(event.currentTarget); const entityId=data.get('entityId'),claimId=String(data.get('claimId')||''); const statement=String(data.get('statement')||'').trim(); const sourceIds=data.getAll('sourceIds'),editing=claims.find(c=>c.id===claimId);
+    if(!records.some(r=>r.id===entityId)||!statement){setNotice('Choose an existing entity and enter a claim.');return false;}
+    if(claimId&&(!editing||!['Draft','Proposed'].includes(editing.status||editing.canonState||'Draft'))){setNotice('Only Draft or Proposed claims can be edited.');return false;}
+    const validSourceIds=[...new Set(sourceIds.filter(id=>sources.some(s=>s.id===id)))],assessment=String(data.get('evidenceAssessment')||'Unassessed');
+    const now=new Date().toISOString(),evidenceLinks=validSourceIds.map(sourceId=>({sourceId,assessment,notes:''}));
+    const evidenceNames=validSourceIds.map(id=>sources.find(s=>s.id===id)?.title||id);
+    if(editing){
+      const version=(editing.version||1)+1,eventId=logEvent('Claim edited and revalidated',editing.id,`${statement}${evidenceNames.length?` · Evidence: ${evidenceNames.join(', ')} · Assessment: ${assessment}`:''}`,'Claim',version);
+      const snapshot={version,entityId,statement,status:editing.status||editing.canonState||'Draft',canonState:editing.canonState||editing.status||'Draft',sourceIds:copyValue(validSourceIds),evidenceLinks:copyValue(evidenceLinks),createdAt:now,createdBy:'Atlas Researcher',createdByEventId:eventId,changeType:'DirectEdit',changeProposalId:null,reviewId:null,restoredFromVersion:null};
+      const updated={...editing,entityId,statement,sourceIds:validSourceIds,evidenceLinks,status:snapshot.status,canonState:snapshot.canonState,version,previousVersion:version-1,versions:[...(editing.versions||[]).map(copyValue),snapshot],updatedAt:now,history:[...(editing.history||[]),{at:now,action:'Claim edited and evidence links revalidated',actor:'Atlas Researcher',version,eventId}]};
+      setClaims(current=>current.map(c=>c.id===editing.id?updated:c));markStaleClaimProposals(editing.id,version,now);setNotice('Claim revised as a new version; evidence links revalidated.');
     }
+    else {const id=`claim-${Date.now()}`,eventId=logEvent('Claim created',id,`${statement}${evidenceNames.length?` · Evidence: ${evidenceNames.join(', ')} · Assessment: ${assessment}`:''}`,'Claim',1),snapshot={version:1,entityId,statement,status:'Draft',canonState:'Draft',sourceIds:copyValue(validSourceIds),evidenceLinks:copyValue(evidenceLinks),createdAt:now,createdBy:'Atlas Researcher',createdByEventId:eventId,changeType:'Created',changeProposalId:null,reviewId:null,restoredFromVersion:null};const claim={id,entityId,statement,sourceIds:validSourceIds,evidenceLinks,status:'Draft',canonState:'Draft',version:1,previousVersion:null,versions:[snapshot],createdBy:'Atlas Researcher',createdAt:now,updatedAt:now,history:[{at:now,action:'Claim created',actor:'Atlas Researcher',version:1,eventId}]};setClaims(current=>[claim,...current]);setNotice('Claim saved as Draft.');}
+    event.currentTarget.reset();return true;
+  }
 
-    const currentVersion = findCurrentClaimVersion(claimId);
-    if (!currentVersion) {
-      alert('Claim has no versions.');
-      return;
+  function markStaleClaimProposals(claimId,currentVersion,now) {
+    const stale=claimChangeProposals.filter(p=>p.claimId===claimId&&p.status==='Proposed'&&p.baseVersion<currentVersion);
+    if(!stale.length)return;
+    setClaimChangeProposals(current=>current.map(p=>p.claimId===claimId&&p.status==='Proposed'&&p.baseVersion<currentVersion?{...p,status:'Conflict',conflictDetectedAt:now,conflictReason:`Claim advanced to version ${currentVersion}; proposal was based on version ${p.baseVersion}.`}:p));
+    stale.forEach(p=>logEvent('Claim change proposal conflict detected',p.id,`Claim ${claimId} advanced to v${currentVersion}; proposal based on v${p.baseVersion} is stale.`,'ClaimChangeProposal',currentVersion,claimId));
+  }
+
+  function reviewClaim(id,nextState) {
+    const claim=claims.find(c=>c.id===id); if(!claim)return;
+    const currentState=claim.status||claim.canonState||'Draft';
+    if(!(CLAIM_TRANSITIONS[currentState]||[]).includes(nextState)){setNotice(`Invalid claim transition: ${currentState} → ${nextState}.`);return;}
+    const form=document.getElementById(`claim-review-${id}`),data=form&&new FormData(form),reviewer=String(data?.get('reviewer')||'').trim(),rationale=String(data?.get('rationale')||'').trim();
+    if(!reviewer||!rationale){setNotice('Enter a reviewer and rationale before changing claim status.');return;}
+    const now=new Date().toISOString(),version=(claim.version||1)+1,reviewId=`rev-${Date.now()}`,eventId=logEvent('Claim review transition',id,`${currentState} → ${nextState} · ${reviewer} · ${rationale}`,'Claim',version),review={id:reviewId,targetType:'Claim',targetId:id,claimId:id,decision:nextState,fromState:currentState,toState:nextState,reviewer,rationale,createdAt:now,claimVersion:version};
+    const snapshot={version,entityId:claim.entityId,statement:claim.statement,status:nextState,canonState:nextState,sourceIds:copyValue(claim.sourceIds||[]),evidenceLinks:copyValue(claim.evidenceLinks||[]),createdAt:now,createdBy:reviewer,createdByEventId:eventId,changeType:'StatusChange',changeProposalId:null,reviewId,restoredFromVersion:null};
+    setReviews(current=>[review,...current]);setClaims(current=>current.map(c=>c.id===id?{...c,status:nextState,canonState:nextState,version,previousVersion:version-1,versions:[...(c.versions||[]).map(copyValue),snapshot],updatedAt:now,history:[...(c.history||[]),{at:now,action:`Claim status changed to ${nextState}`,actor:reviewer,reviewId,rationale,version,eventId}]}:c));
+    markStaleClaimProposals(id,version,now);setNotice(`Claim moved to ${nextState}; version and review details recorded.`);
+  }
+
+  function submitClaimChangeProposal(event) {
+    event.preventDefault();const data=new FormData(event.currentTarget),claimId=String(data.get('claimId')||''),claim=claims.find(c=>c.id===claimId),baseVersion=Number(data.get('baseVersion')),reason=String(data.get('reason')||'').trim(),statement=String(data.get('statement')||'').trim(),entityId=String(data.get('entityId')||''),sourceIds=[...new Set(data.getAll('sourceIds').filter(sourceId=>sources.some(source=>source.id===sourceId)))];
+    if(!claim||['Draft','Proposed'].includes(claim.status||claim.canonState||'Draft')||baseVersion!==(claim.version||1)){setNotice('Choose a current protected claim version for the proposal.');return;}
+    const proposedChanges={};if(statement&&statement!==claim.statement)proposedChanges.statement=statement;if(entityId&&entityId!==claim.entityId)proposedChanges.entityId=entityId;if(data.has('replaceSources'))proposedChanges.sourceIds=sourceIds;
+    if(!reason||!Object.keys(proposedChanges).length){setNotice('Add a rationale and at least one change from the current claim.');return;}
+    const now=new Date().toISOString(),id=`ccp-${Date.now()}`,proposal={id,claimId,baseVersion,status:'Proposed',reason,proposedChanges,proposedBy:'Atlas Researcher',createdAt:now,conflictDetectedAt:null,conflictReason:null,resolvedAt:null,reviewId:null};
+    setClaimChangeProposals(current=>[proposal,...current]);logEvent('Claim change proposal created',id,`Claim ${claimId} v${baseVersion}: ${reason}`,'ClaimChangeProposal',baseVersion,claimId);event.currentTarget.reset();setNotice('Change proposal submitted; the current claim remains unchanged.');
+  }
+
+  function resolveClaimChangeProposal(id,outcome) {
+    const proposal=claimChangeProposals.find(p=>p.id===id),claim=proposal&&claims.find(c=>c.id===proposal.claimId);if(!proposal||proposal.status!=='Proposed'||!claim)return;
+    const actor=GOVERNANCE_ACTORS[governanceActorKey];
+    try { requireGovernanceCapability(actor,outcome==='Approved'?'canon:approve':'canon:reject'); }
+    catch(error) { setNotice(error.message); return; }
+    const currentVersion=claim.version||1,now=new Date().toISOString();if(proposal.baseVersion!==currentVersion){setClaimChangeProposals(current=>current.map(p=>p.id===id?{...p,status:'Conflict',conflictDetectedAt:now,conflictReason:`Claim is now version ${currentVersion}; proposal was based on version ${p.baseVersion}.`}:p));logEvent('Claim change proposal conflict detected',id,`Claim advanced from proposal base v${proposal.baseVersion} to v${currentVersion}.`,'ClaimChangeProposal',currentVersion,claim.id);setNotice('Proposal is stale and marked Conflict. Submit a new proposal against the current version.');return;}
+    const form=document.getElementById(`claim-proposal-review-${id}`),reviewData=form&&new FormData(form),reviewer=actor.name,rationale=String(reviewData?.get('rationale')||'').trim();if(!rationale){setNotice('Enter a rationale to resolve this proposal.');return;}
+    const reviewId=`rev-${Date.now()}`,nextVersion=outcome==='Approved'?currentVersion+1:currentVersion,eventId=logEvent(`Claim change proposal ${outcome.toLowerCase()}`,id,`${outcome} by ${reviewer} (${actor.role}) · ${rationale}`,'ClaimChangeProposal',nextVersion,claim.id),review={id:reviewId,targetType:'ClaimChangeProposal',targetId:id,claimId:claim.id,decision:outcome,fromState:'Proposed',toState:outcome,reviewer,actorId:actor.id,actorRole:actor.role,rationale,createdAt:now,claimVersion:nextVersion};
+    setReviews(current=>[review,...current]);setClaimChangeProposals(current=>current.map(p=>p.id===id?{...p,status:outcome,resolvedAt:now,reviewId}:p));
+    if(outcome==='Approved'){
+      const proposed={...claim,...proposal.proposedChanges},proposedEvidence=proposal.proposedChanges.sourceIds?proposal.proposedChanges.sourceIds.map(sourceId=>({sourceId,assessment:'Unassessed',notes:''})):claim.evidenceLinks||[],snapshot={version:nextVersion,entityId:proposed.entityId,statement:proposed.statement,status:'Approved',canonState:'Approved',sourceIds:copyValue(proposed.sourceIds||claim.sourceIds||[]),evidenceLinks:copyValue(proposedEvidence),createdAt:now,createdBy:reviewer,createdByEventId:eventId,changeType:'ApprovedProposal',changeProposalId:id,reviewId,restoredFromVersion:null};
+      setClaims(current=>current.map(c=>c.id===claim.id?{...proposed,sourceIds:copyValue(snapshot.sourceIds),evidenceLinks:copyValue(snapshot.evidenceLinks),status:'Approved',canonState:'Approved',version:nextVersion,previousVersion:currentVersion,versions:[...(c.versions||[]).map(copyValue),snapshot],updatedAt:now,history:[...(c.history||[]),{at:now,action:'Approved claim change proposal created a new version',actor:reviewer,changeProposalId:id,reviewId,rationale,version:nextVersion,eventId}]}:c));markStaleClaimProposals(claim.id,nextVersion,now);
     }
+    setNotice(outcome==='Approved'?'Proposal approved; a new Approved claim version was created.':'Proposal rejected; claim content and version remain unchanged.');
+  }
 
-    if (claim.status === 'Approved') {
-      alert('Approved claims cannot be modified directly. Use a change proposal instead.');
-      return;
-    }
+  function rollbackClaim(claimId,versionNumber) {
+    const claim=claims.find(c=>c.id===claimId),target=claim?.versions?.find(v=>v.version===Number(versionNumber));if(!claim||!target)return;
+    if(!['Draft','Proposed'].includes(claim.status||claim.canonState||'Draft')){setNotice('Only Draft or Proposed claims can be rolled back directly. Submit a reviewed change proposal for protected claims.');return;}
+    const rationale=window.prompt(`Reason for restoring claim content from v${target.version}:`,'Restore prior claim version');if(!rationale?.trim())return;
+    const now=new Date().toISOString(),version=(claim.version||1)+1,eventId=logEvent('Claim rolled back as new version',claim.id,`Restored content from v${target.version} as v${version}. ${rationale.trim()}`,'Claim',version),snapshot={...copyValue(target),version,status:claim.status||claim.canonState||'Draft',canonState:claim.canonState||claim.status||'Draft',createdAt:now,createdBy:'Atlas Researcher',createdByEventId:eventId,changeType:'Rollback',changeProposalId:null,reviewId:null,restoredFromVersion:target.version};
+    setClaims(current=>current.map(c=>c.id===claimId?{...c,entityId:snapshot.entityId,statement:snapshot.statement,status:snapshot.status,canonState:snapshot.canonState,sourceIds:copyValue(snapshot.sourceIds||[]),evidenceLinks:copyValue(snapshot.evidenceLinks||[]),version,previousVersion:version-1,versions:[...(c.versions||[]).map(copyValue),snapshot],updatedAt:now,history:[...(c.history||[]),{at:now,action:`Rolled back to v${target.version} as v${version}`,actor:'Atlas Researcher',rationale:rationale.trim(),eventId}]}:c));markStaleClaimProposals(claimId,version,now);setNotice(`Restored v${target.version} content as new claim version v${version}.`);
+  }
 
-    const baseVersion = currentVersion.version;
-    const proposedChanges = {};
-    if (statement && statement !== currentVersion.statement) {
-      proposedChanges.statement = statement;
-    }
+  function createChangeRequest(event) {
+    event.preventDefault(); const data=new FormData(event.currentTarget); const target=records.find(r=>r.id===data.get('targetId')); if(!target||target.canonState!=='Approved'){setNotice('Change requests are only available for Approved records.');return;}
+    const request={id:`cr-${Date.now()}`,targetId:target.id,reason:String(data.get('reason')||'').trim(),proposedName:String(data.get('proposedName')||'').trim(),proposedSummary:String(data.get('proposedSummary')||'').trim(),status:'Proposed',createdBy:'Atlas Researcher',createdAt:new Date().toISOString(),previousSnapshot:{name:target.name,summary:target.summary,version:target.version||1}};
+    if(!request.reason||(!request.proposedName&&!request.proposedSummary)){setNotice('Add a reason and at least one proposed field change.');return;}
+    setChangeRequests(current=>[request,...current]);logEvent('Change request proposed',request.id,`${target.name}: ${request.reason}`);event.currentTarget.reset();setNotice('Change request saved for review. Approved record remains unchanged.');
+  }
 
-    if (Object.keys(proposedChanges).length === 0) {
-      alert('No changes specified.');
-      return;
-    }
+  function resolveChangeRequest(id, approve) {
+    const request=changeRequests.find(x=>x.id===id);const target=request&&records.find(r=>r.id===request.targetId);if(!request||!target||request.status!=='Proposed')return;
+    const actor=GOVERNANCE_ACTORS[governanceActorKey];
+    try { requireGovernanceCapability(actor,approve?'canon:approve':'canon:reject'); }
+    catch(error) { setNotice(error.message); return; }
+    const rationale=window.prompt('Review rationale:','Reviewed proposed change');if(!rationale?.trim())return;
+    const reviewer=actor.name,now=new Date().toISOString();const review={id:`rev-${Date.now()}`,targetType:'ChangeRequest',targetId:id,decision:approve?'Approved':'Rejected',reviewer,actorId:actor.id,actorRole:actor.role,rationale:rationale.trim(),createdAt:now};setReviews(current=>[review,...current]);
+    setChangeRequests(current=>current.map(x=>x.id===id?{...x,status:approve?'Approved':'Rejected',reviewedAt:now,reviewer,rationale}:x));
+    if(approve){setRecords(current=>current.map(r=>r.id===target.id?{...r,name:request.proposedName||r.name,summary:request.proposedSummary||r.summary,version:(r.version||1)+1,previousVersions:[...(r.previousVersions||[]),{version:r.version||1,name:r.name,summary:r.summary,recordedAt:now,changeRequestId:id}],history:[...(r.history||[]),{at:now,action:'Approved change request created a new version',actor:reviewer,actorId:actor.id,actorRole:actor.role,changeRequestId:id,rationale:rationale.trim()}],canonState:'Approved'}:r));}
+    logEvent(`Change request ${approve?'approved':'rejected'}`,id,`${target.name} · ${reviewer} (${actor.role}) · ${rationale.trim()}`);setNotice(approve?'Approved change applied as a new record version.':'Change request rejected; approved record unchanged.');
+  }
 
-    const proposalId = `ccp_${Date.now().toString(36)}`;
-    const now = new Date().toISOString();
+  function addSource(event) {
+    event.preventDefault(); const data=new FormData(event.currentTarget); const source={id:`src-${Date.now()}`,title:String(data.get('title')).trim(),kind:data.get('kind'),reference:String(data.get('reference')).trim(),note:String(data.get('note')).trim(),addedAt:new Date().toISOString().slice(0,10)};
+    if (!source.title) return; setSources(current=>[source,...current]); logEvent('Source registered',source.id,source.title); event.currentTarget.reset(); setNotice('Source registered. Link it to a record to create provenance.');
+  }
 
-    const proposal = {
-      id: proposalId,
-      claimId,
-      baseVersion,
-      status: 'Proposed',
-      reason,
-      proposedChanges,
-      proposedBy,
-      createdAt: now,
-      resolvedAt: null,
-      reviewId: null
-    };
+  function logEvidenceEvent(action,item,version,actor='Atlas Researcher (prototype)') {
+    const event={id:`evt-${Date.now()}-${Math.random().toString(16).slice(2,6)}`,at:new Date().toISOString(),actor,action,targetType:'Evidence',targetId:item.id,evidenceId:item.id,claimId:item.claimId,sourceId:item.sourceId,evidenceVersion:version};
+    setAudit(current=>[event,...current]);return event;
+  }
 
-    setWorkspaceData({
-      ...workspaceData,
-      changeProposals: [...workspaceData.changeProposals, proposal],
-      activityLog: [
-        ...workspaceData.activityLog,
-        {
-          id: Date.now(),
-          timestamp: now,
-          action: 'Claim proposal created',
-          target: `Claim ${claimId} v${baseVersion}`,
-          type: 'claim-proposal'
-        }
-      ]
-    });
+  function addEvidence(event) {
+    event.preventDefault();const data=new FormData(event.currentTarget),claimId=String(data.get('claimId')||''),sourceId=String(data.get('sourceId')||''),assessment=String(data.get('assessment')||''),notes=String(data.get('notes')||'').trim();
+    if(!claims.some(c=>c.id===claimId)){setNotice('Choose an existing claim for this evidence.');return;}
+    if(!sources.some(s=>s.id===sourceId)){setNotice('Choose an existing source for this evidence.');return;}
+    if(!EVIDENCE_ASSESSMENTS.includes(assessment)){setNotice('Choose one of the registered evidence assessments.');return;}
+    const now=new Date().toISOString(),id=`evidence-${Date.now()}-${Math.random().toString(16).slice(2,6)}`,base={id,claimId,sourceId,assessment,status:'Draft',version:1,previousVersion:null,notes,createdAt:now,createdBy:'Atlas Researcher',updatedAt:now},createdEvent=logEvidenceEvent('Evidence Created',base,1),snapshot={version:1,assessment,notes,createdAt:now,createdBy:'Atlas Researcher',eventId:createdEvent.id,changeType:'Created',reviewId:null},item={...base,createdByEventId:createdEvent.id,versions:[snapshot]};
+    setEvidence(current=>[item,...current]);logEvidenceEvent('Evidence Linked',item,1);event.currentTarget.reset();setNotice('Evidence record created and linked to its claim and source.');
+  }
 
-    document.getElementById('proposal-form').reset();
-    document.getElementById('proposal-by').value = 'local-user';
+  function editEvidence(event) {
+    event.preventDefault();const data=new FormData(event.currentTarget),id=String(data.get('evidenceId')||''),item=evidence.find(e=>e.id===id),assessment=String(data.get('assessment')||''),notes=String(data.get('notes')||'').trim();if(!item)return;
+    if(!claims.some(claim=>claim.id===item.claimId)){setNotice('Evidence cannot be edited until its missing claim reference is repaired.');return;}
+    if(!sources.some(source=>source.id===item.sourceId)){setNotice('Evidence cannot be edited until its missing source reference is repaired.');return;}
+    if(!EVIDENCE_ASSESSMENTS.includes(assessment)){setNotice('Choose one of the registered evidence assessments.');return;}
+    if(assessment===item.assessment&&notes===item.notes){setNotice('No evidence changes to save.');return;}
+    const now=new Date().toISOString(),version=(item.version||1)+1,updated={...item,assessment,notes,status:'Draft',version,previousVersion:version-1,updatedAt:now},editEvent=logEvidenceEvent('Evidence Edited',updated,version),snapshot={version,assessment,notes,createdAt:now,createdBy:'Atlas Researcher',eventId:editEvent.id,changeType:'DirectEdit',reviewId:null};
+    setEvidence(current=>current.map(e=>e.id===id?{...updated,createdByEventId:item.createdByEventId,versions:[...(item.versions||[]).map(copyValue),snapshot]}:e));event.currentTarget.reset();setNotice(`Evidence updated as version ${version}. Earlier versions remain in history.`);
+  }
+
+  function reviewEvidence(id,decision) {
+    const item=evidence.find(e=>e.id===id);if(!item||item.status==='Unlinked')return;
+    if(!claims.some(claim=>claim.id===item.claimId)||!sources.some(source=>source.id===item.sourceId)){setNotice('Evidence cannot be reviewed until its claim and source references are valid.');return;}
+    const form=document.getElementById(`evidence-review-${id}`),data=form&&new FormData(form),reviewer=String(data?.get('reviewer')||'').trim(),rationale=String(data?.get('rationale')||'').trim();if(!reviewer||!rationale){setNotice('Enter reviewer and rationale before reviewing evidence.');return;}
+    const now=new Date().toISOString(),reviewId=`evidence-review-${Date.now()}-${Math.random().toString(16).slice(2,6)}`,event={id:`evt-${Date.now()}-${Math.random().toString(16).slice(2,6)}`,at:now,actor:`${reviewer} (prototype)`,action:`Evidence ${decision.toLowerCase()}`,targetType:'Evidence',targetId:id,evidenceId:id,claimId:item.claimId,sourceId:item.sourceId,evidenceVersion:item.version};
+    const review={id:reviewId,targetType:'Evidence',targetId:id,evidenceId:id,evidenceVersion:item.version,decision,reviewer,rationale,createdAt:now,eventId:event.id};setEvidenceReviews(current=>[review,...current]);setAudit(current=>[event,...current]);setEvidence(current=>current.map(e=>e.id===id?{...e,status:decision,updatedAt:now}:e));setNotice(`Evidence marked ${decision}; reviewer rationale and audit event recorded.`);
+  }
+
+  function setEvidenceLinkStatus(id,linked) {
+    const item=evidence.find(e=>e.id===id);if(!item)return;const now=new Date().toISOString(),status=linked?'Draft':'Unlinked',event=logEvidenceEvent(linked?'Evidence Linked':'Evidence Unlinked',{...item,status},item.version);setEvidence(current=>current.map(e=>e.id===id?{...e,status,updatedAt:now}:e));setNotice(linked?'Evidence link restored.':'Evidence unlinked and retained in local history.');
+  }
+
+  function linkEvidence(event) {
+    event.preventDefault(); const data=new FormData(event.currentTarget); const recordId=data.get('record'); const sourceId=data.get('source');
+    const record=records.find(r=>r.id===recordId), source=sources.find(s=>s.id===sourceId); if(!record||!source)return;
+    setRecords(current=>current.map(r=>r.id===recordId?{...r,sourceIds:[...new Set([...(r.sourceIds||[]),sourceId])],history:[...(r.history||[]),{at:new Date().toISOString(),action:`Evidence linked: ${source.title}`,actor:'Atlas Researcher'}]}:r));
+    logEvent('Evidence linked',recordId,`${source.title} → ${record.name}`); setNotice('Evidence link recorded with local provenance.');
+  }
+
+  function addDecision(event) {
+    event.preventDefault(); const data=new FormData(event.currentTarget),claimId=String(data.get('claimId')||''),claim=claims.find(c=>c.id===claimId); if(claimId&&!claim){setNotice('Choose an existing claim.');return;}const decision={id:`dec-${Date.now()}`,title:String(data.get('title')).trim(),recordId:data.get('record')||claim?.entityId||'',claimId,rationale:String(data.get('rationale')).trim(),alternatives:String(data.get('alternatives')).trim(),authority:String(data.get('authority')).trim(),status:'Proposed',createdBy:'Atlas Researcher',createdAt:new Date().toISOString()};
+    if(!decision.title)return; setDecisions(current=>[decision,...current]); logEvent('Decision proposed',decision.id,decision.title); event.currentTarget.reset(); setNotice('Decision recorded as Proposed.');
+  }
+
+  function decideDecision(id, status) {
+    const decision=decisions.find(d=>d.id===id); if(!decision)return;
+    setDecisions(current=>current.map(d=>d.id===id?{...d,status,reviewedAt:new Date().toISOString()}:d)); logEvent(`Decision ${status.toLowerCase()}`,id,decision.title); setNotice(`Decision marked ${status}. Prototype only; approval authority is not enforced.`);
+  }
+
+  function generateWorldDraft(event) {
+    event.preventDefault(); const source=generatorPrompt.trim(); if(!source){setNotice('Enter a prompt first.');return;}
+    const first=source.replace(/^(please\s+)?(create|build|generate|imagine)\s+(a|an|the)\s+/i,'').split(/[.!?]/)[0].trim();
+    const worldName=first.split(/\s+(?:governed by|ruled by|with|where|that has)\b/i)[0].split(/\s+/).slice(0,6).map(w=>w[0]?.toUpperCase()+w.slice(1)).join(' ')||'Untitled World';
+    const specs=[['World',worldName,source],['Nation',`${worldName} Concord`,'A proposed governing community inferred as a starter record.'],['Character',`Steward of ${worldName}`,'A proposed civic role for further author definition.'],['Faction',`Surveyors of ${worldName}`,'A proposed organization for further author definition.'],['Location',`Central Reach of ${worldName}`,'A proposed place for further author definition.'],['Historical Event',`Founding of ${worldName}`,'A proposed event for further author definition.']];
+    const created=specs.map(([type,name,summary],i)=>({id:`gen-${Date.now()}-${i}`,world:worldName,type,name,summary,status:'Draft',canonState:'Draft',createdBy:'Local Template Generator',createdAt:new Date().toISOString().slice(0,10),sourceIds:[],history:[{at:new Date().toISOString(),action:'Generated as draft from user prompt',actor:'Local Template Generator'}]}));
+    setRecords(current=>[...created,...current]); logEvent('Draft world generated',created[0].id,`Deterministic local template · ${worldName} · 6 records`); setPage('World Model'); setNotice(`Created six proposed draft records for ${worldName}. This used templates; no AI model was called.`);
+  }
+
+  function exportWorkspace() {
+    const bundle={format:'AH-AIOS WorldForge workspace bundle',version:5,exportedAt:new Date().toISOString(),records,relations,sources,claims,claimChangeProposals,decisions,reviews,changeRequests,evidence,evidenceReviews,audit,auditEvents:audit};
+    download('worldforge-workspace-bundle.json',JSON.stringify(bundle,null,2),'application/json');setExchangeStatus('Workspace bundle v5 exported with first-class evidence, evidence reviews, and audit events.');
+  }
+  async function importWorkspace(event) {
+    const file=event.target.files?.[0];if(!file)return;
+    try {
+      const bundle=JSON.parse(await file.text()),auditRows=bundle.auditEvents||bundle.audit;
+      if(bundle.format!=='AH-AIOS WorldForge workspace bundle'||![2,3,4,5].includes(bundle.version)||!Array.isArray(bundle.records)||!Array.isArray(bundle.relations)||!Array.isArray(bundle.sources)||!Array.isArray(bundle.decisions)||!Array.isArray(auditRows)||bundle.version===4&&(!Array.isArray(bundle.claims)||!Array.isArray(bundle.claimChangeProposals)||!Array.isArray(bundle.reviews)||!Array.isArray(bundle.changeRequests))||bundle.version===5&&(!Array.isArray(bundle.claims)||!Array.isArray(bundle.claimChangeProposals)||!Array.isArray(bundle.reviews)||!Array.isArray(bundle.changeRequests)||!Array.isArray(bundle.evidence)||!Array.isArray(bundle.evidenceReviews)||!Array.isArray(bundle.auditEvents)))throw new Error('Unsupported workspace bundle. Expected a valid version 2, 3, 4, or 5 export.');
+      const importedClaims=(Array.isArray(bundle.claims)?bundle.claims:[]).map(normalizeClaim),claimIds=new Set(),eventIds=new Set(auditRows.map(e=>e.id));
+      if(eventIds.size!==auditRows.length||auditRows.some(e=>!e.id))throw new Error('Import stopped: audit event IDs must be present and unique.');
+      for(const claim of importedClaims){
+        if(!claim.id||claimIds.has(claim.id))throw new Error('Import stopped: claim IDs must be present and unique.');claimIds.add(claim.id);
+        if(!bundle.records.some(r=>r.id===claim.entityId))throw new Error(`Import stopped: claim ${claim.id} references missing entity ${claim.entityId}.`);
+        if(!Array.isArray(claim.versions)||claim.versions.length!==(claim.version||1)||claim.versions.some((v,i)=>v.version!==i+1))throw new Error(`Import stopped: claim ${claim.id} has a non-sequential or incomplete version history.`);
+        for(const v of claim.versions){if(!bundle.records.some(r=>r.id===v.entityId))throw new Error(`Import stopped: claim ${claim.id} v${v.version} references missing entity ${v.entityId}.`);if(bundle.version===4||bundle.version===5){const eventRecord=auditRows.find(e=>e.id===v.createdByEventId);if(!eventRecord||eventRecord.claimId!==claim.id||eventRecord.claimVersion!==v.version)throw new Error(`Import stopped: claim ${claim.id} v${v.version} has no matching creation audit event.`);}if((v.sourceIds||[]).some(sourceId=>!bundle.sources.some(source=>source.id===sourceId)))throw new Error(`Import stopped: claim ${claim.id} v${v.version} references a missing source.`);}
+      }
+      const proposalIds=new Set(),reviewIds=new Set((bundle.reviews||[]).map(review=>review.id)),importedProposals=(Array.isArray(bundle.claimChangeProposals)?bundle.claimChangeProposals:[]).map(proposal=>{
+        if(!proposal.id||proposalIds.has(proposal.id))throw new Error('Import stopped: proposal IDs must be present and unique.');proposalIds.add(proposal.id);const claim=importedClaims.find(item=>item.id===proposal.claimId);
+        if(!claim)throw new Error(`Import stopped: proposal ${proposal.id} references a missing claim.`);if(!Number.isInteger(proposal.baseVersion)||proposal.baseVersion<1||proposal.baseVersion>(claim.version||1))throw new Error(`Import stopped: proposal ${proposal.id} has an invalid base version.`);if(!['Proposed','Approved','Rejected','Conflict'].includes(proposal.status))throw new Error(`Import stopped: proposal ${proposal.id} has an unsupported status.`);if(proposal.proposedChanges?.entityId&&!bundle.records.some(record=>record.id===proposal.proposedChanges.entityId))throw new Error(`Import stopped: proposal ${proposal.id} references a missing entity.`);if((proposal.proposedChanges?.sourceIds||[]).some(sourceId=>!bundle.sources.some(source=>source.id===sourceId)))throw new Error(`Import stopped: proposal ${proposal.id} references a missing source.`);if(['Approved','Rejected'].includes(proposal.status)&&(!proposal.reviewId||!reviewIds.has(proposal.reviewId)))throw new Error(`Import stopped: resolved proposal ${proposal.id} has no matching review record.`);
+        return proposal.status==='Proposed'&&proposal.baseVersion<(claim.version||1)?{...proposal,status:'Conflict',conflictDetectedAt:proposal.conflictDetectedAt||new Date().toISOString(),conflictReason:proposal.conflictReason||`Claim is v${claim.version}; proposal was based on v${proposal.baseVersion}.`}:proposal;
+      });
+      const rawEvidence=Array.isArray(bundle.evidence)?bundle.evidence:[];if(bundle.version===5&&rawEvidence.some(item=>!EVIDENCE_ASSESSMENTS.includes(item.assessment)||!['Draft','Validated','Rejected','Unlinked'].includes(item.status)))throw new Error('Import stopped: evidence contains an unsupported assessment or status.');const importedEvidence=rawEvidence.map(normalizeEvidence),evidenceIds=new Set(),importWarnings=[];
+      for(const item of importedEvidence){
+        if(!item.id||evidenceIds.has(item.id))throw new Error('Import stopped: evidence IDs must be present and unique.');evidenceIds.add(item.id);
+        if(!claimIds.has(item.claimId))importWarnings.push(`Evidence ${item.id} references missing claim ${item.claimId}.`);if(!bundle.sources.some(source=>source.id===item.sourceId))importWarnings.push(`Evidence ${item.id} references missing source ${item.sourceId}.`);if(!EVIDENCE_ASSESSMENTS.includes(item.assessment))throw new Error(`Import stopped: evidence ${item.id} has an unsupported assessment.`);if(!['Draft','Validated','Rejected','Unlinked'].includes(item.status))throw new Error(`Import stopped: evidence ${item.id} has an unsupported status.`);if(item.versions.length!==item.version||item.previousVersion!==(item.version>1?item.version-1:null)||item.versions.some((version,index)=>version.version!==index+1||!EVIDENCE_ASSESSMENTS.includes(version.assessment)))throw new Error(`Import stopped: evidence ${item.id} has an invalid version history.`);const latest=item.versions[item.versions.length-1];if(latest.assessment!==item.assessment||latest.notes!==(item.notes||''))throw new Error(`Import stopped: evidence ${item.id} current fields do not match its latest version.`);
+        if(bundle.version===5)for(const version of item.versions){const eventRecord=auditRows.find(auditEvent=>auditEvent.id===version.eventId);if(!eventRecord||eventRecord.evidenceId!==item.id||eventRecord.evidenceVersion!==version.version)throw new Error(`Import stopped: evidence ${item.id} v${version.version} has no matching audit event.`);}
+      }
+      const importedEvidenceReviews=Array.isArray(bundle.evidenceReviews)?bundle.evidenceReviews:[],evidenceReviewIds=new Set();
+      for(const review of importedEvidenceReviews){if(!review.id||evidenceReviewIds.has(review.id))throw new Error('Import stopped: evidence review IDs must be present and unique.');evidenceReviewIds.add(review.id);if(!evidenceIds.has(review.evidenceId))importWarnings.push(`Evidence review ${review.id} references missing evidence ${review.evidenceId}.`);if(!review.reviewer||!review.rationale||!review.createdAt)throw new Error(`Import stopped: evidence review ${review.id} is missing reviewer, rationale, or date.`);if(!['Validated','Rejected'].includes(review.decision))throw new Error(`Import stopped: evidence review ${review.id} has an unsupported decision.`);if(bundle.version===5){const eventRecord=auditRows.find(auditEvent=>auditEvent.id===review.eventId);if(!eventRecord||eventRecord.evidenceId!==review.evidenceId)importWarnings.push(`Evidence review ${review.id} has no matching audit event.`);}}
+      const importedAuditIds=new Set(auditRows.map(item=>item.id)),claimMigrationEvents=importedClaims.flatMap(claim=>(claim.versions||[]).filter(version=>version.createdByEventId&&!importedAuditIds.has(version.createdByEventId)).map(version=>({id:version.createdByEventId,at:version.createdAt||claim.createdAt||new Date().toISOString(),actor:version.createdBy||'Legacy import',action:'Legacy claim version normalized',targetType:'Claim',targetId:claim.id,claimId:claim.id,claimVersion:version.version,detail:`Migrated claim ${claim.id} version ${version.version} into the versioned schema.`})));
+      setRecords(bundle.records);setRelations(bundle.relations.map(normalizeRelation));setSources(bundle.sources);setClaims(importedClaims);setClaimChangeProposals(importedProposals);setDecisions(bundle.decisions);setReviews(Array.isArray(bundle.reviews)?bundle.reviews:[]);setChangeRequests(Array.isArray(bundle.changeRequests)?bundle.changeRequests:[]);setEvidence(importedEvidence);setEvidenceReviews(importedEvidenceReviews);setAudit([...claimMigrationEvents,...auditRows]);
+      setExchangeStatus(`Imported v${bundle.version}: ${bundle.records.length} records, ${bundle.relations.length} relationships, ${bundle.sources.length} sources, ${importedClaims.length} claims, ${importedEvidence.length} evidence records, and ${importedEvidenceReviews.length} evidence reviews.${importWarnings.length?` Warnings: ${importWarnings.join(' ')}`:' Legacy embedded evidence will be migrated and retained.'}`);logEvent('Workspace bundle imported','workspace',file.name);
+    } catch(error){setExchangeStatus(error.message||'Could not import this file.');} finally{event.target.value='';}
+  }
+
+  function exportReact() {
+    if (!site) return;
+    const title = JSON.stringify(site.title);
+    const premise = JSON.stringify(site.prompt);
+    const source = `import React from 'react';\n\nexport default function WorldLandingPage() {\n  const title = ${title};\n  const premise = ${premise};\n  return <main style={{fontFamily:'system-ui',background:'#07111d',color:'#f4f1e8',minHeight:'100vh',padding:'clamp(24px,7vw,88px)'}}>\n    <nav style={{display:'flex',justifyContent:'space-between',color:'#c4a86a'}}><strong>WORLD ATLAS</strong><span>Explore　 Lore　 Discover</span></nav>\n    <section style={{maxWidth:900,margin:'15vh auto 10vh'}}><p style={{color:'#55d5e8',letterSpacing:'.2em'}}>A WORLD TAKING SHAPE</p><h1 style={{fontSize:'clamp(3rem,9vw,7rem)',lineHeight:.98,margin:'20px 0'}}>{title}</h1><p style={{maxWidth:620,fontSize:'1.25rem',color:'#bdc8d2'}}>{premise}</p><button style={{marginTop:24,padding:'14px 20px',borderRadius:30,background:'#d6ba78',border:0}}>Enter the world →</button></section>\n    <section style={{display:'grid',gridTemplateColumns:'repeat(auto-fit,minmax(220px,1fr))',gap:16}}>{['World overview','Places & peoples','History & discovery'].map(x=><article key={x} style={{padding:24,border:'1px solid #294256',borderRadius:18,background:'#0e1c2b'}}><h2>{x}</h2><p style={{color:'#bdc8d2'}}>A living guide to {title}, connected to its reviewed world model.</p></article>)}</section>\n  </main>;\n}\n`;
+    download(`${site.title.toLowerCase().replace(/[^a-z0-9]+/g,'-')}-landing-page.jsx`, source, 'text/plain');
+    setNotice('React page component downloaded.');
+  }
+
+  function download(name, text, type) {
+    const url = URL.createObjectURL(new Blob([text], {type}));
+    const a = document.createElement('a'); a.href=url; a.download=name; a.click(); URL.revokeObjectURL(url);
+  }
+
+  const pages = {
+    Overview: <Overview setPage={setPage} setRange={setRange} range={range} />,
+    Worlds: <Worlds setPage={setPage} records={records} />,
+    'World Model': <WorldModel records={records} query={recordQuery} setQuery={setRecordQuery} type={recordType} setType={setRecordType} formOpen={recordFormOpen} setFormOpen={setRecordFormOpen} onSubmit={saveRecord} sources={sources} onOpenEntity={id=>{setSelectedEntityId(id);setPage('Entity Details')}} />,
+    'Entity Details': <EntityDetails entity={records.find(r=>r.id===selectedEntityId)} records={records} relations={relations} sources={sources} claims={claims} audit={audit} onBack={()=>setPage('World Model')} onOpenEntity={id=>{setSelectedEntityId(id);setPage('Entity Details')}} />,
+    'Prompt Generator': <GeneratorPage prompt={generatorPrompt} setPrompt={setGeneratorPrompt} onSubmit={generateWorldDraft} />,
+    'Site Builder': <SiteBuilder prompt={prompt} setPrompt={setPrompt} site={site} generatedSections={generatedSections} generateSite={generateSite} exportReact={exportReact} />,
+    Analytics: <Analytics range={range} setRange={setRange} />,
+    'Knowledge Graph': <KnowledgeGraph records={records} relations={relations} sources={sources} editingRelation={relations.find(r=>r.id===editingRelationId)} onSubmit={addRelation} onEdit={id=>setEditingRelationId(id)} onCancelEdit={()=>setEditingRelationId('')} onReviewRelation={reviewRelation} filter={relationFilter} setFilter={setRelationFilter} query={relationQuery} setQuery={setRelationQuery} onDelete={deleteRelation} onOpenEntity={id=>{setSelectedEntityId(id);setPage('Entity Details')}} />,
+    Claims: <ClaimsPage claims={claims} claimChangeProposals={claimChangeProposals} evidence={evidence} records={records} sources={sources} reviews={reviews} decisions={decisions} focusClaimId={claimFocusId} onClearFocus={()=>setClaimFocusId('')} onOpenEvidence={id=>{setSelectedEvidenceId(id);setPage('Evidence Registry')}} onOpenDecisions={id=>{setDecisionClaimFilter(id);setPage('Decision Register')}} onCompare={id=>{setComparisonTarget({type:'Claim',id});setPage('Version Comparison')}} onSubmit={addClaim} onReview={reviewClaim} onSubmitProposal={submitClaimChangeProposal} onResolveProposal={resolveClaimChangeProposal} onRollback={rollbackClaim} />,
+    'Evidence Registry': <EvidencePage evidence={evidence} evidenceReviews={evidenceReviews} claims={claims} sources={sources} selectedEvidenceId={selectedEvidenceId} onClearSelection={()=>setSelectedEvidenceId('')} onSubmit={addEvidence} onEdit={editEvidence} onReview={reviewEvidence} onLinkStatus={setEvidenceLinkStatus} onOpenClaim={id=>{setClaimFocusId(id);setPage('Claims')}} onOpenSource={id=>{setSourceFocusId(id);setPage('Sources & Provenance')}} />,
+    'Sources & Provenance': <SourcesPage sources={sources} records={records} relations={relations} evidence={evidence} claims={claims} focusSourceId={sourceFocusId} onClearFocus={()=>setSourceFocusId('')} onOpenEvidence={id=>{setSelectedEvidenceId(id);setPage('Evidence Registry')}} onAddSource={addSource} onLink={linkEvidence} />,
+    'Provenance Timeline': <LineagePage audit={audit} records={records} relations={relations} claims={claims} evidence={evidence} sources={sources} decisions={decisions} changeRequests={changeRequests} reviews={reviews} evidenceReviews={evidenceReviews} onOpenObject={(type,id)=>{if(type==='Entity'){setSelectedEntityId(id);setPage('Entity Details')}else if(type==='Relationship'){setEditingRelationId(id);setPage('Knowledge Graph')}else if(type==='Claim'){setClaimFocusId(id);setPage('Claims')}else if(type==='Evidence'){setSelectedEvidenceId(id);setPage('Evidence Registry')}else if(type==='Source'){setSourceFocusId(id);setPage('Sources & Provenance')}else if(type==='Decision'){setPage('Decision Register')}else if(type==='Review'){setPage('Refraction Reviews')}else if(type==='ChangeRequest'){setPage('Canon Governance')}else if(type==='ClaimChangeProposal'){setPage('Claims')}}} />,
+    'Version Comparison': <VersionComparisonPage records={records} relations={relations} claims={claims} evidence={evidence} sources={sources} initial={comparisonTarget} />,
+    'Canon Governance': <CanonPage records={records} reviews={reviews} changeRequests={changeRequests} actorKey={governanceActorKey} setActorKey={setGovernanceActorKey} onChange={changeCanon} onCreateChange={createChangeRequest} onResolveChange={resolveChangeRequest} />,
+    'Refraction Reviews': <RefractionPage records={records} sources={sources} decisions={decisions} />,
+    'Decision Register': <DecisionPage records={records} claims={claims} evidence={evidence} decisions={decisions} claimFilter={decisionClaimFilter} onClearClaimFilter={()=>setDecisionClaimFilter('')} onOpenClaim={id=>{setClaimFocusId(id);setPage('Claims')}} onOpenEvidence={id=>{setSelectedEvidenceId(id);setPage('Evidence Registry')}} onCompareClaim={id=>{setComparisonTarget({type:'Claim',id});setPage('Version Comparison')}} onOpenTimeline={id=>{try{localStorage.setItem('worldforge.timeline-filters.v1',JSON.stringify({...readLocal('worldforge.timeline-filters.v1',{}),decision:id}))}catch{}setPage('Provenance Timeline')}} onSubmit={addDecision} onDecision={decideDecision} />,
+    'Hermes Exchange': <HermesPage records={records} relations={relations} sources={sources} claims={claims} claimChangeProposals={claimChangeProposals} evidence={evidence} evidenceReviews={evidenceReviews} decisions={decisions} reviews={reviews} changeRequests={changeRequests} audit={audit} onExport={exportWorkspace} onImport={importWorkspace} status={exchangeStatus} />,
+    'Server Governance': <ServerGovernancePage />,
   };
 
-  const reviewChangeProposal = (proposalId, decision, reviewer) => {
-    const proposal = workspaceData.changeProposals.find(p => p.id === proposalId);
-    if (!proposal) return;
-
-    const claim = findClaimById(proposal.claimId);
-    if (!claim) return;
-
-    const currentVersion = findCurrentClaimVersion(proposal.claimId);
-    if (!currentVersion) return;
-
-    if (proposal.baseVersion !== currentVersion.version) {
-      alert('Conflict: claim has changed since proposal was created. Create a fresh proposal.');
-      return;
-    }
-
-    const now = new Date().toISOString();
-
-    const review = {
-      id: `review_${Date.now().toString(36)}`,
-      targetType: 'ClaimChangeProposal',
-      targetId: proposalId,
-      claimId: proposal.claimId,
-      decision: decision,
-      fromState: proposal.status,
-      toState: decision,
-      reviewer: reviewer || 'local-user',
-      rationale: document.getElementById('review-rationale').value || '',
-      createdAt: now
-    };
-
-    const approvalEvent = {
-      id: `evt_${Date.now().toString(36)}`,
-      at: now,
-      actor: reviewer || 'local-user',
-      action: `Claim proposal ${decision.toLowerCase()}`,
-      targetType: 'ClaimChangeProposal',
-      targetId: proposalId,
-      claimId: claim.id,
-      claimVersion: currentVersion.version,
-      detail: decision === 'Approved' ? `Approved proposal ${proposalId}; version ${currentVersion.version + 1} created.` : 'Proposal rejected.'
-    };
-
-    setWorkspaceData({
-      ...workspaceData,
-      changeProposals: workspaceData.changeProposals.map(p =>
-        p.id === proposalId
-          ? {
-              ...p,
-              status: decision,
-              resolvedAt: now,
-              reviewId: review.id
-            }
-          : p
-      ),
-      reviews: [...workspaceData.reviews, review],
-      activityLog: [
-        ...workspaceData.activityLog,
-        {
-          id: Date.now(),
-          timestamp: now,
-          action: `Claim proposal ${decision.toLowerCase()}`,
-          target: `Claim ${proposal.claimId} v${currentVersion.version}`,
-          type: 'claim-proposal-review'
-        },
-        {
-          id: Date.now() + 1,
-          timestamp: now,
-          action: decision === 'Approved' ? 'Version created' : 'Proposal rejected',
-          target: `Claim ${proposal.claimId}`,
-          type: decision === 'Approved' ? 'version-creation' : 'claim-proposal-rejection'
-        }
-      ]
-    });
-
-    document.getElementById('review-rationale').value = '';
-  };
-
-  const getNextClaimEventId = () => {
-    const ids = workspaceData.activityLog.filter(a => a.type === 'audit-event').map(a => parseInt(a.id));
-    return Math.max(...ids, 0) + 1;
-  };
-
-  const filteredRecords = workspaceData.records.filter(record => {
-    const matchesSearch = record.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         record.description?.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesType = filterType === 'all' || record.type === filterType;
-    return matchesSearch && matchesType;
-  });
-
-  const findCurrentVersion = (recordId) => {
-    return workspaceData.records
-      .filter(r => r.id === recordId)
-      .sort((a, b) => b.version - a.version)[0];
-  };
-
-  const findSupersededVersions = (recordId) => {
-    return workspaceData.records
-      .filter(r => r.id === recordId)
-      .sort((a, b) => b.version - a.version);
-  };
-
-  const createChangeRequest = (e) => {
-    e.preventDefault();
-    const targetId = document.getElementById('cr-target').value;
-    const targetType = document.getElementById('cr-target-type').value;
-    const targetTitle = document.getElementById('cr-target-title').value;
-    const description = document.getElementById('cr-description').value;
-    const reason = document.getElementById('cr-reason').value;
-
-    if (!targetId || !targetTitle) return;
-
-    const current = findCurrentVersion(targetId);
-    if (!current) {
-      alert('Target entity not found.');
-      return;
-    }
-
-    const changeRequest = {
-      id: `cr_${Date.now().toString(36)}`,
-      targetType,
-      targetId,
-      targetTitle,
-      targetVersion: current.version,
-      proposedChanges: {
-        description: description || current.description,
-        population: description || current.description
-      },
-      reason,
-      status: 'Proposed',
-      createdBy: 'local-user',
-      createdAt: new Date().toISOString(),
-      reviewedBy: null,
-      reviewedAt: null,
-      decisionRationale: ''
-    };
-
-    setWorkspaceData({
-      ...workspaceData,
-      changeRequests: [...workspaceData.changeRequests, changeRequest],
-      activityLog: [
-        ...workspaceData.activityLog,
-        {
-          id: Date.now(),
-          timestamp: new Date().toISOString(),
-          action: 'Change request created',
-          target: `${targetTitle} v${current.version}`,
-          type: 'change-request'
-        }
-      ]
-    });
-
-    document.getElementById('cr-form').reset();
-  };
-
-  const approveChangeRequest = (crId) => {
-    const request = workspaceData.changeRequests.find(cr => cr.id === crId);
-    if (!request) return;
-
-    const current = findCurrentVersion(request.targetId);
-    if (!current) return;
-
-    const newVersion = {
-      id: current.id,
-      version: current.version + 1,
-      type: current.type,
-      title: current.title,
-      description: request.proposedChanges.description || current.description,
-      canon: request.proposedChanges.canon || current.canon,
-      status: current.status,
-      createdAt: new Date().toISOString(),
-      tags: current.tags
-    };
-
-    setWorkspaceData({
-      ...workspaceData,
-      records: [
-        ...workspaceData.records.map(r =>
-          r.id === current.id && r.version === current.version
-            ? { ...r, canon: 'Superseded' }
-            : r
-        ),
-        newVersion
-      ],
-      changeRequests: workspaceData.changeRequests.map(cr =>
-        cr.id === crId
-          ? { ...cr, status: 'Approved', reviewedBy: 'local-user', reviewedAt: new Date().toISOString(), decisionRationale: '' }
-          : cr
-      ),
-      activityLog: [
-        ...workspaceData.activityLog,
-        {
-          id: Date.now(),
-          timestamp: new Date().toISOString(),
-          action: 'Change request approved',
-          target: `${current.title} v${current.version} -> v${newVersion.version}`,
-          type: 'change-request-approval'
-        },
-        {
-          id: Date.now() + 1,
-          timestamp: new Date().toISOString(),
-          action: 'Version created',
-          target: `${current.title} v${newVersion.version}`,
-          type: 'version-creation'
-        }
-      ]
-    });
-  };
-
-  const rejectChangeRequest = (crId) => {
-    const request = workspaceData.changeRequests.find(cr => cr.id === crId);
-    if (!request) return;
-
-    setWorkspaceData({
-      ...workspaceData,
-      changeRequests: workspaceData.changeRequests.map(cr =>
-        cr.id === crId
-          ? { ...cr, status: 'Rejected', reviewedBy: 'local-user', reviewedAt: new Date().toISOString(), decisionRationale: 'Rejected by reviewer' }
-          : cr
-      ),
-      activityLog: [
-        ...workspaceData.activityLog,
-        {
-          id: Date.now(),
-          timestamp: new Date().toISOString(),
-          action: 'Change request rejected',
-          target: `${request.targetTitle} v${request.targetVersion}`,
-          type: 'change-request-rejection'
-        }
-      ]
-    });
-  };
-
-  const addAuditEvent = (eventType, entityId, fromVersion, toVersion) => {
-    const id = getNextClaimEventId();
-    setWorkspaceData({
-      ...workspaceData,
-      activityLog: [
-        ...workspaceData.activityLog,
-        {
-          id,
-          timestamp: new Date().toISOString(),
-          action: eventType,
-          target: entityId,
-          type: 'audit-event'
-        }
-      ]
-    });
-  };
-
-
-  const checkDuplicateRelationship = (from, to) => {
-    return workspaceData.relationships.some(rel =>
-      (rel.from === from && rel.to === to) || (rel.from === to && rel.to === from)
-    );
-  };
-
-  const findOrphanRelationships = (recordId) => {
-    return workspaceData.relationships.filter(rel =>
-      rel.from === recordId || rel.to === recordId
-    );
-  };
-
-  const addRelationship = (e) => {
-    e.preventDefault();
-    const from = document.getElementById('rel-from').value;
-    const to = document.getElementById('rel-to').value;
-    const type = document.getElementById('rel-type').value;
-
-    if (!from || !to || from === to) return;
-
-    if (checkDuplicateRelationship(from, to)) {
-      alert('Duplicate relationship: this pair already exists.');
-      return;
-    }
-
-    const fromRecord = workspaceData.records.find(r => r.id === from);
-    const toRecord = workspaceData.records.find(r => r.id === to);
-    if (!fromRecord || !toRecord) {
-      alert('Orphan detection: both records must exist.');
-      return;
-    }
-
-    const relationship = {
-      id: Date.now().toString(36),
-      from,
-      to,
-      type
-    };
-
-    setWorkspaceData({
-      ...workspaceData,
-      relationships: [...workspaceData.relationships, relationship],
-      activityLog: [
-        ...workspaceData.activityLog,
-        {
-          id: Date.now(),
-          timestamp: new Date().toISOString(),
-          action: 'Relationship created',
-          target: `${fromRecord.title} ${type} ${toRecord.title}`,
-          type: 'relationship'
-        }
-      ]
-    });
-
-    document.getElementById('rel-form').reset();
-  };
-
-  const addSource = (e) => {
-    e.preventDefault();
-    const title = document.getElementById('source-title').value;
-    const type = document.getElementById('source-type').value;
-
-    if (!title) return;
-
-    const source = {
-      id: Date.now().toString(36),
-      title,
-      type,
-      createdAt: new Date().toISOString()
-    };
-
-    setWorkspaceData({
-      ...workspaceData,
-      sources: [...workspaceData.sources, source],
-      activityLog: [
-        ...workspaceData.activityLog,
-        {
-          id: Date.now(),
-          timestamp: new Date().toISOString(),
-          action: 'Source registered',
-          target: title,
-          type: 'source'
-        }
-      ]
-    });
-
-    document.getElementById('source-form').reset();
-  };
-
-  const addDecision = (e) => {
-    e.preventDefault();
-    const title = document.getElementById('decision-title').value;
-    const rationale = document.getElementById('decision-rationale').value;
-    const reviewers = document.getElementById('decision-reviewers').value;
-
-    if (!title) return;
-
-    const decision = {
-      id: Date.now().toString(36),
-      title,
-      rationale,
-      status: 'Proposed',
-      createdAt: new Date().toISOString()
-    };
-
-    setWorkspaceData({
-      ...workspaceData,
-      decisions: [...workspaceData.decisions, decision],
-      activityLog: [
-        ...workspaceData.activityLog,
-        {
-          id: Date.now(),
-          timestamp: new Date().toISOString(),
-          action: 'Decision proposed',
-          target: title,
-          type: 'decision'
-        }
-      ]
-    });
-
-    document.getElementById('decision-form').reset();
-  };
-
-  const generateComponent = (prompt) => {
-    const title = prompt.slice(0, 50) || 'My World';
-    return `import React from 'react';
-
-export default function ${title.replace(/[^a-zA-Z0-9]/g, '')}() {
-  return (
-    <div style={{
-      fontFamily: 'system-ui, sans-serif',
-      maxWidth: '800px',
-      margin: '0 auto',
-      padding: '2rem',
-      background: '#0f172a',
-      color: '#f1f5f9'
-    }}>
-      <header style={{textAlign: 'center', padding: '3rem 0'} }>
-        <h1 style={{color: '#59d1ff'}}>${title}</h1>
-      </header>
-      <main style={{padding: '2rem'}}>
-        <p>Generated world content goes here.</p>
-      </main>
-    </div>
-  );
-}`;
-  };
-
-  const getGeneratedComponent = () => {
-    return generateComponent(promptInput);
-  };
-
-  const copyComponent = () => {
-    const code = getGeneratedComponent();
-    navigator.clipboard.writeText(code);
-    setCopyStatus('Copied to clipboard!');
-    setTimeout(() => setCopyStatus(''), 2000);
-  };
-
-  const downloadComponent = () => {
-    const code = getGeneratedComponent();
-    const blob = new Blob([code], { type: 'text/javascript' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${workspaceData.records.length + 1}-${workspaceData.records.find(r => r.title)?.toLowerCase().replace(/\s+/g, '-')}`.slice(0, 50) || 'generated-component';
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
-  return (
-    <div className="App">
-      <nav className="navbar">
-        <div className="nav-logo">
-          <div className="logo-icon">✦</div>
-          <span>AH-AIOS WorldForge</span>
-        </div>
-        <ul className={`nav-links ${menuOpen ? 'active' : ''}`}>
-          <li><a href="#dashboard" onClick={() => setActiveView('dashboard')}>Dashboard</a></li>
-          <li><a href="#worlds" onClick={() => setActiveView('worlds')}>Worlds</a></li>
-          <li><a href="#relationships" onClick={() => setActiveView('relationships')}>Relationships</a></li>
-          <li><a href="#sources" onClick={() => setActiveView('sources')}>Sources</a></li>
-          <li><a href="#governance" onClick={() => setActiveView('governance')}>Governance</a></li>
-          <li><a href="#import-export" onClick={() => setActiveView('import-export')}>Import/Export</a></li>
-          <li><a href="#prompt" onClick={() => setActiveView('prompt')}>Prompt Builder</a></li>
-          <li><a href="#after-humanity" onClick={() => setActiveView('sample')}>After Humanity Sample</a></li>
-        </ul>
-        <button
-          className="nav-cta"
-          style={{ backgroundColor: 'transparent', color: 'var(--text)', padding: '8px 16px', border: '1px solid var(--border)', cursor: 'pointer', gap: '8px', display: 'flex', alignItems: 'center' }}
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          <span style={{ fontSize: '1.2rem' }}>&#9776;</span>
-        </button>
-      </nav>
-
-      <section id="after-humanity" className="sample-world-section">
-        <div className="sample-portal">
-          <header className="sample-portal-header">
-            <a className="sample-portal-brand" href="#after-humanity" aria-label="After Humanity home">
-              <span className="sample-portal-mark" aria-hidden="true">✧</span>
-              <span><strong>AFTER HUMANITY</strong><small>WORLD BUILDING · LORE · CANON</small></span>
-            </a>
-            <nav className="sample-portal-nav" aria-label="After Humanity sample navigation">
-              <a className="is-current" href="#after-humanity">Home</a>
-              <a href="#after-humanity-records">Worlds</a>
-              <a href="#sample-characters">Characters</a>
-              <a href="#sample-factions">Factions</a>
-              <a href="#sample-lore">Lore</a>
-              <a href="#sample-gallery">Gallery</a>
-              <a href="#prompt">Tools</a>
-            </nav>
-            <a className="sample-portal-explore" href="#after-humanity-records">Explore <span aria-hidden="true">↗</span></a>
-          </header>
-
-          <div className="sample-portal-layout">
-            <aside className="sample-portal-sidebar" aria-label="Explore WorldForge">
-              <p className="sample-portal-label">EXPLORE</p>
-              <a href="#worlds"><span aria-hidden="true">◎</span><span><strong>World Atlas</strong><small>Places · Routes · Timelines</small></span></a>
-              <a href="#claims"><span aria-hidden="true">◉</span><span><strong>Identity Archive</strong><small>Characters · Factions · Claims</small></span></a>
-              <a href="#relationships"><span aria-hidden="true">⟷</span><span><strong>Relationship Explorer</strong><small>Alliances · Conflicts · Lineages</small></span></a>
-              <a href="#sources"><span aria-hidden="true">⌕</span><span><strong>Source &amp; Evidence Registry</strong><small>Sources · Claims · Verification</small></span></a>
-              <a href="#governance"><span aria-hidden="true">◇</span><span><strong>Canon Governance</strong><small>Proposals · Reviews · Decisions</small></span></a>
-              <a href="#prompt"><span aria-hidden="true">▧</span><span><strong>Visual Artifact Studio</strong><small>Prompts · Previews · Components</small></span></a>
-            </aside>
-
-            <main className="sample-portal-main">
-              <div className="sample-portal-hero">
-                <div className="sample-portal-hero-art" aria-hidden="true">
-                  <svg viewBox="0 0 1200 520" preserveAspectRatio="xMidYMid slice">
-                    <defs>
-                      <linearGradient id="ahSky" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0" stopColor="#15223e" />
-                        <stop offset=".45" stopColor="#59467f" />
-                        <stop offset="1" stopColor="#f1a66f" />
-                      </linearGradient>
-                      <linearGradient id="ahWater" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0" stopColor="#65d4d2" stopOpacity=".75" />
-                        <stop offset="1" stopColor="#142d48" />
-                      </linearGradient>
-                      <radialGradient id="ahPlanet">
-                        <stop offset="0" stopColor="#f7dfc7" />
-                        <stop offset=".72" stopColor="#cc9be5" />
-                        <stop offset="1" stopColor="#7456a5" />
-                      </radialGradient>
-                    </defs>
-                    <rect width="1200" height="520" fill="url(#ahSky)" />
-                    <circle cx="910" cy="110" r="112" fill="url(#ahPlanet)" opacity=".92" />
-                    <circle cx="910" cy="110" r="140" fill="none" stroke="#efd9f7" strokeOpacity=".28" strokeWidth="2" />
-                    <path d="M0 316 Q170 205 325 300 T640 286 T920 256 T1200 284 V520 H0Z" fill="#202c4a" opacity=".86" />
-                    <path d="M0 370 Q190 294 400 355 T800 336 T1200 350 V520 H0Z" fill="#182841" />
-                    <path d="M0 420 Q240 368 440 410 T800 395 T1200 405 V520 H0Z" fill="url(#ahWater)" opacity=".86" />
-                    <path d="M0 430 Q220 400 440 432 T850 420 T1200 432" fill="none" stroke="#d9dcbb" strokeOpacity=".5" strokeWidth="4" />
-                    <g fill="#111c31">
-                      <path d="M425 372V230h42v142zm52 0V188h26v184zm38 0V260h48v112zm60 0V145h34v227zm49 0V214h50v158zm62 0V172h30v200zm42 0V235h60v137zm70 0V195h40v177zm56 0V248h62v124zm71 0V210h36v162z" />
-                      <path d="M365 315h633v16H365zM400 275h510v12H400z" fill="none" stroke="#111c31" strokeWidth="12" />
-                    </g>
-                    <g fill="#f4d3a0" opacity=".8">
-                      <circle cx="477" cy="216" r="3"/><circle cx="620" cy="173" r="3"/><circle cx="708" cy="199" r="3"/>
-                      <circle cx="833" cy="225" r="3"/><circle cx="950" cy="218" r="3"/><circle cx="559" cy="278" r="3"/>
-                    </g>
-                    <path d="M0 488 Q220 451 414 470 T790 466 T1200 466" fill="none" stroke="#d8c191" strokeOpacity=".45" strokeWidth="2" />
-                  </svg>
-                </div>
-                <div className="sample-portal-hero-copy">
-                  <p className="sample-portal-kicker">A WORLD FORGED AFTER THE BLACKOUT</p>
-                  <h1>AFTER HUMANITY</h1>
-                  <p className="sample-portal-subtitle">A universe to explore.</p>
-                  <p>Follow the worlds, people, and stories of a civilization rebuilding from fragments. Every place has a history. Every claim has evidence. Canon is made together.</p>
-                  <a href="#after-humanity-records" className="sample-portal-hero-link">EXPLORE THE UNIVERSE <span aria-hidden="true">→</span></a>
-                </div>
-              </div>
-
-              <div className="sample-portal-stats" aria-label="Sample universe facts">
-                <div><strong>83</strong><span>years since the Blackout</span></div>
-                <div><strong>06</strong><span>charted coastal routes</span></div>
-                <div><strong>00</strong><span>global networks online</span></div>
-              </div>
-
-              <div className="sample-portal-content">
-                <div id="after-humanity-records" className="sample-category-grid">
-                  <a className="sample-category-card sample-card-worlds" href="#worlds">
-                    <span className="sample-category-icon" aria-hidden="true">◉</span>
-                    <h2>Worlds</h2><p>Places, settlements, timelines, and the routes that connect them.</p><span className="sample-card-arrow">→</span>
-                  </a>
-                  <a id="sample-characters" className="sample-category-card sample-card-characters" href="#claims">
-                    <span className="sample-category-icon" aria-hidden="true">♙</span>
-                    <h2>Characters</h2><p>People, motives, and the stories that tie them together.</p><span className="sample-card-arrow">→</span>
-                  </a>
-                  <a id="sample-factions" className="sample-category-card sample-card-factions" href="#relationships">
-                    <span className="sample-category-icon" aria-hidden="true">✥</span>
-                    <h2>Factions</h2><p>Communities, alliances, traditions, and disagreements.</p><span className="sample-card-arrow">→</span>
-                  </a>
-                  <a id="sample-lore" className="sample-category-card sample-card-lore" href="#claims">
-                    <span className="sample-category-icon" aria-hidden="true">⌘</span>
-                    <h2>Lore</h2><p>History, events, theories, and discoveries under review.</p><span className="sample-card-arrow">→</span>
-                  </a>
-                  <a id="sample-gallery" className="sample-category-card sample-card-gallery" href="#prompt">
-                    <span className="sample-category-icon" aria-hidden="true">▧</span>
-                    <h2>Visual Archive</h2><p>Concepts, deterministic previews, and approved artifacts.</p><span className="sample-card-arrow">→</span>
-                  </a>
-                </div>
-
-                <aside className="sample-updates">
-                  <div className="sample-updates-heading"><h2>Latest updates</h2><a href="#reviews">View all →</a></div>
-                  <a href="#after-humanity-records" className="sample-update"><span className="sample-update-orb">✦</span><span><small>NEW LORE</small><strong>The northern relay answers</strong><time>Today · Proposed</time></span></a>
-                  <a href="#after-humanity-records" className="sample-update"><span className="sample-update-orb">⌖</span><span><small>NEW WORLD</small><strong>Meridian Reach route chart</strong><time>Yesterday · Reviewed</time></span></a>
-                  <a href="#sample-characters" className="sample-update"><span className="sample-update-orb">♙</span><span><small>NEW CHARACTER</small><strong>Mara Venn's field notes</strong><time>3 days ago · Proposed</time></span></a>
-                  <a href="#prompt" className="sample-update"><span className="sample-update-orb">▧</span><span><small>NEW VISUAL</small><strong>Storm season over the Glass Belt</strong><time>Sample preview · Deterministic</time></span></a>
-                  <blockquote>“Not all that is lost is gone. Some things simply wait for a new world.”<cite>— AFTER HUMANITY</cite></blockquote>
-                </aside>
-              </div>
-
-              <div className="sample-portal-footer">
-                <p>CONNECTED LORE</p>
-                <span><strong>Mara Venn</strong> found a signal → <strong>The northern relay</strong> may be active → <strong>The Tidekeepers</strong> debate whether to publish the route.</span>
-                <a href="#relationships">Open Relationship Explorer →</a>
-              </div>
-            </main>
-          </div>
-        </div>
-      </section>
-
-      <section id="after-humanity-video" className="after-humanity-video-section" aria-labelledby="after-humanity-video-title">
-        <div className="container">
-          <div className="after-humanity-video-heading">
-            <span className="eyebrow">AFTER HUMANITY · FEATURED VIDEO</span>
-            <h2 id="after-humanity-video-title">AH The Refraction of the Four Nines</h2>
-            <p>Watch the universe unfold on the After Humanity YouTube channel.</p>
-          </div>
-          <div className="after-humanity-video-frame">
-            <iframe
-              src="https://www.youtube-nocookie.com/embed/TGheUWZO43s"
-              title="AH The Refraction of the Four Nines"
-              loading="lazy"
-              referrerPolicy="strict-origin-when-cross-origin"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            />
-          </div>
-          <a className="after-humanity-video-link" href="https://www.youtube.com/watch?v=TGheUWZO43s" target="_blank" rel="noreferrer">Watch on YouTube ↗</a>
-        </div>
-      </section>
-
-      <section id="home" className="hero">
-        <div className="container">
-          <aside className="data-notice" aria-label="Local data notice">
-            <div>
-              <strong>Your world data is stored in this browser.</strong>
-              <p>It is not synced or backed up online. Export a workspace backup regularly; clearing this browser’s site data can erase it.</p>
-            </div>
-            <a href="#import-export" className="data-notice-link">Back up workspace</a>
-          </aside>
-          <h1>WorldForge</h1>
-          <p className="subtitle">Worldbuilding for narrative and game development.</p>
-          <p className="lede">
-            Design worlds, people, and stories. Track decisions. Explore relationships.
-            All local, all yours.
-          </p>
-          <div className="hero-buttons">
-            <a href="#dashboard" className="btn btn-primary">Open Dashboard &rarr;</a>
-            <a href="#worlds" className="btn btn-secondary">Browse Worlds</a>
-            <a href="#after-humanity" className="btn btn-secondary">Explore Sample World</a>
-          </div>
-        </div>
-      </section>
-
-      <section id="dashboard" className="dashboard-section">
-        <div className="container">
-          <div className="dashboard-header">
-            <h2>Dashboard Overview</h2>
-            <p>Synthetic examples only &mdash; no external data or AI models are connected.</p>
-          </div>
-
-          <div className="dashboard-grid">
-            <div className="stat-card">
-              <div className="stat-value">{workspaceData.records.length}</div>
-              <div className="stat-label">Worlds Created</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-value">{workspaceData.decisions.length}</div>
-              <div className="stat-label">Decisions Recorded</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-value">{workspaceData.sources.length}</div>
-              <div className="stat-label">Sources Registered</div>
-            </div>
-            <div className="stat-card">
-              <div className="stat-value">{workspaceData.relationships.length}</div>
-              <div className="stat-label">Relationships</div>
-            </div>
-          </div>
-
-          <div className="recent-works">
-            <h3>Recent Works</h3>
-            <div className="recent-list">
-              {workspaceData.records.slice(-5).reverse().map(record => (
-                <div key={record.id} className="recent-item">
-                  <span className={`canon-badge ${record.canon.toLowerCase()}`}>{record.canon}</span>
-                  <span className="record-title">{record.title}</span>
-                  <span className="record-type">{record.type}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="activity-feed">
-            <h3>Activity Feed</h3>
-            {workspaceData.activityLog.slice(-5).reverse().map((log, i) => (
-              <div key={i} className="activity-item">
-                <span className="activity-time">{new Date(log.timestamp).toLocaleString()}</span>
-                <span className="activity-action">{log.action}</span>
-                <span className="activity-target">{log.target}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="worlds" className="dashboard-section">
-        <div className="container">
-          <h2>World Model &amp; Records</h2>
-          <p>Create and manage world records. All data stored locally in your browser.</p>
-
-          <div className="search-filter">
-            <input
-              type="text"
-              placeholder="Search records..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="search-input"
-            />
-            <select value={filterType} onChange={(e) => setFilterType(e.target.value)} className="search-select">
-              <option value="all">All Types</option>
-              <option value="World">World</option>
-              <option value="Nation">Nation</option>
-              <option value="Character">Character</option>
-              <option value="Faction">Faction</option>
-              <option value="Location">Location</option>
-              <option value="Historical Event">Historical Event</option>
-            </select>
-          </div>
-
-          <div className="records-list">
-            {filteredRecords.map(record => (
-              <div key={record.id} className="record-card">
-                <div className="record-header">
-                  <span className={`canon-badge ${record.canon.toLowerCase()}`}>{record.canon}</span>
-                  <span className={`status-badge ${record.status.toLowerCase()}`}>{record.status}</span>
-                  <span className="record-type">{record.type}</span>
-                </div>
-                <div className="record-content">
-                  <h4>{record.title}</h4>
-                  <p>{record.description}</p>
-                </div>
-                <button className="btn-sm" onClick={() => setExpandedRecords(!expandedRecords[record.id])}>
-                  {expandedRecords[record.id] ? 'Hide' : 'Edit'}
-                </button>
-                {expandedRecords[record.id] && (
-                  <div className="record-details">
-                    <p><strong>Created:</strong> {new Date(record.createdAt).toLocaleString()}</p>
-                    <p><strong>Tags:</strong> {record.tags?.join(', ') || 'none'}</p>
-                    <textarea
-                      className="form-input"
-                      value={record.description}
-                      onChange={(e) => {
-                        const newRecords = workspaceData.records.map(r =>
-                          r.id === record.id ? {...r, description: e.target.value} : r
-                        );
-                        setWorkspaceData({...workspaceData, records: newRecords});
-                      }}
-                      rows="3"
-                    />
-                  </div>
-                )}
-              </div>
-            ))}
-            {filteredRecords.length === 0 && (
-              <div className="empty-state">
-                <p>No records found. Create your first world record!</p>
-              </div>
-            )}
-          </div>
-
-          <div className="record-form">
-            <h3>Create New Record</h3>
-            <form id="record-form">
-              <div className="form-group">
-                <label className="form-label">Record Type</label>
-                <select className="form-input" id="record-type">
-                  <option>World</option>
-                  <option>Nation</option>
-                  <option>Character</option>
-                  <option>Faction</option>
-                  <option>Location</option>
-                  <option>Historical Event</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <label className="form-label">Title</label>
-                <input
-                  type="text"
-                  className="form-input"
-                  placeholder="Record title"
-                  id="record-title"
-                />
-              </div>
-              <div className="form-group">
-                <label className="form-label">Description</label>
-                <textarea
-                  className="form-input"
-                  id="record-description"
-                  rows="4"
-                  placeholder="Describe this world record..."
-                ></textarea>
-              </div>
-              <div className="form-group">
-                <label className="form-label">Canon Label</label>
-                <select className="form-input" id="canon-label">
-                  <option value="Proposed">Proposed</option>
-                  <option value="Approved">Approved</option>
-                  <option value="Rejected">Rejected</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <label className="form-label">Status</label>
-                <select className="form-input" id="record-status">
-                  <option value="Draft">Draft</option>
-                  <option value="Proposed">Proposed</option>
-                  <option value="Validated">Validated</option>
-                  <option value="Approved">Approved</option>
-                </select>
-              </div>
-              <button type="button" className="btn btn-primary" onClick={addRecord}>
-                Add Record
-              </button>
-            </form>
-          </div>
-        </div>
-      </section>
-
-      <section id="relationships" className="dashboard-section">
-        <div className="container">
-          <h2>Typed Relationships</h2>
-          <p>Create and browse relationships between world records.</p>
-
-          <div className="relationship-form">
-            <h4>Create Relationship</h4>
-            <form id="rel-form">
-              <div className="form-group">
-                <label>From</label>
-                <select className="form-input" id="rel-from">
-                  {workspaceData.records.map(r => <option key={r.id} value={r.id}>{r.title}</option>)}
-                </select>
-              </div>
-              <div className="form-group">
-                <label>To</label>
-                <select className="form-input" id="rel-to">
-                  {workspaceData.records.map(r => <option key={r.id} value={r.id}>{r.title}</option>)}
-                </select>
-              </div>
-              <div className="form-group">
-                <label>Type</label>
-                <select className="form-input" id="rel-type">
-                  <option>supports</option>
-                  <option>contradicts</option>
-                  <option>belongs_to</option>
-                  <option>authored_by</option>
-                  <option>approved_by</option>
-                  <option>location_of</option>
-                </select>
-              </div>
-              <button type="button" className="btn btn-primary" onClick={addRelationship}>
-                Add Relationship
-              </button>
-            </form>
-          </div>
-
-          <div className="relationship-list">
-            <h4>Relationships ({workspaceData.relationships.length})</h4>
-            {workspaceData.relationships.map((rel, i) => (
-              <div key={i} className="relationship-item">
-                <span>{rel.from ? workspaceData.records.find(r => r.id === rel.from)?.title : 'Unknown'}</span>
-                <span className="relationship-type">{rel.type}</span>
-                <span>{rel.to ? workspaceData.records.find(r => r.id === rel.to)?.title : 'Unknown'}</span>
-              </div>
-            ))}
-            {workspaceData.relationships.length === 0 && (
-              <p className="empty-state">No relationships yet. Create one above.</p>
-            )}
-          </div>
-
-          <div className="relationship-explorer">
-            <h4>Relationship Explorer</h4>
-            <p className="section-hint">Browse and analyze relationships between records.</p>
-            <div className="relationship-filters">
-              <input
-                type="text"
-                placeholder="Filter relationships..."
-                className="search-input"
-                style={{ flex: '1', minWidth: '150px' }}
-              />
-              <select className="search-select" style={{ minWidth: '140px' }}>
-                <option value="all">All Types</option>
-                <option value="supports">supports</option>
-                <option value="contradicts">contradicts</option>
-                <option value="belongs_to">belongs_to</option>
-                <option value="authored_by">authored_by</option>
-                <option value="approved_by">approved_by</option>
-                <option value="location_of">location_of</option>
-              </select>
-            </div>
-            <div className="relationship-grid">
-              {workspaceData.relationships.map((rel, i) => (
-                <div key={i} className="relationship-card">
-                  <div className="relationship-card-header">
-                    <span className="relationship-card-from">{findRecordTitle(rel.from)}</span>
-                    <span className="relationship-card-arrow">&rarr;</span>
-                    <span className="relationship-card-to">{findRecordTitle(rel.to)}</span>
-                    <span className="relationship-card-type">{rel.type}</span>
-                  </div>
-                  <div className="relationship-card-stats">
-                    <span className="connection-count">{workspaceData.relationships.filter(r => r.from === rel.to || r.to === rel.to).length} incoming, {workspaceData.relationships.filter(r => r.from === rel.from || r.to === rel.from).length} outgoing</span>
-                  </div>
-                </div>
-              ))}
-              {workspaceData.relationships.length === 0 && (
-                <p className="empty-state">No relationships yet. Create one above.</p>
-              )}
-            </div>
-          </div>
-
-          <div className="entity-connections">
-            <h4>Entity Connection Views</h4>
-            <p className="section-hint">Explore how records connect to each other.</p>
-            <div className="entity-connection-list">
-              {workspaceData.records.map(record => {
-                const connections = findOrphanRelationships(record.id);
-                if (connections.length === 0) return null;
-                return (
-                  <div key={record.id} className="entity-connection-group">
-                    <h5>{record.title} ({connections.length} connections)</h5>
-                    <div className="entity-connection-list">
-                      {connections.map((conn, i) => (
-                        <span key={i} className="entity-connection-tag">
-                          {conn.from === record.id ? 'connected from ' : 'connected to '}
-                          {findRecordTitle(conn.from === record.id ? conn.to : conn.from)}
-                          <small>{conn.type}</small>
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                );
-              })}
-              {workspaceData.records.every(r => findOrphanRelationships(r.id).length === 0) && (
-                <p className="empty-state">No connections yet. Create relationships to see them here.</p>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="sources" className="dashboard-section">
-        <div className="container">
-          <h2>Source Registry</h2>
-          <p>Register sources and link them to records for evidence tracking.</p>
-
-          <div className="source-form">
-            <h4>Register New Source</h4>
-            <form id="source-form">
-              <div className="form-group">
-                <label className="form-label">Source Title</label>
-                <input type="text" className="form-input" id="source-title" placeholder="e.g., The Lord of the Rings" />
-              </div>
-              <div className="form-group">
-                <label className="form-label">Source Type</label>
-                <select className="form-input" id="source-type">
-                  <option>Book</option>
-                  <option>Film</option>
-                  <option>Game</option>
-                  <option>Article</option>
-                  <option>Other</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <label className="form-label">Description</label>
-                <textarea className="form-input" id="source-description" rows="3" placeholder="Describe the source..."></textarea>
-              </div>
-              <button type="button" className="btn btn-primary" onClick={addSource}>
-                Register Source
-              </button>
-            </form>
-          </div>
-
-          <div className="sources-list">
-            <h4>Registered Sources ({workspaceData.sources.length})</h4>
-            {workspaceData.sources.map(source => (
-              <div key={source.id} className="source-item">
-                <h4>{source.title}</h4>
-                <span className="source-type">{source.type}</span>
-              </div>
-            ))}
-            {workspaceData.sources.length === 0 && (
-              <p className="empty-state">No sources registered yet.</p>
-            )}
-          </div>
-        </div>
-      </section>
-
-      <section id="governance" className="dashboard-section">
-        <div className="container">
-          <h2>Governance &amp; Decisions</h2>
-          <p>Track decisions and canon statuses. All data stays in your browser.</p>
-
-          <div className="decision-form">
-            <h4>Propose a Decision</h4>
-            <form id="decision-form">
-              <div className="form-group">
-                <label className="form-label">Decision Title</label>
-                <input type="text" className="form-input" id="decision-title" placeholder="e.g., Adopt Unified Nexus Protocol" />
-              </div>
-              <div className="form-group">
-                <label className="form-label">Rationale</label>
-                <textarea className="form-input" id="decision-rationale" rows="3" placeholder="Why is this decision needed?"></textarea>
-              </div>
-              <div className="form-group">
-                <label className="form-label">Reviewer(s)</label>
-                <input type="text" className="form-input" id="decision-reviewers" placeholder="e.g., Governance Lead" />
-              </div>
-              <button type="button" className="btn btn-primary" onClick={addDecision}>
-                Propose Decision
-              </button>
-            </form>
-          </div>
-
-          <div className="decisions-list">
-            <h4>Decisions ({workspaceData.decisions.length})</h4>
-            {workspaceData.decisions.map(decision => (
-              <div key={decision.id} className="decision-item">
-                <span className="canon-badge proposed">{decision.status}</span>
-                <h5>{decision.title}</h5>
-                <p>{decision.rationale}</p>
-                <span className="decision-date">{new Date(decision.createdAt).toLocaleDateString()}</span>
-              </div>
-            ))}
-            {workspaceData.decisions.length === 0 && (
-              <p className="empty-state">No decisions proposed yet.</p>
-            )}
-          </div>
-
-          <div className="change-request-panel">
-            <h4>Change Requests ({workspaceData.changeRequests.length})</h4>
-            <div className="change-request-list">
-              {workspaceData.changeRequests.map(cr => {
-                const current = findCurrentVersion(cr.targetId);
-                const versions = workspaceData.records.filter(r => r.id === cr.targetId);
-                return (
-                  <div key={cr.id} className="change-request-item">
-                    <div className="change-request-header">
-                      <strong>CR: {cr.id}</strong>
-                      <span className={`canon-badge ${cr.status.toLowerCase()}`}>{cr.status}</span>
-                    </div>
-                    <p className="change-request-target">
-                      Target: {cr.targetTitle} (v{cr.targetVersion} {cr.targetType})
-                    </p>
-                    <p className="change-request-reason">Reason: {cr.reason}</p>
-                    <p className="change-request-proposed">
-                      Proposed: {cr.proposedChanges.description || current?.description || 'No changes specified'}
-                    </p>
-                    <div className="change-request-actions">
-                      {cr.status === 'Proposed' && (
-                        <div className="change-request-actions-row">
-                          <button
-                            className="btn btn-sm btn-primary"
-                            onClick={() => approveChangeRequest(cr.id)}
-                          >
-                            Approve
-                          </button>
-                          <button
-                            className="btn btn-sm btn-secondary"
-                            onClick={() => rejectChangeRequest(cr.id)}
-                          >
-                            Reject
-                          </button>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-              {workspaceData.changeRequests.length === 0 && (
-                <p className="empty-state">No change requests yet.</p>
-              )}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="import-export" className="dashboard-section">
-        <div className="container">
-          <h2>JSON Import / Export</h2>
-          <p>Back up your workspace or share it with others. Import replaces current data.</p>
-
-          <div className="import-export-grid">
-            <div className="import-export-card">
-              <h4>Export Workspace</h4>
-              <button className="btn btn-primary" onClick={async () => {
-                const data = JSON.stringify({
-                  version: 3,
-                  records: workspaceData.records,
-                  relationships: workspaceData.relationships,
-                  sources: workspaceData.sources,
-                  decisions: workspaceData.decisions,
-                  changeRequests: workspaceData.changeRequests,
-                  reviews: workspaceData.reviews,
-                  activityLog: workspaceData.activityLog,
-                  exports: workspaceData.exports
-                }, null, 2);
-                const blob = new Blob([data], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `worldforge-export-${new Date().toISOString().slice(0,10)}.json`;
-                a.click();
-                URL.revokeObjectURL(url);
-              }}>
-                Download Backup
-              </button>
-            </div>
-            <div className="import-export-card">
-              <h4>Import Workspace</h4>
-              <input
-                type="file"
-                id="import-file"
-                accept=".json"
-                style={{ marginTop: "8px" }}
-                onChange={async (e) => {
-                  const file = e.target.files[0];
-                  if (!file) return;
-                  const text = await file.text();
-                  try {
-                    const imported = JSON.parse(text);
-                    if (imported.records && Array.isArray(imported.records)) {
-                      setWorkspaceData({
-                        records: imported.records,
-                        relationships: imported.relationships || [],
-                        sources: imported.sources || [],
-                        decisions: imported.decisions || [],
-                        changeRequests: imported.changeRequests || [],
-                        reviews: imported.reviews || [],
-                        activityLog: imported.activityLog || [],
-                        exports: imported.exports || []
-                      });
-                    } else {
-                      alert("Unexpected file format.");
-                    }
-                  } catch {
-                    alert("Invalid JSON file.");
-                  }
-                }}
-              />
-              <p className="form-hint">Select a JSON file to import. This replaces current workspace data.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="claims" className="dashboard-section">
-        <div className="container">
-          <h2>Claims Registry</h2>
-          <p>Track claims as first-class objects with version history, reviews, and audit events.</p>
-
-          <div className="search-filter">
-            <input
-              type="text"
-              placeholder="Search claims..."
-              className="search-input"
-              style={{ flex: '1', minWidth: '200px' }}
-            />
-            <select className="search-select" style={{ minWidth: '140px' }}>
-              <option value="all">All Types</option>
-              <option value="Proposed">Proposed</option>
-              <option value="Approved">Approved</option>
-              <option value="Rejected">Rejected</option>
-              <option value="Draft">Draft</option>
-              <option value="Superseded">Superseded</option>
-            </select>
-          </div>
-
-          <div className="claims-list">
-            {workspaceData.claims.map(claim => {
-              const currentVersion = findCurrentClaimVersion(claim.id);
-              const versions = claim.versions || [];
-              const latestVersion = versions.length > 0 ? versions[versions.length - 1] : null;
-              return (
-                <div key={claim.id} className="claim-card">
-                  <div className="claim-card-header">
-                    <div className="claim-card-main">
-                      <span className={`canon-badge ${claim.canonState?.toLowerCase() || 'proposed'}`}>{claim.canonState?.toUpperCase()}</span>
-                      <h4>{claim.statement}</h4>
-                      <span className="claim-entity">Entity: {claim.entityId}</span>
-                    </div>
-                    <div className="claim-card-meta">
-                      <span className="claim-version">v{claim.version}</span>
-                      <span className="claim-created">{new Date(claim.createdAt).toLocaleDateString()}</span>
-                      <span className="claim-status">{claim.status}</span>
-                    </div>
-                  </div>
-                  <div className="claim-card-body">
-                    <details>
-                      <summary>Version History ({versions.length})</summary>
-                      <div className="claim-versions">
-                        {versions.map(v => (
-                          <div key={v.version} className="claim-version-item">
-                            <span className="claim-version-number">v{v.version}</span>
-                            <span className={`canon-badge ${v.status?.toLowerCase() || 'proposed'}`}>{v.status || 'Proposed'}</span>
-                            <span className="claim-version-date">{new Date(v.createdAt).toLocaleDateString()}</span>
-                            <span className="claim-version-type">{v.changeType || 'Created'}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </details>
-                    <details>
-                      <summary>Proposal & Review History</summary>
-                      <div className="claim-proposals">
-                        {workspaceData.changeProposals.filter(p => p.claimId === claim.id).map(p => (
-                          <div key={p.id} className="claim-proposal-item">
-                            <strong>{p.status}</strong>
-                            <span>Base v{p.baseVersion}</span>
-                            <span>Proposed by: {p.proposedBy}</span>
-                            <span>{(new Date(p.createdAt).toLocaleString())}</span>
-                          </div>
-                        ))}
-                        {workspaceData.reviews.filter(r => r.claimId === claim.id).map(r => (
-                          <div key={r.id} className="claim-review-item">
-                            <strong>{r.decision}</strong>
-                            <span>Reviewed by: {r.reviewer}</span>
-                            <span>{(new Date(r.createdAt).toLocaleString())}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </details>
-                  </div>
-                </div>
-              );
-            })}
-            {workspaceData.claims.length === 0 && (
-              <div className="empty-state">
-                <p>No claims yet. Create your first claim using the form below.</p>
-              </div>
-            )}
-          </div>
-
-          <div className="claim-form-section">
-            <h3>Create a New Claim</h3>
-            <form id="claim-form">
-              <div className="form-group">
-                <label className="form-label">Entity</label>
-                <select className="form-input" id="claim-entity">
-                  <option>World</option>
-                  <option>Nation</option>
-                  <option>Character</option>
-                  <option>Faction</option>
-                  <option>Location</option>
-                  <option>Historical Event</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <label className="form-label">Statement</label>
-                <textarea className="form-input" id="claim-statement" rows="4" placeholder="e.g. Aurelis was founded in 850 AE."></textarea>
-              </div>
-              <div className="form-group">
-                <label className="form-label">Status</label>
-                <select className="form-input" id="claim-status">
-                  <option value="Draft">Draft</option>
-                  <option value="Proposed">Proposed</option>
-                  <option value="Validated">Validated</option>
-                  <option value="Approved">Approved</option>
-                  <option value="Rejected">Rejected</option>
-                  <option value="Superseded">Superseded</option>
-                </select>
-              </div>
-              <button type="button" className="btn btn-primary" onClick={createClaim}>
-                Create Claim
-              </button>
-            </form>
-          </div>
-
-          <div className="claim-form-section">
-            <h3>Change Proposal</h3>
-            <form id="proposal-form">
-              <div className="form-group">
-                <label className="form-label">Target Claim</label>
-                <select className="form-input" id="proposal-claim">
-                  {workspaceData.claims.map(c => (
-                    <option key={c.id} value={c.id}>{c.statement} (v{c.version})</option>
-                  ))}
-                </select>
-              </div>
-              <div className="form-group">
-                <label className="form-label">Proposed Statement</label>
-                <textarea className="form-input" id="proposal-statement" rows="3" placeholder="New claim statement..."></textarea>
-              </div>
-              <div className="form-group">
-                <label className="form-label">Reason</label>
-                <input type="text" className="form-input" id="proposal-reason" placeholder="Why does the claim need to change?" />
-              </div>
-              <div className="form-group">
-                <label className="form-label">Proposer</label>
-                <input type="text" className="form-input" id="proposal-by" value="local-user" readOnly />
-              </div>
-              <button type="button" className="btn btn-primary" onClick={createClaimChangeProposal}>
-                Submit Proposal
-              </button>
-            </form>
-          </div>
-        </div>
-      </section>
-
-      <section id="reviews" className="dashboard-section">
-        <div className="container">
-          <h2>Claim Reviews & Decision Traceability</h2>
-          <p>Track review records, linked decisions, and evidence for each claim.</p>
-
-          <div className="reviews-list">
-            {workspaceData.reviews.length === 0 && (
-              <div className="empty-state">
-                <p>No reviews yet. Propose changes to claims to create review records.</p>
-              </div>
-            )}
-            {workspaceData.reviews.map(review => {
-              const proposal = workspaceData.changeProposals.find(p => p.id === review.targetId);
-              const claim = findClaimById(proposal?.claimId);
-              return (
-                <div key={review.id} className="review-item">
-                  <div className="review-header">
-                    <span className={`canon-badge ${review.decision?.toLowerCase() || ''}`}>{review.decision}</span>
-                    <span className="review-type">{review.targetType}</span>
-                    <span className="review-date">{new Date(review.createdAt).toLocaleString()}</span>
-                  </div>
-                  <h5>Review: {review.id}</h5>
-                  <p className="review-rationale">{review.rationale || 'No rationale provided'}</p>
-                  {proposal && (
-                    <>
-                      <p className="review-target">Target: Proposal {proposal.id} for claim {claim?.statement || proposal.claimId}</p>
-                      <p className="review-state">From: {review.fromState} → To: {review.toState}</p>
-                    </>
-                  )}
-                  {claim && (
-                    <p className="review-claim">Claim: {claim.statement} (v{claim.version})</p>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      <section id="analytics" className="dashboard-section">
-        <div className="container">
-          <h2>Analytics Dashboard</h2>
-          <p>Illustrative trend, weekly activity, and workflow-stage visualizations implemented with SVG and CSS. No production data source is connected.</p>
-
-          <div className="analytics-grid">
-            <div className="analytics-card">
-              <h3>Trend Visualization</h3>
-              <div className="chart-wrapper">
-                <svg viewBox="0 0 600 200" width="100%" height="200">
-                  <defs>
-                    <linearGradient id="trendGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stop-color="#59d1ff" stop-opacity="0.3" />
-                      <stop offset="100%" stop-color="#59d1ff" stop-opacity="0.05" />
-                    </linearGradient>
-                  </defs>
-                  {[10, 30, 60, 45, 80, 120, 90, 150, 110, 180, 140, 200].map((h, i) => (
-                    <rect
-                      key={i}
-                      x={i * 50 + 10}
-                      y={200 - h}
-                      width="40"
-                      height={h}
-                      rx="4"
-                      fill={i % 2 === 0 ? "rgba(89, 209, 255, 0.4)" : "rgba(89, 209, 255, 0.2)"}
-                      stroke="rgba(89, 209, 255, 0.3)"
-                      strokeWidth="1"
-                    />
-                  ))}
-                  <line x1="10" y1="200" x2="610" y2="200" stroke="var(--border)" strokeWidth="1" />
-                </svg>
-              </div>
-              <p className="chart-legend">
-                <span>Rising</span>
-                <span>Stable</span>
-                <span>Declining</span>
-              </p>
-            </div>
-
-            <div className="analytics-card">
-              <h3>Weekly Activity</h3>
-              <div className="chart-wrapper">
-                <svg viewBox="0 0 400 200" width="100%" height="200">
-                  {[45, 78, 120, 95, 140, 110, 80].map((h, i) => (
-                    <rect
-                      key={i}
-                      x={i * 50 + 5}
-                      y={200 - h}
-                      width="40"
-                      height={h}
-                      rx="4"
-                      fill={i === 6 ? "rgba(52, 211, 153, 0.4)" : "rgba(52, 211, 153, 0.2)"}
-                      stroke="rgba(52, 211, 153, 0.3)"
-                      strokeWidth="1"
-                    />
-                  ))}
-                  <text x="200" y="30" textAnchor="middle" fill="var(--text-muted)" fontSize="12" fontFamily="monospace">Weekly</text>
-                  <line x1="5" y1="200" x2="395" y2="200" stroke="var(--border)" strokeWidth="1" />
-                </svg>
-              </div>
-              <p className="chart-legend">
-                <span>Mon</span>
-                <span>Tue</span>
-                <span>Wed</span>
-                <span>Thu</span>
-                <span>Fri</span>
-                <span>Sat</span>
-                <span>Sun</span>
-              </p>
-            </div>
-
-            <div className="analytics-card">
-              <h3>Workflow Stage</h3>
-              <div className="chart-wrapper">
-                <svg viewBox="0 0 600 200" width="100%" height="200">
-                  {[
-                    { label: 'Draft', value: 30, color: 'rgba(89, 209, 255, 0.6)' },
-                    { label: 'Proposed', value: 25, color: 'rgba(251, 191, 36, 0.6)' },
-                    { label: 'Validated', value: 20, color: 'rgba(52, 211, 153, 0.6)' },
-                    { label: 'Approved', value: 15, color: 'rgba(223, 187, 112, 0.6)' },
-                    { label: 'Rejected', value: 10, color: 'rgba(248, 113, 113, 0.6)' },
-                  ].map((stage, i) => (
-                    <rect
-                      key={i}
-                      x={i * 120 + 10}
-                      y={200 - (stage.value * 1.5)}
-                      width="100"
-                      height={stage.value * 1.5}
-                      rx="4"
-                      fill={stage.color}
-                      stroke="rgba(255, 255, 255, 0.15)"
-                      strokeWidth="1"
-                    />
-                  ))}
-                  <text x="60" y="90" textAnchor="middle" fill="var(--cyan)" fontSize="12" fontFamily="monospace" fontWeight="600">Draft</text>
-                  <text x="180" y="90" textAnchor="middle" fill="var(--amber)" fontSize="12" fontFamily="monospace" fontWeight="600">Proposed</text>
-                  <text x="300" y="90" textAnchor="middle" fill="var(--green)" fontSize="12" fontFamily="monospace" fontWeight="600">Validated</text>
-                  <text x="420" y="90" textAnchor="middle" fill="var(--gold)" fontSize="12" fontFamily="monospace" fontWeight="600">Approved</text>
-                  <text x="540" y="90" textAnchor="middle" fill="var(--red)" fontSize="12" fontFamily="monospace" fontWeight="600">Rejected</text>
-                  <line x1="10" y1="200" x2="610" y2="200" stroke="var(--border)" strokeWidth="1" />
-                </svg>
-              </div>
-              <p className="chart-legend">
-                <span>Draft</span>
-                <span>Proposed</span>
-                <span>Validated</span>
-                <span>Approved</span>
-                <span>Rejected</span>
-              </p>
-            </div>
-          </div>
-
-          <div className="analytics-summary">
-            <h3>Activity Summary</h3>
-            <div className="summary-grid">
-              <div>
-                <span className="summary-value">{workspaceData.records.length}</span>
-                <span className="summary-label">Records</span>
-              </div>
-              <div>
-                <span className="summary-value">{workspaceData.relationships.length}</span>
-                <span className="summary-label">Relationships</span>
-              </div>
-              <div>
-                <span className="summary-value">{workspaceData.sources.length}</span>
-                <span className="summary-label">Sources</span>
-              </div>
-              <div>
-                <span className="summary-value">{workspaceData.claims.length}</span>
-                <span className="summary-label">Claims</span>
-              </div>
-              <div>
-                <span className="summary-value">{workspaceData.decisions.length}</span>
-                <span className="summary-label">Decisions</span>
-              </div>
-              <div>
-                <span className="summary-value">{workspaceData.activityLog.length}</span>
-                <span className="summary-label">Events</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="prompt" className="dashboard-section">
-        <div className="container">
-          <h2>Prompt Builder</h2>
-          <aside className="data-notice prompt-builder-notice" role="note" aria-label="Prompt Builder notice"><div><strong>Notice: This does not generate images or use AI.</strong><p>Enter a brief to preview a deterministic landing page and generate React component code. Copy or download the .jsx output below.</p></div></aside>
-
-          <div className="prompt-builder">
-            <div className="prompt-form">
-              <textarea
-                className="form-input"
-                placeholder="Describe your world brief, e.g. &quot;A steampunk city floating among the clouds...&quot;"
-                value={promptInput}
-                onChange={(e) => setPromptInput(e.target.value)}
-                rows="6"
-              />
-              <div className="prompt-actions">
-                <button
-                  className="btn btn-primary"
-                  onClick={() => setPromptInput(promptInput)}
-                >
-                  Generate
-                </button>
-                <button
-                  className="btn btn-secondary"
-                  onClick={copyComponent}
-                  disabled={!promptInput}
-                >
-                  {copyStatus || "Copy .jsx"}
-                </button>
-                <button
-                  className="btn btn-secondary"
-                  onClick={downloadComponent}
-                  disabled={!promptInput}
-                >
-                  Download .jsx
-                </button>
-              </div>
-              {copyStatus && <p className="copy-status">{copyStatus}</p>}
-            </div>
-
-            <div className="prompt-preview">
-              <div className="preview-header">
-                <h4>Landing Page Preview</h4>
-                <span className="preview-badge">Deterministic</span>
-              </div>
-              <div className="preview-body">
-                {promptInput ? (
-                  <div className="preview-card">
-                    <h3>{promptInput.slice(0, 60)}</h3>
-                    <p>Generated landing page for: {promptInput}</p>
-                    <details>
-                      <summary>View generated .jsx</summary>
-                      <pre className="jsx-preview">{getGeneratedComponent().slice(0, 800)}</pre>
-                    </details>
-                  </div>
-                ) : (
-                  <div className="empty-state">
-                    <p>Enter a world brief and click Generate.</p>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <footer className="footer">
-        <p>&copy; 2026 AH-AIOS WorldForge Prototype &mdash; Local browser workflow. Built with React 19 + Vite.</p>
-      </footer>
-    </div>
-  );
+  return <div className="app-shell">
+    <aside className={`sidebar ${menuOpen?'open':''}`}>
+      <div className="brand"><div className="brand-mark">✳</div><div><strong>AH-AIOS</strong><span>WORLDFORGE</span></div><button className="mobile-close" onClick={()=>setMenuOpen(false)} aria-label="Close navigation">×</button></div>
+      <div className="workspace-switch"><span className="workspace-avatar">A</span><div><strong>Atlas Studio</strong><small>Creative workspace</small></div><span className="chevron">⌄</span></div>
+      <nav className="side-nav">{nav.map(section=><div className="nav-group" key={section.group}><small>{section.group}</small>{section.items.map(([name,icon])=><button key={name} className={`nav-item ${page===name?'active':''}`} onClick={()=>{setPage(name);setMenuOpen(false)}}><Icon>{icon}</Icon><span>{name}</span>{name==='Worlds'&&<b>12</b>}</button>)}</div>)}</nav>
+      <div className="sidebar-bottom"><div className="plan-card"><span className="plan-glow">✦</span><strong>WorldForge Studio</strong><p>Build worlds with traceable creative workflows.</p><button onClick={()=>setPage('Site Builder')}>Create a world <span>↗</span></button></div><div className="profile"><div className="profile-avatar">AR</div><div><strong>Atlas Researcher</strong><small>Workspace owner</small></div><span>•••</span></div></div>
+    </aside>
+    {menuOpen&&<button className="scrim" onClick={()=>setMenuOpen(false)} aria-label="Close menu"/>}
+    <main className="main-area"><header className="topbar"><button className="mobile-menu" onClick={()=>setMenuOpen(true)} aria-label="Open menu">☰</button><div className="breadcrumbs"><span>Workspace</span><i>/</i><strong>{page}</strong></div><div className="top-actions"><button className="search-pill" onClick={()=>setPage('Worlds')}>⌕ <span>Search worlds...</span><kbd>⌘ K</kbd></button><button className="icon-button" aria-label="Notifications">♧<i/></button><div className="tiny-avatar">AR</div></div></header>
+      {page==='Server Governance' ? <aside className="data-privacy-notice" aria-label="Server persistence notice"><div><strong>Server-backed workflow</strong><p>Mutations on this page use Django sessions, workspace membership, and persistent server records. Other prototype pages continue to use browser-local data.</p></div></aside> : <aside className={`data-privacy-notice${storageWarning?' storage-warning':''}`} aria-label="Browser-local data notice" aria-live={storageWarning?'assertive':'off'}><div><strong>{storageWarning?'Some changes may not be saved':'Your data stays in this browser'}</strong><p>{storageWarning?'Browser storage could not save all workspace data. Export a backup now and free browser storage before continuing.':'Worlds and governance history are stored locally here. They are not synced or backed up online. Export a workspace backup regularly; clearing browser data may remove it.'}</p></div><button className="button-secondary" onClick={()=>setPage('Hermes Exchange')}>Export or restore data</button></aside>}
+      <div className="content">{pages[page] || pages.Overview}</div><div className="toast" aria-live="polite" data-visible={!!notice} onAnimationEnd={()=>{}}>{notice}<button onClick={()=>setNotice('')} aria-label="Dismiss">×</button></div>
+    </main>
+  </div>;
 }
 
-export default App;
+function PageHead({eyebrow,title,subtitle,action}) { return <div className="page-head"><div><div className="eyebrow">{eyebrow}</div><h1>{title}</h1><p>{subtitle}</p></div>{action}</div>; }
+function Overview({setPage,setRange,range}) {
+  return <><PageHead eyebrow="MONDAY, 27 OCTOBER 2026" title="Good morning, Atlas" subtitle="Your worlds are taking shape. Here's what is happening across your workspace." action={<button className="button-primary" onClick={()=>setPage('Site Builder')}><span>＋</span> Create a world</button>}/>
+    <div className="metric-grid">{metrics.map(m=><article className="metric-card" key={m.label}><div className="metric-top"><span>{m.label}</span><span className={`metric-icon ${m.color}`}>{m.color==='gold'?'✧':m.color==='cyan'?'⌘':m.color==='violet'?'◇':'↗'}</span></div><div className="metric-value">{m.value}</div><div className="metric-delta"><span>↗ {m.delta}</span><small>vs. last period</small></div></article>)}</div>
+    <div className="dashboard-grid"><section className="panel chart-panel"><div className="panel-head"><div><h2>World activity</h2><p>Creation and review activity across your worlds</p></div><select aria-label="Chart time range" value={range} onChange={e=>setRange(e.target.value)}><option>12 months</option><option>30 days</option><option>7 days</option></select></div><div className="chart-total"><strong>2,486</strong><span className="positive">↗ 14.8%</span><small>Total connected actions</small></div><div className="chart-area"><div className="y-labels"><span>100</span><span>75</span><span>50</span><span>25</span><span>0</span></div><div className="chart-plot"><div className="gridlines"><i/><i/><i/><i/><i/></div><Spark/><div className="x-labels"><span>Jan</span><span>Mar</span><span>May</span><span>Jul</span><span>Sep</span><span>Nov</span></div></div></div></section>
+      <section className="panel"><div className="panel-head"><div><h2>Creation pipeline</h2><p>Worlds by current stage</p></div><button className="dots">•••</button></div><div className="pipeline"><div className="donut"><div><strong>12</strong><small>worlds</small></div></div><div className="legend"><div><i className="dot gold"/><span>Draft</span><b>05</b></div><div><i className="dot cyan"/><span>Refraction review</span><b>03</b></div><div><i className="dot violet"/><span>Experience build</span><b>02</b></div><div><i className="dot green"/><span>Published</span><b>02</b></div></div></div><button className="text-link" onClick={()=>setPage('Worlds')}>View all worlds <span>→</span></button></section>
+    </div>
+    <div className="lower-grid"><section className="panel"><div className="panel-head"><div><h2>Recent worlds</h2><p>Pick up where you left off</p></div><button className="text-link" onClick={()=>setPage('Worlds')}>View all →</button></div><WorldRows compact/></section><section className="panel"><div className="panel-head"><div><h2>Recent activity</h2><p>Latest work across your studio</p></div><button className="dots">•••</button></div><Activity compact/></section></div>
+    <div className="demo-note">ⓘ <span>Dashboard numbers are synthetic preview data. Connect an approved AH-AIOS data source to display real workspace activity.</span></div>
+  </>;
+}
+function WorldRows({compact=false}) { return <div className="world-rows">{starters.map((w,i)=><div className="world-row" key={w.name}><div className={`world-thumb ${w.hue}`}><span>{w.mark}</span><i/></div><div className="world-info"><strong>{w.name}</strong><small>{w.kind}</small></div><div className="world-detail">{w.detail}</div><span className={`stage ${i===0?'review':i===1?'draft':'published'}`}>{i===0?'In review':i===1?'Draft':'Published'}</span><button className="row-menu" aria-label={`More options for ${w.name}`}>•••</button></div>)}</div>; }
+function Activity({compact=false}) { return <div className="activity-list">{activity.slice(0,compact?3:4).map((a,i)=><div className="activity-row" key={i}><div className={`activity-symbol s${i}`}>{['◇','⌘','↗','✧'][i]}</div><div className="activity-text"><strong>{a[1]}</strong><small>{a[0]} · {a[2]}</small></div><span className="activity-tag">{a[3]}</span></div>)}</div>; }
+function Worlds({setPage, records}) { return <><PageHead eyebrow="YOUR CREATIVE UNIVERSE" title="Worlds" subtitle="Every universe, connected and traceable." action={<button className="button-primary" onClick={()=>setPage('World Model')}>＋ Add world record</button>}/><div className="toolbar"><div className="search-field">⌕ <input placeholder="Search worlds..."/></div><select><option>All stages</option><option>Draft</option><option>In review</option><option>Published</option></select><button className="button-secondary">☷ Filters</button></div><section className="panel"><WorldRows/><div className="table-foot">3 sample worlds · {records.length} structured records in local workspace <button className="text-link" onClick={()=>setPage('World Model')}>Open world model →</button></div></section><div className="demo-note">ⓘ <span>World cards remain illustrative fixtures. Open the World Model to inspect and create locally saved Aetherfall records.</span></div></>; }
 
+function WorldModel({records,query,setQuery,type,setType,formOpen,setFormOpen,onSubmit,sources}) {
+  const visible = records.filter(record => (type === 'All types' || record.type === type) && `${record.name} ${record.summary} ${record.type}`.toLowerCase().includes(query.toLowerCase()));
+  const types = ['All types', ...new Set(records.map(record => record.type))];
+  return <><PageHead eyebrow="STRUCTURED KNOWLEDGE · V0.2" title="World model" subtitle="Create and find structured world records. This prototype stores them in this browser only." action={<button className="button-primary" onClick={()=>setFormOpen(!formOpen)}>{formOpen?'× Close':'＋ Add record'}</button>}/>
+    <div className="model-notice"><strong>Prototype boundary</strong><span>Records and workflow history are saved in this browser. Relationship validation and review transitions are demonstrations only; there is no shared database, identity enforcement, or authoritative canon write.</span></div>
+    <div className="entity-stats">{['World','Nation','Character','Faction','Location','Historical Event'].map(kind=><div key={kind}><strong>{records.filter(r=>r.type===kind).length}</strong><span>{kind}{kind==='Historical Event'?'s':'s'}</span></div>)}</div>
+    {formOpen&&<form className="panel record-form" onSubmit={onSubmit}><div className="panel-head"><div><h2>New proposed record</h2><p>Added to the Aetherfall sample world.</p></div></div><div className="form-grid"><label>Record type<select name="type" defaultValue="Character">{['World','Nation','Character','Faction','Location','Historical Event'].map(x=><option key={x}>{x}</option>)}</select></label><label>Name<input name="name" required maxLength="100" placeholder="Record name"/></label><label className="wide">Summary<textarea name="summary" required rows="3" maxLength="500" placeholder="Describe what this record represents."/></label></div><div className="form-actions"><span>New records start as Draft · Proposed</span><button className="button-primary" type="submit">Save proposed record</button></div></form>}
+    <div className="model-toolbar"><div className="search-field">⌕ <input aria-label="Search world records" value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search names and summaries..."/></div><select aria-label="Filter by record type" value={type} onChange={e=>setType(e.target.value)}>{types.map(x=><option key={x}>{x}</option>)}</select><span>{visible.length} records</span></div>
+    <section className="panel model-list"><div className="model-list-head"><span>RECORD</span><span>TYPE</span><span>STATUS</span><span>CANON STATE</span><span>PROVENANCE</span></div>{visible.length?visible.map(r=><article className="model-record" key={r.id}><div className="record-primary"><strong>{r.name}</strong><small>{r.summary}</small><small className="record-date">{r.world} · Created {r.createdAt}</small></div><span className="record-type">{r.type}</span><span className={`stage ${r.status==='Approved'?'published':r.status==='In review'?'review':'draft'}`}>{r.status}</span><span className={`canon-pill ${r.canonState==='Approved'?'canon-approved':''}`}>{r.canonState}</span><span className="record-owner">{(r.sourceIds||[]).map(id=>sources.find(s=>s.id===id)?.title).filter(Boolean).join(', ')||'No linked source'}</span></article>):<div className="model-empty">No records match this search.</div>}</section>
+    <div className="demo-note">ⓘ <span>Records and attached sources are persisted locally in this browser. Approval state is a prototype label and does not enforce identity or authority.</span></div>
+  </>;
+}
+function SiteBuilder({prompt,setPrompt,site,generatedSections,generateSite,exportReact}) {
+  return <><PageHead eyebrow="EXPERIENCE ENGINE" title="Build a world website" subtitle="Describe a world. Generate a responsive React landing page and preview it instantly."/><div className="builder-layout"><section className="panel prompt-panel"><div className="builder-step"><span>01</span><div><strong>Describe your world</strong><small>Start with the idea, atmosphere, or audience.</small></div></div><form onSubmit={generateSite}><label htmlFor="world-prompt">Your prompt</label><textarea id="world-prompt" value={prompt} onChange={e=>setPrompt(e.target.value)} rows="7" placeholder="A floating ocean civilization governed by scholar-engineers..."/><div className="prompt-hint">✦ Local template builder · no AI service connected</div><button className="button-primary full" type="submit">Generate website preview <span>→</span></button></form><div className="builder-step second"><span>02</span><div><strong>What gets created</strong><small>React page structure from the shared world model.</small></div></div><ul className="check-list"><li><i>✓</i> Responsive hero and navigation</li><li><i>✓</i> World overview cards</li><li><i>✓</i> React component you can download</li><li><i className="muted-check">○</i> Linked to approved world records</li></ul></section>
+      <section className="preview-frame"><div className="preview-toolbar"><span><i/> Live preview</span><div><button>Desktop</button><button>↗</button></div></div>{site?<div className="generated-site"><div className="gen-nav"><strong>WORLD ATLAS</strong><span>Explore &nbsp;&nbsp; Lore &nbsp;&nbsp; Discover</span><button>☰</button></div><div className="gen-hero"><div className="gen-orb"/><div className="eyebrow">A WORLD TAKING SHAPE</div><h2>{site.title}</h2><p>{site.prompt}</p><button className="button-primary">Enter the world <span>→</span></button></div><div className="gen-cards">{generatedSections.map((s,i)=><article key={s.title}><span>0{i+1}</span><h3>{s.title}</h3><p>{s.text}</p></article>)}</div><div className="gen-footer">Created with AH-AIOS WorldForge · Proposed world draft</div></div>:<div className="preview-empty"><div className="empty-stars">✦　·　✧<br/>　·　✦</div><h3>Your world portal starts here</h3><p>Write a prompt and generate a first responsive website draft.</p></div>}<div className="preview-bottom"><span>Responsive preview</span>{site&&<button className="button-secondary" onClick={exportReact}>↓ Export React component</button>}</div></section></div></>;
+}
+function Analytics({range,setRange}) { return <><PageHead eyebrow="WORKSPACE INSIGHTS" title="Analytics" subtitle="Understand how worlds grow, connect, and move through review." action={<select value={range} onChange={e=>setRange(e.target.value)}><option>12 months</option><option>30 days</option><option>7 days</option></select>}/><div className="metric-grid">{metrics.map(m=><article className="metric-card" key={m.label}><div className="metric-top"><span>{m.label}</span><span className={`metric-icon ${m.color}`}>↗</span></div><div className="metric-value">{m.value}</div><div className="metric-delta"><span>↗ {m.delta}</span><small>vs. last period</small></div></article>)}</div><div className="dashboard-grid analytics-grid"><section className="panel chart-panel"><div className="panel-head"><div><h2>Connected knowledge over time</h2><p>Records created, reviewed, or linked · {range}</p></div></div><div className="chart-total"><strong>1,284</strong><span className="positive">↗ 18.6%</span></div><div className="chart-area"><div className="y-labels"><span>100</span><span>75</span><span>50</span><span>25</span><span>0</span></div><div className="chart-plot"><div className="gridlines"><i/><i/><i/><i/><i/></div><Spark color="var(--cyan)"/><div className="x-labels"><span>Jan</span><span>Mar</span><span>May</span><span>Jul</span><span>Sep</span><span>Nov</span></div></div></div></section><section className="panel"><div className="panel-head"><div><h2>Weekly creation activity</h2><p>New linked records per day</p></div></div><BarChart/><div className="chart-total bar-total"><strong>247</strong><span className="positive">This week</span></div></section></div><div className="lower-grid"><section className="panel"><div className="panel-head"><div><h2>Worlds by stage</h2><p>Current work distribution</p></div></div><div className="stage-bars">{[['Draft',5,'gold'],['Refraction review',3,'cyan'],['Experience build',2,'violet'],['Published',2,'green']].map(([name,value,color])=><div key={name}><div className="stage-label"><span>{name}</span><b>{value}</b></div><div className="hbar"><i className={color} style={{width:`${value/5*100}%`}}/></div></div>)}</div></section><section className="panel"><div className="panel-head"><div><h2>Recent activity</h2><p>Latest workspace events</p></div></div><Activity/></section></div><div className="demo-note">ⓘ <span>Illustrative sample metrics only. No production or institutional data is connected.</span></div></>; }
+function GeneratorPage({prompt,setPrompt,onSubmit}) { return <><PageHead eyebrow="LOCAL DRAFT GENERATOR" title="Prompt to world records" subtitle="Turn a brief into editable starter records for a world. Review and change every result before use."/><div className="model-notice"><strong>Generation boundary</strong><span>This uses deterministic local templates. It does not call an AI model or create canon.</span></div><form className="panel prompt-panel generator-panel" onSubmit={onSubmit}><label htmlFor="draft-prompt">World brief</label><textarea id="draft-prompt" rows="5" value={prompt} onChange={e=>setPrompt(e.target.value)} placeholder="Describe a world, its people, and its central tension."/><div className="prompt-hint">Creates six Draft · Proposed records: World, Nation, Character, Faction, Location, Historical Event.</div><button className="button-primary" type="submit">✦ Create editable draft records</button></form><section className="panel capability-note"><h2>AI engine connection point</h2><p>A provider interface can be added here after the project approves its model, privacy rules, and human review policy. Current output is labeled template-generated.</p></section></>; }
+
+function EntityDetails({entity,records,relations,sources,claims,audit,onBack,onOpenEntity}) {
+  if(!entity)return <><PageHead eyebrow="WORLD MODEL" title="Record not found" subtitle="This record may have been removed or is missing from the imported workspace."/><button className="button-secondary" onClick={onBack}>← Back to records</button></>;
+  const links=relations.filter(r=>r.sourceId===entity.id||r.targetId===entity.id);
+  const byId=id=>records.find(r=>r.id===id);
+  const history=[...(entity.history||[]).map(h=>({...h,targetName:entity.name})),...audit.filter(e=>e.targetId===entity.id).map(e=>({at:e.at,action:e.action,actor:e.actor,rationale:e.detail}))].sort((a,b)=>new Date(b.at)-new Date(a.at));
+  return <><PageHead eyebrow="ENTITY CONNECTION VIEW" title={entity.name} subtitle={`${entity.type} · ${entity.world||'Unassigned world'} · ${entity.canonState||'Draft'}`} action={<button className="button-secondary" onClick={onBack}>← World model</button>}/>
+    <div className="detail-grid"><section className="panel"><div className="panel-head"><div><h2>Record summary</h2><p>Local workspace record · {entity.id}</p></div><span className="canon-pill">{entity.canonState||'Draft'}</span></div><p className="entity-summary">{entity.summary||'No summary recorded.'}</p><small className="form-help">Created by {entity.createdBy||'Unknown'} · {entity.createdAt||'Date not recorded'}</small></section>
+      <section className="panel"><div className="panel-head"><div><h2>Evidence</h2><p>Linked source references</p></div></div>{(entity.sourceIds||[]).length?(entity.sourceIds||[]).map(id=>{const s=sources.find(x=>x.id===id);return <div className="list-item" key={id}><strong>{s?.title||'Missing source'}</strong><p>{s?`${s.kind} · ${s.reference||'No reference'}`:`Source ${id} is unavailable in this workspace.`}</p></div>}):<div className="model-empty">No source references linked.</div>}</section></div>
+    <section className="panel entity-connections"><div className="panel-head"><div><h2>Connections</h2><p>{links.length} relationship(s) connected to this record</p></div></div>{links.length?links.map(r=>{const outbound=r.sourceId===entity.id,other=byId(outbound?r.targetId:r.sourceId);return <article className="relation-row" key={r.id}><span className="connection-direction">{outbound?'OUTGOING':'INCOMING'}</span><span>{outbound?r.type:RELATIONSHIP_TYPES[r.type]?.inverse||r.type}</span><button className="entity-link" onClick={()=>other&&onOpenEntity(other.id)}>{other?.name||'Missing record'}<small>{other?.type||'Orphaned relationship'}</small></button><small>{r.notes||r.canonState}</small></article>}):<div className="model-empty">No connected records yet. Add a relationship in Knowledge Graph.</div>}</section>
+    <div className="detail-grid"><section className="panel"><div className="panel-head"><div><h2>Claims</h2><p>Statements attached to this record</p></div></div>{claims.filter(c=>c.entityId===entity.id).length?claims.filter(c=>c.entityId===entity.id).map(c=><article className="list-item" key={c.id}><strong>{c.statement}</strong><p>{c.status||c.canonState} · {c.evidenceLinks?.length??(c.sourceIds||[]).length} source link(s)</p></article>):<div className="model-empty">No claims recorded.</div>}</section><section className="panel"><div className="panel-head"><div><h2>Record history</h2><p>Local history and workspace events</p></div></div>{history.length?history.map((h,i)=><article className="lineage-event" key={`${h.at}-${i}`}><time>{h.at?new Date(h.at).toLocaleString():'Time unavailable'}</time><div><strong>{h.action||'Record update'}</strong><small>{h.actor||'Actor not recorded'}{h.rationale?` · ${h.rationale}`:''}</small></div></article>):<div className="model-empty">No history recorded.</div>}<h3 className="version-heading">Version lineage · v{entity.version||1}</h3>{(entity.previousVersions||[]).length?(entity.previousVersions||[]).slice().reverse().map((v,i)=><article className="review-history-row" key={`${v.version}-${i}`}><strong>Version {v.version}</strong><small>{v.recordedAt?new Date(v.recordedAt).toLocaleString():'Date unavailable'} · Change request {v.changeRequestId||'not recorded'}</small><p>{v.name} — {v.summary}</p></article>):<small className="form-help">No prior versions recorded.</small>}</section></div></>;
+}
+
+function ClaimsPage({claims,claimChangeProposals,evidence,records,sources,reviews,decisions,focusClaimId,onClearFocus,onOpenEvidence,onOpenDecisions,onCompare,onSubmit,onReview,onSubmitProposal,onResolveProposal,onRollback}) {
+  const [query,setQuery]=useState(''),[filter,setFilter]=useState('All statuses'),[editingId,setEditingId]=useState(''),[rollbackSelections,setRollbackSelections]=useState({});
+  const editing=claims.find(c=>c.id===editingId),editingEvidence=editing?.evidenceLinks||((editing?.sourceIds||[]).map(sourceId=>({sourceId,assessment:'Unassessed'})));
+  const visible=claims.filter(c=>(!focusClaimId||c.id===focusClaimId)&&(filter==='All statuses'||(c.status||c.canonState||'Draft')===filter)&&`${c.statement} ${records.find(r=>r.id===c.entityId)?.name||''}`.toLowerCase().includes(query.toLowerCase()));
+  const statuses=['All statuses',...new Set(claims.map(c=>c.status||c.canonState||'Draft'))];
+  const editable=status=>['Draft','Proposed'].includes(status);
+  return <><PageHead eyebrow="CLAIMS & EVIDENCE · V0.4" title="Claim registry" subtitle="Version claim changes, review proposals for governed claims, and preserve local history."/><div className="model-notice"><strong>Governance boundary</strong><span>Reviewer names and history are local prototype data. Approved or validated claim changes require a proposal; no identity or authority is authenticated.</span></div>
+    <div className="decision-layout"><form key={editing?.id||'new-claim'} className="panel decision-form" onSubmit={e=>{if(onSubmit(e))setEditingId('')}}><h2>{editing?'Save new claim version':'Record a claim'}</h2>{editing&&<input type="hidden" name="claimId" value={editing.id}/>}<label>Entity<select name="entityId" required defaultValue={editing?.entityId||records[0]?.id}>{records.map(r=><option key={r.id} value={r.id}>{r.name} · {r.type}</option>)}</select></label><label>Claim statement<textarea name="statement" required maxLength="1000" rows="3" defaultValue={editing?.statement||''} placeholder="A specific statement that can be reviewed against evidence."/></label><label>Linked sources<select name="sourceIds" multiple size="4" defaultValue={editingEvidence.map(e=>e.sourceId)}>{sources.map(s=><option key={s.id} value={s.id}>{s.title}</option>)}</select></label><label>Evidence assessment<select name="evidenceAssessment" defaultValue={editingEvidence[0]?.assessment||'Unassessed'}><option>Unassessed</option><option>Supports</option><option>Contradicts</option><option>Contextual</option></select></label><p className="form-help">Use Ctrl or Command to select multiple sources. Edits are allowed directly only for Draft and Proposed claims; other states require a reviewed change proposal.</p><div className="form-actions"><button className="button-primary">{editing?'Save claim version':'＋ Save draft claim'}</button>{editing&&<button className="button-secondary" type="button" onClick={()=>setEditingId('')}>Cancel</button>}</div></form>
+    <section className="panel"><div className="panel-head"><div><h2>Claim explorer</h2><p>{visible.length} of {claims.length} claims · {claimChangeProposals.filter(p=>p.status==='Proposed').length} pending proposal(s)</p></div>{focusClaimId&&<button className="button-secondary" onClick={onClearFocus}>Show all claims</button>}</div><div className="model-toolbar"><div className="search-field">⌕ <input aria-label="Search claims" value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search claim text or entity..."/></div><select aria-label="Filter claims by status" value={filter} onChange={e=>setFilter(e.target.value)}>{statuses.map(s=><option key={s}>{s}</option>)}</select></div>{visible.length?visible.map(c=>{const status=c.status||c.canonState||'Draft',allowed=CLAIM_TRANSITIONS[status]||[],registeredEvidence=evidence.filter(e=>e.claimId===c.id&&e.status!=='Unlinked'),claimEvidence=registeredEvidence.length?registeredEvidence:(c.evidenceLinks||(c.sourceIds||[]).map(sourceId=>({sourceId,assessment:'Unassessed'}))),linkedDecisions=decisions.filter(d=>d.claimId===c.id),claimProposals=claimChangeProposals.filter(p=>p.claimId===c.id),versions=c.versions||[];return <article className="decision-row claim-row" key={c.id}><div className="decision-title"><strong>{c.statement}</strong><span className="stage draft">{status}</span></div><small>{records.find(r=>r.id===c.entityId)?.name||'Missing entity'} · v{c.version||1} · {c.createdAt?new Date(c.createdAt).toLocaleString():''}</small><div className="claim-evidence">{claimEvidence.length?claimEvidence.map((e,i)=>{const source=sources.find(s=>s.id===e.sourceId);return <div key={e.id||`${e.sourceId}-${i}`}><strong>{source?.title||`Missing source ${e.sourceId}`}</strong><span>{e.assessment||'Unassessed'}{e.notes?` · ${e.notes}`:''}</span>{e.id&&<button type="button" className="text-link" onClick={()=>onOpenEvidence(e.id)}>Open evidence →</button>}</div>}):<p>No evidence linked.</p>}</div>
+      <details className="review-history"><summary>Version history · {versions.length} version(s)</summary>{versions.slice().reverse().map(v=><div className="review-history-row" key={`${c.id}-v${v.version}`}><strong>v{v.version} · {v.statement}</strong><small>{v.status||v.canonState} · {v.createdAt?new Date(v.createdAt).toLocaleString():'Date unavailable'} · {v.changeType||'Legacy'}{v.restoredFromVersion?` · restored from v${v.restoredFromVersion}`:''}</small><small>Event: {v.createdByEventId||'Unavailable'}</small></div>)}</details>
+      {versions.length>1&&editable(status)&&<div className="claim-rollback"><label>Restore content from<select aria-label={`Choose claim version to restore for ${c.id}`} value={rollbackSelections[c.id]||''} onChange={e=>setRollbackSelections(current=>({...current,[c.id]:e.target.value}))}><option value="">Choose prior version</option>{versions.filter(v=>v.version<(c.version||1)).map(v=><option key={v.version} value={v.version}>v{v.version} · {v.statement.slice(0,60)}</option>)}</select></label><button className="button-secondary" disabled={!rollbackSelections[c.id]} onClick={()=>onRollback(c.id,rollbackSelections[c.id])}>Restore as new version</button></div>}
+      {!editable(status)&&<form className="claim-proposal-form" onSubmit={onSubmitProposal}><h3>Propose a claim change</h3><input type="hidden" name="claimId" value={c.id}/><input type="hidden" name="baseVersion" value={c.version||1}/><label>Reason<textarea name="reason" required maxLength="500" rows="2" placeholder="Why should this governed claim change?"/></label><label>Proposed statement<textarea name="statement" maxLength="1000" rows="2" placeholder={c.statement}/></label><label>Proposed entity<select name="entityId" defaultValue={c.entityId}><option value={c.entityId}>Keep current entity</option>{records.filter(r=>r.id!==c.entityId).map(r=><option key={r.id} value={r.id}>{r.name} · {r.type}</option>)}</select></label><label className="proposal-source-toggle"><input type="checkbox" name="replaceSources"/> Replace linked sources</label><label>Proposed sources<select name="sourceIds" multiple size="3" defaultValue={c.sourceIds||[]}>{sources.map(source=><option key={source.id} value={source.id}>{source.title}</option>)}</select></label><button className="button-secondary">＋ Submit proposal</button></form>}
+      <div className="claim-decisions"><strong>{linkedDecisions.length} linked decision(s)</strong><button className="text-link" onClick={()=>onOpenDecisions(c.id)}>{linkedDecisions.length?'View decisions':'Record decision for this claim'} →</button><button className="text-link" onClick={()=>onCompare(c.id)}>Compare versions →</button>{linkedDecisions.map(d=><small key={d.id}>{d.title} · {d.status}</small>)}</div>
+      {editable(status)&&<button className="button-secondary" onClick={()=>setEditingId(c.id)}>Edit claim</button>}{allowed.length>0&&<><form id={`claim-review-${c.id}`} className="claim-review-form" onSubmit={e=>e.preventDefault()}><label>Reviewer<input name="reviewer" required maxLength="100" placeholder="Reviewer name"/></label><label>Rationale<textarea name="rationale" required maxLength="500" rows="2" placeholder="Explain the review outcome."/></label></form><div className="canon-actions">{allowed.map(next=><button key={next} className={`button-secondary ${next==='Rejected'?'danger-button':''}`} onClick={()=>onReview(c.id,next)}>Move to {next}</button>)}</div></>}
+      {reviews.filter(r=>r.targetType==='Claim'&&r.targetId===c.id).length>0&&<details className="review-history"><summary>Claim review history · {reviews.filter(r=>r.targetType==='Claim'&&r.targetId===c.id).length}</summary>{reviews.filter(r=>r.targetType==='Claim'&&r.targetId===c.id).map(r=><div className="review-history-row" key={r.id}><strong>{r.fromState} → {r.toState}</strong><small>{r.reviewer} · {new Date(r.createdAt).toLocaleString()} · Review {r.id}</small><p>{r.rationale}</p>{linkedDecisions.length>0&&<button className="text-link" onClick={()=>onOpenDecisions(c.id)}>View decisions linked to this reviewed claim →</button>}</div>)}</details>}
+      {claimProposals.length>0&&<details className="review-history" open><summary>Change proposals · {claimProposals.length}</summary>{claimProposals.map(p=><div className="claim-proposal-item" key={p.id}><div className="decision-title"><strong>Proposal based on v{p.baseVersion}</strong><span className={`stage ${p.status==='Approved'?'published':p.status==='Conflict'?'review':'draft'}`}>{p.status}</span></div><p>{p.reason}</p><small>Requested: {p.proposedChanges.statement||c.statement}{p.proposedChanges.entityId?` · Entity ${records.find(r=>r.id===p.proposedChanges.entityId)?.name||p.proposedChanges.entityId}`:''}</small>{p.conflictReason&&<p className="claim-conflict">Conflict: {p.conflictReason}</p>}{p.status==='Proposed'&&<><form id={`claim-proposal-review-${p.id}`} className="claim-review-form" onSubmit={e=>e.preventDefault()}><label>Rationale<textarea name="rationale" required maxLength="500" rows="2" placeholder="Review rationale"/></label></form><div className="canon-actions"><button className="button-secondary" onClick={()=>onResolveProposal(p.id,'Approved')}>Approve and create version</button><button className="button-secondary danger-button" onClick={()=>onResolveProposal(p.id,'Rejected')}>Reject proposal</button></div></>}{p.reviewId&&reviews.filter(r=>r.id===p.reviewId).map(r=><small key={r.id}>Reviewed by {r.reviewer} · {r.rationale}</small>)}</div>)}</details>}
+    </article>}):<div className="model-empty">{claims.length?'No claims match this view.':'No claims recorded yet.'}</div>}</section></div></>;
+}
+
+function KnowledgeGraph({records,relations,sources,editingRelation,onSubmit,onEdit,onCancelEdit,onReviewRelation,filter,setFilter,query,setQuery,onDelete,onOpenEntity}) {
+  const byId=id=>records.find(r=>r.id===id);
+  const types=Object.keys(RELATIONSHIP_TYPES);
+  const visible=relations.filter(r=>{
+    const source=byId(r.sourceId),target=byId(r.targetId),meta=RELATIONSHIP_TYPES[r.type];
+    return source&&target&&meta&&(filter==='All categories'||meta.category===filter)&&`${source.name} ${target.name} ${r.type} ${r.notes||''}`.toLowerCase().includes(query.toLowerCase());
+  });
+  const categories=['All categories',...new Set(Object.values(RELATIONSHIP_TYPES).map(x=>x.category))];
+  return <><PageHead eyebrow="RELATIONSHIP EXPLORER · V0.3" title="Knowledge graph" subtitle="Create validated typed links, filter the registry, and inspect an entity’s connections."/>
+    <div className="model-notice"><strong>Relationship validation</strong><span>New and edited links are checked against registered types, semantic endpoint rules, and duplicate/self-link checks. Imported orphan links remain flagged and excluded from exploration.</span></div>
+    <form key={editingRelation?.id||'new-relation'} className="panel relation-form" onSubmit={onSubmit}><label>From<select name="from" required defaultValue={editingRelation?.sourceId||records[0]?.id}>{records.map(r=><option key={r.id} value={r.id}>{r.name} · {r.type}</option>)}</select></label><label>Relationship<select name="type" defaultValue={editingRelation?.type||types[0]}>{types.map(t=><option key={t} value={t}>{t.replaceAll('_',' ')} · {RELATIONSHIP_TYPES[t].category}</option>)}</select></label><label>To<select name="to" required defaultValue={editingRelation?.targetId||records[1]?.id||records[0]?.id}>{records.map(r=><option key={r.id} value={r.id}>{r.name} · {r.type}</option>)}</select></label><label className="relation-notes">Context / note<input name="notes" maxLength="500" defaultValue={editingRelation?.notes||''} placeholder="Optional context for this link"/></label><label className="relation-evidence">Evidence sources<select name="sourceEvidenceIds" multiple size="3" defaultValue={editingRelation?.sourceEvidenceIds||[]}>{sources.map(s=><option key={s.id} value={s.id}>{s.title}</option>)}</select></label><div className="relation-form-actions"><button className="button-primary" disabled={records.length<2}>{editingRelation?'Save revised relationship':'＋ Add relationship'}</button>{editingRelation&&<button className="button-secondary" type="button" onClick={onCancelEdit}>Cancel edit</button>}</div><p className="relation-validation-hint">Endpoint rules apply by record type. For example, Nation ALLIED_WITH Nation is allowed; Nation MEMBER_OF Character is rejected.</p></form>
+    <div className="model-toolbar"><div className="search-field">⌕ <input aria-label="Search relationships" value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search connected records and notes..."/></div><select aria-label="Filter relationships by category" value={filter} onChange={e=>setFilter(e.target.value)}>{categories.map(x=><option key={x}>{x}</option>)}</select><span>{visible.length} of {relations.length} links</span></div>
+    <section className="panel relation-list"><div className="panel-head"><div><h2>Relationship registry</h2><p>{relations.length} local links · select either endpoint to inspect its connections</p></div></div>{visible.length?visible.map(rel=>{const status=rel.status||'Draft',issue=relationValidationError(byId(rel.sourceId),byId(rel.targetId),rel.type),transitions=RELATIONSHIP_REVIEW_TRANSITIONS[status]||[];return <article className="relation-row" key={rel.id}><button className="entity-link" onClick={()=>onOpenEntity(rel.sourceId)}>{byId(rel.sourceId).name}<small>{byId(rel.sourceId).type}</small></button><span title={RELATIONSHIP_TYPES[rel.type]?.category}>{rel.type.replaceAll('_',' ')}</span><button className="entity-link" onClick={()=>onOpenEntity(rel.targetId)}>{byId(rel.targetId).name}<small>{byId(rel.targetId).type}</small></button><details className="relation-detail"><summary>Details · v{rel.version||1} · {status}</summary>{issue&&<strong className="relation-invalid">Validation issue: {issue}</strong>}<p>{rel.notes||'No context note.'}</p><small>ID {rel.id} · {RELATIONSHIP_TYPES[rel.type].category} · {rel.canonState||'Proposed'}</small>{(rel.sourceEvidenceIds||[]).map(id=><small className="evidence-citation" key={id}>{sources.find(s=>s.id===id)?.title||`Missing source ${id}`}</small>)}{(rel.previousVersions||[]).map((v,i)=><small className="evidence-citation" key={`${v.version}-${i}`}>Prior v{v.version}: {v.type} · {v.notes||'No note'}</small>)}{transitions.length>0&&<><form id={`relation-review-${rel.id}`} className="relation-review-form" onSubmit={e=>e.preventDefault()}><label>Reviewer<input name="reviewer" required maxLength="100" placeholder="Reviewer name"/></label><label>Rationale<textarea name="rationale" required maxLength="500" rows="2" placeholder="Review this relationship."/></label></form><div className="relation-review-actions">{transitions.map(next=><button key={next} className={`button-secondary ${next==='Rejected'?'danger-button':''}`} onClick={()=>onReviewRelation(rel.id,next)}>{next==='Draft'?'Reopen draft':`Mark ${next}`}</button>)}</div></>}</details><div className="relation-actions"><button className="button-secondary" onClick={()=>onEdit(rel.id)}>Edit</button><button className="button-secondary danger-button" onClick={()=>onDelete(rel.id)} aria-label={`Delete ${rel.type} relationship`}>Remove</button></div></article>}) :<div className="model-empty">{relations.length?'No valid relationships match these filters.':'No links yet. Add a relationship above to build the graph.'}</div>}</section>
+    {relations.some(r=>!byId(r.sourceId)||!byId(r.targetId)||!RELATIONSHIP_TYPES[r.type]||!!relationValidationError(byId(r.sourceId),byId(r.targetId),r.type))&&<div className="demo-note">ⓘ <span>{relations.filter(r=>!byId(r.sourceId)||!byId(r.targetId)||!RELATIONSHIP_TYPES[r.type]||!!relationValidationError(byId(r.sourceId),byId(r.targetId),r.type)).length} imported relationship(s) have an endpoint, type, or domain-rule issue. Missing endpoints or types are hidden; semantic mismatches can be edited and revalidated.</span></div>}
+    <div className="demo-note">ⓘ <span>Relationship edits create local versions and return the link to Draft for review. Domain constraints are a prototype registry, not an approved universal ontology.</span></div></>;
+}
+
+function EvidencePage({evidence,evidenceReviews,claims,sources,selectedEvidenceId,onClearSelection,onSubmit,onEdit,onReview,onLinkStatus,onOpenClaim,onOpenSource}) {
+  const [query,setQuery]=useState(''),[claimFilter,setClaimFilter]=useState('All claims'),[sourceFilter,setSourceFilter]=useState('All sources'),[assessmentFilter,setAssessmentFilter]=useState('All assessments'),[editingId,setEditingId]=useState('');
+  const editing=evidence.find(item=>item.id===editingId),visible=evidence.filter(item=>
+    (claimFilter==='All claims'||item.claimId===claimFilter)&&(sourceFilter==='All sources'||item.sourceId===sourceFilter)&&(assessmentFilter==='All assessments'||item.assessment===assessmentFilter)&&
+    `${item.id} ${item.notes} ${claims.find(c=>c.id===item.claimId)?.statement||''} ${sources.find(s=>s.id===item.sourceId)?.title||''}`.toLowerCase().includes(query.toLowerCase()));
+  const claimName=id=>claims.find(c=>c.id===id)?.statement||`Missing claim ${id}`,sourceName=id=>sources.find(s=>s.id===id)?.title||`Missing source ${id}`;
+  useEffect(()=>{if(selectedEvidenceId)document.getElementById(`evidence-${selectedEvidenceId}`)?.scrollIntoView({block:'center',behavior:'auto'});},[selectedEvidenceId]);
+  return <><PageHead eyebrow="V0.4 · EVIDENCE REGISTRY" title="Evidence registry" subtitle="Manage independent claim-to-source evidence records with versions, reviewer decisions, and local audit history."/><div className="model-notice"><strong>Evidence boundary</strong><span>Assessments and reviewer labels are user-entered prototype data. Sources are references only; WorldForge does not fetch or verify source contents.</span></div>
+    <div className="evidence-registry-layout"><form key={editing?.id||'new-evidence'} className="panel decision-form evidence-editor" onSubmit={e=>{if(editing){onEdit(e);setEditingId('')}else onSubmit(e)}}><h2>{editing?'Edit evidence · create a version':'Add evidence'}</h2>{editing&&<input type="hidden" name="evidenceId" value={editing.id}/>}<label>Claim<select name="claimId" required defaultValue={editing?.claimId||claims[0]?.id} disabled={!!editing}>{claims.map(c=><option key={c.id} value={c.id}>{c.statement.slice(0,100)}</option>)}</select></label><label>Source<select name="sourceId" required defaultValue={editing?.sourceId||sources[0]?.id} disabled={!!editing}>{sources.map(source=><option key={source.id} value={source.id}>{source.title}</option>)}</select></label><label>Assessment<select name="assessment" required defaultValue={editing?.assessment||'Unassessed'}>{EVIDENCE_ASSESSMENTS.map(value=><option key={value}>{value}</option>)}</select></label><label>Evidence notes<textarea name="notes" maxLength="1000" rows="4" defaultValue={editing?.notes||''} placeholder="What does this source contribute to the claim?"/></label><p className="form-help">Evidence is a separate object linking exactly one claim to one source. Editing assessment or notes creates a new immutable version.</p><div className="form-actions"><button className="button-primary" disabled={!claims.length||!sources.length}>{editing?'Save new evidence version':'＋ Add evidence record'}</button>{editing&&<button type="button" className="button-secondary" onClick={()=>setEditingId('')}>Cancel</button>}</div></form>
+    <section className="panel evidence-registry"><div className="panel-head"><div><h2>Evidence records</h2><p>{visible.length} of {evidence.length} record(s)</p></div>{selectedEvidenceId&&<button className="button-secondary" onClick={onClearSelection}>Clear selection</button>}</div><div className="model-toolbar"><div className="search-field">⌕ <input aria-label="Search evidence notes" value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search evidence, claim, or source..."/></div><select aria-label="Filter evidence by claim" value={claimFilter} onChange={e=>setClaimFilter(e.target.value)}><option>All claims</option>{claims.map(c=><option key={c.id} value={c.id}>{c.statement.slice(0,50)}</option>)}</select><select aria-label="Filter evidence by source" value={sourceFilter} onChange={e=>setSourceFilter(e.target.value)}><option>All sources</option>{sources.map(source=><option key={source.id} value={source.id}>{source.title}</option>)}</select><select aria-label="Filter evidence by assessment" value={assessmentFilter} onChange={e=>setAssessmentFilter(e.target.value)}><option>All assessments</option>{EVIDENCE_ASSESSMENTS.map(value=><option key={value}>{value}</option>)}</select></div>
+      {visible.length?visible.map(item=>{const itemReviews=evidenceReviews.filter(review=>review.evidenceId===item.id),claim=claims.find(c=>c.id===item.claimId),source=sources.find(s=>s.id===item.sourceId);return <article id={`evidence-${item.id}`} className={`evidence-card ${selectedEvidenceId===item.id?'evidence-selected':''}`} key={item.id}><div className="decision-title"><strong>{item.id} · v{item.version}</strong><span className={`stage ${item.status==='Validated'?'published':item.status==='Rejected'||item.status==='Unlinked'?'review':'draft'}`}>{item.status}</span></div><div className="evidence-card-links"><div><small>Claim</small><button className="text-link" onClick={()=>onOpenClaim(item.claimId)}>{claimName(item.claimId)}</button></div><div><small>Source</small><button className="text-link" onClick={()=>onOpenSource(item.sourceId)}>{sourceName(item.sourceId)}</button></div></div><p className="evidence-assessment"><b>{item.assessment}</b>{item.notes?` · ${item.notes}`:''}</p><small className="evidence-date">Created {item.createdAt?new Date(item.createdAt).toLocaleString():'Date unavailable'} · Updated {item.updatedAt?new Date(item.updatedAt).toLocaleString():'Date unavailable'}</small>
+        <details className="review-history"><summary>Version history · {(item.versions||[]).length}</summary>{(item.versions||[]).slice().reverse().map(v=><div className="review-history-row" key={`${item.id}-v${v.version}`}><strong>v{v.version} · {v.assessment}</strong><small>{v.createdAt?new Date(v.createdAt).toLocaleString():''} · {v.changeType} · Event {v.eventId||'unavailable'}</small><p>{v.notes}</p></div>)}</details>
+        {itemReviews.length>0&&<details className="review-history"><summary>Evidence reviews · {itemReviews.length}</summary>{itemReviews.map(review=><div className="review-history-row" key={review.id}><strong>{review.decision} · v{review.evidenceVersion}</strong><small>{review.reviewer} · {new Date(review.createdAt).toLocaleString()} · Event {review.eventId}</small><p>{review.rationale}</p></div>)}</details>}
+        {(!claim||!source)&&<p className="evidence-missing">Broken reference: {!claim?claimName(item.claimId):''}{!claim&&!source?' · ':''}{!source?sourceName(item.sourceId):''}</p>}
+        {item.status!=='Unlinked'&&<><form id={`evidence-review-${item.id}`} className="claim-review-form" onSubmit={e=>e.preventDefault()}><label>Reviewer<input name="reviewer" required maxLength="100" placeholder="Reviewer name"/></label><label>Rationale<textarea name="rationale" required maxLength="500" rows="2" placeholder="Why is this evidence validated or rejected?"/></label></form><div className="canon-actions"><button className="button-secondary" onClick={()=>onReview(item.id,'Validated')}>Validate evidence</button><button className="button-secondary danger-button" onClick={()=>onReview(item.id,'Rejected')}>Reject evidence</button><button className="button-secondary" onClick={()=>setEditingId(item.id)}>Edit</button><button className="button-secondary danger-button" onClick={()=>onLinkStatus(item.id,false)}>Unlink</button></div></>}
+        {item.status==='Unlinked'&&<button className="button-secondary" onClick={()=>onLinkStatus(item.id,true)}>Relink evidence</button>}
+      </article>}):<div className="model-empty">{evidence.length?'No evidence matches these filters.':'No evidence records yet. Add evidence to connect a claim to a source.'}</div>}</section></div></>;
+}
+
+function SourcesPage({sources,records,relations,evidence,claims,focusSourceId,onClearFocus,onOpenEvidence,onAddSource,onLink}) { const [fileNote,setFileNote]=useState('');const shownSources=focusSourceId?sources.filter(source=>source.id===focusSourceId):sources;return <><PageHead eyebrow="EVIDENCE & PROVENANCE" title="Sources & provenance" subtitle="Register source references and inspect their connections to records and first-class evidence."/><div className="model-notice"><strong>Provenance rule</strong><span>Source references are entered locally. This prototype does not fetch, verify, or preserve external source files.</span></div><div className="evidence-grid"><form className="panel source-form" onSubmit={onAddSource}><h2>Register a source</h2><label>Title<input name="title" required placeholder="Source title"/></label><label>Source type<select name="kind"><option>Document</option><option>Creative brief</option><option>Author note</option><option>URL reference</option><option>Interview</option></select></label><label>Reference / URL<input name="reference" placeholder="URL, file label, or local reference"/></label><label>Notes<textarea name="note" rows="3" placeholder="Provenance notes, version, or limitations"/></label><button className="button-primary">＋ Register source</button></form><form className="panel source-form" onSubmit={onLink}><h2>Link source to record</h2><label>World record<select name="record">{records.map(r=><option key={r.id} value={r.id}>{r.name} · {r.type}</option>)}</select></label><label>Source<select name="source">{sources.map(s=><option key={s.id} value={s.id}>{s.title}</option>)}</select></label><p className="form-help">This links a source reference to a world record. Use Evidence Registry to create claim-level evidence.</p><button className="button-secondary">Link source to record</button><small className="inline-status">{fileNote}</small></form></div><section className="panel source-list"><div className="panel-head"><div><h2>Source registry</h2><p>{sources.length} local references</p></div>{focusSourceId&&<button className="button-secondary" onClick={onClearFocus}>Show all sources</button>}</div>{shownSources.map(source=>{const linkedEvidence=evidence.filter(item=>item.sourceId===source.id);return <article className={`source-row source-detail-row ${focusSourceId===source.id?'evidence-selected':''}`} key={source.id}><div><strong>{source.title}</strong><small>{source.kind} · {source.reference||'No reference supplied'}</small><small>{source.note}</small><div className="source-evidence-links"><b>{linkedEvidence.length} evidence record(s)</b>{linkedEvidence.map(item=><button className="text-link" key={item.id} onClick={()=>onOpenEvidence(item.id)}>{claims.find(c=>c.id===item.claimId)?.statement||`Missing claim ${item.claimId}`} · {item.assessment} · {item.status}</button>)}</div></div><span>{records.filter(r=>(r.sourceIds||[]).includes(source.id)).length} records · {claims.filter(c=>(c.sourceIds||[]).includes(source.id)).length} legacy claim links · {relations.filter(r=>(r.sourceEvidenceIds||[]).includes(source.id)).length} relations</span></article>})}</section></>; }
+
+function CanonPage({records,reviews,changeRequests,actorKey,setActorKey,onChange,onCreateChange,onResolveChange}) {
+  const actor=GOVERNANCE_ACTORS[actorKey];
+  return <><PageHead eyebrow="CANON WORKFLOW · V0.3" title="Canon governance" subtitle="Move proposed material through investigation and validation, with each transition recorded alongside reviewer rationale."/>
+    <div className="model-notice"><strong>Local policy guard · simulated identity</strong><span>Application logic checks each transition against this selected demo role. Anyone can change the selector; it is not authentication, production authorization, or an external canon write.</span></div>
+    <section className="panel governance-actor"><label htmlFor="governance-actor">Simulated actor</label><select id="governance-actor" value={actorKey} onChange={event=>setActorKey(event.target.value)}>{Object.entries(GOVERNANCE_ACTORS).map(([key,value])=><option key={key} value={key}>{value.name} · {value.role}</option>)}</select><span>Actions are recorded as {actor.name} ({actor.role}). This selector exists for workflow demonstration and is not proof of identity.</span></section>
+    <section className="panel canon-list">{records.map(r=>{const allowed=CANON_TRANSITIONS[r.canonState]||[];return <article className="canon-row canon-workflow-row" key={r.id}><div className="canon-record-head"><strong>{r.name}</strong><small>{r.type} · {r.world} · {r.canonState||'Draft'}</small><div className="workflow-track">{['Draft','Proposed','Investigated','Validated','Approved'].map((step,i)=><span className={(i<=['Draft','Proposed','Investigated','Validated','Approved'].indexOf(r.canonState))?'complete':''} key={step}>{step}</span>)}</div></div>
+      <div className="canon-transition-box"><form id={`canon-form-${r.id}`} onSubmit={e=>e.preventDefault()}><label>Decision rationale<textarea name="rationale" required maxLength="500" rows="2" placeholder="Why is this transition appropriate?"/></label></form><div className="canon-actions">{allowed.length?allowed.map(next=><button key={next} className={`button-secondary ${next==='Rejected'?'danger-button':''}`} onClick={()=>onChange(r.id,next)}>{next==='Superseded'?'Mark superseded':`Move to ${next}`}</button>):<span className="form-help">No next transition from {r.canonState||'Draft'}.</span>}</div></div>
+      {r.canonState==='Approved'&&<form className="change-request-form" onSubmit={onCreateChange}><h3>Propose a change</h3><input type="hidden" name="targetId" value={r.id}/><label>Reason<input name="reason" required maxLength="400" placeholder="Why should this approved record change?"/></label><label>Proposed name<input name="proposedName" maxLength="100" placeholder={r.name}/></label><label>Proposed summary<textarea name="proposedSummary" maxLength="500" rows="2" placeholder="Leave blank to keep the current summary."/></label><button className="button-secondary">＋ Submit change request</button></form>}
+      {reviews.filter(x=>x.targetId===r.id).length>0&&<details className="review-history"><summary>Approval history · {reviews.filter(x=>x.targetId===r.id).length}</summary>{reviews.filter(x=>x.targetId===r.id).map(x=><div className="review-history-row" key={x.id}><strong>{x.fromState||'—'} → {x.toState||x.decision}</strong><small>{x.reviewer} · {new Date(x.createdAt).toLocaleString()}</small><p>{x.rationale}</p></div>)}</details>}</article>})}</section>
+    <section className="panel change-request-list"><div className="panel-head"><div><h2>Change requests</h2><p>Approved records remain unchanged until a request is reviewed.</p></div></div>{changeRequests.length?changeRequests.map(x=>{const target=records.find(r=>r.id===x.targetId);return <article className="decision-row" key={x.id}><div className="decision-title"><strong>{target?.name||'Missing record'}</strong><span className="stage draft">{x.status}</span></div><p>{x.reason}</p><small>Proposed: {x.proposedName||target?.name||'Name unchanged'} · Submitted {new Date(x.createdAt).toLocaleString()}</small>{x.status==='Proposed'&&<div className="canon-actions"><button className="button-secondary" onClick={()=>onResolveChange(x.id,true)}>Approve and version</button><button className="button-secondary danger-button" onClick={()=>onResolveChange(x.id,false)}>Reject request</button></div>}{x.reviewer&&<p><b>Review:</b> {x.reviewer} · {x.rationale}</p>}</article>}):<div className="model-empty">No change requests recorded.</div>}</section>
+    <div className="demo-note">ⓘ <span>Transitions create local review and lineage entries. These records are editable through browser storage and do not confer governance authority.</span></div></>;
+}
+
+function DecisionPage({records,claims,evidence,decisions,claimFilter,onClearClaimFilter,onOpenClaim,onOpenEvidence,onCompareClaim,onOpenTimeline,onSubmit,onDecision}) {
+  const visible=decisions.filter(d=>!claimFilter||d.claimId===claimFilter);
+  return <><PageHead eyebrow="DECISION TRACEABILITY" title="Decision register" subtitle="Record a proposal with its rationale, alternatives, related entity, claim, and authority basis."/><div className="decision-layout"><form className="panel decision-form" onSubmit={onSubmit}><h2>Record a decision proposal</h2><label>Decision title<input name="title" required placeholder="What needs to be decided?"/></label><label>Related entity<select name="record"><option value="">No entity selected</option>{records.map(r=><option key={r.id} value={r.id}>{r.name}</option>)}</select></label><label>Related claim<select name="claimId" defaultValue={claimFilter||''}><option value="">No claim selected</option>{claims.map(c=><option key={c.id} value={c.id}>{c.statement.slice(0,90)}</option>)}</select></label><label>Rationale<textarea name="rationale" required rows="3" placeholder="Why is this option proposed?"/></label><label>Alternatives considered<textarea name="alternatives" rows="2" placeholder="List other options and why they were not selected."/></label><label>Authority basis<input name="authority" placeholder="Charter, policy, role, or unresolved"/></label><button className="button-primary">＋ Save as proposed</button></form><section className="panel decision-list"><div className="panel-head"><div><h2>{claimFilter?'Decisions linked to claim':'Recorded decisions'}</h2><p>{visible.length} of {decisions.length} proposals</p></div>{claimFilter&&<button className="button-secondary" onClick={onClearClaimFilter}>Show all</button>}</div>{visible.length?visible.map(d=>{const claim=claims.find(c=>c.id===d.claimId),linkedEvidence=evidence.filter(item=>item.claimId===d.claimId);return <article className="decision-row" key={d.id}><div className="decision-title"><strong>{d.title}</strong><span className={`stage ${d.status==='Approved'?'published':d.status==='Rejected'?'review':'draft'}`}>{d.status}</span></div><small>Related entity: {records.find(r=>r.id===d.recordId)?.name||'Not specified'}{claim?` · Claim: ${claim.statement}`:''} · {new Date(d.createdAt).toLocaleString()}</small>{claim&&<div className="timeline-event-actions"><button className="text-link" onClick={()=>onOpenClaim(claim.id)}>Open claim →</button><button className="text-link" onClick={()=>onCompareClaim(claim.id)}>Compare claim versions →</button>{linkedEvidence.map(item=><button className="text-link" key={item.id} onClick={()=>onOpenEvidence(item.id)}>Evidence: {item.id} →</button>)}</div>}<p><b>Rationale:</b> {d.rationale}</p><p><b>Alternatives:</b> {d.alternatives||'Not recorded'}</p><p><b>Authority basis:</b> {d.authority||'Unresolved'}</p><div className="canon-actions"><button className="button-secondary" onClick={()=>onOpenTimeline(d.id)}>View audit history</button>{d.status==='Proposed'&&<><button className="button-secondary" onClick={()=>onDecision(d.id,'Approved')}>Mark approved</button><button className="button-secondary danger-button" onClick={()=>onDecision(d.id,'Rejected')}>Reject</button></>}</div></article>}):<div className="model-empty">{claimFilter?'No decisions are linked to this claim yet.':'No decisions recorded yet.'}</div>}</section></div><div className="demo-note">ⓘ <span>Decision states are sample workflow labels and are not legally or organizationally authorized.</span></div></>;
+}
+function VersionComparisonPage({records,relations,claims,evidence,sources,initial}) {
+  const [kind,setKind]=useState(initial?.type||'Claim'),[targetId,setTargetId]=useState(initial?.id||''),[leftVersion,setLeftVersion]=useState(''),[rightVersion,setRightVersion]=useState('');
+  const collections={Entity:records,Relationship:relations,Claim:claims,Evidence:evidence};
+  const targets=collections[kind]||[],target=targets.find(item=>item.id===targetId)||targets[0];
+  const versions=target?kind==='Claim'||kind==='Evidence'?(target.versions||[]):kind==='Entity'?[...(target.previousVersions||[]),target].map(item=>({...item,version:item.version||1})):kind==='Relationship'?[...(target.previousVersions||[]),target].map((item,index)=>({...item,version:item.version||index+1})):[]:[];
+  const sorted=versions.slice().sort((a,b)=>a.version-b.version);
+  useEffect(()=>{if(!targets.some(item=>item.id===targetId))setTargetId(targets[0]?.id||'')},[kind,targets,targetId]);
+  useEffect(()=>{if(initial?.type){setKind(initial.type);setTargetId(initial.id||'')}},[initial?.type,initial?.id]);
+  useEffect(()=>{if(sorted.length>1){setLeftVersion(String(sorted[sorted.length-2].version));setRightVersion(String(sorted[sorted.length-1].version))}else{setLeftVersion('');setRightVersion('')}},[kind,targetId,sorted.length]);
+  const left=sorted.find(v=>v.version===Number(leftVersion)),right=sorted.find(v=>v.version===Number(rightVersion));
+  const fields=kind==='Claim'?['statement','entityId','status','canonState','sourceIds','evidenceLinks']:kind==='Relationship'?['type','sourceId','targetId','notes','status','canonState','sourceEvidenceIds']:kind==='Evidence'?['assessment','status','claimId','sourceId','notes']:['name','type','world','summary','status','canonState','sourceIds'];
+  const metadata=['createdAt','recordedAt','createdBy','changeType','reviewId','changeProposalId','restoredFromVersion','eventId','createdByEventId'];
+  const value=(field,item)=>{const raw=item?.[field];if(raw===undefined||raw===null||raw==='')return '—';if(field==='sourceIds'||field==='sourceEvidenceIds'){const ids=Array.isArray(raw)?raw:[];return ids.map(id=>sources.find(s=>s.id===id)?.title||id).join(', ')||'—'}if(Array.isArray(raw)||typeof raw==='object')return JSON.stringify(raw,null,2);if(field==='entityId'||field==='claimId'||field==='sourceId'||field==='targetId')return raw;return String(raw)};
+  const status=(a,b)=>a==='—'&&b!=='—'?'Added':a!=='—'&&b==='—'?'Removed':a===b?'Unchanged':'Changed';
+  const rows=[...fields,...metadata.filter(field=>left?.[field]!==undefined||right?.[field]!==undefined)].map(field=>({field,before:value(field,left),after:value(field,right)})).map(row=>({...row,status:status(row.before,row.after)}));
+  return <><PageHead eyebrow="SPRINT 4 · VERSION LINEAGE" title="Version comparison" subtitle="Compare saved snapshots side by side to understand what changed across entities, relationships, claims, and evidence."/><div className="model-notice"><strong>Read-only comparison</strong><span>Snapshots are displayed as stored. This view does not alter records or reconcile conflicting values.</span></div><section className="panel comparison-controls"><label>Object type<select value={kind} onChange={e=>{setKind(e.target.value);setTargetId('')}}>{Object.keys(collections).map(x=><option key={x}>{x}</option>)}</select></label><label>Object<select value={target?.id||''} onChange={e=>setTargetId(e.target.value)}>{targets.map(item=><option key={item.id} value={item.id}>{item.name||item.statement||item.notes||item.id} · {item.id}</option>)}</select></label><label>Earlier version<select value={leftVersion} onChange={e=>setLeftVersion(e.target.value)}>{sorted.map(v=><option key={v.version} value={v.version}>v{v.version}</option>)}</select></label><label>Later version<select value={rightVersion} onChange={e=>setRightVersion(e.target.value)}>{sorted.map(v=><option key={v.version} value={v.version}>v{v.version}</option>)}</select></label></section>{target&&sorted.length>1&&left&&right?<section className="panel comparison-results"><div className="panel-head"><div><h2>{target.name||target.statement||target.notes||target.id}</h2><p>{kind} · {target.id} · v{left.version} compared with v{right.version}</p></div><span className="comparison-readonly">Read-only</span></div><div className="comparison-table" role="table" aria-label={`${kind} version differences`}><div className="comparison-row comparison-head" role="row"><strong role="columnheader">Field</strong><strong role="columnheader">v{left.version}</strong><strong role="columnheader">v{right.version}</strong><strong role="columnheader">Change</strong></div>{rows.map(row=><div className={`comparison-row diff-${row.status.toLowerCase()}`} role="row" key={row.field}><strong role="rowheader">{row.field}</strong><pre role="cell" data-label={`Version ${left.version}`}>{row.before}</pre><pre role="cell" data-label={`Version ${right.version}`}>{row.after}</pre><span className="diff-status" role="cell">{row.status}</span></div>)}</div><p className="form-help">Added, removed, and changed values are labeled as well as highlighted; unchanged values remain visible for context.</p></section>:target?<section className="panel model-empty">Only one saved version exists for this {kind.toLowerCase()}.</section>:<section className="panel model-empty">No {kind.toLowerCase()} records are available to compare.</section>}</>;
+}
+
+function LineagePage({audit,records,relations,claims,evidence,sources,decisions,changeRequests,reviews,evidenceReviews,onOpenObject}) {
+  const defaults={type:'All event types',entity:'All entities',claim:'All claims',evidence:'All evidence',decision:'All decisions',reviewer:'',from:'',to:''};
+  const [filters,setFilters]=useState(()=>({...defaults,...readLocal('worldforge.timeline-filters.v1',{})}));
+  const [selected,setSelected]=useState(null);
+  useEffect(()=>{if(!selected)return;const drawer=document.querySelector('.timeline-drawer'),items=drawer?.querySelectorAll('button,[href],input,select,textarea,[tabindex]:not([tabindex="-1"])')||[];items[0]?.focus();const keydown=event=>{if(event.key==='Escape'){setSelected(null);return}if(event.key==='Tab'&&items.length){const first=items[0],last=items[items.length-1];if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus()}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus()}}};document.addEventListener('keydown',keydown);return()=>document.removeEventListener('keydown',keydown)},[selected]);
+  const update=(key,value)=>setFilters(current=>{const next={...current,[key]:value};try{localStorage.setItem('worldforge.timeline-filters.v1',JSON.stringify(next))}catch{}return next});
+  const title=id=>records.find(r=>r.id===id)?.name||claims.find(c=>c.id===id)?.statement?.slice(0,70)||(evidence.some(e=>e.id===id)?`Evidence ${id}`:null)||sources.find(s=>s.id===id)?.title||decisions.find(d=>d.id===id)?.title||(()=>{const rel=relations.find(r=>r.id===id);if(rel)return `${records.find(r=>r.id===rel.sourceId)?.name||rel.sourceId} → ${rel.type} → ${records.find(r=>r.id===rel.targetId)?.name||rel.targetId}`;const change=changeRequests.find(x=>x.id===id);return change?`Change request · ${records.find(r=>r.id===change.targetId)?.name||change.targetId}`:id?`Unavailable object · ${id}`:'Object unavailable'})();
+  const kind=evt=>{if(evt.targetType==='Review'&&evt.reviewId)return 'Review';if(records.some(x=>x.id===evt.targetId))return 'Entity';if(relations.some(x=>x.id===evt.targetId))return 'Relationship';if(claims.some(x=>x.id===evt.targetId)||evt.claimId&&/claim/i.test(evt.targetType||''))return 'Claim';if(evidence.some(x=>x.id===evt.targetId)||evt.evidenceId)return 'Evidence';if(sources.some(x=>x.id===evt.targetId))return 'Source';if(decisions.some(x=>x.id===evt.targetId)||/decision/i.test(evt.action||''))return 'Decision';if(changeRequests.some(x=>x.id===evt.targetId))return 'ChangeRequest';return evt.targetType&&evt.targetType!=='Workspace'?evt.targetType:(/relationship/i.test(evt.action||'')?'Relationship':/claim/i.test(evt.action||'')?'Claim':/evidence/i.test(evt.action||'')?'Evidence':/decision/i.test(evt.action||'')?'Decision':/source/i.test(evt.action||'')?'Source':/review/i.test(evt.action||'')?'Review':'Workspace')};
+  const rows=[...audit,...(reviews||[]).filter(r=>!audit.some(e=>e.id===r.eventId||e.reviewId===r.id||e.targetId===r.targetId&&Math.abs(new Date(e.at||0).getTime()-new Date(r.createdAt||0).getTime())<1000)).map(r=>({id:r.eventId||`review-${r.id}`,at:r.createdAt,actor:r.reviewer,action:`${r.targetType||'Record'} review · ${r.decision}`,targetType:'Review',targetId:r.targetId,claimId:r.claimId,reviewId:r.id,detail:r.rationale})),...(evidenceReviews||[]).filter(r=>!audit.some(e=>e.id===r.eventId)).map(r=>({id:r.eventId||`review-${r.id}`,at:r.createdAt,actor:r.reviewer,action:`Evidence review · ${r.decision}`,targetType:'Review',targetId:r.evidenceId,evidenceId:r.evidenceId,claimId:r.claimId||evidence.find(item=>item.id===r.evidenceId)?.claimId,sourceId:evidence.find(item=>item.id===r.evidenceId)?.sourceId,reviewId:r.id,detail:r.rationale}))];
+  const filtered=rows.filter(evt=>{const type=kind(evt),at=new Date(evt.at).getTime(),entityId=evt.entityId||evt.recordId||(records.some(r=>r.id===evt.targetId)?evt.targetId:'')||records.find(r=>r.id===claims.find(c=>c.id===evt.claimId)?.entityId)?.id||relations.find(r=>r.id===evt.targetId)?.sourceId||'',linkedDecision=decisions.find(d=>d.id===filters.decision);return(filters.type==='All event types'||type===filters.type||evt.action===filters.type)&&(filters.entity==='All entities'||entityId===filters.entity||relations.some(r=>r.id===evt.targetId&&(r.sourceId===filters.entity||r.targetId===filters.entity)))&&(filters.claim==='All claims'||evt.claimId===filters.claim||evt.targetType==='Claim'&&evt.targetId===filters.claim)&&(filters.evidence==='All evidence'||evt.evidenceId===filters.evidence||evt.targetType==='Evidence'&&evt.targetId===filters.evidence)&&(filters.decision==='All decisions'||evt.decisionId===filters.decision||evt.targetId===filters.decision||evt.targetType==='Decision'&&evt.targetId===filters.decision||linkedDecision?.claimId&&evt.claimId===linkedDecision.claimId)&&(!filters.reviewer||String(evt.actor||'').toLowerCase().includes(filters.reviewer.toLowerCase()))&&(!filters.from||Number.isNaN(at)||at>=new Date(`${filters.from}T00:00:00`).getTime())&&(!filters.to||Number.isNaN(at)||at<=new Date(`${filters.to}T23:59:59.999`).getTime())}).sort((a,b)=>{const delta=new Date(b.at||0).getTime()-new Date(a.at||0).getTime();return delta||String(a.id).localeCompare(String(b.id))});
+  const clear=()=>{setFilters(defaults);try{localStorage.setItem('worldforge.timeline-filters.v1',JSON.stringify(defaults))}catch{}};
+  const refs=evt=>[{type:kind(evt),id:evt.targetId,label:`View ${kind(evt).toLowerCase()}`},...(evt.claimId?[{type:'Claim',id:evt.claimId,label:'Open claim'}]:[]),...(evt.evidenceId?[{type:'Evidence',id:evt.evidenceId,label:'Open evidence'}]:[]),...(evt.sourceId?[{type:'Source',id:evt.sourceId,label:'Open source'}]:[])].filter(x=>x.id);
+  const reviewFor=evt=>(reviews||[]).find(r=>r.id===evt.reviewId||r.targetId===evt.targetId&&Math.abs(new Date(r.createdAt||0).getTime()-new Date(evt.at||0).getTime())<1000)||(evidenceReviews||[]).find(r=>r.id===evt.reviewId||r.evidenceId===evt.evidenceId&&Math.abs(new Date(r.createdAt||0).getTime()-new Date(evt.at||0).getTime())<1000);
+  const eventDetail=evt=><article className="lineage-event timeline-event" key={evt.id} aria-label={`${evt.action||'History event'}, ${evt.actor||'actor unavailable'}, ${evt.at||'time unavailable'}`}><i/><time>{evt.at&&!Number.isNaN(new Date(evt.at).getTime())?new Date(evt.at).toLocaleString():'Time unavailable'}</time><div><strong><span className={`timeline-badge badge-${kind(evt).toLowerCase()}`}>{kind(evt)}</span>{evt.action||'History event'}</strong><small>Target: {title(evt.targetId)} · Actor: {evt.actor||'Not recorded'}</small>{evt.detail&&<small>{evt.detail}</small>}<div className="timeline-event-actions"><button className="button-secondary" onClick={()=>setSelected(evt)}>Event details</button>{refs(evt).map((ref,i)=><button className="text-link" key={`${ref.type}-${ref.id}-${i}`} onClick={()=>onOpenObject(ref.type,ref.id)}>{ref.label}: {title(ref.id)}</button>)}</div></div></article>;
+  return <><PageHead eyebrow="PROVENANCE SYSTEM" title="Provenance timeline" subtitle="Trace how records, relationships, claims, evidence, reviews, decisions, and proposals evolved."/><div className="model-notice"><strong>Local history</strong><span>Events remain in browser storage and exports. They can be edited through browser data controls; this is not tamper-proof audit storage.</span></div>
+    <section className="panel timeline-filters" aria-label="Timeline filters"><div className="timeline-filter-grid">
+      <label>Event type<select value={filters.type} onChange={e=>update('type',e.target.value)}>{['All event types','Entity','Relationship','Claim','Evidence','Source','Review','Decision','ClaimChangeProposal','ChangeRequest','Workspace'].map(x=><option key={x}>{x}</option>)}</select></label>
+      <label>Entity<select value={filters.entity} onChange={e=>update('entity',e.target.value)}><option>All entities</option>{records.map(x=><option key={x.id} value={x.id}>{x.name}</option>)}</select></label>
+      <label>Claim<select value={filters.claim} onChange={e=>update('claim',e.target.value)}><option>All claims</option>{claims.map(x=><option key={x.id} value={x.id}>{x.statement.slice(0,60)}</option>)}</select></label>
+      <label>Evidence<select value={filters.evidence} onChange={e=>update('evidence',e.target.value)}><option>All evidence</option>{evidence.map(x=><option key={x.id} value={x.id}>{x.notes?.slice(0,50)||x.id}</option>)}</select></label>
+      <label>Decision<select value={filters.decision} onChange={e=>update('decision',e.target.value)}><option>All decisions</option>{decisions.map(x=><option key={x.id} value={x.id}>{x.title}</option>)}</select></label>
+      <label>Reviewer<input value={filters.reviewer} onChange={e=>update('reviewer',e.target.value)} placeholder="Name contains…"/></label><label>From<input type="date" value={filters.from} onChange={e=>update('from',e.target.value)}/></label><label>To<input type="date" value={filters.to} onChange={e=>update('to',e.target.value)}/></label>
+    </div><div className="timeline-filter-footer"><span>{filtered.length} of {rows.length} events</span><button className="button-secondary" onClick={clear}>Clear filters</button></div></section>
+    <section className="panel lineage-list timeline-list" aria-label="Provenance events">{filtered.length?filtered.map(eventDetail):<div className="model-empty">{rows.length?'No events match the selected filters. Clear filters or create new content.':'No provenance events yet. Create records, relationships, claims, evidence, reviews, or decisions to start the timeline.'}{rows.length>0&&<button className="button-secondary" onClick={clear}>Clear filters</button>}</div>}</section>
+    {selected&&<div className="timeline-drawer-backdrop" role="presentation" onClick={()=>setSelected(null)}><aside className="timeline-drawer" role="dialog" aria-modal="true" aria-labelledby="timeline-detail-title" onClick={e=>e.stopPropagation()}><div className="panel-head"><div><h2 id="timeline-detail-title">Event details</h2><p>{selected.action||'History event'}</p></div><button className="button-secondary" onClick={()=>setSelected(null)} aria-label="Close event details">Close</button></div><dl><dt>Timestamp</dt><dd>{selected.at?new Date(selected.at).toLocaleString():'Time unavailable'}</dd><dt>Actor</dt><dd>{selected.actor||'Not recorded'}</dd><dt>Target object</dt><dd>{title(selected.targetId)}</dd><dt>Type</dt><dd>{kind(selected)}</dd>{selected.claimVersion&&<><dt>Claim version</dt><dd>v{selected.claimVersion}</dd></>}{selected.evidenceVersion&&<><dt>Evidence version</dt><dd>v{selected.evidenceVersion}</dd></>}{(selected.reviewId||reviewFor(selected))&&<><dt>Review</dt><dd>{selected.reviewId||reviewFor(selected)?.id}</dd></>}{selected.decisionId&&<><dt>Decision</dt><dd>{title(selected.decisionId)}</dd></>}{(selected.detail||reviewFor(selected)?.rationale)&&<><dt>Details / rationale</dt><dd>{selected.detail||reviewFor(selected)?.rationale}</dd></>}</dl><button className="button-secondary" onClick={()=>setSelected(null)}>Return to timeline</button></aside></div>}
+  </>;
+}
+function RefractionPage({records,sources,decisions}) { const reviewed=records.filter(r=>r.canonState==='Approved').length; return <><PageHead eyebrow="SOURCE-GROUNDED REVIEW" title="Refraction reviews" subtitle="Inspect observations, interpretations, challenges, and decisions against linked evidence."/><div className="model-notice"><strong>Workflow status</strong><span>This initial screen summarizes records and prompts reviewers; it does not enforce mandatory steps or assign reviewer identities.</span></div><section className="panel review-board"><div className="review-step-row">{['Observe','Interpret','Challenge','Review','Decision'].map((x,i)=><div key={x}><b>0{i+1}</b><strong>{x}</strong></div>)}</div>{records.map(r=><article className="review-item" key={r.id}><div><strong>{r.name}</strong><small>{r.type} · {r.canonState}</small></div><div><b>{(r.sourceIds||[]).length}</b><small>Evidence links</small></div><div><b>{decisions.filter(d=>d.recordId===r.id).length}</b><small>Decisions</small></div><span className="stage draft">Review steps: not recorded</span></article>)}<p className="form-help">Current approved-state sample count: {reviewed} of {records.length}. Register evidence in Sources & Provenance and document outcomes in Decision Register.</p></section><div className="demo-note">ⓘ <span>Evidence registry contains {sources.length} source references. Full structured Refraction notes, reviewer assignment, and sign-off controls are future work.</span></div></>; }
+
+function HermesPage({records,relations,sources,claims,claimChangeProposals,evidence,evidenceReviews,decisions,reviews,changeRequests,audit,onExport,onImport,status}) { return <><PageHead eyebrow="WORKSPACE DATA EXCHANGE" title="Workspace exchange" subtitle="Import or export a complete WorldForge workspace as a versioned JSON file."/><div className="model-notice"><strong>No live connection</strong><span>This is a local import/export adapter. It does not connect to an AH-AIOS Hermes server or transmit data.</span></div><section className="panel exchange-panel"><div className="exchange-counts">{[['World records',records.length],['Relationships',relations.length],['Sources',sources.length],['Claims',claims.length],['Claim proposals',claimChangeProposals.length],['Evidence',evidence.length],['Evidence reviews',evidenceReviews.length],['Reviews',reviews.length],['Change requests',changeRequests.length],['Decisions',decisions.length],['History events',audit.length]].map(([label,count])=><div key={label}><strong>{count}</strong><span>{label}</span></div>)}</div><div className="exchange-actions"><button className="button-primary" onClick={onExport}>↓ Export workspace bundle</button><label className="button-secondary file-button">↑ Import workspace JSON<input type="file" accept="application/json,.json" onChange={onImport}/></label></div>{status&&<p className="exchange-status" role="status">{status}</p>}<p className="form-help">Version 5 exports include first-class evidence records, evidence reviews, and linked audit events. Version 2, 3, and 4 bundles remain importable; legacy claim evidence links are migrated to evidence records. Import replaces current browser workspace data.</p></section><section className="panel capability-note"><h2>Future API adapter</h2><p>A live Hermes connector needs an approved API contract, authentication, workspace mapping, conflict policy, and server-side secret handling.</p></section></>; }
+
+export default App;

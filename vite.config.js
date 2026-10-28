@@ -1,8 +1,12 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+const base = process.env.GITHUB_ACTIONS === 'true'
+  ? '/ah-aios-react-website/'
+  : '/';
 
-export default defineConfig({
-  plugins: [react()],
-  base: '/ah-aios-react-website/',
-})
-
+export default {
+  base,
+  server: {
+    proxy: {
+      '/api': { target: process.env.WORLDFORGE_API_PROXY || 'http://127.0.0.1:8000', changeOrigin: false },
+    },
+  },
+};
