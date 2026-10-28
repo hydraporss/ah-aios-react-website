@@ -111,11 +111,11 @@ pnpm preview
 
 The project includes `netlify.toml` for a static Netlify build (`pnpm build`, publish `dist`) and `.github/workflows/deploy.yml` for GitHub Pages. When GitHub Actions builds the `ah-aios-react-website` repository, Vite uses `/ah-aios-react-website/`; local builds and Netlify builds use `/`. The workflow uses pnpm and the committed `pnpm-lock.yaml`.
 
-To publish with GitHub Pages, put this project in a GitHub repository, push the `main` branch, then set **Settings → Pages → Build and deployment → Source** to **GitHub Actions**. The workflow deploys on pushes to `main` and can also be run manually from the Actions tab. This project folder currently has no Git repository or remote, so the workflow is prepared but no repository has been connected and no deployment has been published.
+To publish with GitHub Pages, put this project in a GitHub repository, push the `main` branch, then set **Settings → Pages → Build and deployment → Source** to **GitHub Actions**. The workflow deploys on pushes to `main` and can also be run manually from the Actions tab. GitHub Pages is configured for this repository and publishes the `dist/` output through GitHub Actions. The latest recorded successful deployment is commit `118da62`; see the [After Humanity page preservation README](docs/after-humanity/README.md) and [deployment run](https://github.com/hydraporss/ah-aios-react-website/actions/runs/40628824210).
 
 Deploy from source with a fresh frozen-lockfile install and serve the site over HTTPS. For any other static host, configure its build command and output directory to match `netlify.toml` (`pnpm build`, `dist`).
 
-Before calling a release production-ready, open the production preview and hosted URL, check browser console and asset requests, exercise the core workflows, and verify representative v2–v5 import/export round trips, keyboard use, mobile layouts, and recovery from storage errors. A successful build alone does not verify these behaviors. No hosted deployment has been performed by this project setup.
+Before calling a release production-ready, open the production preview and hosted URL, check browser console and asset requests, exercise the core workflows, and verify representative v2–v5 import/export round trips, keyboard use, mobile layouts, and recovery from storage errors. A successful build alone does not verify these behaviors. GitHub Pages is deployed; production governance and full browser acceptance are still separate, unverified properties.
 
 ---
 
@@ -350,6 +350,7 @@ Vite document shell.
 
 ## v0.4 planning documents
 
+- [After Humanity page preservation notes](docs/after-humanity/README.md)
 - [Sprint 1 contract, Sprint 2 evidence schema and plan, and v0.4 acceptance checklist](docs/v0.4-sprint-1-and-acceptance.md)
 - [v0.4 end-to-end acceptance and audit record](docs/v0.4-end-to-end-acceptance.md)
 
