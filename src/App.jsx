@@ -680,7 +680,7 @@ export default function ${title.replace(/[^a-zA-Z0-9]/g, '')}() {
           <li><a href="#governance" onClick={() => setActiveView('governance')}>Governance</a></li>
           <li><a href="#import-export" onClick={() => setActiveView('import-export')}>Import/Export</a></li>
           <li><a href="#prompt" onClick={() => setActiveView('prompt')}>Prompt Builder</a></li>
-          <li><a href="#after-humanity" onClick={() => setActiveView('sample')}>After Humanity</a></li>
+          <li><a href="#after-humanity" onClick={() => setActiveView('sample')}>After Humanity Sample</a></li>
         </ul>
         <button
           className="nav-cta"
@@ -691,12 +691,131 @@ export default function ${title.replace(/[^a-zA-Z0-9]/g, '')}() {
         </button>
       </nav>
 
-      <section id="after-humanity" className="sample-world-section" aria-label="After Humanity home">
-        <iframe
-          title="After Humanity index"
-          src="worldforge/index.html"
-          style={{ display: 'block', width: '100%', height: 'min(1000px, calc(100vh - 100px))', minHeight: '760px', border: 0 }}
-        />
+      <section id="after-humanity" className="sample-world-section">
+        <div className="sample-portal">
+          <header className="sample-portal-header">
+            <a className="sample-portal-brand" href="#after-humanity" aria-label="After Humanity home">
+              <span className="sample-portal-mark" aria-hidden="true">✧</span>
+              <span><strong>AFTER HUMANITY</strong><small>WORLD BUILDING · LORE · CANON</small></span>
+            </a>
+            <nav className="sample-portal-nav" aria-label="After Humanity sample navigation">
+              <a className="is-current" href="#after-humanity">Home</a>
+              <a href="#after-humanity-records">Worlds</a>
+              <a href="#sample-characters">Characters</a>
+              <a href="#sample-factions">Factions</a>
+              <a href="#sample-lore">Lore</a>
+              <a href="#sample-gallery">Gallery</a>
+              <a href="#prompt">Tools</a>
+            </nav>
+            <a className="sample-portal-explore" href="#after-humanity-records">Explore <span aria-hidden="true">↗</span></a>
+          </header>
+
+          <div className="sample-portal-layout">
+            <aside className="sample-portal-sidebar" aria-label="Explore WorldForge">
+              <p className="sample-portal-label">EXPLORE</p>
+              <a href="#worlds"><span aria-hidden="true">◎</span><span><strong>World Atlas</strong><small>Places · Routes · Timelines</small></span></a>
+              <a href="#claims"><span aria-hidden="true">◉</span><span><strong>Identity Archive</strong><small>Characters · Factions · Claims</small></span></a>
+              <a href="#relationships"><span aria-hidden="true">⟷</span><span><strong>Relationship Explorer</strong><small>Alliances · Conflicts · Lineages</small></span></a>
+              <a href="#sources"><span aria-hidden="true">⌕</span><span><strong>Source &amp; Evidence Registry</strong><small>Sources · Claims · Verification</small></span></a>
+              <a href="#governance"><span aria-hidden="true">◇</span><span><strong>Canon Governance</strong><small>Proposals · Reviews · Decisions</small></span></a>
+              <a href="#prompt"><span aria-hidden="true">▧</span><span><strong>Visual Artifact Studio</strong><small>Prompts · Previews · Components</small></span></a>
+            </aside>
+
+            <main className="sample-portal-main">
+              <div className="sample-portal-hero">
+                <div className="sample-portal-hero-art" aria-hidden="true">
+                  <svg viewBox="0 0 1200 520" preserveAspectRatio="xMidYMid slice">
+                    <defs>
+                      <linearGradient id="ahSky" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0" stopColor="#15223e" />
+                        <stop offset=".45" stopColor="#59467f" />
+                        <stop offset="1" stopColor="#f1a66f" />
+                      </linearGradient>
+                      <linearGradient id="ahWater" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0" stopColor="#65d4d2" stopOpacity=".75" />
+                        <stop offset="1" stopColor="#142d48" />
+                      </linearGradient>
+                      <radialGradient id="ahPlanet">
+                        <stop offset="0" stopColor="#f7dfc7" />
+                        <stop offset=".72" stopColor="#cc9be5" />
+                        <stop offset="1" stopColor="#7456a5" />
+                      </radialGradient>
+                    </defs>
+                    <rect width="1200" height="520" fill="url(#ahSky)" />
+                    <circle cx="910" cy="110" r="112" fill="url(#ahPlanet)" opacity=".92" />
+                    <circle cx="910" cy="110" r="140" fill="none" stroke="#efd9f7" strokeOpacity=".28" strokeWidth="2" />
+                    <path d="M0 316 Q170 205 325 300 T640 286 T920 256 T1200 284 V520 H0Z" fill="#202c4a" opacity=".86" />
+                    <path d="M0 370 Q190 294 400 355 T800 336 T1200 350 V520 H0Z" fill="#182841" />
+                    <path d="M0 420 Q240 368 440 410 T800 395 T1200 405 V520 H0Z" fill="url(#ahWater)" opacity=".86" />
+                    <path d="M0 430 Q220 400 440 432 T850 420 T1200 432" fill="none" stroke="#d9dcbb" strokeOpacity=".5" strokeWidth="4" />
+                    <g fill="#111c31">
+                      <path d="M425 372V230h42v142zm52 0V188h26v184zm38 0V260h48v112zm60 0V145h34v227zm49 0V214h50v158zm62 0V172h30v200zm42 0V235h60v137zm70 0V195h40v177zm56 0V248h62v124zm71 0V210h36v162z" />
+                      <path d="M365 315h633v16H365zM400 275h510v12H400z" fill="none" stroke="#111c31" strokeWidth="12" />
+                    </g>
+                    <g fill="#f4d3a0" opacity=".8">
+                      <circle cx="477" cy="216" r="3"/><circle cx="620" cy="173" r="3"/><circle cx="708" cy="199" r="3"/>
+                      <circle cx="833" cy="225" r="3"/><circle cx="950" cy="218" r="3"/><circle cx="559" cy="278" r="3"/>
+                    </g>
+                    <path d="M0 488 Q220 451 414 470 T790 466 T1200 466" fill="none" stroke="#d8c191" strokeOpacity=".45" strokeWidth="2" />
+                  </svg>
+                </div>
+                <div className="sample-portal-hero-copy">
+                  <p className="sample-portal-kicker">A WORLD FORGED AFTER THE BLACKOUT</p>
+                  <h1>AFTER HUMANITY</h1>
+                  <p className="sample-portal-subtitle">A universe to explore.</p>
+                  <p>Follow the worlds, people, and stories of a civilization rebuilding from fragments. Every place has a history. Every claim has evidence. Canon is made together.</p>
+                  <a href="#after-humanity-records" className="sample-portal-hero-link">EXPLORE THE UNIVERSE <span aria-hidden="true">→</span></a>
+                </div>
+              </div>
+
+              <div className="sample-portal-stats" aria-label="Sample universe facts">
+                <div><strong>83</strong><span>years since the Blackout</span></div>
+                <div><strong>06</strong><span>charted coastal routes</span></div>
+                <div><strong>00</strong><span>global networks online</span></div>
+              </div>
+
+              <div className="sample-portal-content">
+                <div id="after-humanity-records" className="sample-category-grid">
+                  <a className="sample-category-card sample-card-worlds" href="#worlds">
+                    <span className="sample-category-icon" aria-hidden="true">◉</span>
+                    <h2>Worlds</h2><p>Places, settlements, timelines, and the routes that connect them.</p><span className="sample-card-arrow">→</span>
+                  </a>
+                  <a id="sample-characters" className="sample-category-card sample-card-characters" href="#claims">
+                    <span className="sample-category-icon" aria-hidden="true">♙</span>
+                    <h2>Characters</h2><p>People, motives, and the stories that tie them together.</p><span className="sample-card-arrow">→</span>
+                  </a>
+                  <a id="sample-factions" className="sample-category-card sample-card-factions" href="#relationships">
+                    <span className="sample-category-icon" aria-hidden="true">✥</span>
+                    <h2>Factions</h2><p>Communities, alliances, traditions, and disagreements.</p><span className="sample-card-arrow">→</span>
+                  </a>
+                  <a id="sample-lore" className="sample-category-card sample-card-lore" href="#claims">
+                    <span className="sample-category-icon" aria-hidden="true">⌘</span>
+                    <h2>Lore</h2><p>History, events, theories, and discoveries under review.</p><span className="sample-card-arrow">→</span>
+                  </a>
+                  <a id="sample-gallery" className="sample-category-card sample-card-gallery" href="#prompt">
+                    <span className="sample-category-icon" aria-hidden="true">▧</span>
+                    <h2>Visual Archive</h2><p>Concepts, deterministic previews, and approved artifacts.</p><span className="sample-card-arrow">→</span>
+                  </a>
+                </div>
+
+                <aside className="sample-updates">
+                  <div className="sample-updates-heading"><h2>Latest updates</h2><a href="#reviews">View all →</a></div>
+                  <a href="#after-humanity-records" className="sample-update"><span className="sample-update-orb">✦</span><span><small>NEW LORE</small><strong>The northern relay answers</strong><time>Today · Proposed</time></span></a>
+                  <a href="#after-humanity-records" className="sample-update"><span className="sample-update-orb">⌖</span><span><small>NEW WORLD</small><strong>Meridian Reach route chart</strong><time>Yesterday · Reviewed</time></span></a>
+                  <a href="#sample-characters" className="sample-update"><span className="sample-update-orb">♙</span><span><small>NEW CHARACTER</small><strong>Mara Venn's field notes</strong><time>3 days ago · Proposed</time></span></a>
+                  <a href="#prompt" className="sample-update"><span className="sample-update-orb">▧</span><span><small>NEW VISUAL</small><strong>Storm season over the Glass Belt</strong><time>Sample preview · Deterministic</time></span></a>
+                  <blockquote>“Not all that is lost is gone. Some things simply wait for a new world.”<cite>— AFTER HUMANITY</cite></blockquote>
+                </aside>
+              </div>
+
+              <div className="sample-portal-footer">
+                <p>CONNECTED LORE</p>
+                <span><strong>Mara Venn</strong> found a signal → <strong>The northern relay</strong> may be active → <strong>The Tidekeepers</strong> debate whether to publish the route.</span>
+                <a href="#relationships">Open Relationship Explorer →</a>
+              </div>
+            </main>
+          </div>
+        </div>
       </section>
 
       <section id="after-humanity-video" className="after-humanity-video-section" aria-labelledby="after-humanity-video-title">
