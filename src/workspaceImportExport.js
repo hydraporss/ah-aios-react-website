@@ -21,7 +21,7 @@ export function buildWorkspaceExport(workspace) {
     throw new TypeError("Cannot export an invalid workspace.");
   }
 
-  const bundle = { version: WORKSPACE_SCHEMA_VERSION };
+  const bundle = { schemaVersion: WORKSPACE_SCHEMA_VERSION };
 
   for (const collection of WORKSPACE_COLLECTIONS) {
     const value = workspace[collection] ?? [];
@@ -47,9 +47,14 @@ export function prepareWorkspaceImport(input) {
     throw new Error("Unexpected file format: a workspace backup must contain a records array. Your current workspace has not been changed.");
   }
 
-  if (parsed.version !== undefined &&
-      (!Number.isInteger(parsed.version) || parsed.version < 1 || parsed.version > WORKSPACE_SCHEMA_VERSION)) {
-    throw new Error(`Unsupported workspace version "${parsed.version}". Your current workspace has not been changed.`);
+  const hasSchemaVersion = parsed.schemaVersion !== undefined;
+  const hasLegacyVersion = parsed.version !== undefined;
+  if (hasSchemaVersion && hasLegacyVersion && parsed.schemaVersion !== parsed.version) {
+    throw new Error("Conflicting schemaVersion and legacy version fields. Your current workspace has not been changed.");
+  }
+  const sourceVersion = hasSchemaVersion ? parsed.schemaVersion : (parsed.version ?? 1);
+  if (!Number.isInteger(sourceVersion) || sourceVersion < 1 || sourceVersion > WORKSPACE_SCHEMA_VERSION) {
+    throw new Error(`Unsupported workspace schema version "${sourceVersion}". Your current workspace has not been changed.`);
   }
 
   for (const collection of WORKSPACE_COLLECTIONS) {
@@ -64,7 +69,6 @@ export function prepareWorkspaceImport(input) {
   }
 
   const warnings = [];
-  const sourceVersion = parsed.version ?? 1;
   if (sourceVersion < WORKSPACE_SCHEMA_VERSION &&
       (!Array.isArray(parsed.claims) || !Array.isArray(parsed.changeProposals))) {
     warnings.push(
