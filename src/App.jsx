@@ -704,7 +704,7 @@ export default function ${title.replace(/[^a-zA-Z0-9]/g, '')}() {
         </button>
       </nav>
 
-      <section id="after-humanity" className="sample-world-section">
+      <section id="after-humanity" className="sample-world-section" style={{ scrollMarginTop: '82px' }}>
         <iframe
           ref={afterHumanityFrameRef}
           title="After Humanity worldbuilding archive"
