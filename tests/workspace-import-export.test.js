@@ -21,7 +21,8 @@ const populatedWorkspace = {
 
 test("exports every supported collection using the current schema version", () => {
   const exported = JSON.parse(buildWorkspaceExport(populatedWorkspace));
-  assert.equal(exported.version, WORKSPACE_SCHEMA_VERSION);
+  assert.equal(exported.schemaVersion, WORKSPACE_SCHEMA_VERSION);
+  assert.equal(exported.version, undefined);
   for (const key of Object.keys(populatedWorkspace)) {
     assert.deepEqual(exported[key], populatedWorkspace[key], `${key} should be preserved`);
   }
@@ -43,7 +44,7 @@ test("rejects malformed JSON without producing replacement state", () => {
 
 test("rejects a backup without a records array", () => {
   assert.throws(
-    () => prepareWorkspaceImport(JSON.stringify({ version: 4, claims: [] })),
+    () => prepareWorkspaceImport(JSON.stringify({ schemaVersion: 4, claims: [] })),
     /records array.*current workspace has not been changed/
   );
 });
@@ -69,7 +70,26 @@ test("warns before importing legacy backups that could not contain claims and pr
 });
 
 test("accepts older valid bundles and fills omitted collections with empty arrays", () => {
-  const result = prepareWorkspaceImport({ version: 3, records: [] });
+  const result = prepareWorkspaceImport({ schemaVersion: 3, records: [] });
   assert.deepEqual(result.workspace.relationships, []);
   assert.deepEqual(result.workspace.reviews, []);
+});
+
+test("accepts legacy version field for backward compatibility", () => {
+  const result = prepareWorkspaceImport({ version: 3, records: [] });
+  assert.equal(result.warnings.length, 1);
+});
+
+test("rejects conflicting schema version fields", () => {
+  assert.throws(
+    () => prepareWorkspaceImport({ schemaVersion: 4, version: 3, records: [] }),
+    /Conflicting schemaVersion/
+  );
+});
+
+test("rejects unknown future schema versions", () => {
+  assert.throws(
+    () => prepareWorkspaceImport({ schemaVersion: 5, records: [] }),
+    /Unsupported workspace schema version/
+  );
 });
