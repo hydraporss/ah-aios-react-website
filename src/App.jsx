@@ -680,7 +680,7 @@ export default function ${title.replace(/[^a-zA-Z0-9]/g, '')}() {
           <li><a href="#governance" onClick={() => setActiveView('governance')}>Governance</a></li>
           <li><a href="#import-export" onClick={() => setActiveView('import-export')}>Import/Export</a></li>
           <li><a href="#prompt" onClick={() => setActiveView('prompt')}>Prompt Builder</a></li>
-          <li><a href="#after-humanity" onClick={() => setActiveView('sample')}>After Humanity Sample</a></li>
+          <li><a href="worldforge/index.html">After Humanity</a></li>
         </ul>
         <button
           className="nav-cta"
