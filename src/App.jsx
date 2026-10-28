@@ -526,7 +526,10 @@ function App() {
     const to = document.getElementById('rel-to').value;
     const type = document.getElementById('rel-type').value;
 
-    if (!from || !to || from === to) return;
+    if (!from || !to || from === to) {
+      alert('Choose two different records before adding a relationship.');
+      return;
+    }
 
     if (checkDuplicateRelationship(from, to)) {
       alert('Duplicate relationship: this pair already exists.');
@@ -941,26 +944,28 @@ export default function ${title.replace(/[^a-zA-Z0-9]/g, '')}() {
             <h4>Create Relationship</h4>
             <form id="rel-form">
               <div className="form-group">
-                <label>From</label>
-                <select className="form-input" id="rel-from">
+                <label htmlFor="rel-from">From</label>
+                <select className="form-input" id="rel-from" defaultValue="">
+                  <option value="" disabled>Select a source record</option>
                   {workspaceData.records.map(r => <option key={r.id} value={r.id}>{r.title}</option>)}
                 </select>
               </div>
               <div className="form-group">
-                <label>To</label>
-                <select className="form-input" id="rel-to">
+                <label htmlFor="rel-to">To</label>
+                <select className="form-input" id="rel-to" defaultValue="">
+                  <option value="" disabled>Select a target record</option>
                   {workspaceData.records.map(r => <option key={r.id} value={r.id}>{r.title}</option>)}
                 </select>
               </div>
               <div className="form-group">
-                <label>Type</label>
-                <select className="form-input" id="rel-type">
-                  <option>supports</option>
-                  <option>contradicts</option>
-                  <option>belongs_to</option>
-                  <option>authored_by</option>
-                  <option>approved_by</option>
-                  <option>location_of</option>
+                <label htmlFor="rel-type">Type</label>
+                <select className="form-input" id="rel-type" defaultValue="supports">
+                  <option value="supports">Supports</option>
+                  <option value="contradicts">Contradicts</option>
+                  <option value="belongs_to">Belongs to</option>
+                  <option value="authored_by">Authored by</option>
+                  <option value="approved_by">Approved by</option>
+                  <option value="location_of">Location of</option>
                 </select>
               </div>
               <button type="button" className="btn btn-primary" onClick={addRelationship}>
