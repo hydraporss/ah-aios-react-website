@@ -1,6 +1,8 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './styles.css';
+
+const afterHumanityDocument = "<!doctype html>\n<html lang=\"en\">\n<head><base href=\"https://hydraporss.github.io/ah-aios-react-website/worldforge/\" target=\"_top\">\n<meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n<meta name=\"theme-color\" content=\"#080d1c\"><title>After Humanity — Worldbuilding Archive</title>\n<style>\n:root{--bg:#080d1c;--panel:#0d1728;--line:#24344d;--gold:#d9b85d;--text:#eef3ff;--muted:#9eacc2;--cyan:#73c9e8}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -30%,#273d69 0,transparent 60%),var(--bg);color:var(--text);font:14px/1.5 Inter,ui-sans-serif,system-ui,Segoe UI,sans-serif}button,input{font:inherit;color:inherit}button{cursor:pointer}.shell{max-width:1440px;margin:auto;padding:16px}.topbar{height:66px;display:flex;align-items:center;gap:25px;padding:0 22px;background:#09111fee;border:1px solid var(--line);border-radius:14px;position:sticky;top:10px;z-index:5;backdrop-filter:blur(16px)}.brand{display:flex;align-items:center;gap:12px;min-width:230px}.sigil{height:40px;width:40px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;color:var(--gold);font-size:23px}.brand strong{display:block;font:20px Georgia,serif;letter-spacing:.13em}.brand small{color:var(--muted);letter-spacing:.2em;font-size:9px}.nav{display:flex;gap:6px;align-items:center;flex:1}.nav button,.iconbtn{border:0;background:none;color:var(--muted);padding:10px 12px;border-radius:8px}.nav button:hover,.nav button.active{color:var(--gold);background:#ffffff0a}.nav button.active{box-shadow:inset 0 -2px var(--gold)}.search{position:relative}.search input{width:210px;background:#0b1424;border:1px solid var(--line);border-radius:22px;padding:9px 34px 9px 14px;outline:none}.search input:focus{border-color:var(--gold)}.search span{position:absolute;right:12px;top:7px;color:var(--muted)}.iconbtn{font-size:18px}.layout{display:grid;grid-template-columns:190px minmax(0,1fr);gap:16px;margin-top:16px}.side,.box{background:linear-gradient(145deg,#111d31,#0a1221);border:1px solid var(--line);border-radius:12px}.side{padding:12px;height:max-content;position:sticky;top:92px}.side h3{font-size:10px;letter-spacing:.18em;color:var(--muted);padding:0 8px;margin:8px 0}.side button{display:flex;width:100%;text-align:left;align-items:center;gap:10px;background:none;color:#c6d2e5;border:0;border-radius:8px;padding:10px 8px;font-size:12px}.side button:hover,.side button.active{background:#ffffff0b;color:var(--gold)}.side .ico{font-size:17px;width:22px;text-align:center}.side small{display:block;color:#8191aa;font-size:9px}.main{min-width:0}.hero{min-height:350px;border:1px solid #36425a;border-radius:13px;overflow:hidden;position:relative;display:flex;align-items:center;padding:clamp(24px,5vw,68px);background:linear-gradient(90deg,#07101bea 0%,#091323c9 38%,#11182d44 76%),linear-gradient(0deg,#08101ddd,transparent 35%),radial-gradient(ellipse at 76% 55%,#f5b36c 0,transparent 18%),radial-gradient(ellipse at 72% 60%,#ac6bc0 0,transparent 32%),radial-gradient(ellipse at 63% 40%,#3785bd 0,transparent 40%),linear-gradient(130deg,#142346,#252954 40%,#723a68 68%,#f2a96e);isolation:isolate}.hero:before{content:\"\";position:absolute;inset:0;z-index:-1;background:radial-gradient(circle at 72% 28%,#d9eaff 0 1px,transparent 2px),radial-gradient(circle at 87% 30%,#fff 0 1px,transparent 2px),radial-gradient(circle at 60% 17%,#fff 0 1px,transparent 2px),radial-gradient(circle at 53% 67%,#b9eaff 0 1px,transparent 2px);background-size:150px 130px,190px 170px,230px 210px,170px 160px;opacity:.8}.hero:after{content:\"\";position:absolute;z-index:-1;right:5%;bottom:-45px;width:47%;height:60%;background:linear-gradient(180deg,#86d9eeaa,#334f80 42%,#131b38 44%,#0c1327);clip-path:polygon(0 100%,8% 65%,17% 70%,25% 24%,32% 64%,43% 8%,53% 66%,62% 35%,72% 69%,84% 22%,100% 100%);filter:drop-shadow(0 0 20px #69bfe0)}.hero-content{max-width:570px}.eyebrow{color:var(--gold);letter-spacing:.25em;text-transform:uppercase;font-size:10px}.hero h1{font:clamp(38px,6vw,64px)/.98 Georgia,serif;letter-spacing:.03em;margin:12px 0}.hero .sub{font:14px Georgia,serif;letter-spacing:.34em;color:#e5c56e}.hero p{color:#d2d9e8;max-width:430px}.goldbtn{border:1px solid var(--gold);background:#0a1425aa;color:var(--gold);border-radius:24px;padding:11px 18px;letter-spacing:.1em;font-size:11px;font-weight:700;margin-top:10px}.goldbtn:hover{background:var(--gold);color:#111}.sectionhead{display:flex;align-items:end;justify-content:space-between;margin:22px 2px 12px}.sectionhead h2{font:23px Georgia,serif;margin:0}.sectionhead p{margin:3px 0 0;color:var(--muted);font-size:12px}.textbtn{border:0;background:none;color:var(--gold);font-size:12px}.content-grid{display:grid;grid-template-columns:repeat(5,minmax(130px,1fr)) minmax(205px,1.4fr);gap:10px}.card{border:1px solid var(--line);border-radius:11px;overflow:hidden;background:#0c1524;min-width:0;transition:.2s transform,.2s border-color}.card:hover{transform:translateY(-3px);border-color:#9b8450}.art{height:155px;display:flex;align-items:center;justify-content:center;font-size:57px;position:relative;overflow:hidden;background:var(--art)}.art:after{content:\"\";position:absolute;inset:35% 0 0;background:linear-gradient(transparent,#09111de8)}.art span{filter:drop-shadow(0 4px 8px #0008);z-index:1}.cardbody{padding:12px}.cardbody h3{font:16px Georgia,serif;letter-spacing:.05em;margin:0 0 4px}.cardbody p{font-size:11px;color:var(--muted);margin:0;min-height:32px}.arrow{display:block;color:var(--gold);text-align:right;margin-top:7px}.updates{padding:14px}.updates h3{font:18px Georgia,serif;margin:0 0 6px}.update{display:grid;grid-template-columns:47px 1fr;gap:9px;padding:10px 0;border-bottom:1px solid #ffffff12}.thumb{height:40px;border-radius:6px;background:var(--art);display:grid;place-items:center;font-size:20px}.update b{display:block;font-size:11px;font-weight:600}.update small{font-size:9px;color:var(--muted)}.quote{margin:12px 0 2px;color:#aab6c8;font:italic 12px Georgia,serif}.empty{padding:30px;text-align:center;color:var(--muted)}.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);background:#e8d08a;color:#151b28;padding:11px 17px;border-radius:24px;opacity:0;transition:.25s;pointer-events:none;z-index:10}.toast.show{opacity:1;transform:translate(-50%,0)}.mobilemenu{display:none}.footer{color:#718098;text-align:center;font-size:10px;padding:25px}\n@media(max-width:1050px){.content-grid{grid-template-columns:repeat(3,1fr)}.updates{grid-column:span 3}.updates-list{display:grid;grid-template-columns:repeat(2,1fr);gap:0 18px}.brand{min-width:190px}.search input{width:165px}}\n@media(max-width:720px){.shell{padding:8px}.topbar{height:auto;min-height:58px;padding:8px 12px;gap:8px;top:5px}.brand{min-width:0;flex:1}.brand strong{font-size:15px}.brand small{font-size:7px}.sigil{width:34px;height:34px}.nav{display:none}.search input{width:clamp(100px,30vw,180px)}.iconbtn{display:none}.mobilemenu{display:block}.layout{grid-template-columns:1fr;margin-top:9px}.side{display:none;position:fixed;z-index:6;top:72px;left:8px;max-width:230px;box-shadow:0 10px 40px #000b}.side.open{display:block}.hero{min-height:360px;padding:27px 23px;align-items:flex-start}.hero:after{width:75%;right:-8%;height:50%}.hero h1{font-size:43px}.hero .sub{font-size:10px}.content-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.card:last-of-type:nth-child(odd){grid-column:span 2}.updates{grid-column:auto}.updates-list{display:block}.art{height:130px}}\n</style></head>\n<body><div class=\"shell\">\n<header class=\"topbar\"><button class=\"iconbtn mobilemenu\" id=\"menuToggle\" aria-label=\"Open menu\">☰</button><div class=\"brand\"><div class=\"sigil\">✥</div><div><strong>AFTER HUMANITY</strong><small>WORLD BUILDING · LORE · CANON</small></div></div><nav class=\"nav\" aria-label=\"Main navigation\"><button class=\"active\" data-section=\"Home\">Home</button><button data-section=\"Worlds\">Worlds</button><button data-section=\"Characters\">Characters</button><button data-section=\"Races\">Races</button><button data-section=\"Lore\">Lore</button><button data-section=\"Gallery\">Gallery</button><button data-section=\"Tools\">Tools</button></nav><label class=\"search\"><input id=\"search\" placeholder=\"Search the universe…\" aria-label=\"Search the universe\"><span>⌕</span></label><button class=\"iconbtn\" id=\"profile\" aria-label=\"Profile\">♙</button><button class=\"iconbtn\" id=\"menuMore\" aria-label=\"More\">☷</button></header>\n<div class=\"layout\"><aside class=\"side\" id=\"side\"><h3>✧ &nbsp; EXPLORE</h3><button class=\"active\" data-section=\"Worlds\"><span class=\"ico\">◎</span><span>World Atlas<small>Planets · Locations · Timelines</small></span></button><button data-section=\"Characters\"><span class=\"ico\">♙</span><span>Identity Archive<small>Characters · Races · Technologies</small></span></button><button data-section=\"Relationships\"><span class=\"ico\">⌘</span><span>Relationship Explorer<small>Alliances · Conflicts · Lineages</small></span></button><button data-section=\"Sources\"><span class=\"ico\">◉</span><span>Source & Evidence Registry<small>Sources · Claims · Verification</small></span></button><button data-section=\"Canon\"><span class=\"ico\">⚙</span><span>Canon Governance<small>Proposals · Reviews · Decisions</small></span></button><button data-section=\"Gallery\"><span class=\"ico\">✧</span><span>Visual Archive Studio<small>Images · Prompts · Assessments</small></span></button></aside>\n<main class=\"main\"><section class=\"hero\"><div class=\"hero-content\"><div class=\"eyebrow\">A living universe · preserved through knowledge</div><h1>AFTER HUMANITY</h1><div class=\"sub\">A UNIVERSE TO EXPLORE</div><p>Explore the worlds, races, characters, and stories of a living universe of possibility, preserved through knowledge and governed by canon.</p><button class=\"goldbtn\" id=\"explore\">EXPLORE THE UNIVERSE &nbsp; →</button></div></section>\n<div class=\"sectionhead\"><div><h2 id=\"sectionTitle\">Explore the universe</h2><p id=\"sectionDesc\">Choose a path into the archive.</p></div><button class=\"textbtn\" id=\"reset\">Reset view ↺</button></div>\n<div class=\"content-grid\" id=\"cards\"></div>\n<div class=\"footer\">AFTER HUMANITY · KNOWLEDGE · EXPLORATION · PRESERVATION · CANON</div></main></div></div><div class=\"toast\" id=\"toast\" role=\"status\"></div>\n<script>\nconst entries=[\n {title:'WORLDS',section:'Worlds',desc:'Planets, locations, timelines and civilizations.',icon:'🪐',art:'radial-gradient(circle at 55% 38%,#d9efff,#348ed4 20%,#142d6a 48%,#10152b 73%)'},\n {title:'CHARACTERS',section:'Characters',desc:'Heroes, allies, and the stories that connect them.',icon:'👩🏻‍🚀',art:'radial-gradient(ellipse at 50% 32%,#f5c39f,#974c67 27%,#252149 58%,#0d1427)'},\n {title:'RACES',section:'Races',desc:'Species, origins, traits and cultures.',icon:'🧝🏽‍♀️',art:'radial-gradient(ellipse at 52% 32%,#ffb8cb,#a546a7 30%,#47226d 58%,#10152b)'},\n {title:'LORE',section:'Lore',desc:'History, events, theories and discoveries.',icon:'🌌',art:'radial-gradient(circle at 50% 45%,#e1c0ff,#7255d9 12%,#162361 42%,#080e20)'},\n {title:'VISUAL ARCHIVE',section:'Gallery',desc:'Approved images, concepts and artwork.',icon:'💎',art:'radial-gradient(ellipse at 50% 48%,#fff5cf,#63e8d2 14%,#197488 35%,#09182c 68%)'},\n];\nconst updates=[['WORLD','The ORI: Ascension and Beyond','Oct 25, 2025','🌅'],['NEW WORLD','Veyr Prime — Research Outpost','Oct 24, 2025','🪐'],['CHARACTER','Mara — Profile Updated','Oct 22, 2025','👩🏻‍🚀'],['VISUALS','The Cosmic Garden — Gallery','Oct 20, 2025','💠']];\nconst cards=document.querySelector('#cards'),toast=document.querySelector('#toast');let timer;\nfunction showToast(msg){toast.textContent=msg;toast.classList.add('show');clearTimeout(timer);timer=setTimeout(()=>toast.classList.remove('show'),2200)}\nfunction render(filter=''){cards.innerHTML='';const q=filter.trim().toLowerCase();let shown=0;entries.filter(x=>!q||`${x.title} ${x.section} ${x.desc}`.toLowerCase().includes(q)).forEach(x=>{shown++;const card=document.createElement('article');card.className='card';card.innerHTML=`<div class=\"art\" style=\"--art:${x.art}\"><span>${x.icon}</span></div><div class=\"cardbody\"><h3>${x.title}</h3><p>${x.desc}</p><span class=\"arrow\">→</span></div>`;card.tabIndex=0;card.setAttribute('role','button');card.setAttribute('aria-label',`Open ${x.title}`);const destinations={Worlds:'world-atlas.html',Characters:'characters.html',Races:'races.html',Lore:'lore.html',Gallery:'gallery.html'};card.onclick=()=>window.top.location.href=destinations[x.section]||'universe-explorer.html';card.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();card.click()}};cards.append(card)});if(!q){const box=document.createElement('aside');box.className='box updates';box.innerHTML='<h3>Latest updates <button class=\"textbtn\" style=\"float:right\" id=\"viewAll\">View all →</button></h3><div class=\"updates-list\">'+updates.map(u=>`<div class=\"update\"><div class=\"thumb\" style=\"--art:${entries.find(e=>e.section===u[0]||e.title===u[0])?.art||'linear-gradient(135deg,#233a6b,#b66d84)'}\">${u[3]}</div><div><small>${u[0]}</small><b>${u[1]}</b><small>${u[2]}</small></div></div>`).join('')+'</div><p class=\"quote\">“Not all that is lost is gone. Some things simply wait for a new world.”</p>';cards.append(box);box.querySelector('#viewAll').onclick=()=>window.top.location.href='latest-updates.html';box.querySelectorAll('.update').forEach((item,i)=>{item.tabIndex=0;item.setAttribute('role','link');item.onclick=()=>window.top.location.href=i===1?'world-atlas.html#veyr':i===2?'identity-archive.html#mara':i===3?'visual-archive-studio.html#cosmic-garden':'latest-updates.html';item.onkeydown=e=>{if(e.key==='Enter')item.click()}})}if(!shown)cards.innerHTML='<div class=\"empty\">No archive entries match that search.</div>'}\nrender();document.querySelector('#search').addEventListener('input',e=>render(e.target.value));document.querySelectorAll('[data-section]').forEach(b=>b.addEventListener('click',()=>{const section=b.dataset.section;if(section==='Worlds'){window.top.location.href=b.closest('.side')?'world-atlas.html':'world-atlas.html';return}if(section==='Characters'){window.top.location.href=b.closest('.side')?'identity-archive.html':'identity-archive.html';return}if(section==='Relationships'){window.top.location.href='relationship-explorer.html';return}if(section==='Sources'){window.top.location.href='evidence-registry.html';return}if(section==='Canon'){window.top.location.href='canon-governance.html';return}if(section==='Races'){window.top.location.href='races.html';return}if(section==='Lore'){window.top.location.href='lore.html';return}if(section==='Gallery'){window.top.location.href=b.closest('.side')?'visual-archive-studio.html':'visual-archive-studio.html';return}if(section==='Tools'){window.top.location.href='tools.html';return}document.querySelectorAll('[data-section]').forEach(x=>x.classList.toggle('active',x===b));document.querySelector('#sectionTitle').textContent=section==='Home'?'Explore the universe':section;document.querySelector('#sectionDesc').textContent=section==='Home'?'Choose a path into the archive.':`Browse the ${section.toLowerCase()} archive.`;document.querySelector('#search').value=section==='Home'?'':section;render(document.querySelector('#search').value);document.querySelector('#side').classList.remove('open')}));document.querySelector('#explore').onclick=()=>window.top.location.href='universe-explorer.html';document.querySelector('#reset').onclick=()=>{document.querySelector('#search').value='';document.querySelector('#sectionTitle').textContent='Explore the universe';document.querySelector('#sectionDesc').textContent='Choose a path into the archive.';render();showToast('View reset')};document.querySelector('#menuToggle').onclick=()=>document.querySelector('#side').classList.toggle('open');document.querySelector('#profile').onclick=()=>showToast('Profile menu — customize this action');document.querySelector('#menuMore').onclick=()=>showToast('More tools — customize this action');\n</script><script>(function(){const report=()=>window.parent.postMessage({source:'ah-after-humanity',height:document.documentElement.scrollHeight},'*');new ResizeObserver(report).observe(document.documentElement);window.addEventListener('load',report);setTimeout(report,0)})()</script></body></html>";
 
 function App() {
   const [workspaceData, setWorkspaceData] = useState(() => {
@@ -42,6 +44,17 @@ function App() {
   const [promptInput, setPromptInput] = useState('');
   const [copyStatus, setCopyStatus] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
+  const [afterHumanityHeight, setAfterHumanityHeight] = useState(1080);
+  const afterHumanityFrameRef = useRef(null);
+
+  useEffect(() => {
+    const handleArchiveResize = (event) => {
+      if (event.source !== afterHumanityFrameRef.current?.contentWindow || event.data?.source !== 'ah-after-humanity') return;
+      setAfterHumanityHeight(Math.max(600, Math.min(Number(event.data.height) || 1080, 4000)));
+    };
+    window.addEventListener('message', handleArchiveResize);
+    return () => window.removeEventListener('message', handleArchiveResize);
+  }, []);
 
   useEffect(() => {
     localStorage.setItem('ah-aios-worldforge', JSON.stringify(workspaceData));
@@ -692,130 +705,13 @@ export default function ${title.replace(/[^a-zA-Z0-9]/g, '')}() {
       </nav>
 
       <section id="after-humanity" className="sample-world-section">
-        <div className="sample-portal">
-          <header className="sample-portal-header">
-            <a className="sample-portal-brand" href="#after-humanity" aria-label="After Humanity home">
-              <span className="sample-portal-mark" aria-hidden="true">✧</span>
-              <span><strong>AFTER HUMANITY</strong><small>WORLD BUILDING · LORE · CANON</small></span>
-            </a>
-            <nav className="sample-portal-nav" aria-label="After Humanity sample navigation">
-              <a className="is-current" href="#after-humanity">Home</a>
-              <a href="#after-humanity-records">Worlds</a>
-              <a href="#sample-characters">Characters</a>
-              <a href="#sample-factions">Factions</a>
-              <a href="#sample-lore">Lore</a>
-              <a href="#sample-gallery">Gallery</a>
-              <a href="#prompt">Tools</a>
-            </nav>
-            <a className="sample-portal-explore" href="#after-humanity-records">Explore <span aria-hidden="true">↗</span></a>
-          </header>
-
-          <div className="sample-portal-layout">
-            <aside className="sample-portal-sidebar" aria-label="Explore WorldForge">
-              <p className="sample-portal-label">EXPLORE</p>
-              <a href="#worlds"><span aria-hidden="true">◎</span><span><strong>World Atlas</strong><small>Places · Routes · Timelines</small></span></a>
-              <a href="#claims"><span aria-hidden="true">◉</span><span><strong>Identity Archive</strong><small>Characters · Factions · Claims</small></span></a>
-              <a href="#relationships"><span aria-hidden="true">⟷</span><span><strong>Relationship Explorer</strong><small>Alliances · Conflicts · Lineages</small></span></a>
-              <a href="#sources"><span aria-hidden="true">⌕</span><span><strong>Source &amp; Evidence Registry</strong><small>Sources · Claims · Verification</small></span></a>
-              <a href="#governance"><span aria-hidden="true">◇</span><span><strong>Canon Governance</strong><small>Proposals · Reviews · Decisions</small></span></a>
-              <a href="#prompt"><span aria-hidden="true">▧</span><span><strong>Visual Artifact Studio</strong><small>Prompts · Previews · Components</small></span></a>
-            </aside>
-
-            <main className="sample-portal-main">
-              <div className="sample-portal-hero">
-                <div className="sample-portal-hero-art" aria-hidden="true">
-                  <svg viewBox="0 0 1200 520" preserveAspectRatio="xMidYMid slice">
-                    <defs>
-                      <linearGradient id="ahSky" x1="0" y1="0" x2="1" y2="1">
-                        <stop offset="0" stopColor="#15223e" />
-                        <stop offset=".45" stopColor="#59467f" />
-                        <stop offset="1" stopColor="#f1a66f" />
-                      </linearGradient>
-                      <linearGradient id="ahWater" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0" stopColor="#65d4d2" stopOpacity=".75" />
-                        <stop offset="1" stopColor="#142d48" />
-                      </linearGradient>
-                      <radialGradient id="ahPlanet">
-                        <stop offset="0" stopColor="#f7dfc7" />
-                        <stop offset=".72" stopColor="#cc9be5" />
-                        <stop offset="1" stopColor="#7456a5" />
-                      </radialGradient>
-                    </defs>
-                    <rect width="1200" height="520" fill="url(#ahSky)" />
-                    <circle cx="910" cy="110" r="112" fill="url(#ahPlanet)" opacity=".92" />
-                    <circle cx="910" cy="110" r="140" fill="none" stroke="#efd9f7" strokeOpacity=".28" strokeWidth="2" />
-                    <path d="M0 316 Q170 205 325 300 T640 286 T920 256 T1200 284 V520 H0Z" fill="#202c4a" opacity=".86" />
-                    <path d="M0 370 Q190 294 400 355 T800 336 T1200 350 V520 H0Z" fill="#182841" />
-                    <path d="M0 420 Q240 368 440 410 T800 395 T1200 405 V520 H0Z" fill="url(#ahWater)" opacity=".86" />
-                    <path d="M0 430 Q220 400 440 432 T850 420 T1200 432" fill="none" stroke="#d9dcbb" strokeOpacity=".5" strokeWidth="4" />
-                    <g fill="#111c31">
-                      <path d="M425 372V230h42v142zm52 0V188h26v184zm38 0V260h48v112zm60 0V145h34v227zm49 0V214h50v158zm62 0V172h30v200zm42 0V235h60v137zm70 0V195h40v177zm56 0V248h62v124zm71 0V210h36v162z" />
-                      <path d="M365 315h633v16H365zM400 275h510v12H400z" fill="none" stroke="#111c31" strokeWidth="12" />
-                    </g>
-                    <g fill="#f4d3a0" opacity=".8">
-                      <circle cx="477" cy="216" r="3"/><circle cx="620" cy="173" r="3"/><circle cx="708" cy="199" r="3"/>
-                      <circle cx="833" cy="225" r="3"/><circle cx="950" cy="218" r="3"/><circle cx="559" cy="278" r="3"/>
-                    </g>
-                    <path d="M0 488 Q220 451 414 470 T790 466 T1200 466" fill="none" stroke="#d8c191" strokeOpacity=".45" strokeWidth="2" />
-                  </svg>
-                </div>
-                <div className="sample-portal-hero-copy">
-                  <p className="sample-portal-kicker">A WORLD FORGED AFTER THE BLACKOUT</p>
-                  <h1>AFTER HUMANITY</h1>
-                  <p className="sample-portal-subtitle">A universe to explore.</p>
-                  <p>Follow the worlds, people, and stories of a civilization rebuilding from fragments. Every place has a history. Every claim has evidence. Canon is made together.</p>
-                  <a href="#after-humanity-records" className="sample-portal-hero-link">EXPLORE THE UNIVERSE <span aria-hidden="true">→</span></a>
-                </div>
-              </div>
-
-              <div className="sample-portal-stats" aria-label="Sample universe facts">
-                <div><strong>83</strong><span>years since the Blackout</span></div>
-                <div><strong>06</strong><span>charted coastal routes</span></div>
-                <div><strong>00</strong><span>global networks online</span></div>
-              </div>
-
-              <div className="sample-portal-content">
-                <div id="after-humanity-records" className="sample-category-grid">
-                  <a className="sample-category-card sample-card-worlds" href="worldforge/world-atlas.html">
-                    <span className="sample-category-icon" aria-hidden="true">◉</span>
-                    <h2>Worlds</h2><p>Planets, locations, timelines, and civilizations.</p><span className="sample-card-arrow">→</span>
-                  </a>
-                  <a id="sample-characters" className="sample-category-card sample-card-characters" href="worldforge/characters.html">
-                    <span className="sample-category-icon" aria-hidden="true">♙</span>
-                    <h2>Characters</h2><p>Heroes, allies, and the stories that connect them.</p><span className="sample-card-arrow">→</span>
-                  </a>
-                  <a id="sample-factions" className="sample-category-card sample-card-factions" href="worldforge/races.html">
-                    <span className="sample-category-icon" aria-hidden="true">✥</span>
-                    <h2>Races</h2><p>Species, origins, traits, and cultures.</p><span className="sample-card-arrow">→</span>
-                  </a>
-                  <a id="sample-lore" className="sample-category-card sample-card-lore" href="worldforge/lore.html">
-                    <span className="sample-category-icon" aria-hidden="true">⌘</span>
-                    <h2>Lore</h2><p>History, events, theories, and discoveries.</p><span className="sample-card-arrow">→</span>
-                  </a>
-                  <a id="sample-gallery" className="sample-category-card sample-card-gallery" href="worldforge/gallery.html">
-                    <span className="sample-category-icon" aria-hidden="true">▧</span>
-                    <h2>Visual Archive</h2><p>Approved images, concepts, and artwork.</p><span className="sample-card-arrow">→</span>
-                  </a>
-                </div>
-
-                <aside className="sample-updates">
-                  <div className="sample-updates-heading"><h2>Latest updates</h2><a href="#reviews">View all →</a></div>
-                  <a href="#after-humanity-records" className="sample-update"><span className="sample-update-orb">✦</span><span><small>NEW LORE</small><strong>The northern relay answers</strong><time>Today · Proposed</time></span></a>
-                  <a href="#after-humanity-records" className="sample-update"><span className="sample-update-orb">⌖</span><span><small>NEW WORLD</small><strong>Meridian Reach route chart</strong><time>Yesterday · Reviewed</time></span></a>
-                  <a href="#sample-characters" className="sample-update"><span className="sample-update-orb">♙</span><span><small>NEW CHARACTER</small><strong>Mara Venn's field notes</strong><time>3 days ago · Proposed</time></span></a>
-                  <a href="#prompt" className="sample-update"><span className="sample-update-orb">▧</span><span><small>NEW VISUAL</small><strong>Storm season over the Glass Belt</strong><time>Sample preview · Deterministic</time></span></a>
-                  <blockquote>“Not all that is lost is gone. Some things simply wait for a new world.”<cite>— AFTER HUMANITY</cite></blockquote>
-                </aside>
-              </div>
-
-              <div className="sample-portal-footer">
-                <p>CONNECTED LORE</p>
-                <span><strong>Mara Venn</strong> found a signal → <strong>The northern relay</strong> may be active → <strong>The Tidekeepers</strong> debate whether to publish the route.</span>
-                <a href="#relationships">Open Relationship Explorer →</a>
-              </div>
-            </main>
-          </div>
-        </div>
+        <iframe
+          ref={afterHumanityFrameRef}
+          title="After Humanity worldbuilding archive"
+          srcDoc={afterHumanityDocument}
+          sandbox="allow-scripts allow-top-navigation-by-user-activation"
+          style={{ display: 'block', width: '100%', height: afterHumanityHeight, border: 0 }}
+        />
       </section>
 
       <section id="after-humanity-video" className="after-humanity-video-section" aria-labelledby="after-humanity-video-title">
