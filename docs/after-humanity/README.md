@@ -8,9 +8,32 @@ This file records the deployed After Humanity page structure and the files neede
 - **Repository:** [hydraporss/ah-aios-react-website](https://github.com/hydraporss/ah-aios-react-website)
 - **Preserved HTML code:** [View HTML source](https://github.com/hydraporss/ah-aios-react-website/blob/main/public/worldforge/after-humanity-source.html) · [Raw HTML](https://raw.githubusercontent.com/hydraporss/ah-aios-react-website/main/public/worldforge/after-humanity-source.html) · [Hosted HTML copy](https://hydraporss.github.io/ah-aios-react-website/worldforge/after-humanity-source.html)
 - **Recorded source revision:** `118da62`
-- **Deployment workflow:** [GitHub Pages build and deployment](https://github.com/hydraporss/ah-aios-react-website/actions/runs/40628824210)
+- **Deployment workflow:** [GitHub Pages build and deployment](https://github.com/hydraporss/ah-aios-react-website/actions/runs/40629297698)
 
 The old link with `?v=32eec0f` refers to an earlier browser-cached build. Use the live page link above for the recorded layout.
+
+## Important links
+
+### Page and preserved code
+
+- [Live WorldForge page — After Humanity section](https://hydraporss.github.io/ah-aios-react-website/#after-humanity)
+- [Standalone After Humanity HTML file in GitHub](https://github.com/hydraporss/ah-aios-react-website/blob/main/public/worldforge/after-humanity-source.html)
+- [Raw HTML source](https://raw.githubusercontent.com/hydraporss/ah-aios-react-website/main/public/worldforge/after-humanity-source.html)
+- [Hosted standalone HTML copy](https://hydraporss.github.io/ah-aios-react-website/worldforge/after-humanity-source.html)
+- [Cover image asset](https://hydraporss.github.io/ah-aios-react-website/worldforge/after-humanity-cover.jpg)
+
+### Project files and publishing
+
+- [GitHub repository](https://github.com/hydraporss/ah-aios-react-website)
+- [React page source](https://github.com/hydraporss/ah-aios-react-website/blob/main/src/App.jsx)
+- [Stylesheet](https://github.com/hydraporss/ah-aios-react-website/blob/main/src/styles.css)
+- [Main project README](https://github.com/hydraporss/ah-aios-react-website/blob/main/README.md)
+- [Latest successful Pages workflow](${newRun})
+
+### YouTube
+
+- [Featured video — AH The Refraction of the Four Nines](https://www.youtube.com/watch?v=TGheUWZO43s)
+- [After Humanity YouTube channel](https://www.youtube.com/channel/UC9Kk4i4-HNbzGalYhsSUMCA)
 
 ## Page structure to preserve
 
