@@ -776,25 +776,25 @@ export default function ${title.replace(/[^a-zA-Z0-9]/g, '')}() {
 
               <div className="sample-portal-content">
                 <div id="after-humanity-records" className="sample-category-grid">
-                  <a className="sample-category-card sample-card-worlds" href="#worlds">
+                  <a className="sample-category-card sample-card-worlds" href="worldforge/world-atlas.html">
                     <span className="sample-category-icon" aria-hidden="true">◉</span>
-                    <h2>Worlds</h2><p>Places, settlements, timelines, and the routes that connect them.</p><span className="sample-card-arrow">→</span>
+                    <h2>Worlds</h2><p>Planets, locations, timelines, and civilizations.</p><span className="sample-card-arrow">→</span>
                   </a>
-                  <a id="sample-characters" className="sample-category-card sample-card-characters" href="#claims">
+                  <a id="sample-characters" className="sample-category-card sample-card-characters" href="worldforge/characters.html">
                     <span className="sample-category-icon" aria-hidden="true">♙</span>
-                    <h2>Characters</h2><p>People, motives, and the stories that tie them together.</p><span className="sample-card-arrow">→</span>
+                    <h2>Characters</h2><p>Heroes, allies, and the stories that connect them.</p><span className="sample-card-arrow">→</span>
                   </a>
-                  <a id="sample-factions" className="sample-category-card sample-card-factions" href="#relationships">
+                  <a id="sample-factions" className="sample-category-card sample-card-factions" href="worldforge/races.html">
                     <span className="sample-category-icon" aria-hidden="true">✥</span>
-                    <h2>Factions</h2><p>Communities, alliances, traditions, and disagreements.</p><span className="sample-card-arrow">→</span>
+                    <h2>Races</h2><p>Species, origins, traits, and cultures.</p><span className="sample-card-arrow">→</span>
                   </a>
-                  <a id="sample-lore" className="sample-category-card sample-card-lore" href="#claims">
+                  <a id="sample-lore" className="sample-category-card sample-card-lore" href="worldforge/lore.html">
                     <span className="sample-category-icon" aria-hidden="true">⌘</span>
-                    <h2>Lore</h2><p>History, events, theories, and discoveries under review.</p><span className="sample-card-arrow">→</span>
+                    <h2>Lore</h2><p>History, events, theories, and discoveries.</p><span className="sample-card-arrow">→</span>
                   </a>
-                  <a id="sample-gallery" className="sample-category-card sample-card-gallery" href="#prompt">
+                  <a id="sample-gallery" className="sample-category-card sample-card-gallery" href="worldforge/gallery.html">
                     <span className="sample-category-icon" aria-hidden="true">▧</span>
-                    <h2>Visual Archive</h2><p>Concepts, deterministic previews, and approved artifacts.</p><span className="sample-card-arrow">→</span>
+                    <h2>Visual Archive</h2><p>Approved images, concepts, and artwork.</p><span className="sample-card-arrow">→</span>
                   </a>
                 </div>
 
