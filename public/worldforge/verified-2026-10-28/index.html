@@ -1,16 +1,126 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#070909">
-  <meta http-equiv="refresh" content="0; url=../after-humanity-prompt-builder-archive/">
-  <link rel="canonical" href="../after-humanity-prompt-builder-archive/">
-  <title>AH-AIOS WorldForge — After Humanity</title>
-  <script>window.location.replace('../after-humanity-prompt-builder-archive/');</script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="AFTER HUMANITY — connected philosophy, prompt building, and archive tools.">
+<title>AH-AIOS WorldForge | After Humanity, Prompt Builder & Complete Archive</title>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <p>Opening the new WorldForge redesign…</p>
-  <p><a href="../after-humanity-prompt-builder-archive/">Continue to After Humanity, Prompt Builder, and the Complete Archive</a></p>
-</body>
-</html>
+<header class="topbar">
+  <a class="brand" href="#home" aria-label="AH-AIOS WorldForge home"><span class="mark">✥</span><span>AH-AIOS WORLDFORGE<small>AFTER HUMANITY · KNOWLEDGE · CANON</small></span></a>
+  <nav class="top-nav" aria-label="Primary navigation">
+    <a class="top-nav-link active" href="#home" data-page="home">Home</a>
+    <a class="top-nav-link" href="#knowledge" data-page="knowledge">After Humanity</a>
+    <a class="top-nav-link" href="#prompt-builder" data-page="prompt-builder">Prompt Builder</a>
+    <a class="top-nav-link" href="#archive" data-page="archive">Complete Archive</a>
+  </nav>
+  <label class="global-search"><span>⌕</span><input id="global-search" placeholder="Search across all systems…" aria-label="Search across all systems"><kbd>Enter</kbd></label>
+  <div class="top-actions"><span class="live-dot"></span><span class="small-status">LOCAL WORKSPACE</span><button id="export-all" class="icon-button" title="Export workspace data" aria-label="Export workspace data">⇩</button></div>
+  <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation">☰</button>
+</header>
+<div class="layout">
+<aside class="sidebar" id="sidebar">
+  <div class="nav-label">PLATFORM</div>
+  <a class="nav-link active" href="#home" data-page="home"><span>⌂</span>Home</a>
+  <a class="nav-link" href="#knowledge" data-page="knowledge"><span>◈</span>Knowledge</a>
+  <a class="nav-link" href="#prompt-builder" data-page="prompt-builder"><span>✧</span>Prompt Builder</a>
+  <a class="nav-link" href="#archive" data-page="archive"><span>▤</span>Complete Archive</a>
+  <a class="nav-link" href="#governance" data-page="governance"><span>◇</span>Governance</a>
+  <a class="nav-link" href="#agents" data-page="agents"><span>⌘</span>Agents & Tools</a>
+  <a class="nav-link" href="#analytics" data-page="analytics"><span>▥</span>Analytics</a>
+  <div class="sidebar-bottom"><div class="status-card"><span class="live-dot"></span><strong>Local workspace ready</strong><p>Your edits are saved in this browser.</p></div><a class="nav-link" href="#settings" data-page="settings"><span>⚙</span>Settings</a></div>
+</aside>
+<main class="content">
+<section class="page active" id="page-home" data-title="Home">
+  <div class="hero">
+    <div class="hero-copy"><p class="eyebrow">AH-AIOS WORLDFORGE</p><h1>Build Worlds<br>That <em>Last.</em></h1><p class="hero-kicker">The operating system for worldbuilding and knowledge governance.</p><p class="hero-lead">Turn ideas, sources, and stories into a structured, connected, traceable universe. Explore AFTER HUMANITY, build a canon-aware prompt, or search the complete archive.</p><div class="button-row"><a class="button primary" href="#knowledge">Explore the Universe <span>→</span></a><a class="button secondary" href="#prompt-builder">Start Building</a></div><p class="hero-footnote">Structured knowledge · Connected worlds · Verified evolution.</p></div>
+    <div class="hero-art"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="planet"></div><div class="city-glow"></div><div class="art-label"><span>AH / 01</span><strong>MEMORY IS ARCHITECTURE</strong><small>BEING · BECOMING · UNDERSTANDING</small></div></div>
+  </div>
+  <div class="feature-strip" aria-label="WorldForge capabilities">
+    <a href="#archive"><span class="feature-icon">✣</span><strong>Structured Worldbuilding</strong><small>Build connected worlds, places, events, and characters.</small></a>
+    <a href="#archive"><span class="feature-icon">↗</span><strong>Relationship Mapping</strong><small>Browse links between people, places, claims, and events.</small></a>
+    <a href="#archive"><span class="feature-icon">⌕</span><strong>Provenance & Evidence</strong><small>Keep source notes and uncertainty visible.</small></a>
+    <a href="#governance"><span class="feature-icon">◇</span><strong>Canon Governance</strong><small>Keep canon, proposals, and unresolved material distinct.</small></a>
+    <a href="#prompt-builder"><span class="feature-icon">✧</span><strong>Prompt Builder</strong><small>Assemble reusable prompts with project safeguards.</small></a>
+  </div>
+  <div class="section-heading"><div><p class="eyebrow">THREE CONNECTED SYSTEMS</p><h2>One ecosystem. Distinct responsibilities.</h2></div><p>Navigate the platform without collapsing the original concepts into one.</p></div>
+  <div class="system-grid">
+    <a class="system-card ah-card" href="#knowledge"><div class="card-top"><span class="round-icon">A</span><span class="card-tag">PHILOSOPHY & UNIVERSE</span></div><h3>AFTER HUMANITY</h3><p>The project’s philosophical universe, narrative, frameworks, concepts, and established records.</p><div class="mini-points"><span>Three Nines</span><span>Level 120</span><span>AION / THE ONE</span></div><span class="card-link">Explore framework ↗</span></a>
+    <a class="system-card prompt-card" href="#prompt-builder"><div class="card-top"><span class="round-icon">✧</span><span class="card-tag">CREATE & REFINE</span></div><h3>Prompt Builder</h3><p>Compose structured prompts, select a framework and focus, then save, copy, or export your work.</p><div class="mini-points"><span>Templates</span><span>Prompt library</span><span>History</span></div><span class="card-link">Open Prompt Builder ↗</span></a>
+    <a class="system-card archive-card" href="#archive"><div class="card-top"><span class="round-icon">▤</span><span class="card-tag">EXPLORE & PRESERVE</span></div><h3>Complete Archive</h3><p>Search, filter, inspect, add, and export records while preserving source and status distinctions.</p><div class="mini-points"><span>Records</span><span>Relationships</span><span>Continuity</span></div><span class="card-link">Browse the archive ↗</span></a>
+  </div>
+  <div class="dashboard-grid">
+    <section class="panel"><div class="panel-heading"><div><p class="eyebrow">FOUNDATION</p><h2>The Three Nines</h2></div><a href="#knowledge" class="text-link">Open knowledge →</a></div><div class="nines-grid"><article><span class="nine-symbol blue">01</span><h3>BEING</h3><p>What is?</p><small>Existence, identity, reality.</small></article><article><span class="nine-symbol teal">02</span><h3>BECOMING</h3><p>What becomes?</p><small>Change, emergence, consequence.</small></article><article><span class="nine-symbol violet">03</span><h3>UNDERSTANDING</h3><p>How is reality understood?</p><small>Knowledge, evidence, limits.</small></article></div><p class="muted note">AION / THE ONE remains the encompassing metaphysical ground beneath the Three Nines, not another numbered level.</p></section>
+    <section class="panel"><div class="panel-heading"><div><p class="eyebrow">WORKSPACE</p><h2>Quick actions</h2></div></div><div class="quick-list"><a href="#prompt-builder"><span class="quick-icon">✧</span><span><strong>Create a prompt</strong><small>Start from a template or blank draft</small></span><b>→</b></a><a href="#archive"><span class="quick-icon">⌕</span><span><strong>Search the archive</strong><small>Find records by title, tag, or content</small></span><b>→</b></a><a href="#governance"><span class="quick-icon">◇</span><span><strong>Review governance</strong><small>Keep proposals separate from canon</small></span><b>→</b></a><button id="quick-backup"><span class="quick-icon">⇩</span><span><strong>Export workspace backup</strong><small>Download records and prompt library as JSON</small></span><b>→</b></button></div></section>
+  </div>
+  <div class="notice"><strong>Integrity by design</strong><span>New material is labeled as a proposal. Existing contradictions and provenance gaps are preserved instead of silently resolved.</span><a href="#governance">Read the governance rules →</a></div>
+</section>
+
+<section class="page" id="page-knowledge" data-title="Knowledge">
+  <div class="page-title"><p class="eyebrow">AFTER HUMANITY / KNOWLEDGE MODEL</p><h1>Knowledge & Relationships</h1><p>Explore the conceptual framework and navigate its connected records.</p></div>
+  <div class="nines-grid large-nines"><article class="panel"><span class="nine-symbol blue">01</span><h2>Being</h2><p>What is?</p><small>Reality, existence, identity, entities, and what it means for something to be.</small></article><article class="panel"><span class="nine-symbol teal">02</span><h2>Becoming</h2><p>What becomes?</p><small>Transformation, emergence, agency, development, power, and consequence.</small></article><article class="panel"><span class="nine-symbol violet">03</span><h2>Understanding</h2><p>How is reality understood?</p><small>Knowledge, interpretation, evidence, models, reasoning, and limits.</small></article></div>
+  <div class="panel"><div class="panel-heading"><div><p class="eyebrow">RELATIONSHIP MODEL</p><h2>Connected concepts</h2></div><a class="text-link" href="#archive">Open records →</a></div><div class="relationship-list"><div><b>Provenance</b><span>Where did this claim come from?</span></div><div><b>Chronology</b><span>When did an event occur?</span></div><div><b>Genealogy</b><span>What lineage or descent is asserted?</span></div><div><b>Contradiction</b><span>Which records remain in tension?</span></div><div><b>Continuity</b><span>How did this record change over time?</span></div></div></div>
+  <div class="panel"><p class="eyebrow">ARCHIVE SEARCH</p><div class="search-row"><input id="knowledge-search" placeholder="Search knowledge records…"><button class="button primary" id="knowledge-search-button">Search</button></div><div id="knowledge-results" class="result-list"></div></div>
+</section>
+
+<section class="page" id="page-prompt-builder" data-title="Prompt Builder">
+  <div class="page-title"><p class="eyebrow">CREATE / CONSTRUCT / INTEGRATE / REFINE</p><h1>Prompt Builder</h1><p>Build reusable prompts using project-aware constraints. Generation here is deterministic template assembly; no external AI service is called.</p></div>
+  <div class="builder-layout">
+    <section class="panel builder-form"><div class="panel-heading"><div><p class="eyebrow">PROMPT CONFIGURATION</p><h2>Compose your prompt</h2></div><span class="pill">LOCAL TOOL</span></div>
+      <label>Prompt title<input id="prompt-title" placeholder="e.g. Audit a historical contradiction" value="New Prompt"></label>
+      <label>What do you want to explore, create, or analyze?<textarea id="prompt-goal" rows="4" placeholder="Describe the task and intended outcome…"></textarea></label>
+      <div class="form-row"><label>Framework<select id="prompt-framework"><option>Master Philosophical Framework</option><option>Three Nines</option><option>WorldForge / Alexandria</option><option>Canon & Provenance Audit</option><option>Visual Concept Development</option><option>Open / General</option></select></label><label>Focus<select id="prompt-focus"><option>All Perspectives</option><option>Being</option><option>Becoming</option><option>Understanding</option><option>Evidence & Provenance</option><option>Continuity & Contradictions</option><option>Visual Design</option></select></label></div>
+      <div class="form-row"><label>Mode<select id="prompt-mode"><option>Audit evidence, then develop</option><option>Research and synthesize</option><option>Generate proposal only</option><option>Critique and revise</option><option>Visual brief</option></select></label><label>Output format<select id="prompt-output"><option>Structured report</option><option>Step-by-step plan</option><option>Markdown document</option><option>Image-generation prompt</option><option>Checklist</option></select></label></div>
+      <label>Constraints / additional context<textarea id="prompt-constraints" rows="3" placeholder="Sources, audience, limits, required sections…"></textarea></label>
+      <div class="button-row"><button class="button primary" id="generate-prompt">Assemble prompt →</button><button class="button secondary" id="load-template">Load selected template</button></div>
+    </section>
+    <section class="panel output-panel"><div class="panel-heading"><div><p class="eyebrow">OUTPUT</p><h2>Prompt preview</h2></div><span class="status-label" id="prompt-state">Draft</span></div><textarea id="prompt-output-text" rows="20" placeholder="Your assembled prompt will appear here…" spellcheck="false"></textarea><div class="button-row wrap"><button class="button primary" id="copy-prompt">Copy prompt</button><button class="button secondary" id="save-prompt">Save to library</button><button class="button secondary" id="download-prompt">Export .md</button><button class="button ghost" id="clear-prompt">Clear</button></div><p class="micro">Copy requires browser permission. Saved prompts are stored in this browser’s local storage.</p></section>
+  </div>
+  <div class="panel"><div class="panel-heading"><div><p class="eyebrow">START FASTER</p><h2>Templates</h2></div></div><div class="template-grid" id="template-grid">
+    <button class="template-card" data-template="worldbuilding"><span>01 / WORLD BUILDING</span><strong>Worldbuilding & Lore</strong><small>Develop setting details with explicit canon boundaries.</small></button>
+    <button class="template-card" data-template="audit"><span>02 / EVIDENCE</span><strong>Research & Analysis</strong><small>Audit sources, confidence, contradictions, and gaps.</small></button>
+    <button class="template-card" data-template="visual"><span>03 / VISUALS</span><strong>Visual Concept Generation</strong><small>Turn a concept into a grounded visual brief.</small></button>
+    <button class="template-card" data-template="story"><span>04 / NARRATIVE</span><strong>Story Development</strong><small>Build narrative from established material.</small></button>
+  </div></div>
+  <div class="panel"><div class="panel-heading"><div><p class="eyebrow">SAVED LOCALLY</p><h2>Prompt library & history</h2></div><button class="button ghost" id="clear-prompt-history">Clear history</button></div><div id="prompt-library" class="saved-list"><p class="muted">No saved prompts yet.</p></div></div>
+</section>
+
+<section class="page" id="page-archive" data-title="Complete Archive">
+  <div class="page-title"><p class="eyebrow">PRESERVE / CONNECT / EXPLORE</p><h1>Complete Archive</h1><p>Search and maintain a local collection of project records. Imported records keep their supplied content; new records are labeled proposals by default.</p></div>
+  <div class="archive-toolbar"><div class="search-row"><input id="archive-search" placeholder="Search title, content, tags, source…"><select id="archive-category"><option value="">All categories</option><option>Philosophy</option><option>Lore & History</option><option>Visuals</option><option>Research</option><option>Governance</option><option>Technology</option><option>Archive Status</option><option>Prompt</option></select><select id="archive-status"><option value="">All statuses</option><option>Established canon</option><option>Proposal</option><option>Unresolved</option><option>Operational record</option></select></div><div class="button-row"><button class="button primary" id="new-record-button">+ New record</button><button class="button secondary" id="import-records">Import JSON</button><button class="button secondary" id="export-records">Export JSON</button><input type="file" id="import-file" accept=".json,application/json" hidden></div></div>
+  <div class="archive-summary"><div><span id="record-count">0</span><small>Records</small></div><div><span id="canon-count">0</span><small>Established</small></div><div><span id="proposal-count">0</span><small>Proposals</small></div><div><span id="unresolved-count">0</span><small>Unresolved</small></div></div>
+  <div class="archive-layout"><div id="archive-list" class="archive-list"></div><aside class="panel record-detail" id="record-detail"><p class="eyebrow">RECORD DETAILS</p><h2>Select a record</h2><p class="muted">Choose an archive item to view its content, provenance, status, and tags.</p></aside></div>
+  <dialog id="record-dialog"><form id="record-form" method="dialog" class="dialog-form"><div class="panel-heading"><h2 id="record-dialog-title">New archive record</h2><button class="icon-button" type="button" id="close-record-dialog" aria-label="Close dialog">×</button></div><input type="hidden" id="record-id"><label>Title<input id="record-title" required maxlength="180"></label><div class="form-row"><label>Category<select id="record-new-category"><option>Philosophy</option><option>Lore & History</option><option>Visuals</option><option>Research</option><option>Governance</option><option>Technology</option><option>Archive Status</option><option>Prompt</option></select></label><label>Status<select id="record-new-status"><option>Proposal</option><option>Established canon</option><option>Unresolved</option><option>Operational record</option></select></label></div><label>Content<textarea id="record-content" rows="7" required></textarea></label><label>Source / provenance<input id="record-source" placeholder="Source document, URL, or explicitly unknown"></label><label>Tags (comma-separated)<input id="record-tags" placeholder="e.g. level-120, provenance"></label><div class="button-row"><button class="button primary" id="save-record" type="submit">Save record</button><button class="button secondary" type="button" id="cancel-record">Cancel</button></div><p class="micro">This edits the local archive only. It does not update external files or canon.</p></form></dialog>
+</section>
+
+<section class="page" id="page-governance" data-title="Governance">
+  <div class="page-title"><p class="eyebrow">STATUS / PROVENANCE / CONTINUITY</p><h1>Governance & Integrity</h1><p>The operational rules below are designed to protect original content, preserve unresolved contradictions, and avoid unsupported claims.</p></div>
+  <div class="governance-grid"><article class="panel"><span class="nine-symbol teal">01</span><h2>Established canon</h2><p>Preserve established records and their status. Do not rewrite them merely to make the narrative simpler.</p></article><article class="panel"><span class="nine-symbol violet">02</span><h2>Unresolved</h2><p>Keep contradictions and missing evidence visible. Do not invent a resolution or claim that a gap is closed.</p></article><article class="panel"><span class="nine-symbol blue">03</span><h2>Proposal</h2><p>Newly generated material remains explicitly labeled as a proposal until authorized.</p></article><article class="panel"><span class="nine-symbol amber">04</span><h2>Provenance</h2><p>Distinguish source text, interpretation, inference, and speculation. Record unknown sources as unknown.</p></article></div>
+  <div class="panel"><p class="eyebrow">CANON SAFEGUARDS</p><h2>Project boundaries to preserve</h2><ul class="integrity-list"><li><strong>Three Nines:</strong> Being, Becoming, Understanding are related perspectives, not compulsory stages.</li><li><strong>AION / THE ONE:</strong> the encompassing metaphysical ground beneath the Three Nines, not simply another numbered level.</li><li><strong>Level 120:</strong> philosophical and visual uses remain distinct until formally resolved.</li><li><strong>Prompt Bible:</strong> the exact original full-text source remains unrecovered; a current methodology record is not a replacement.</li><li><strong>Chronology vs genealogy:</strong> distinct relationships; do not treat one as proof of the other.</li><li><strong>Archive gaps:</strong> missing documents and intermediate history remain visible as recovery targets.</li></ul></div>
+  <div class="panel"><div class="panel-heading"><div><p class="eyebrow">LOCAL WORKFLOW</p><h2>Governance review queue</h2></div><a href="#archive" class="text-link">Open archive →</a></div><p class="muted">Create a proposal record in the archive and it will appear here. This is a browser-local demo, not a shared approval system.</p><div id="governance-queue" class="result-list"></div></div>
+</section>
+
+<section class="page" id="page-agents" data-title="Agents & Tools">
+  <div class="page-title"><p class="eyebrow">PROPOSED CAPABILITIES</p><h1>Agents & Tools</h1><p>Role definitions for a future connected system. These cards describe workflows, not active autonomous agents.</p></div>
+  <div class="system-grid"><article class="system-card"><span class="round-icon">⌕</span><h3>Research & Retrieval</h3><p>Find relevant source material and record where it came from.</p><span class="pill">PROPOSED ROLE</span></article><article class="system-card"><span class="round-icon teal">⟷</span><h3>Relationship Analyst</h3><p>Map relationships and flag whether each is sourced, inferred, or uncertain.</p><span class="pill">PROPOSED ROLE</span></article><article class="system-card"><span class="round-icon violet">◇</span><h3>Continuity Auditor</h3><p>Detect contradictions, missing links, provenance gaps, and risky revisions.</p><span class="pill">PROPOSED ROLE</span></article></div>
+  <div class="notice"><strong>Integration status: not connected</strong><span>No live AI API, database, authentication service, or external agent runtime is configured in this package.</span><a href="#settings">Review workspace settings →</a></div>
+</section>
+
+<section class="page" id="page-analytics" data-title="Analytics">
+  <div class="page-title"><p class="eyebrow">WORKSPACE METRICS</p><h1>Analytics</h1><p>Counts below are calculated from this browser’s current archive, not from a remote service.</p></div>
+  <div class="metrics-grid"><article class="metric-card"><small>All archive records</small><strong id="metric-records">0</strong><span>Local dataset</span></article><article class="metric-card"><small>Established canon</small><strong id="metric-canon">0</strong><span>Explicitly marked</span></article><article class="metric-card"><small>Proposals</small><strong id="metric-proposals">0</strong><span>Not canonized</span></article><article class="metric-card"><small>Saved prompts</small><strong id="metric-prompts">0</strong><span>Local library</span></article></div>
+  <div class="panel"><p class="eyebrow">INTEGRITY INDICATORS</p><h2>What is measured — and what is not</h2><div class="relationship-list"><div><b>Record counts</b><span>Calculated from local archive data.</span></div><div><b>Prompt counts</b><span>Calculated from local saved prompts.</span></div><div><b>Source verification</b><span>Not automated; source presence is not proof of truth.</span></div><div><b>AI activity / agent uptime</b><span>Not applicable; no agents or APIs are connected.</span></div></div></div>
+</section>
+
+<section class="page" id="page-settings" data-title="Settings">
+  <div class="page-title"><p class="eyebrow">PREFERENCES / DATA CONTROL</p><h1>Settings</h1><p>Manage local presentation preferences and export or reset browser data.</p></div>
+  <div class="panel settings-panel"><label class="setting-row"><span><strong>High contrast</strong><small>Increase text and border contrast.</small></span><input type="checkbox" id="setting-contrast"></label><label class="setting-row"><span><strong>Compact cards</strong><small>Reduce card padding across the interface.</small></span><input type="checkbox" id="setting-compact"></label><label class="setting-row"><span><strong>Reduced motion</strong><small>Disable nonessential interface transitions.</small></span><input type="checkbox" id="setting-motion"></label><button class="button primary" id="save-settings">Apply preferences</button></div>
+  <div class="panel"><h2>Data management</h2><p class="muted">Archive records, prompt library, and settings are stored in local browser storage. Export regularly if you want a portable backup.</p><div class="button-row"><button class="button secondary" id="settings-export">Export workspace JSON</button><button class="button danger" id="reset-workspace">Reset local workspace</button></div><p class="micro">Reset cannot be undone unless you have exported a backup.</p></div>
+</section>
+<footer class="app-footer"><span class="brand tiny-brand"><span class="mark">A</span><span>AFTER HUMANITY<small>ONE ECOSYSTEM · A LARGER TOMORROW</small></span></span><span>Static local workspace · v1.0</span><span><a href="#governance">Governance</a> · <a href="#settings">Data controls</a></span></footer>
+</main></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<dialog id="concept-dialog"><div class="concept-dialog-content"><button class="icon-button close-concept" id="close-concept">×</button><img data-concept-image src="../after-humanity-prompt-builder-archive/assets/after-humanity-redesign-concept.webp" alt="AFTER HUMANITY redesign concept reference"><p class="micro">Visual concept reference. The operational interface is built with native HTML, CSS, and JavaScript.</p></div></dialog>
+<script src="app.js"></script>
+</body></html>
