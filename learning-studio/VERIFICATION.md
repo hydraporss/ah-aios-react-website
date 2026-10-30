@@ -35,3 +35,10 @@ The regression suite checks:
 
 ## Source integrity
 The three learning domains and nine starter modules are a functional starter curriculum based on available AH-AIOS architecture principles. This does not silently elevate course interpretations to canon or replace authoritative source records.
+
+## 3-Day AI Engineering Sprint addition
+- Added three-day task track with 15 persistent checkboxes and a live completion bar.
+- Added Governance AI capstone structure and acceptance criteria.
+- Added explicit API-key hygiene guidance. The sprint does not provision an API key, call a live model, or deploy the capstone.
+- New regression checks verify section navigation, all 15 controls, local persistence wiring, and credential-safety guidance.
+- Sprint completion is a learner checklist, not evidence that the capstone has been built.
