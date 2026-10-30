@@ -104,7 +104,7 @@
       const kind=String(r.type||r.entityType||r.entity_type||'other').toLowerCase();
       return {...common,name:String(r.name||''),entity_type:['person','civilization','place','object','organization','concept','species','technology','other'].includes(kind)?kind:'other',description:String(r.description||''),identity_notes:String(r.identity||r.identity_notes||''),attributes:r.attributes||{}};
     }
-    if (type==='relationship') return {...common,source_id:String(r.sourceId||r.source_id||''),target_id:String(r.targetId||r.target_id||''),relationship_type:String(r.type||r.relationshipType||r.relationship_type||'Related to'),directionality:r.directionality==='symmetric'?'symmetric':'directed',context:String(r.context||''),allow_self_link:!!r.allowSelfLink,allow_cycle:!!r.allowCycle};
+    if (type==='relationship') { const sourceId=String(r.sourceId||r.source_id||''),targetId=String(r.targetId||r.target_id||''),source=(workspace.entities||[]).find(x=>x.id===sourceId),target=(workspace.entities||[]).find(x=>x.id===targetId),relationWorld=worldId||(source&&source.worldId)||(target&&target.worldId)||null; return {...common,world_id:relationWorld,source_id:sourceId,target_id:targetId,relationship_type:String(r.type||r.relationshipType||r.relationship_type||'Related to'),directionality:r.directionality==='symmetric'?'symmetric':'directed',context:String(r.context||''),allow_self_link:!!r.allowSelfLink,allow_cycle:!!r.allowCycle}; }
     if (type==='claim') {
       const raw=String(r.type||r.claimType||r.claim_type||'interpretation').toLowerCase().replaceAll(' ','_');
       const claimType=['observation','fact_assertion','inference','interpretation','hypothesis','proposal'].includes(raw)?raw:'interpretation';
