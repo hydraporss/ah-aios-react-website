@@ -7,7 +7,7 @@ const css=fs.readFileSync(new URL("../styles.css",import.meta.url),"utf8");
 const ids=[...html.matchAll(/id="([^"]+)"/g)].map(x=>x[1]);
 test("nine starter modules are declared",()=>assert.equal((app.match(/id:"(?:core|harness|world)-0[1-3]"/g)||[]).length,9));
 test("theory gate enforces 82 records and 68+14 split",()=>{assert.match(app,/a\.length!==82/);assert.match(app,/r\.length!==68/);assert.match(app,/s\.length!==14/)});
-test("progress import validates schema and version before replacing state",()=>{assert.match(app,/schema==="ah-aios-learning-progress"/);assert.match(app,/\[1,2\]\.includes\(x\.version\)/);assert.match(app,/if\(!validate\(x\)\)throw Error/)});
+test("progress import validates schema and version before replacing state",()=>{assert.match(app,/x\.schema==="ah-aios-learning-progress"/);assert.match(app,/\[1,2\]\.includes\(x\.version\)/);assert.match(app,/if\(!validate\(x\)\)throw Error/)});
 test("invalid progress import is rejected without replacing state",()=>assert.match(app,/Existing progress preserved/));
 test("course, lab, tutor, portfolio, and profile interactions are wired",()=>{for(const s of ["openCourse(id)","openLab(kind)","tutor-start","#export","#import","#save-profile","#reset-progress"])assert.ok(app.includes(s),s)});
 test("all internal navigation links resolve to a page section",()=>{const links=[...html.matchAll(/href="#([^"]+)"/g)].map(x=>x[1]);const missing=[...new Set(links.filter(x=>!ids.includes(x)))];assert.deepEqual(missing,[])});
