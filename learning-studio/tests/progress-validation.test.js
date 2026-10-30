@@ -18,3 +18,5 @@ test("PWA service worker registration exists",()=>assert.match(app,/serviceWorke
 test("3-day sprint section and all 15 task controls exist",()=>{assert.match(html,/id="sprint"/);assert.equal((html.match(/data-sprint=/g)||[]).length,15);for(const day of ["Day 1 — Git & GitHub","Day 2 — Python & AI API","Day 3 — Quality & CI\/CD"])assert.ok(html.includes(day),day)});
 test("sprint progress is persisted locally and restored",()=>{assert.match(app,/ah-aios-learning-sprint-v1/);assert.match(app,/localStorage\.setItem\(SPRINT_KEY/);assert.match(app,/renderSprint\(\)/)});
 test("sprint security guidance forbids committing credentials",()=>assert.match(html,/Never commit \.env, tokens or keys/));
+
+test("learner profile is reflected in header identity and completion certificates",()=>{assert.match(app,/function syncProfile\(\)/);assert.match(app,/localStorage\.setItem\(PROFILE,learnerName\)/);assert.match(app,/esc\(learnerName\)/);assert.doesNotMatch(app,/\>Alex Rivera\<\/b\>/)});
