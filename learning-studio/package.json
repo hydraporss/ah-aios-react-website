@@ -1,0 +1,9 @@
+{
+  "name": "ah-aios-learning-studio",
+  "version": "0.3.0",
+  "private": true,
+  "description": "Independent static AH-AIOS learning application",
+  "scripts": {
+    "test": "node --test tests/deployment-smoke.test.js"
+  }
+}

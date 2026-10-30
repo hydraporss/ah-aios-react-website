@@ -1,0 +1,74 @@
+name: Learning Studio verification
+on:
+  push:
+    branches: [learning-studio-0.2.0]
+    paths:
+      - "learning-studio/**"
+      - ".github/workflows/learning-studio-verify.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "learning-studio/**"
+      - ".github/workflows/learning-studio-verify.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - name: Install locked project dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Run website deployment checks
+        working-directory: learning-studio
+        run: npm test
+      - name: Check application JavaScript syntax
+        working-directory: learning-studio
+        run: node --check app.js
+      - name: Install Chromium for browser acceptance checks
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Test the application from its production subpath
+        run: |
+          python3 -m http.server 4173 --directory . > /tmp/learning-studio-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 20); do
+            if curl --fail --silent http://127.0.0.1:4173/learning-studio/ > /dev/null; then break; fi
+            sleep 1
+          done
+          node learning-studio/tests/browser-smoke.mjs
+      - name: Check required static application files
+        working-directory: learning-studio
+        run: |
+          test -s index.html
+          test -s app.js
+          test -s styles.css
+          test -s manifest.webmanifest
+          test -s sw.js
+          test -s icon.svg
+          test -s curriculum-data.js
+      - name: Run existing WorldForge governance tests
+        run: pnpm test
+      - name: Build the WorldForge production site
+        run: pnpm build
+      - name: Package Learning Studio alongside WorldForge
+        run: |
+          mkdir -p dist/learning-studio
+          cp learning-studio/index.html learning-studio/app.js learning-studio/styles.css learning-studio/manifest.webmanifest learning-studio/sw.js learning-studio/icon.svg learning-studio/curriculum-data.js dist/learning-studio/
+      - name: Verify the combined production artifact
+        run: |
+          test -s dist/index.html
+          test -s dist/worldforge.svg
+          test -s dist/learning-studio/index.html
+          test -s dist/learning-studio/app.js
+          test -s dist/learning-studio/curriculum-data.js
+          find dist -maxdepth 2 -type f
