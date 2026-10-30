@@ -1,1 +1,12 @@
-{"name":"AH-AIOS Learning Studio","short_name":"AH-AIOS Learn","start_url":"./index.html","display":"standalone","background_color":"#0a1220","theme_color":"#101a2c","description":"Independent AH-AIOS learning environment."}
+{
+  "name": "AH-AIOS Learning",
+  "short_name": "AH-AIOS",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#050d19",
+  "theme_color": "#061323",
+  "description": "Learn, build, govern, and create across the AH-AIOS ecosystem.",
+  "icons": []
+}
