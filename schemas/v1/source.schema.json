@@ -1,0 +1,18 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://hydraporss.github.io/ah-aios-react-website/schemas/v1/source.schema.json",
+  "title":"WorldForge Source Record","type":"object",
+  "allOf":[{"$ref":"./common.schema.json#/$defs/baseRecord"}],
+  "required":["id","record_type","schema_version","world_id","title","source_type","created_at","updated_at","created_by","updated_by","record_version","workflow_status","source_refs"],
+  "properties":{
+    "record_type":{"const":"source"},
+    "world_id":{"anyOf":[{"$ref":"./common.schema.json#/$defs/id"},{"type":"null"}]},
+    "title":{"type":"string","minLength":1,"maxLength":500},
+    "source_type":{"enum":["document","conversation","image","audio","video","webpage","book","dataset","other"]},
+    "origin_locator":{"type":"string","maxLength":4000},
+    "captured_at":{"$ref":"./common.schema.json#/$defs/timestamp"},
+    "attribution":{"type":"string","maxLength":4000},
+    "content_hash":{"type":"string","pattern":"^sha256:[a-f0-9]{64}$"},
+    "access_classification":{"enum":["public","internal","restricted","unknown"]}
+  }
+}
