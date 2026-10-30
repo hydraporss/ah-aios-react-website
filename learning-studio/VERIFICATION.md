@@ -174,3 +174,23 @@ Added `tests/curriculum-quality-gate.test.js`. The new automated checks validate
 The quality gate is deliberately structural: it verifies completeness of required fields and status boundaries, not the factual correctness of every lesson explanation. Human subject-matter and instructional review remain necessary.
 
 At the time this gate was added, the curriculum contains 16 authored drafts and 80 specified-only lessons. This is not a content-complete or release-accepted programme. The new test must pass in GitHub Actions on the exact branch head before its result is treated as verified.
+
+
+## Deployment candidate 0.3.0 — packaging and smoke checks
+
+Added `tests/deployment-smoke.test.js` to check:
+- Package and service-worker cache version alignment at 0.3.0.
+- Relative HTML asset references and local asset existence.
+- PWA manifest start URL, scope, display mode, and icon.
+- Service-worker app-shell precache and Learning Studio-only cache cleanup.
+- Absence of root-relative HTML asset references, so the app can be hosted below `/learning-studio/`.
+
+Updated the root GitHub Pages workflow to retain the existing WorldForge root build and additionally:
+- Run Learning Studio's Node test suite and JavaScript syntax check.
+- Check all required runtime files.
+- Copy the Learning Studio runtime files to `dist/learning-studio/`.
+- Verify both root and Learning Studio production entry points before uploading the single Pages artifact.
+
+The branch-specific verification workflow runs on pushes to `learning-studio-0.2.0`. The root deployment workflow runs on pushes to `main` or manual dispatch. The current branch has not been merged, and no production deployment has been triggered by this change.
+
+**Not yet verified:** the new test suite's GitHub Actions result on the exact branch head; the merged deployment workflow; the public Pages URL; browser/device/accessibility acceptance; and real PWA install/offline behavior. See `DEPLOYMENT.md` for the required release checklist.
