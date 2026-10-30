@@ -1,29 +1,23 @@
-# AH-AIOS Learning Studio 0.2.0
+# AH-AIOS Learning — 0.2.0
 
-Independent static learning application. It does not modify or replace the WorldForge application.
+A standalone, responsive learning website inspired by the supplied AH-AIOS Learning dashboard reference.
 
 ## Included
-- Three learning paths: AH-AIOS Core, AI Harness, WorldForge.
-- Nine starter modules with lessons, practice prompts, and knowledge checks.
-- Learner dashboard with module/check progress.
-- Practice lab and learner portfolio.
-- Browser-local progress persistence.
-- JSON progress export and schema-validated import; invalid imports are rejected without replacing current progress.
-- PWA manifest and service worker for offline shell caching.
-- 82-Theory Explorer import gate requiring exactly 82 records, 68 registry-origin and 14 synthesized-origin, each with id and title.
+- Dashboard navigation: Home, Learning Paths, Courses, Labs, AI Tutor, Assessments, Competencies, Certification Center, Knowledge Library, Profile, Settings, Help.
+- Three learning domains and nine starter courses with lessons, exercises, and assessed knowledge checks.
+- Local progress dashboard, course filtering, learner activity, portfolio, and JSON progress backup/restore.
+- Three interactive practice labs; saved submissions appear in the portfolio.
+- Local curriculum tutor (rule-based, no live AI backend or external model connection).
+- Competency progress and path completion certificates (print/save as PDF).
+- 82-Theory Explorer import gate: exactly 82 records, 68 registry + 14 synthesized, required id/title fields.
+- Responsive layouts, PWA manifest, and service worker offline app-shell cache.
+- GitHub Pages workflow template in `.github/workflows/pages.yml`.
 
-## Important source limitation
-The connected repositories currently expose no authoritative 82-theory registry or the required 68+14 record dataset. The explorer therefore starts empty and does not invent records. The import gate checks counts and required fields; it does not prove provenance or authenticity. Attach the authoritative source registry before treating the explorer as populated.
+## Run
+Serve this directory on localhost or HTTPS. Example: `python -m http.server 8000`, then open `http://localhost:8000`. Opening the HTML file directly disables service workers.
 
-The nine module lessons are a starter curriculum derived from the documented AH-AIOS architecture principles and WorldForge capability descriptions available in the connected project. They are not a replacement for a separately approved curriculum specification.
+## Independent deployment
+Copy the contents of this folder to the root of a new GitHub repository. Copy the included Pages workflow to `.github/workflows/pages.yml` at that repository root. Enable GitHub Actions as the Pages source in repository Settings → Pages.
 
-## Run locally
-Serve this directory using any static HTTP server, for example:
-`python -m http.server 8000`
-Then open `http://localhost:8000`. Service workers require localhost or HTTPS.
-
-## Deploy independently with GitHub Pages
-Copy this directory's contents to the root of a dedicated repository, then copy `.github/workflows/pages.yml` from this directory into that repository's `.github/workflows/pages.yml`. In repository Settings → Pages, select GitHub Actions. The workflow builds no dependencies and deploys the static root.
-
-## Data
-Progress is local to the browser profile. No backend, login, cloud synchronization, or server-side learner database is included.
+## Data and limitations
+Learner progress/profile are stored in local browser storage. There is no login, backend, cloud sync, or real AI service. The 82-Theory Explorer is empty until the authoritative source registry is imported. Count/field validation does not authenticate provenance. Course materials are a starter curriculum based on the accessible AH-AIOS architecture descriptions; they do not replace an unavailable approved curriculum specification.
