@@ -8,7 +8,18 @@ page.on("pageerror", error => pageErrors.push(error.message));
 
 try {
   await page.goto("http://127.0.0.1:4173/learning-studio/", { waitUntil: "domcontentloaded" });
-  await page.locator("#curriculum-roadmap").waitFor();
+  await page.locator("#curriculum-roadmap").waitFor({ state: "attached" });
+  await page.waitForTimeout(500);
+  const diagnostics = await page.evaluate(() => ({
+    hasRawCurriculum: !!window.AH_LEARNING_CURRICULUM,
+    hasRuntimeCurriculum: !!window.CURRICULUM_DATA,
+    scriptUrls: [...document.scripts].map(script => script.src),
+    roadmapHtml: document.querySelector("#curriculum-roadmap")?.innerHTML.slice(0, 500),
+    appReady: !!document.querySelector("#all-courses")?.children.length
+  }));
+  if (!diagnostics.hasRuntimeCurriculum || !diagnostics.appReady) {
+    throw new Error("Application bootstrap failed: " + JSON.stringify({ diagnostics, pageErrors }));
+  }
   assert.ok(await page.locator("#curriculum-roadmap .curriculum-card").count() > 0);
   const courseCount = await page.locator("#all-courses .blueprint-course").count();
   assert.ok(courseCount > 0, "course catalogue should contain at least one record");
