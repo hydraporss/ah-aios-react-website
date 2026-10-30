@@ -46,3 +46,14 @@ The Learning Studio now displays the full source-defined course blueprint from `
 The blueprint is not a claim that all courses have been authored. The interactive catalogue still contains nine starter modules. The full lessons, worked examples, exercises, rubrics, source references, review records, and publication workflow remain to be completed against the source standard.
 
 The roadmap and responsive layout passed CI in run https://github.com/hydraporss/ah-aios-react-website/actions/runs/41024000678.
+
+
+## Full curriculum catalogue and lesson reader
+
+The application now includes a source-traced interactive catalogue of all 24 courses and 96 lesson units from `docs/learning/content-master-plan.md` (AH-LEARN-MASTER-001 v0.1.0, **SUGGESTION / PROCESS**). It preserves the 6 AH-AIOS Core, 7 AI Harness, 8 WorldForge, and 3 cross-cutting Human Stewardship course structure. Each course opens its four specified lesson topics, source exercises, assessment evidence, and exact source links with Git blob hashes. Each lesson has a working reader and a local response-save path.
+
+Four AH-CORE-100 lesson units currently have authored drafts with outcomes, prerequisites, source references, interpretation-labeled explanations, worked examples, guided and independent practice, knowledge checks with rationales, assessment evidence, feedback, safety boundaries, and references. The remaining 92 lesson units retain their exact source outlines and are visibly marked **Specified only**; missing explanations, examples, checks, and safety notes are not invented. No lesson is reviewed or published.
+
+Five source-defined integrated project briefs and the common 1–4 assessment framework (seven dimensions and remediation steps) are available in the app. The common rubric does not establish course-specific thresholds or credentials. The nine legacy quick-start primers are labeled separately from the 24-course programme. No authorized credential issuer is configured.
+
+See `VERIFICATION.md` for exact source hashes, CI evidence, and remaining content gaps. The source plan identifies approved technical source references for every lesson as an unresolved input; detailed AI Harness source material is not present in the repository, so those lessons remain specified until approved references are available.
