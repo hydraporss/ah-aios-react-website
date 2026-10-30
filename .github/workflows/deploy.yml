@@ -32,8 +32,7 @@ jobs:
       - name: Run Learning Studio and WorldForge regression tests
         run: pnpm test
       - name: Check WorldForge Studio JavaScript syntax
-        run: node --check public/worldforge/verified-2026-10-28/assets/data-layer.js
-          node --check public/worldforge/verified-2026-10-28/assets/studio.js
+        run: 'node --check public/worldforge/verified-2026-10-28/assets/data-layer.js && node --check public/worldforge/verified-2026-10-28/assets/studio.js'
       - name: Check Learning Studio JavaScript syntax
         run: |
           node --check app.js
