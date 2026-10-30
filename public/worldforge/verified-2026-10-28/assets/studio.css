@@ -12,3 +12,14 @@
 .toast{position:fixed;right:20px;bottom:20px;z-index:30;padding:12px 16px;border:1px solid #38728b;border-radius:8px;background:#092035;color:#e9fbff;font-size:12px;box-shadow:0 10px 30px #0008;opacity:0;transform:translateY(8px);pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translateY(0)}
 @media(max-width:1000px){.studio-shell{grid-template-columns:205px minmax(0,1fr)}.studio-rail{padding:25px 15px}.welcome{grid-template-columns:1fr}.welcome-mark{display:none}.overview-grid{grid-template-columns:1fr}}
 @media(max-width:720px){.studio-shell{display:block}.studio-rail{position:static;height:auto;border-right:0;border-bottom:1px solid var(--studio-line);padding:18px}.rail-heading h1{font-size:26px}.rail-heading h1 br{display:none}.rail-heading p{margin-bottom:0}.studio-tabs{display:flex;overflow:auto;margin-top:14px;gap:5px}.studio-tabs button{white-space:nowrap;padding:8px 10px}.rail-foot{display:none}.studio-main{padding:18px 14px 45px}.studio-top{align-items:flex-start;flex-direction:column}.toolbar{width:100%}.welcome{padding:24px 18px}.stat-grid{grid-template-columns:repeat(2,1fr)}.record-grid{grid-template-columns:1fr}.studio-form{grid-template-columns:1fr}.studio-form .full{grid-column:auto}.form-actions{grid-column:auto}.integrity-banner,.portability{align-items:flex-start;flex-direction:column}}
+
+.cloud-panel{margin:14px 0 16px;border-color:#285274;background:linear-gradient(145deg,#091b2b,#0a1b31)}
+.cloud-panel>p{font-size:11px;color:#9fb6c9;line-height:1.6;max-width:900px}
+.cloud-auth{margin-top:14px;align-items:end}
+.cloud-auth .form-actions{justify-content:flex-start;align-items:center;flex-wrap:wrap}
+.cloud-auth button[hidden]{display:none}
+.cloud-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:4px}
+#cloud-sync:disabled{opacity:.45;cursor:not-allowed}
+#cloud-sync-result{font-size:11px;color:#9fb6c9;overflow-wrap:anywhere}
+.cloud-footnote{font-size:10px!important;color:#7896ad!important}
+@media(max-width:720px){.cloud-actions{align-items:flex-start;flex-direction:column}.cloud-auth{grid-template-columns:1fr}.cloud-auth .form-actions{grid-column:1/-1}}
