@@ -16,7 +16,7 @@ window.AH_LEARNING_CURRICULUM = {
     {
       "id": "AH-CORE-100",
       "title": "AH-AIOS Orientation and System Map",
-      "domain": "Core",
+      "domain": "AH-AIOS Core",
       "outcome": "Explain the purpose, domains, boundaries, and learning progression of AH-AIOS.",
       "lessons": [
         {
@@ -334,13 +334,16 @@ window.AH_LEARNING_CURRICULUM = {
         "AH-LEARN-README-001",
         "AH-LEARN-CURRICULUM-001",
         "AH-LEARN-GOV-001",
-        "AH-LEARN-ASSESS-001"
+        "AH-LEARN-ASSESS-001",
+        "AH-LEARN-CORE-PATH-001",
+        "AH-LEARN-PLATFORM-001",
+        "WF-README-001"
       ]
     },
     {
       "id": "AH-CORE-110",
       "title": "Architecture and System Boundaries",
-      "domain": "Core",
+      "domain": "AH-AIOS Core",
       "outcome": "Explain component responsibilities, interfaces, dependencies, and separation of concerns.",
       "lessons": [
         {
@@ -376,13 +379,16 @@ window.AH_LEARNING_CURRICULUM = {
         "AH-LEARN-README-001",
         "AH-LEARN-CURRICULUM-001",
         "AH-LEARN-GOV-001",
-        "AH-LEARN-ASSESS-001"
+        "AH-LEARN-ASSESS-001",
+        "AH-LEARN-CORE-PATH-001",
+        "AH-LEARN-PLATFORM-001",
+        "WF-README-001"
       ]
     },
     {
       "id": "AH-CORE-120",
       "title": "Identity, Roles, and Access Control",
-      "domain": "Core",
+      "domain": "AH-AIOS Core",
       "outcome": "Analyze access scenarios using identity, role, permission, and least-privilege concepts.",
       "lessons": [
         {
@@ -418,13 +424,16 @@ window.AH_LEARNING_CURRICULUM = {
         "AH-LEARN-README-001",
         "AH-LEARN-CURRICULUM-001",
         "AH-LEARN-GOV-001",
-        "AH-LEARN-ASSESS-001"
+        "AH-LEARN-ASSESS-001",
+        "AH-LEARN-CORE-PATH-001",
+        "AH-LEARN-PLATFORM-001",
+        "WF-README-001"
       ]
     },
     {
       "id": "AH-CORE-130",
       "title": "Security, Policy, and Safe Operation",
-      "domain": "Core",
+      "domain": "AH-AIOS Core",
       "outcome": "Identify security boundaries and explain how policy and human review constrain operation.",
       "lessons": [
         {
@@ -460,13 +469,16 @@ window.AH_LEARNING_CURRICULUM = {
         "AH-LEARN-README-001",
         "AH-LEARN-CURRICULUM-001",
         "AH-LEARN-GOV-001",
-        "AH-LEARN-ASSESS-001"
+        "AH-LEARN-ASSESS-001",
+        "AH-LEARN-CORE-PATH-001",
+        "AH-LEARN-PLATFORM-001",
+        "WF-README-001"
       ]
     },
     {
       "id": "AH-CORE-140",
       "title": "Audit, Evidence, and Verification",
-      "domain": "Core",
+      "domain": "AH-AIOS Core",
       "outcome": "Distinguish claims, evidence, observations, and verification results.",
       "lessons": [
         {
@@ -502,13 +514,16 @@ window.AH_LEARNING_CURRICULUM = {
         "AH-LEARN-README-001",
         "AH-LEARN-CURRICULUM-001",
         "AH-LEARN-GOV-001",
-        "AH-LEARN-ASSESS-001"
+        "AH-LEARN-ASSESS-001",
+        "AH-LEARN-CORE-PATH-001",
+        "AH-LEARN-PLATFORM-001",
+        "WF-README-001"
       ]
     },
     {
       "id": "AH-CORE-150",
       "title": "Governance and Controlled Change",
-      "domain": "Core",
+      "domain": "AH-AIOS Core",
       "outcome": "Describe how proposals, reviews, approvals, versions, and protected assets are handled.",
       "lessons": [
         {
@@ -544,7 +559,10 @@ window.AH_LEARNING_CURRICULUM = {
         "AH-LEARN-README-001",
         "AH-LEARN-CURRICULUM-001",
         "AH-LEARN-GOV-001",
-        "AH-LEARN-ASSESS-001"
+        "AH-LEARN-ASSESS-001",
+        "AH-LEARN-CORE-PATH-001",
+        "AH-LEARN-PLATFORM-001",
+        "WF-README-001"
       ]
     },
     {
@@ -1285,7 +1303,8 @@ window.AH_LEARNING_CURRICULUM = {
         "AH-LEARN-README-001",
         "AH-LEARN-CURRICULUM-001",
         "AH-LEARN-GOV-001",
-        "AH-LEARN-ASSESS-001"
+        "AH-LEARN-ASSESS-001",
+        "AH-LEARN-LABS-001"
       ]
     },
     {
@@ -1327,7 +1346,8 @@ window.AH_LEARNING_CURRICULUM = {
         "AH-LEARN-README-001",
         "AH-LEARN-CURRICULUM-001",
         "AH-LEARN-GOV-001",
-        "AH-LEARN-ASSESS-001"
+        "AH-LEARN-ASSESS-001",
+        "AH-LEARN-LABS-001"
       ]
     },
     {
@@ -1369,7 +1389,8 @@ window.AH_LEARNING_CURRICULUM = {
         "AH-LEARN-README-001",
         "AH-LEARN-CURRICULUM-001",
         "AH-LEARN-GOV-001",
-        "AH-LEARN-ASSESS-001"
+        "AH-LEARN-ASSESS-001",
+        "AH-LEARN-LABS-001"
       ]
     }
   ],
