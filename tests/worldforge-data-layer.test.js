@@ -47,3 +47,12 @@ test('revision preserves identity and increments version',()=>{
   assert.equal(r.id,'entity-a'); assert.equal(r.version,5); assert.equal(r.updatedBy,'test-user');
 });
 test('migration rejects unsupported versions',()=>assert.throws(()=>api.migrateWorkspace({...base,schemaVersion:'9.0.0'}),/Unsupported schema version/));
+
+test('Supabase adapter preserves governance boundaries and optimistic concurrency',()=>{
+  const service=readFileSync(join(process.cwd(),'public/worldforge/verified-2026-10-28/assets/supabase-service.js'),'utf8');
+  assert.match(service,/record_version:existing\.record_version\+1/);
+  assert.match(service,/\.eq\('record_version',existing\.record_version\)/);
+  assert.match(service,/Governance terminal states require a separate authorized review action/);
+  assert.match(service,/delete next\.canon_status/);
+  assert.doesNotMatch(readFileSync(join(process.cwd(),'public/worldforge/verified-2026-10-28/assets/supabase-config.js'),'utf8'),/service_role|secret_key/i);
+});
