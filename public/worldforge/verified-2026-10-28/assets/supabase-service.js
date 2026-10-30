@@ -12,7 +12,7 @@ async function client(){
 function idMap(){try{return JSON.parse(localStorage.getItem(MAP_KEY)||'{}')}catch{return {}}}
 function saveMap(m){localStorage.setItem(MAP_KEY,JSON.stringify(m))}
 function uuid(){return crypto.randomUUID()}
-function workflow(v){const x=String(v||'Draft').toLowerCase().replaceAll(' ','_');return ({proposed:'Proposed',investigating:'Investigated',needs_evidence:'Needs Evidence',validated:'Validated',approved:'Approved',rejected:'Rejected',superseded:'Superseded',draft:'Draft'})[x]||'Draft'}
+function workflow(v){const x=String(v||'Draft').toLowerCase().replaceAll(' ','_');if(['approved','rejected','superseded'].includes(x))throw new Error('Governance terminal states require a separate authorized review action.');return ({proposed:'Proposed',investigating:'Investigated',needs_evidence:'Needs Evidence',validated:'Validated',draft:'Draft'})[x]||'Draft'}
 async function requireUser(db){const {data,error}=await db.auth.getUser();if(error)throw error;if(!data.user)throw new Error('Sign in to use the shared WorldForge workspace.');return data.user}
 async function signIn(email,password){const db=await client();const r=await db.auth.signInWithPassword({email,password});if(r.error)throw r.error;return r.data.user}
 async function signUp(email,password){const db=await client();const r=await db.auth.signUp({email,password});if(r.error)throw r.error;return {user:r.data.user,session:r.data.session,confirmationRequired:!r.data.session}}
