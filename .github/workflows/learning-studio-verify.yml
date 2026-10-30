@@ -56,3 +56,19 @@ jobs:
           test -s sw.js
           test -s icon.svg
           test -s curriculum-data.js
+      - name: Run existing WorldForge governance tests
+        run: pnpm test
+      - name: Build the WorldForge production site
+        run: pnpm build
+      - name: Package Learning Studio alongside WorldForge
+        run: |
+          mkdir -p dist/learning-studio
+          cp learning-studio/index.html learning-studio/app.js learning-studio/styles.css learning-studio/manifest.webmanifest learning-studio/sw.js learning-studio/icon.svg learning-studio/curriculum-data.js dist/learning-studio/
+      - name: Verify the combined production artifact
+        run: |
+          test -s dist/index.html
+          test -s dist/worldforge.svg
+          test -s dist/learning-studio/index.html
+          test -s dist/learning-studio/app.js
+          test -s dist/learning-studio/curriculum-data.js
+          find dist -maxdepth 2 -type f
