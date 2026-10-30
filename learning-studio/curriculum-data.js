@@ -1032,7 +1032,8 @@ window.AH_LEARNING_CURRICULUM = {
               "src/governance.js (blob 8d21a745155e2463fea802c9325c3a68b972562d)",
               "docs/v0.4-sprint-1-and-acceptance.md (blob 8526cccd8dda54f88b574c619eb371e89f23c89c)",
               "tests/e2e-governance.mjs (blob e0eb9491ab2b0e23dd9aa03f835c6e0beac3bf50)",
-              "tests/governance.test.js (blob edb13f5c9405155dea176f10f2cd55299d85b894)"
+              "tests/governance.test.js (blob edb13f5c9405155dea176f10f2cd55299d85b894)",
+              "NIST AI 100-2 E2025 — adversarial ML terminology and attack/lifecycle taxonomy (external concept reference; not project threat-model evidence)."
             ],
             "explanation": "The project sources identify several assets requiring protection: world and claim records, source excerpts and evidence, proposals and review rationales, role assignments, learner records, and audit/lineage history. The Server Governance page persists changes through a Django API; the browser-local prototype stores its own records in local browser storage. The governance code defines actor capabilities and legal state transitions. The end-to-end test exercises sign-in, CSRF-protected POST requests, role-denied approval attempts, invalid empty claim submission, audit verification, and archive export. These are concrete surfaces to include in a bounded inventory. The cited sources do not provide a complete formal threat model, adversary catalogue, security severity scale, or penetration-test report. STRIDE or other taxonomies may be used as an external analysis aid, but should be labelled as such rather than attributed to this repository.",
             "workedExample": {
@@ -1093,7 +1094,8 @@ window.AH_LEARNING_CURRICULUM = {
               "src/governance.js",
               "docs/v0.4-sprint-1-and-acceptance.md",
               "tests/e2e-governance.mjs",
-              "tests/governance.test.js"
+              "tests/governance.test.js",
+              "https://csrc.nist.gov/pubs/ai/100/2/e2025/final"
             ],
             "reviewStatus": "Not reviewed"
           }
@@ -1208,7 +1210,9 @@ window.AH_LEARNING_CURRICULUM = {
               "src/governance.js (blob 8d21a745155e2463fea802c9325c3a68b972562d)",
               "docs/v0.4-sprint-1-and-acceptance.md (blob 8526cccd8dda54f88b574c619eb371e89f23c89c)",
               "tests/e2e-governance.mjs (blob e0eb9491ab2b0e23dd9aa03f835c6e0beac3bf50)",
-              "tests/governance.test.js (blob edb13f5c9405155dea176f10f2cd55299d85b894)"
+              "tests/governance.test.js (blob edb13f5c9405155dea176f10f2cd55299d85b894)",
+              "OWASP GenAI / LLM Top 10 2026 — current LLM application risk taxonomy, including prompt injection (external teaching reference; not evidence of implemented defenses).",
+              "NIST AI 100-2 E2025 — adversarial ML taxonomy and terminology (external concept reference; not evidence of implemented defenses)."
             ],
             "explanation": "The project stores source excerpts, source references, claims, evidence assessments, and proposals as records for review. Its content-governance policy requires source attribution and distinguishes source-derived content from interpretation. The Server Governance interface accepts source titles, authors, references, excerpts, and assessments; the application tests invalid empty claim submission and role-restricted decisions. These controls support careful treatment of untrusted submitted material as evidence to evaluate, not as automatic authority. However, the cited project sources do not specify a prompt-injection defence, instruction hierarchy for an AI agent, sandboxing model, model-output filtering policy, or automated detection of malicious embedded instructions. Those controls must not be described as implemented. As an external security concept, content can contain adversarial instructions; the safe analytical response is to preserve its provenance and treat embedded commands as quoted data unless a trusted system policy explicitly authorizes an action.",
             "workedExample": {
@@ -1268,7 +1272,9 @@ window.AH_LEARNING_CURRICULUM = {
               "src/governance.js",
               "docs/v0.4-sprint-1-and-acceptance.md",
               "tests/e2e-governance.mjs",
-              "tests/governance.test.js"
+              "tests/governance.test.js",
+              "https://github.com/GenAI-Security-Project/GenAI-LLM-Top10/tree/main/2026/final",
+              "https://csrc.nist.gov/pubs/ai/100/2/e2025/final"
             ],
             "reviewStatus": "Not reviewed"
           }
@@ -1296,7 +1302,8 @@ window.AH_LEARNING_CURRICULUM = {
               "src/governance.js (blob 8d21a745155e2463fea802c9325c3a68b972562d)",
               "docs/v0.4-sprint-1-and-acceptance.md (blob 8526cccd8dda54f88b574c619eb371e89f23c89c)",
               "tests/e2e-governance.mjs (blob e0eb9491ab2b0e23dd9aa03f835c6e0beac3bf50)",
-              "tests/governance.test.js (blob edb13f5c9405155dea176f10f2cd55299d85b894)"
+              "tests/governance.test.js (blob edb13f5c9405155dea176f10f2cd55299d85b894)",
+              "NIST SP 800-61 Rev. 3 — incident-response recommendations integrated with CSF 2.0 risk management (external teaching reference; not an AH-AIOS response procedure)."
             ],
             "explanation": "The project end-to-end test demonstrates expected rejection of anonymous and insufficiently privileged approval attempts, and rejects an empty claim submission. A rejected request in a test is evidence that the tested control behaved as expected; it is not itself a security incident. The learning content-governance policy requires revision history and restricted access to learner data, and it says content publication, canon, assessment, and credential authority are distinct unless policy combines them. The v0.4 sprint document describes audit events and rollback for specific claim changes, but also states that browser-local audit events are editable/deletable and are not tamper-proof evidence. The cited sources do not define an operational incident-response team, severity matrix, notification timeline, on-call rota, or complete escalation procedure. This lesson therefore teaches evidence capture and escalation-record drafting, not a claimed production incident-response capability.",
             "workedExample": {
@@ -1357,7 +1364,8 @@ window.AH_LEARNING_CURRICULUM = {
               "src/governance.js",
               "docs/v0.4-sprint-1-and-acceptance.md",
               "tests/e2e-governance.mjs",
-              "tests/governance.test.js"
+              "tests/governance.test.js",
+              "https://csrc.nist.gov/pubs/sp/800/61/r3/final"
             ],
             "reviewStatus": "Not reviewed"
           }
@@ -1375,6 +1383,11 @@ window.AH_LEARNING_CURRICULUM = {
         "AH-LEARN-CORE-PATH-001",
         "AH-LEARN-PLATFORM-001",
         "WF-README-001"
+      ],
+      "externalSourceRefs": [
+        "NIST-SP-800-61-R3",
+        "NIST-AI-100-2-E2025",
+        "OWASP-GENAI-LLM-TOP10-2026"
       ]
     },
     {
@@ -2617,5 +2630,43 @@ window.AH_LEARNING_CURRICULUM = {
     "Required reviews recorded.",
     "Pilot feedback addressed or retained as unresolved.",
     "Version and publication status accurate."
+  ],
+  "externalSourceCatalog": [
+    {
+      "id": "NIST-SP-800-61-R3",
+      "title": "Incident Response Recommendations and Considerations for Cybersecurity Risk Management: A CSF 2.0 Community Profile",
+      "publisher": "National Institute of Standards and Technology",
+      "documentId": "NIST SP 800-61 Rev. 3",
+      "published": "2025-04-03",
+      "status": "Final",
+      "url": "https://csrc.nist.gov/pubs/sp/800/61/r3/final",
+      "doi": "https://doi.org/10.6028/NIST.SP.800-61r3",
+      "scope": "General cybersecurity incident-response recommendations integrated with CSF 2.0 risk management; supports preparation, detection, response, and recovery teaching.",
+      "limitations": "Does not establish an AH-AIOS incident-response team, severity matrix, on-call rota, notification deadline, or implemented operational procedure."
+    },
+    {
+      "id": "NIST-AI-100-2-E2025",
+      "title": "Adversarial Machine Learning: A Taxonomy and Terminology of Attacks and Mitigations",
+      "publisher": "National Institute of Standards and Technology",
+      "documentId": "NIST AI 100-2 E2025",
+      "published": "2025-03-24",
+      "status": "Final; NIST page notes potential errata/update",
+      "url": "https://csrc.nist.gov/pubs/ai/100/2/e2025/final",
+      "doi": "https://doi.org/10.6028/NIST.AI.100-2e2025",
+      "scope": "Terminology and taxonomy for adversarial machine-learning attacks, attacker goals/capabilities, lifecycle stages, and mitigation concepts, including generative AI contexts.",
+      "limitations": "A conceptual taxonomy does not prove that a particular project implements defenses or has completed a threat assessment."
+    },
+    {
+      "id": "OWASP-GENAI-LLM-TOP10-2026",
+      "title": "OWASP GenAI / LLM Top 10 2026",
+      "publisher": "OWASP GenAI Security Project",
+      "documentId": "OWASP GenAI LLM Top 10 2026",
+      "published": "2026-08-04",
+      "status": "Current release; official source repository",
+      "url": "https://github.com/GenAI-Security-Project/GenAI-LLM-Top10",
+      "canonicalSource": "https://github.com/GenAI-Security-Project/GenAI-LLM-Top10/tree/main/2026/final",
+      "scope": "Current awareness taxonomy for LLM application risks, including prompt injection, sensitive information disclosure, excessive agency, supply chain, data/model poisoning, unbounded consumption, misinformation, hidden context exposure, vector/embedding weaknesses, and improper output handling.",
+      "limitations": "An awareness taxonomy is not a project-specific security audit, control implementation, or proof of compliance."
+    }
   ]
 };
