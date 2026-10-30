@@ -48,6 +48,7 @@ jobs:
           test -s sw.js
           test -s icon.svg
           test -s curriculum-data.js
+          test -s theory-validation.js
       - name: Install Chromium for Learning Studio browser acceptance
         run: pnpm exec playwright install --with-deps chromium
       - name: Test Learning Studio from its production subpath
@@ -65,7 +66,7 @@ jobs:
       - name: Package Learning Studio under its own path
         run: |
           mkdir -p dist/learning-studio
-          cp learning-studio/index.html learning-studio/app.js learning-studio/styles.css learning-studio/manifest.webmanifest learning-studio/sw.js learning-studio/icon.svg learning-studio/curriculum-data.js dist/learning-studio/
+          cp learning-studio/index.html learning-studio/app.js learning-studio/styles.css learning-studio/manifest.webmanifest learning-studio/sw.js learning-studio/icon.svg learning-studio/curriculum-data.js learning-studio/theory-validation.js dist/learning-studio/
       - name: Verify both production entry points
         run: |
           test -s dist/index.html
@@ -73,6 +74,7 @@ jobs:
           test -s dist/learning-studio/index.html
           test -s dist/learning-studio/app.js
           test -s dist/learning-studio/curriculum-data.js
+          test -s dist/learning-studio/theory-validation.js
           find dist -maxdepth 2 -type f
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
