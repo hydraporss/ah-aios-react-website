@@ -36,6 +36,7 @@ jobs:
           node --check app.js
           node --check theory-validation.js
           node --check progress-integrity.js
+          node --check progress-integrity.js
       - name: Verify required root application files
         run: |
           test -s index.html
@@ -46,6 +47,7 @@ jobs:
           test -s icon.svg
           test -s curriculum-data.js
           test -s theory-validation.js
+          test -s progress-integrity.js
           test -s progress-integrity.js
       - name: Install Chromium for browser acceptance
         run: pnpm exec playwright install --with-deps chromium
@@ -70,6 +72,7 @@ jobs:
           test -s dist/app.js
           test -s dist/curriculum-data.js
           test -s dist/theory-validation.js
+          test -s dist/progress-integrity.js
           test -s dist/progress-integrity.js
           test -s dist/manifest.webmanifest
           find dist -maxdepth 2 -type f
