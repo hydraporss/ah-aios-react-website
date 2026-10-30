@@ -678,25 +678,315 @@ window.AH_LEARNING_CURRICULUM = {
           "id": "M1.1",
           "title": "Identity, authentication, and authorization",
           "exercise": "distinguish the three in scenarios",
-          "status": "Specified"
+          "status": "Authored draft",
+          "content": {
+            "status": "Authored draft",
+            "purpose": "Distinguish identity, authentication, and authorization using the documented Django Server Governance path.",
+            "outcomes": [
+              "Explain the difference between identifying an actor, authenticating a session, and authorizing a protected operation.",
+              "Describe the documented session-authentication and server-side authorization boundary.",
+              "Distinguish the API path from browser-local demo role selectors."
+            ],
+            "prerequisites": [
+              "AH-CORE-100 orientation",
+              "AH-CORE-110 architecture and system boundaries"
+            ],
+            "sourceBase": [
+              "AH-AIOS WorldForge React Website README (repository root), blob 4a99342dfed4eab085162f22b464540e5cc99612; WorldForge v0.4 End-to-End Acceptance Record, blob SHA to be recorded separately."
+            ],
+            "explanation": "The repository describes session authentication for the Django Server Governance API and server-side authorization for protected endpoints. The API checks session identity and workspace membership. These are separate concepts: identity is the actor account or session principal; authentication establishes that the request is associated with that authenticated session; authorization decides whether that actor may perform the requested operation on the target workspace. The main browser-local prototype has simulated identity/role controls and no authentication or server-side authorization. The repository does not claim enterprise SSO/MFA or completed browser-to-backend acceptance.",
+            "workedExample": {
+              "title": "Classify three controls",
+              "steps": [
+                "A signed-in Django session identifies the authenticated request principal.",
+                "A protected API endpoint checks the session before processing the request.",
+                "The endpoint checks the actor's workspace membership and role before allowing the operation.",
+                "Compare this with a local demo role selector, which a browser user can change."
+              ],
+              "result": "Authentication and authorization are distinct; a local role label is not proof of authenticated identity."
+            },
+            "guidedPractice": [
+              "Read the README sections describing the Django API and simulated browser roles.",
+              "Create a three-column table: identity, authentication, authorization.",
+              "Place each documented mechanism in the appropriate column.",
+              "Add a separate note for enterprise identity and browser acceptance gaps."
+            ],
+            "independentExercise": {
+              "input": "Repository README and v0.4 end-to-end acceptance record.",
+              "instructions": "Write a short request trace showing where session identity is established and where protected-operation authorization is checked. Contrast this with the local prototype's simulated role selector.",
+              "deliverables": [
+                "Identity/authentication/authorization comparison",
+                "Protected API request trace",
+                "Limitations statement"
+              ]
+            },
+            "knowledgeCheck": [
+              {
+                "question": "What does authentication establish?",
+                "options": [
+                  "Whether the actor may edit a particular world",
+                  "That the request is associated with an authenticated session identity",
+                  "That a feature passed browser acceptance"
+                ],
+                "answer": 1,
+                "rationale": "Authentication establishes the authenticated session; authorization determines access to a particular operation/resource."
+              },
+              {
+                "question": "Does the browser-local demo role selector authenticate a user?",
+                "options": [
+                  "Yes, it is an authenticated identity",
+                  "No, it is simulated and can be changed by the browser user",
+                  "Yes, because it displays a role name"
+                ],
+                "answer": 1,
+                "rationale": "The README explicitly describes the local role selector as simulated identity, not authentication."
+              }
+            ],
+            "assessmentEvidence": "A request trace separating identity, session authentication, and server-side authorization.",
+            "feedback": "If the trace claims the browser-local prototype is authenticated, correct it: the README explicitly says it has no authentication or server-side authorization.",
+            "safetyBoundary": "Do not paste session cookies, tokens, passwords, or real user identifiers into lesson work.",
+            "references": [
+              "README.md",
+              "docs/v0.4-end-to-end-acceptance.md"
+            ],
+            "reviewStatus": "Not reviewed"
+          }
         },
         {
           "id": "M1.2",
           "title": "Roles, permissions, and resource scope",
           "exercise": "build a fictional role-permission matrix",
-          "status": "Specified"
+          "status": "Authored draft",
+          "content": {
+            "status": "Authored draft",
+            "purpose": "Explain the documented owner, editor, and viewer roles and their workspace scope without inventing an undocumented permission matrix.",
+            "outcomes": [
+              "Name the three documented per-world roles.",
+              "Explain that membership scope is per world/workspace rather than a global role claim.",
+              "Separate documented role names from any action-specific permissions not stated in the source."
+            ],
+            "prerequisites": [
+              "AH-CORE-100 orientation",
+              "AH-CORE-110 architecture and system boundaries"
+            ],
+            "sourceBase": [
+              "AH-AIOS WorldForge React Website README (repository root), blob 4a99342dfed4eab085162f22b464540e5cc99612; WorldForge v0.4 End-to-End Acceptance Record, blob SHA to be recorded separately."
+            ],
+            "explanation": "The repository describes per-world membership roles named owner, editor, and viewer, with backend enforcement for protected API operations. The role is evaluated in the context of a workspace/world. The source establishes the role names and the existence of server-side enforcement; it does not, in the cited overview, define a complete action-by-action permission matrix. Do not infer that a viewer can export, that an editor can change membership, or that an owner has unrestricted access unless a specific policy or test establishes it.",
+            "workedExample": {
+              "title": "Build a source-bounded role table",
+              "steps": [
+                "Create rows for owner, editor, and viewer.",
+                "Record the source-supported fact: each is a per-world membership role.",
+                "Add a permissions column but leave action-level entries blank unless a source or test defines them.",
+                "Mark the missing matrix as a verification requirement, not as an invitation to guess."
+              ],
+              "result": "The table accurately names the roles and exposes the permission detail still requiring evidence."
+            },
+            "guidedPractice": [
+              "Read the repository's Identity & Roles and Django API authorization sections.",
+              "Identify role scope and enforcement location.",
+              "Separate the existence of role checks from the exact permission set.",
+              "Record unknown action-level permissions as open."
+            ],
+            "independentExercise": {
+              "input": "Repository README and v0.4 acceptance record.",
+              "instructions": "Produce a role-and-scope register. Include owner/editor/viewer, per-world membership, enforcement location, and a list of action permissions that still need source evidence.",
+              "deliverables": [
+                "Role-and-scope table",
+                "Enforcement boundary diagram",
+                "Open permission-matrix questions"
+              ]
+            },
+            "knowledgeCheck": [
+              {
+                "question": "Which role set is documented?",
+                "options": [
+                  "Admin, manager, guest",
+                  "Owner, editor, viewer",
+                  "Creator, reviewer, canon authority"
+                ],
+                "answer": 1,
+                "rationale": "The README describes owner, editor, and viewer as per-world roles."
+              },
+              {
+                "question": "What can be safely inferred from the presence of these three roles?",
+                "options": [
+                  "A complete permission matrix for every action",
+                  "Only that the roles exist and are enforced in the documented API scope",
+                  "That all users can access every world"
+                ],
+                "answer": 1,
+                "rationale": "The overview does not provide every action-specific permission."
+              }
+            ],
+            "assessmentEvidence": "Role-and-scope register with action-level unknowns clearly marked.",
+            "feedback": "Do not fabricate role capabilities. Require a specific policy definition or test before claiming an action is allowed or denied.",
+            "safetyBoundary": "Use fictional workspace examples and omit real account or membership details.",
+            "references": [
+              "README.md",
+              "docs/v0.4-end-to-end-acceptance.md"
+            ],
+            "reviewStatus": "Not reviewed"
+          }
         },
         {
           "id": "M1.3",
           "title": "Least privilege and access lifecycle",
           "exercise": "review an over-permissioned account and document a correction",
-          "status": "Specified"
+          "status": "Authored draft",
+          "content": {
+            "status": "Authored draft",
+            "purpose": "Examine least-authority and access-lifecycle questions while distinguishing a design principle from implemented controls.",
+            "outcomes": [
+              "Recognize that permissions should be scoped to the target world/workspace in the documented API model.",
+              "Identify the evidence needed to assess granting, changing, and revoking membership.",
+              "State which lifecycle and least-privilege details remain unspecified in the available source."
+            ],
+            "prerequisites": [
+              "AH-CORE-100 orientation",
+              "AH-CORE-110 architecture and system boundaries"
+            ],
+            "sourceBase": [
+              "AH-AIOS WorldForge React Website README (repository root), blob 4a99342dfed4eab085162f22b464540e5cc99612; WorldForge v0.4 End-to-End Acceptance Record, blob SHA to be recorded separately."
+            ],
+            "explanation": "The repository establishes per-world membership roles and server-side checks for protected endpoints. This supports a scoped-access discussion: authorization is evaluated against a workspace/world rather than inferred from a global browser role selector. However, the cited project overview and acceptance record do not fully specify membership invitation, approval, role-change, revocation, expiry, periodic review, or emergency-access procedures. Least privilege is a useful review lens for assessing whether each role receives only the capabilities required, but the lesson must not present a complete least-privilege policy or access lifecycle as implemented.",
+            "workedExample": {
+              "title": "Separate implemented facts from review questions",
+              "steps": [
+                "Record the implemented fact: API checks per-world membership and role for protected operations.",
+                "List lifecycle events: grant, change, revoke, expire, review.",
+                "For each event, look for an explicit policy, endpoint, or test.",
+                "Mark unsupported lifecycle controls as not established by the source.",
+                "Propose a verification question rather than filling the gap with an assumed workflow."
+              ],
+              "result": "The analysis distinguishes scoped authorization already described from lifecycle controls that still need evidence."
+            },
+            "guidedPractice": [
+              "Create a lifecycle checklist with grant, change, revoke, expiry, review, and emergency access.",
+              "For each item, attach a source or test if available.",
+              "Label unsupported items 'not established in source'.",
+              "Use least privilege as an evaluation question, not a claim of existing implementation."
+            ],
+            "independentExercise": {
+              "input": "Repository README and v0.4 acceptance record.",
+              "instructions": "Prepare an access-lifecycle gap assessment. Identify documented scope/enforcement and the evidence needed to verify each lifecycle event.",
+              "deliverables": [
+                "Access lifecycle checklist",
+                "Evidence/gap matrix",
+                "Three concrete verification tests to write"
+              ]
+            },
+            "knowledgeCheck": [
+              {
+                "question": "What access-scope behavior is documented?",
+                "options": [
+                  "Global browser role selector controls API access",
+                  "Per-world membership roles are checked server-side",
+                  "No membership checks exist"
+                ],
+                "answer": 1,
+                "rationale": "The README describes per-world membership checks on protected API endpoints."
+              },
+              {
+                "question": "Are revocation, expiry, and periodic review procedures established by the cited source?",
+                "options": [
+                  "Yes, all are fully specified",
+                  "No, these details are not established in the cited overview",
+                  "They are implied by the role names"
+                ],
+                "answer": 1,
+                "rationale": "The source identifies roles and server enforcement but does not specify those lifecycle procedures."
+              }
+            ],
+            "assessmentEvidence": "Access-lifecycle gap assessment with traceable evidence and proposed verification tests.",
+            "feedback": "Do not describe least privilege, revocation, expiry, or review as implemented unless a policy or test verifies it.",
+            "safetyBoundary": "Do not use real user lists, access tokens, or production membership records.",
+            "references": [
+              "README.md",
+              "docs/v0.4-end-to-end-acceptance.md"
+            ],
+            "reviewStatus": "Not reviewed"
+          }
         },
         {
           "id": "M1.4",
           "title": "Access decisions and audit evidence",
           "exercise": "map a request to the evidence needed to explain its authorization outcome",
-          "status": "Specified"
+          "status": "Authored draft",
+          "content": {
+            "status": "Authored draft",
+            "purpose": "Trace an access decision and identify what audit evidence exists, what is conditional, and what remains unverified.",
+            "outcomes": [
+              "Trace session identity and per-world membership checks for a protected API request.",
+              "Explain the documented limits of the signed audit chain.",
+              "Distinguish API test evidence from browser acceptance and production assurance."
+            ],
+            "prerequisites": [
+              "AH-CORE-100 orientation",
+              "AH-CORE-110 architecture and system boundaries"
+            ],
+            "sourceBase": [
+              "AH-AIOS WorldForge React Website README (repository root), blob 4a99342dfed4eab085162f22b464540e5cc99612; WorldForge v0.4 End-to-End Acceptance Record, blob SHA to be recorded separately."
+            ],
+            "explanation": "The README states that the Django API enforces session identity and workspace membership for protected endpoints. It also describes a signed audit chain as tamper-evident while its signing key remains secret; an administrator who can rewrite both database and key can defeat that protection. The v0.4 acceptance record reports isolated Django tests, but the full React-to-Django browser workflow is unverified because Edge could not be launched. Therefore an access-decision report should identify the request, resource scope, authorization outcome, and evidence source, while avoiding claims of immutable audit or end-to-end acceptance.",
+            "workedExample": {
+              "title": "Write an evidence-bounded access decision",
+              "steps": [
+                "Describe a synthetic actor with an authenticated Django session.",
+                "Name the target world/workspace and the membership role check.",
+                "Record the protected operation and its allow/deny result only if a source or test demonstrates it.",
+                "Describe the audit-chain property as tamper-evident under key protection, not immutable.",
+                "State that browser-to-backend acceptance remains unverified."
+              ],
+              "result": "The record explains the decision path and its evidence limits."
+            },
+            "guidedPractice": [
+              "Read the README's API authorization and audit-chain limitation statements.",
+              "Read the v0.4 acceptance record's reported checks and browser acceptance result.",
+              "Create an access-decision evidence template with actor/session, workspace, requested operation, membership check, result, audit reference, and verification status.",
+              "Do not invent a successful or denied action outcome."
+            ],
+            "independentExercise": {
+              "input": "Repository README and v0.4 end-to-end acceptance record.",
+              "instructions": "Produce a synthetic access-decision record and evidence note. Explicitly state the audit-chain threat-model limitation and browser acceptance status.",
+              "deliverables": [
+                "Access-decision record",
+                "Audit evidence limitation note",
+                "Acceptance status statement"
+              ]
+            },
+            "knowledgeCheck": [
+              {
+                "question": "How is the Django audit chain characterized?",
+                "options": [
+                  "Immutable against every administrator",
+                  "Tamper-evident while the signing key remains protected",
+                  "A replacement for authorization"
+                ],
+                "answer": 1,
+                "rationale": "The README describes the key-protection assumption and administrator limitation."
+              },
+              {
+                "question": "Do isolated API tests prove the browser-to-backend workflow passed?",
+                "options": [
+                  "Yes",
+                  "No, the recorded browser workflow is unverified",
+                  "Only if roles are named"
+                ],
+                "answer": 1,
+                "rationale": "The acceptance record explicitly marks the Playwright browser workflow unverified."
+              }
+            ],
+            "assessmentEvidence": "Access-decision record with source evidence, resource scope, and accurate audit/acceptance caveats.",
+            "feedback": "Do not claim immutable audit, production authorization assurance, or end-to-end browser acceptance.",
+            "safetyBoundary": "Use synthetic actor and workspace names. Do not expose session identifiers, audit secrets, or private membership records.",
+            "references": [
+              "README.md",
+              "docs/v0.4-end-to-end-acceptance.md"
+            ],
+            "reviewStatus": "Not reviewed"
+          }
         }
       ],
       "assessment": "role-permission matrix and scenario analysis. Never use real credentials in exercises.",
