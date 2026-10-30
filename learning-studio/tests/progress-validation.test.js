@@ -14,3 +14,7 @@ test("all internal navigation links resolve to a page section",()=>{const links=
 test("all required dashboard interaction targets exist",()=>{for(const id of ["domain-grid","continue-grid","all-courses","activity","assessment-list","competency-list","cert-list","portfolio-items","theory-list","modal","modal-content"])assert.ok(ids.includes(id),id)});
 test("responsive dashboard styles are present",()=>{assert.match(css,/@media\(max-width:560px\)/);assert.match(css,/\.sidebar\.show/);assert.match(css,/\.domain-grid/)});
 test("PWA service worker registration exists",()=>assert.match(app,/serviceWorker\.register\("\.\/sw\.js"\)/));
+
+test("3-day sprint section and all 15 task controls exist",()=>{assert.match(html,/id="sprint"/);assert.equal((html.match(/data-sprint=/g)||[]).length,15);for(const day of ["Day 1 — Git & GitHub","Day 2 — Python & AI API","Day 3 — Quality & CI\/CD"])assert.ok(html.includes(day),day)});
+test("sprint progress is persisted locally and restored",()=>{assert.match(app,/ah-aios-learning-sprint-v1/);assert.match(app,/localStorage\.setItem\(SPRINT_KEY/);assert.match(app,/renderSprint\(\)/)});
+test("sprint security guidance forbids committing credentials",()=>assert.match(html,/Never commit \.env, tokens or keys/));
