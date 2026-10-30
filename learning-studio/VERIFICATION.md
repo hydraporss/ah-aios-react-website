@@ -155,3 +155,6 @@ The lesson mapping is intentionally bounded: NIST AI 100-2 E2025 supports M1.1 a
 **Evidence boundary:** external references do not prove project-specific control implementation. The repository still does not establish a complete formal threat model, implemented prompt-injection defense, full operational incident-response policy, or tamper-proof browser-local audit history. All four AH-CORE-130 lessons remain Authored draft / Not reviewed. Source verification is not content approval or publication.
 
 Regression tests now verify the three external source records, publication metadata, canonical URLs, lesson mappings, and explicit implementation-limit language.
+
+
+The external-source verification additions and regression tests completed successfully in GitHub Actions run [41029942500](https://github.com/hydraporss/ah-aios-react-website/actions/runs/41029942500) on commit `9f810020a3165cf710e92cef1d7a298785a18b05`. This run validates the curriculum-data and regression-test changes. The final documentation-only update is recorded in the branch head after that run; a fresh branch-head run is being triggered to verify the exact final commit.
