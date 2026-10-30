@@ -57,3 +57,8 @@ Four AH-CORE-100 lesson units currently have authored drafts with outcomes, prer
 Five source-defined integrated project briefs and the common 1–4 assessment framework (seven dimensions and remediation steps) are available in the app. The common rubric does not establish course-specific thresholds or credentials. The nine legacy quick-start primers are labeled separately from the 24-course programme. No authorized credential issuer is configured.
 
 See `VERIFICATION.md` for exact source hashes, CI evidence, and remaining content gaps. The source plan identifies approved technical source references for every lesson as an unresolved input; detailed AI Harness source material is not present in the repository, so those lessons remain specified until approved references are available.
+
+
+## AH-AIOS Core architecture lessons — 30 October 2026
+
+Four additional source-grounded lesson drafts have been authored for AH-CORE-110 (Architecture and System Boundaries). The drafts cover component responsibilities and separate data paths, documented interfaces/dependencies, browser-local versus server-backed trust boundaries, and the distinction between prototype, backend foundation, acceptance, deployment, and production assurance. They cite the repository README blob recorded in `curriculum-data.js`. The lesson explanations preserve the documented boundary that browser-to-backend acceptance remains unverified. Total authored drafts: 8 of 96; remaining 88 are specified-only. None is reviewed or published.
