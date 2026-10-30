@@ -41,8 +41,19 @@
       if (edgeKeys.has(key)) errors.push({code:'DUPLICATE_EDGE',path,message:'Duplicate relationship edge.'});
       edgeKeys.add(key);
     }
+    const sources = new Map((workspace.sources || []).map(x => [x.id,x]));
+    const evidence = new Map((workspace.evidence || []).map(x => [x.id,x]));
     for (const [i,c] of (workspace.claims || []).entries()) {
       if (!c.sourceRef && !(c.sourceRefs || []).length && !(c.sourceName || '').trim()) warnings.push({code:'MISSING_PROVENANCE',path:'claims['+i+']',message:'Claim has no recorded source provenance.'});
+      for (const evidenceId of c.evidenceRefs || []) if (!evidence.has(evidenceId)) errors.push({code:'DANGLING_EVIDENCE',path:'claims['+i+'].evidenceRefs',message:'Claim evidence reference does not resolve: '+evidenceId});
+    }
+    for (const [i,e] of (workspace.evidence || []).entries()) {
+      const path='evidence['+i+']',claim=(workspace.claims || []).find(x=>x.id===e.claimId),source=sources.get(e.sourceId);
+      if (!claim) errors.push({code:'DANGLING_EVIDENCE_CLAIM',path:path+'.claimId',message:'Evidence claim reference does not resolve.'});
+      if (!source) errors.push({code:'DANGLING_EVIDENCE_SOURCE',path:path+'.sourceId',message:'Evidence source reference does not resolve.'});
+      if (!['supports','contradicts','qualifies','contextualizes'].includes(e.relation)) errors.push({code:'UNKNOWN_EVIDENCE_RELATION',path:path+'.relation',message:'Evidence relation is not supported.'});
+      if (claim && source && claim.worldId && source.worldId && claim.worldId!==source.worldId && !e.allowCrossWorld) errors.push({code:'CROSS_WORLD_EVIDENCE',path,message:'Evidence links records from different worlds without explicit authorization.'});
+      if (e.worldId && claim && claim.worldId && e.worldId!==claim.worldId) errors.push({code:'EVIDENCE_WORLD_MISMATCH',path:path+'.worldId',message:'Evidence world does not match its claim.'});
     }
     return {valid:errors.length===0,errors,warnings,checkedAt:new Date().toISOString(),schemaVersion:CURRENT_SCHEMA_VERSION};
   }
