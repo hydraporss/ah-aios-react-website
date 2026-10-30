@@ -692,7 +692,7 @@ window.AH_LEARNING_CURRICULUM = {
               "AH-CORE-110 architecture and system boundaries"
             ],
             "sourceBase": [
-              "AH-AIOS WorldForge React Website README (repository root), blob 4a99342dfed4eab085162f22b464540e5cc99612; WorldForge v0.4 End-to-End Acceptance Record, blob SHA to be recorded separately."
+              "AH-AIOS WorldForge React Website README, blob 4a99342dfed4eab085162f22b464540e5cc99612; WorldForge v0.4 End-to-End Acceptance Record, blob 668b72567dd22501b70b7b186bc9cc11fe39b4d1."
             ],
             "explanation": "The repository describes session authentication for the Django Server Governance API and server-side authorization for protected endpoints. The API checks session identity and workspace membership. These are separate concepts: identity is the actor account or session principal; authentication establishes that the request is associated with that authenticated session; authorization decides whether that actor may perform the requested operation on the target workspace. The main browser-local prototype has simulated identity/role controls and no authentication or server-side authorization. The repository does not claim enterprise SSO/MFA or completed browser-to-backend acceptance.",
             "workedExample": {
@@ -770,7 +770,7 @@ window.AH_LEARNING_CURRICULUM = {
               "AH-CORE-110 architecture and system boundaries"
             ],
             "sourceBase": [
-              "AH-AIOS WorldForge React Website README (repository root), blob 4a99342dfed4eab085162f22b464540e5cc99612; WorldForge v0.4 End-to-End Acceptance Record, blob SHA to be recorded separately."
+              "AH-AIOS WorldForge React Website README, blob 4a99342dfed4eab085162f22b464540e5cc99612; WorldForge v0.4 End-to-End Acceptance Record, blob 668b72567dd22501b70b7b186bc9cc11fe39b4d1."
             ],
             "explanation": "The repository describes per-world membership roles named owner, editor, and viewer, with backend enforcement for protected API operations. The role is evaluated in the context of a workspace/world. The source establishes the role names and the existence of server-side enforcement; it does not, in the cited overview, define a complete action-by-action permission matrix. Do not infer that a viewer can export, that an editor can change membership, or that an owner has unrestricted access unless a specific policy or test establishes it.",
             "workedExample": {
@@ -848,7 +848,7 @@ window.AH_LEARNING_CURRICULUM = {
               "AH-CORE-110 architecture and system boundaries"
             ],
             "sourceBase": [
-              "AH-AIOS WorldForge React Website README (repository root), blob 4a99342dfed4eab085162f22b464540e5cc99612; WorldForge v0.4 End-to-End Acceptance Record, blob SHA to be recorded separately."
+              "AH-AIOS WorldForge React Website README, blob 4a99342dfed4eab085162f22b464540e5cc99612; WorldForge v0.4 End-to-End Acceptance Record, blob 668b72567dd22501b70b7b186bc9cc11fe39b4d1."
             ],
             "explanation": "The repository establishes per-world membership roles and server-side checks for protected endpoints. This supports a scoped-access discussion: authorization is evaluated against a workspace/world rather than inferred from a global browser role selector. However, the cited project overview and acceptance record do not fully specify membership invitation, approval, role-change, revocation, expiry, periodic review, or emergency-access procedures. Least privilege is a useful review lens for assessing whether each role receives only the capabilities required, but the lesson must not present a complete least-privilege policy or access lifecycle as implemented.",
             "workedExample": {
@@ -927,7 +927,7 @@ window.AH_LEARNING_CURRICULUM = {
               "AH-CORE-110 architecture and system boundaries"
             ],
             "sourceBase": [
-              "AH-AIOS WorldForge React Website README (repository root), blob 4a99342dfed4eab085162f22b464540e5cc99612; WorldForge v0.4 End-to-End Acceptance Record, blob SHA to be recorded separately."
+              "AH-AIOS WorldForge React Website README, blob 4a99342dfed4eab085162f22b464540e5cc99612; WorldForge v0.4 End-to-End Acceptance Record, blob 668b72567dd22501b70b7b186bc9cc11fe39b4d1."
             ],
             "explanation": "The README states that the Django API enforces session identity and workspace membership for protected endpoints. It also describes a signed audit chain as tamper-evident while its signing key remains secret; an administrator who can rewrite both database and key can defeat that protection. The v0.4 acceptance record reports isolated Django tests, but the full React-to-Django browser workflow is unverified because Edge could not be launched. Therefore an access-decision report should identify the request, resource scope, authorization outcome, and evidence source, while avoiding claims of immutable audit or end-to-end acceptance.",
             "workedExample": {
@@ -2081,11 +2081,11 @@ window.AH_LEARNING_CURRICULUM = {
       "url": "https://github.com/hydraporss/ah-aios-react-website/blob/ah-aios-learning-package/src/governance.js"
     },
     {
-      "id": "WF-README-001",
-      "path": "README.md",
-      "title": "AH-AIOS WorldForge React Website README",
-      "blobSha": "4a99342dfed4eab085162f22b464540e5cc99612",
-      "url": "https://github.com/hydraporss/ah-aios-react-website/blob/learning-studio-0.2.0/README.md"
+      "id": "WF-ACCEPT-004",
+      "path": "docs/v0.4-end-to-end-acceptance.md",
+      "title": "WorldForge v0.4 End-to-End Acceptance Record",
+      "blobSha": "668b72567dd22501b70b7b186bc9cc11fe39b4d1",
+      "url": "https://github.com/hydraporss/ah-aios-react-website/blob/ah-aios-learning-package/docs/v0.4-end-to-end-acceptance.md"
     }
   ],
   "projects": [
