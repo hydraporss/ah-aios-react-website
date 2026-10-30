@@ -51,6 +51,11 @@ jobs:
         run: pnpm exec playwright install --with-deps chromium
       - name: Build the production site
         run: pnpm build
+      - name: Include canonical WorldForge JSON Schemas in the production artifact
+        run: |
+          mkdir -p dist/schemas/v1
+          cp schemas/v1/*.json dist/schemas/v1/
+          test -s dist/schemas/v1/manifest.schema.json
       - name: Copy static Learning Studio runtime assets into the Pages artifact
         run: |
           cp app.js styles.css manifest.webmanifest sw.js icon.svg curriculum-data.js theory-validation.js dist/
