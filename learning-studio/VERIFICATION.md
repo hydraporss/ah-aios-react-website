@@ -82,3 +82,35 @@ Added a visible, responsive curriculum blueprint sourced from `docs/learning/con
 The 24-course roadmap is clearly labeled **Specified · authoring pending**. It is not represented as published or interactive lesson content. The nine interactive starter modules remain separately labeled. The page links to the source master plan.
 
 Regression tests verify the 6/7/8/3 course counts, visible roadmap, and distinction between specified blueprint and starter lessons. GitHub Actions run [41024000678](https://github.com/hydraporss/ah-aios-react-website/actions/runs/41024000678) completed successfully on commit `f9d6d2cebc1769270a2a3ed7068dfe15f2836f09`.
+
+
+## Source-grounded curriculum implementation — 30 October 2026
+
+### Implemented in the learner interface
+- Added `curriculum-data.js`, extracted from the exact course and lesson outline in `docs/learning/content-master-plan.md` on branch `ah-aios-learning-package`.
+- The data contains 24 unique course records and 96 lesson units: 6 AH-AIOS Core, 7 AI Harness, 8 WorldForge, and 3 cross-cutting Human Stewardship. Human Stewardship is not a fourth technical subsystem.
+- Each course opens a course view with its four specified lesson topics, source-specified exercises, course outcome (where supplied), assessment evidence, and exact source document links with Git blob SHAs.
+- Each lesson opens in a reader. Four AH-CORE-100 lessons have full authored drafts: purpose, observable outcomes, prerequisites, source base, explanation labeled as interpretation, worked example, guided practice, independent exercise, knowledge checks with rationales, assessment evidence, feedback/remediation, safety boundary, and references.
+- The remaining 92 lesson units display the source-defined topic and exercise and explicitly identify missing authoring fields. They remain **Specified**, not authored or published.
+- Added all five source-defined integrated project briefs with local learner evidence submission.
+- Added the common assessment framework: 1–4 scale, seven dimensions, assessment rules, and remediation sequence. It is not a substitute for course-specific mandatory criteria or thresholds.
+- Added a visible lesson quality gate and course definition-of-done data. The learner's saved response is local portfolio evidence only; it does not mark content reviewed or competency assessed.
+- Updated the service-worker app shell to cache the curriculum data and lesson reader offline.
+- Corrected status presentation: the nine legacy primer checks are no longer presented as the 24-course curriculum, formal competencies, or credentials. No authorized credential issuer is configured.
+
+### Source lineage
+The curriculum data records 15 exact source files from `ah-aios-learning-package`, including the master plan, platform definition, curriculum, content governance, three learning paths, assessment and lab specifications, WorldForge README, constitution, doctrine, governance interface, and governance policy code. Each source record includes its Git blob SHA and direct GitHub link. The master plan itself remains labeled **SUGGESTION / PROCESS**, not canon.
+
+### Automated verification
+Latest GitHub Actions run [41025750155](https://github.com/hydraporss/ah-aios-react-website/actions/runs/41025750155) passed on commit `6816d56f521a486996affe2012d8828e2d6d472a`. CI passed curriculum integrity tests (24 courses, 96 lessons, 6/7/8/3 domain split, unique IDs, source hashes, authoring/publication status), project and assessment framework tests, learner import checks, JavaScript syntax validation, and required static file checks.
+
+### Not yet complete — do not overstate
+- Only four of 96 lesson units have authored drafts; none have subject-matter or instructional review. No course is approved or published.
+- The source master plan explicitly lists approved source references and versions for every technical lesson as an unresolved input. In particular, the repository does not contain a detailed AI Harness technical source corpus. Do not fill those gaps with invented AH-AIOS implementation claims.
+- Course-specific rubrics, mandatory criteria, minimum thresholds, instructor/reviewer packs, pilot results, and publication approvals are not complete.
+- The five integrated projects are specified briefs; they are not piloted or reviewed.
+- Complete authoritative 82-Theory registry remains unprovided to this app; no theory entries are fabricated.
+- Manual cross-browser, mobile, screen-reader, and PWA offline acceptance remains open.
+- No authorized credential issuer, production learner data policy, server-backed learner records, or production deployment is claimed.
+
+**Status:** 24-course/96-lesson source structure is interactive; four lesson drafts are authored. The programme is not content-complete, reviewed, published, or production-deployed.
