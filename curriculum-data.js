@@ -230,6 +230,16 @@ window.AH_LEARNING_CURRICULUM = {
                 ],
                 "answer": 1,
                 "rationale": "Creative canon and software implementation evidence have different scopes."
+              },
+              {
+                "question": "What does creative canon authority establish?",
+                "options": [
+                  "The truth of authorized statements within the creative-world canon",
+                  "That a similarly named software feature has been implemented",
+                  "That a website deployment passed its production checks"
+                ],
+                "answer": 0,
+                "rationale": "Creative authority is scoped to the fictional world and does not substitute for implementation or deployment evidence."
               }
             ],
             "assessmentEvidence": "A two-resource authority classification with supported and unsupported claims.",

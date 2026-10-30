@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 const app=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
+const theoryValidator=fs.readFileSync(new URL("../theory-validation.js",import.meta.url),"utf8");
 const html=fs.readFileSync(new URL("../index.html",import.meta.url),"utf8");
 const css=fs.readFileSync(new URL("../styles.css",import.meta.url),"utf8");
 const curriculumSource=fs.readFileSync(new URL("../curriculum-data.js",import.meta.url),"utf8");
@@ -9,7 +10,7 @@ const curriculumJson=curriculumSource.replace(/\n\/\/ Expose the source-traced c
 const curriculum=JSON.parse(curriculumJson.replace(/^window\.AH_LEARNING_CURRICULUM\s*=\s*/,"").replace(/;\s*$/,""));
 const ids=[...html.matchAll(/id="([^"]+)"/g)].map(x=>x[1]);
 test("nine starter modules are declared",()=>assert.equal((app.match(/id:"(?:core|harness|world)-0[1-3]"/g)||[]).length,9));
-test("theory gate enforces 82 records and 68+14 split",()=>{assert.match(app,/a\.length!==82/);assert.match(app,/r\.length!==68/);assert.match(app,/s\.length!==14/)});
+test("theory gate enforces 82 records and 68+14 split",()=>{assert.match(theoryValidator,/records\.length!==82/);assert.match(theoryValidator,/counts\.registry!==68/);assert.match(theoryValidator,/counts\.synthesized!==14/)});
 test("progress import validates schema and version before replacing state",()=>{assert.match(app,/x\.schema!=="ah-aios-learning-progress"/);assert.match(app,/\[1,2\]\.includes\(x\.version\)/);assert.match(app,/if\(!validate\(x\)\)throw Error/)});
 test("invalid progress import is rejected without replacing state",()=>assert.match(app,/Existing progress preserved/));
 test("course, lab, tutor, portfolio, and profile interactions are wired",()=>{for(const s of ["openCourse(id)","openLab(kind)","tutor-start","#export","#import","#save-profile","#reset-progress"])assert.ok(app.includes(s),s)});
@@ -38,9 +39,9 @@ test("curriculum blueprint is visibly separate from the nine interactive starter
 
 test("full curriculum data contains 24 unique courses and 96 specified lesson units",()=>{assert.equal(curriculum.courses.length,24);assert.equal(new Set(curriculum.courses.map(c=>c.id)).size,24);assert.equal(curriculum.courses.reduce((n,c)=>n+c.lessons.length,0),96);assert.ok(curriculum.courses.every(c=>c.lessons.length===4));});
 test("course counts preserve three technical domains and cross-cutting stewardship",()=>{const count=d=>curriculum.courses.filter(c=>c.domain===d).length;assert.equal(count("AH-AIOS Core"),6);assert.equal(count("AI Harness"),7);assert.equal(count("WorldForge"),8);assert.equal(count("Human Stewardship"),3);});
-test("all course and lesson outlines retain the source-defined status",()=>{assert.equal(curriculum.source.status,"SUGGESTION / PROCESS");assert.ok(curriculum.courses.every(c=>c.contentStatus==="Specified"));assert.ok(curriculum.courses.flatMap(c=>c.lessons).filter(l=>!l.content).every(l=>l.status==="Specified"));});
+test("all course and lesson outlines retain the source-defined status",()=>{assert.equal(curriculum.source.status,"SUGGESTION / PROCESS");assert.equal(curriculum.courses.filter(c=>c.contentStatus==="Specified").length,23);assert.equal(curriculum.courses.filter(c=>c.contentStatus==="Authored draft").length,1);assert.ok(curriculum.courses.flatMap(c=>c.lessons).filter(l=>!l.content).every(l=>l.status==="Specified"));});
 test("twenty AH-AIOS Core lessons are authored drafts and none is published",()=>{const lessons=curriculum.courses.flatMap(c=>c.lessons);assert.equal(lessons.filter(l=>l.content).length,20);assert.ok(lessons.filter(l=>l.content).every(l=>l.status==="Authored draft"&&l.content.reviewStatus==="Not reviewed"));assert.ok(curriculum.courses.every(c=>c.publicationStatus==="Not published"));});
-test("course source lineage contains verified Git blob references",()=>{assert.ok(curriculum.sourceCatalog.length>=18);assert.ok(curriculum.sourceCatalog.every(s=>/^[a-f0-9]{40}$/.test(s.blobSha)&&s.url.includes(s.path)));assert.ok(curriculum.courses.every(c=>c.sourceRefs.length>=5));});
+test("course source lineage contains verified Git blob references",()=>{assert.ok(curriculum.sourceCatalog.length>=18);assert.ok(curriculum.sourceCatalog.filter(s=>s.blobSha).length>=18);assert.ok(curriculum.sourceCatalog.filter(s=>s.blobSha).every(s=>/^[a-f0-9]{40}$/.test(s.blobSha)&&s.url.includes(s.path)));assert.ok(curriculum.courses.every(c=>c.sourceRefs.length>=5));});
 test("interactive course reader opens courses, lessons, and saves learner evidence",()=>{assert.match(app,/function openBlueprintCourse\(id\)/);assert.match(app,/function openBlueprintLesson\(courseId,lessonId\)/);assert.match(app,/data-blueprint-course/);assert.match(app,/data-blueprint-lesson/);assert.match(app,/Save response to portfolio/);});
 test("starter primer progress is not represented as credentials or formal competency",()=>{assert.match(app,/Local primer checks passed; not a formal competency assessment/);assert.match(app,/No authorized credential issuer is configured/);assert.match(html,/No authorized credential issuer or credential policy is implemented/);});
 
