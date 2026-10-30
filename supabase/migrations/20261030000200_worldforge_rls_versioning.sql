@@ -185,12 +185,8 @@ create policy wf_evidence_write on public.claim_evidence for all to authenticate
 using (exists (select 1 from public.claims c where c.id=claim_id and (c.world_id is null or public.wf_has_world_role(c.world_id,array['owner','architect','researcher','contributor']))))
 with check (exists (select 1 from public.claims c where c.id=claim_id and (c.world_id is null or public.wf_has_world_role(c.world_id,array['owner','architect','researcher','contributor']))));
 
-drop policy if exists wf_versions_read on public.record_versions;
-create policy wf_versions_read on public.record_versions for select to authenticated
-using (case table_name when 'worlds' then public.wf_has_world_role(record_id,array['owner','canon_authority','reviewer']) else true end);
-drop policy if exists wf_audit_read on public.audit_events;
-create policy wf_audit_read on public.audit_events for select to authenticated
-using (true);
+-- Version and audit rows remain default-deny until scoped policies can resolve each
+-- target's owning world. Never expose all audit/version history to every authenticated user.
 drop policy if exists wf_validation_read on public.validation_runs;
 create policy wf_validation_read on public.validation_runs for select to authenticated
 using (actor_id=auth.uid());
