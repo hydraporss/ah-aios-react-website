@@ -38,7 +38,7 @@ async function syncWorkspace(workspace){
      else if(table==='entities'||table==='relationships'||table==='claims'||table==='sources')payload.created_by=user.id;
      const {data,error}=await db.from(table).insert(payload).select('id,record_version').single();
      if(error)throw new Error('Could not create '+type+' "'+(local.name||local.title||local.id)+'": '+error.message);
-     map.lastSyncedVersions[key]=data.record_version||1;map.lastSyncedHashes[key]=payloadHash;map.lastSyncedLocalSnapshots[key]=validator.comparable?validator.comparable(type.slice(0,-1),local):local;saveMap(map);synced[type]++;return data;
+     map.lastSyncedVersions[key]=data.record_version||1;map.lastSyncedHashes[key]=payloadHash;map.lastSyncedLocalSnapshots[key]=validator.comparable?validator.comparable(({worlds:'world',entities:'entity',relationships:'relationship',sources:'source',claims:'claim'}[type]||type),local):local;saveMap(map);synced[type]++;return data;
    }
    const last=map.lastSyncedVersions[key];
    if(last===undefined||existing.record_version!==last){conflicts.push({type,id:local.id,reason:'Remote revision changed since last sync.'});return null}
@@ -112,6 +112,7 @@ async function syncBidirectional(workspace){
  const db=await client(),user=await requireUser(db),map=idMap();map.lastSyncedLocalSnapshots=map.lastSyncedLocalSnapshots||{};map.lastSyncedVersions=map.lastSyncedVersions||{};map.lastSyncedHashes=map.lastSyncedHashes||{};
  const report=validator.validateWorkspace(workspace);if(!report.valid)throw new Error('Local workspace failed integrity checks: '+report.errors.slice(0,4).map(x=>x.code).join(', '));
  if(validator.validateWorkspaceSchemas){const sr=await validator.validateWorkspaceSchemas(workspace);if(!sr.valid)throw new Error('JSON Schema validation failed: '+sr.errors.slice(0,4).map(x=>x.path+': '+x.message).join('; '))}
+ for(const type of ['worlds','entities','relationships','claims','sources'])map[type]=map[type]||{};
  const [projects,entities,relationships,sources,claims]=await Promise.all(['projects','entities','relationships','sources','claims'].map(t=>tableRows(db,t)));
  const worldByRemote={},entityByRemote={},remoteSets={worlds:projects,entities,relationships,sources,claims},localTypes={worlds:'worlds',entities:'entities',relationships:'relationships',sources:'sources',claims:'claims'};
  for(const row of projects){const id=remoteKey('worlds',row);if(id){worldByRemote[row.id]=id;map.worlds[id]=row.id}}
@@ -183,7 +184,7 @@ async function resolveConflict(workspace,conflictId,choice){
  }
  conflict.status='resolved';conflict.resolution=choice==='remote'?'keep_remote':'keep_local';conflict.resolvedAt=new Date().toISOString();
  saveMap(map);
- if(conflict.projectId){const db=await client();await db.from('sync_conflicts').update({status:'resolved',resolution:conflict.resolution,updated_at:conflict.resolvedAt}).eq('id',conflict.id)}
+ if(conflict.projectId){const db=await client();await db.from('sync_conflicts').update({status:'resolved',resolution:conflict.resolution,updated_at:conflict.resolvedAt,resolved_by:(await requireUser(db)).id}).eq('id',conflict.id)}
  workspace.auditLog=workspace.auditLog||[];workspace.auditLog.push({id:uuid(),action:'sync-conflict-resolved',detail:conflict.type+':'+conflict.recordId+' → '+conflict.resolution,at:conflict.resolvedAt});
  return {resolved:true,workspace,conflict};
 }
