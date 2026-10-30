@@ -72,3 +72,8 @@ Four source-grounded lesson drafts now cover architecture responsibilities and d
 ## AH-CORE-120 authoring milestone
 
 Four source-grounded lesson drafts now cover identity/authentication/authorization, per-world owner/editor/viewer roles, access-scope and lifecycle gaps, and access-decision evidence. Sources are the root README (blob `4a99342dfed4eab085162f22b464540e5cc99612`) and the WorldForge v0.4 End-to-End Acceptance Record (blob `668b72567dd22501b70b7b186bc9cc11fe39b4d1`). The lessons distinguish documented API session and membership checks from the unauthenticated browser-local demo. The available sources do not define a complete action-by-action role matrix or full membership lifecycle; those remain explicit evidence gaps. All four lessons are authored drafts, not reviewed or published.
+
+
+## AH-CORE-130 authoring milestone
+
+Four source-grounded lessons now cover project assets and attack surfaces; policy-to-control mapping; untrusted source content and instruction conflicts; and incident recognition, evidence preservation, and escalation. Sources include the learning content-governance policy, WorldForge governance state machine and unit tests, server end-to-end authorization tests, and v0.4 sprint/acceptance notes. The lessons preserve key limitations: no complete formal threat model, no documented AI prompt-injection defense, no complete operational incident-response procedure, and browser-local audit records are not tamper-proof. All four lessons are Authored draft / Not reviewed.
