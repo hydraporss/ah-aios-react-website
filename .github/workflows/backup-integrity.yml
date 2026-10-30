@@ -1,0 +1,99 @@
+name: AH-AIOS Backup Integrity
+
+on:
+  push:
+    branches:
+      - backup/notion-export-2026-10-30
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ah-aios-backup-integrity
+  cancel-in-progress: true
+
+jobs:
+  verify-backup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out complete Git history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.25.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install locked dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run governance tests
+        run: pnpm test
+
+      - name: Build application
+        run: pnpm build
+
+      - name: Verify Git object database
+        run: git fsck --full --no-reflogs
+
+      - name: Generate SHA-256 inventory for every tracked file
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/ah-aios-backup-audit"
+          python - <<'PY'
+          import hashlib
+          import json
+          import os
+          import subprocess
+          from pathlib import Path
+
+          raw = subprocess.check_output(["git", "ls-files", "-z"])
+          paths = [p.decode("utf-8", "surrogateescape") for p in raw.split(b"\\0") if p]
+          records = []
+          total_bytes = 0
+          for name in paths:
+              data = Path(name).read_bytes()
+              size = len(data)
+              total_bytes += size
+              records.append({
+                  "path": name,
+                  "size_bytes": size,
+                  "sha256": hashlib.sha256(data).hexdigest()
+              })
+
+          out = Path(os.environ["RUNNER_TEMP"]) / "ah-aios-backup-audit"
+          (out / "inventory.json").write_text(json.dumps({
+              "repository": os.environ["GITHUB_REPOSITORY"],
+              "commit": os.environ["GITHUB_SHA"],
+              "tracked_file_count": len(records),
+              "total_bytes": total_bytes,
+              "algorithm": "SHA-256",
+              "files": records
+          }, indent=2) + "\\n", encoding="utf-8")
+
+          with (out / "SHA256SUMS.txt").open("w", encoding="utf-8", newline="\\n") as f:
+              for item in records:
+                  f.write(f'{item["sha256"]}  {item["path"]}\\n')
+
+          print(f'Commit: {os.environ["GITHUB_SHA"]}')
+          print(f'Tracked files: {len(records)}')
+          print(f'Total bytes: {total_bytes}')
+          PY
+
+      - name: Upload verification evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: ah-aios-backup-integrity-${{ github.sha }}
+          path: ${{ runner.temp }}/ah-aios-backup-audit/
+          if-no-files-found: error
+          retention-days: 90
