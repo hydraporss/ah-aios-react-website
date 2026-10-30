@@ -1,0 +1,99 @@
+{
+  "schemaVersion": "1.0.0",
+  "program": {
+    "id": "ERPRP",
+    "name": "AH-AIOS Ecosystem Realization & Production Readiness Program",
+    "charter": "ERPRP-CHARTER-001",
+    "status": "proposed_pending_formal_adoption"
+  },
+  "sourceOfTruth": {
+    "platform": "GitHub",
+    "repository": "hydraporss/ah-aios-react-website",
+    "defaultBranch": "main",
+    "authority": "version_controlled_source_architecture_specifications_schemas_governance_and_approved_evidence"
+  },
+  "systems": [
+    {
+      "id": "AH-AIOS-CORE",
+      "name": "AH-AIOS Core",
+      "role": "core_intelligence_world_model_and_governance",
+      "baselineStatus": "needs_g0_inventory"
+    },
+    {
+      "id": "AI-HARNESS",
+      "name": "AI Harness",
+      "role": "controlled_execution_evaluation_and_test_environment",
+      "baselineStatus": "needs_g0_inventory"
+    },
+    {
+      "id": "WORLD-FORGE",
+      "name": "World Forge",
+      "role": "structured_world_model_authoring_and_governance",
+      "baselineStatus": "needs_g0_inventory"
+    },
+    {
+      "id": "LEARNING-STUDIO",
+      "name": "Learning Studio",
+      "role": "integrated_learning_and_development_package",
+      "classification": "integrated_package_not_fourth_core_application",
+      "baselineStatus": "application_checks_exist_production_readiness_unverified"
+    }
+  ],
+  "gates": [
+    {
+      "id": "G0",
+      "name": "Baseline",
+      "status": "in_progress"
+    },
+    {
+      "id": "G1",
+      "name": "Implementation",
+      "status": "not_started"
+    },
+    {
+      "id": "G2",
+      "name": "Data Integrity",
+      "status": "not_started"
+    },
+    {
+      "id": "G3",
+      "name": "Security",
+      "status": "not_started"
+    },
+    {
+      "id": "G4",
+      "name": "Integration",
+      "status": "not_started"
+    },
+    {
+      "id": "G5",
+      "name": "Quality Assurance",
+      "status": "not_started"
+    },
+    {
+      "id": "G6",
+      "name": "Operational Readiness",
+      "status": "not_started"
+    },
+    {
+      "id": "G7",
+      "name": "Release Approval",
+      "status": "not_started"
+    }
+  ],
+  "rules": {
+    "unknownIsNotPassed": true,
+    "workflowPassIsNotProductionApproval": true,
+    "canonRequiresExplicitGovernance": true,
+    "mainBranchChangesViaPullRequest": true
+  },
+  "openFindings": [
+    "Confirm canonical repository map and complete three-application inventory.",
+    "Confirm program authority, application owners, reviewers, and release approvers.",
+    "Reconcile the legacy Learning Studio verification workflow with the root deployment workflow.",
+    "Verify branch protection, required reviews, secrets controls, and dependency security settings.",
+    "Establish cross-system data contracts, provenance, backup, restore, and reconciliation evidence.",
+    "Establish cross-application integration and operational acceptance evidence.",
+    "Repository rename to learning-studio has not been performed."
+  ]
+}

@@ -1,0 +1,74 @@
+name: ERPRP governance package verification
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "docs/erprp/**"
+      - ".github/workflows/erprp-governance.yml"
+  push:
+    branches: [main]
+    paths:
+      - "docs/erprp/**"
+      - ".github/workflows/erprp-governance.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-governance:
+    name: Validate ERPRP register and controlled documents
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate machine-readable ERPRP register
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path("docs/erprp")
+          register = json.loads((root / "erprp-register.json").read_text(encoding="utf-8"))
+          assert register["schemaVersion"] == "1.0.0"
+          assert register["program"]["id"] == "ERPRP"
+          assert register["sourceOfTruth"]["platform"] == "GitHub"
+          assert register["rules"]["unknownIsNotPassed"] is True
+          assert register["rules"]["workflowPassIsNotProductionApproval"] is True
+
+          systems = register["systems"]
+          system_ids = [item["id"] for item in systems]
+          assert len(system_ids) == len(set(system_ids)), "Duplicate system IDs"
+          required = {"AH-AIOS-CORE", "AI-HARNESS", "WORLD-FORGE", "LEARNING-STUDIO"}
+          assert required.issubset(set(system_ids)), "Required system boundary missing"
+          studio = next(item for item in systems if item["id"] == "LEARNING-STUDIO")
+          assert studio["classification"] == "integrated_package_not_fourth_core_application"
+
+          gates = register["gates"]
+          expected = [f"G{i}" for i in range(8)]
+          assert [gate["id"] for gate in gates] == expected, "G0-G7 sequence missing or reordered"
+          allowed = {"not_started", "in_progress", "blocked", "evidence_pending", "passed", "failed"}
+          for gate in gates:
+              assert gate["status"] in allowed, f"Invalid status for {gate['id']}"
+          assert next(g for g in gates if g["id"] == "G0")["status"] == "in_progress"
+          assert all(g["status"] != "passed" for g in gates), "Initial register must not claim unearned gate passes"
+
+          required_docs = [
+              "README.md",
+              "ERPRP-CHARTER.md",
+              "GITHUB-AUTHORITY-AND-DATA-INTEGRITY.md",
+              "SYSTEM-REGISTRY.md",
+              "READINESS-GATES.md",
+          ]
+          for name in required_docs:
+              path = root / name
+              assert path.is_file() and path.stat().st_size > 100, f"Missing or empty document: {path}"
+          print("ERPRP governance package: structural checks passed.")
+          print("This validates package integrity only; it does not certify system readiness.")
+          PY
+      - name: Check required governance language
+        run: |
+          grep -q "pending formal adoption" docs/erprp/ERPRP-CHARTER.md
+          grep -q "No gate is passed by default" docs/erprp/ERPRP-CHARTER.md
+          grep -q "G7 — Release Approval" docs/erprp/ERPRP-CHARTER.md
+          grep -q "GitHub is the authoritative system of record" docs/erprp/GITHUB-AUTHORITY-AND-DATA-INTEGRITY.md
