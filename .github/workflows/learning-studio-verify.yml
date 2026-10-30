@@ -1,0 +1,29 @@
+name: Learning Studio verification
+on:
+  push:
+    branches: [learning-studio-0.2.0]
+    paths:
+      - "learning-studio/**"
+      - ".github/workflows/learning-studio-verify.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run Learning Studio source checks
+        working-directory: learning-studio
+        run: node --test tests/*.test.js
+      - name: Check required static app files
+        working-directory: learning-studio
+        run: |
+          test -s index.html
+          test -s app.js
+          test -s styles.css
+          test -s manifest.webmanifest
+          test -s sw.js
