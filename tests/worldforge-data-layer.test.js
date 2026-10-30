@@ -34,6 +34,15 @@ test('integrity validator rejects duplicate IDs and dangling endpoints',()=>{
   assert.ok(result.errors.some(x=>x.code==='DUPLICATE_ID'));
   assert.ok(result.errors.some(x=>x.code==='DANGLING_TARGET'));
 });
+
+test('integrity validator rejects evidence with dangling claim or source references',()=>{
+  const bad={...base,claims:[{id:'claim-a',statement:'A claim',evidenceRefs:['evidence-missing']}],evidence:[{id:'evidence-a',claimId:'claim-missing',sourceId:'source-missing',relation:'supports'}]};
+  const result=api.validateWorkspace(bad);
+  assert.ok(result.errors.some(x=>x.code==='DANGLING_EVIDENCE'));
+  assert.ok(result.errors.some(x=>x.code==='DANGLING_EVIDENCE_CLAIM'));
+  assert.ok(result.errors.some(x=>x.code==='DANGLING_EVIDENCE_SOURCE'));
+});
+
 test('migration preserves record IDs and does not promote canon status',()=>{
   const input={...base,claims:[{id:'claim-a',statement:'A claim',sourceRef:'source-a',canonStatus:'not_canon',version:2}]};
   const out=api.migrateWorkspace(input);
@@ -69,4 +78,12 @@ test('three-way sync classifier distinguishes pull, push, no-op, and conflict',(
 });
 test('records without a sync base are never silently reconciled',()=>{
   assert.equal(api.classifyConflict(null,{id:'x'},{id:'x'}).state,'conflict');
+});
+
+test('conflict persistence adopts the database conflict ID and checks remote resolution writes',()=>{
+  const service=readFileSync(join(process.cwd(),'public/worldforge/verified-2026-10-28/assets/supabase-service.js'),'utf8');
+  assert.match(service,/if\(prior\.data\)\{c\.id=prior\.data\.id;\}/);
+  assert.match(service,/if\(persisted\.error\)throw persisted\.error/);
+  assert.match(service,/Local resolution was not applied/);
+  assert.match(service,/const db=await client\(\);const user=await requireUser\(db\)/);
 });
