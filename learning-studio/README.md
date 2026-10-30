@@ -94,3 +94,10 @@ The current curriculum data contains 24 source-defined courses and 96 lesson uni
 A new automated curriculum quality gate checks the 24/96 structure, 6/7/8/3 domain split, required instructional fields for every authored lesson, knowledge-check answer/rationale integrity, specified-only status for the remaining 80 lessons, and the non-promotion of drafts to reviewed or published status. It also protects the existing AH-CORE-140 lesson titles and specified-only state.
 
 This is a verification milestone, not a claim that the Learning Studio is content-complete. Source recovery, the remaining 80 lesson authoring units, independent reviews, manual accessibility/browser/PWA acceptance, and release acceptance remain open.
+
+
+## Deployment candidate 0.3.0
+
+The application is versioned as 0.3.0. Its deployment packaging is designed to preserve the existing WorldForge site at the repository root and publish Learning Studio separately under `/learning-studio/`. The root Pages workflow now runs both WorldForge governance tests and Learning Studio checks before building one artifact containing both applications. Only the Learning Studio runtime assets are copied to its public subdirectory.
+
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for the release layout, operational boundaries, and live acceptance checklist. The application remains browser-local: there is no account system, cloud progress sync, backend learner store, or live AI model connection. Deployment preparation does not mean the programme is content-complete or that the live site has passed acceptance.
