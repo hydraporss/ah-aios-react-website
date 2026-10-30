@@ -1,0 +1,15 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://hydraporss.github.io/ah-aios-react-website/schemas/v1/world.schema.json",
+  "title":"WorldForge World Record","type":"object",
+  "allOf":[{"$ref":"./common.schema.json#/$defs/baseRecord"}],
+  "required":["id","record_type","schema_version","world_id","name","status","created_at","updated_at","created_by","updated_by","record_version","workflow_status","source_refs"],
+  "properties":{
+    "record_type":{"const":"world"},"world_id":{"type":"null"},
+    "name":{"type":"string","minLength":1,"maxLength":240},
+    "description":{"type":"string","maxLength":20000},
+    "status":{"enum":["active","draft","archived","retired"]},
+    "canon_status":{"$ref":"./common.schema.json#/$defs/canonStatus"},
+    "metadata":{"type":"object"}
+  }
+}
