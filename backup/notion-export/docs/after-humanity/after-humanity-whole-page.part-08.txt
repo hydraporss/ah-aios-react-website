@@ -1,0 +1,736 @@
+<!-- Source: Notion page 40966662-b29d-81e7-be89-e424ee5dd455; original archive: after-humanity-whole-page.txt; chunked export; 2026-10-30 -->
+<b>Source repository:</b> [hydraporss/ah-aios-react-website](https://github.com/hydraporss/ah-aios-react-website)
+
+<b>Source branch:</b> main
+
+<b>Source path:</b> docs/after-humanity/after-humanity-whole-page.txt
+
+<b>Git blob SHA:</b> 4a8b3901e43fff36b30c48bde8ba586e7a816c3d
+
+<b>Part:</b> 8/10; character range 245001–280000. Concatenate parts in ascending order to reconstruct the source text. The original source is preserved verbatim inside the code block below.
+
+---
+
+```txt
+="allow-scripts allow-top-navigation-by-user-activation"
+          style={{ display: 'block', width: '100%', height: afterHumanityHeight, border: 0 }}
+        />
+      </section>
+
+      <section id="after-humanity-video" className="after-humanity-video-section" aria-labelledby="after-humanity-video-title">
+        <div className="container">
+          <div className="after-humanity-video-heading">
+            <span className="eyebrow">AFTER HUMANITY · FEATURED VIDEO</span>
+            <h2 id="after-humanity-video-title">AH The Refraction of the Four Nines</h2>
+            <p>Watch the universe unfold on the After Humanity YouTube channel.</p>
+          </div>
+          <div className="after-humanity-video-frame">
+            <iframe
+              src="https://www.youtube-nocookie.com/embed/TGheUWZO43s"
+              title="AH The Refraction of the Four Nines"
+              loading="lazy"
+              referrerPolicy="strict-origin-when-cross-origin"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          </div>
+          <a className="after-humanity-video-link" href="https://www.youtube.com/watch?v=TGheUWZO43s" target="_blank" rel="noreferrer">Watch on YouTube ↗</a>
+        </div>
+      </section>
+
+      <section id="home" className="hero">
+        <div className="container">
+          <aside className="data-notice" aria-label="Local data notice">
+            <div>
+              <strong>Your world data is stored in this browser.</strong>
+              <p>It is not synced or backed up online. Export a workspace backup regularly; clearing this browser’s site data can erase it.</p>
+            </div>
+            <a href="#import-export" className="data-notice-link">Back up workspace</a>
+          </aside>
+          <h1>WorldForge</h1>
+          <p className="subtitle">Worldbuilding for narrative and game development.</p>
+          <p className="lede">
+            Design worlds, people, and stories. Track decisions. Explore relationships.
+            All local, all yours.
+          </p>
+          <div className="hero-buttons">
+            <a href="#dashboard" className="btn btn-primary">Open Dashboard &rarr;</a>
+            <a href="#worlds" className="btn btn-secondary">Browse Worlds</a>
+            <a href="#after-humanity" className="btn btn-secondary">Explore Sample World</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="dashboard" className="dashboard-section">
+        <div className="container">
+          <div className="dashboard-header">
+            <h2>Dashboard Overview</h2>
+            <p>Synthetic examples only &mdash; no external data or AI models are connected.</p>
+          </div>
+
+          <div className="dashboard-grid">
+            <div className="stat-card">
+              <div className="stat-value">{workspaceData.records.length}</div>
+              <div className="stat-label">Worlds Created</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-value">{workspaceData.decisions.length}</div>
+              <div className="stat-label">Decisions Recorded</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-value">{workspaceData.sources.length}</div>
+              <div className="stat-label">Sources Registered</div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-value">{workspaceData.relationships.length}</div>
+              <div className="stat-label">Relationships</div>
+            </div>
+          </div>
+
+          <div className="recent-works">
+            <h3>Recent Works</h3>
+            <div className="recent-list">
+              {workspaceData.records.slice(-5).reverse().map(record => (
+                <div key={record.id} className="recent-item">
+                  <span className={`canon-badge ${record.canon.toLowerCase()}`}>{record.canon}</span>
+                  <span className="record-title">{record.title}</span>
+                  <span className="record-type">{record.type}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="activity-feed">
+            <h3>Activity Feed</h3>
+            {workspaceData.activityLog.slice(-5).reverse().map((log, i) => (
+              <div key={i} className="activity-item">
+                <span className="activity-time">{new Date(log.timestamp).toLocaleString()}</span>
+                <span className="activity-action">{log.action}</span>
+                <span className="activity-target">{log.target}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section id="worlds" className="dashboard-section">
+        <div className="container">
+          <h2>World Model &amp; Records</h2>
+          <p>Create and manage world records. All data stored locally in your browser.</p>
+
+          <div className="search-filter">
+            <input
+              type="text"
+              placeholder="Search records..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="search-input"
+            />
+            <select value={filterType} onChange={(e) => setFilterType(e.target.value)} className="search-select">
+              <option value="all">All Types</option>
+              <option value="World">World</option>
+              <option value="Nation">Nation</option>
+              <option value="Character">Character</option>
+              <option value="Faction">Faction</option>
+              <option value="Location">Location</option>
+              <option value="Historical Event">Historical Event</option>
+            </select>
+          </div>
+
+          <div className="records-list">
+            {filteredRecords.map(record => (
+              <div key={record.id} className="record-card">
+                <div className="record-header">
+                  <span className={`canon-badge ${record.canon.toLowerCase()}`}>{record.canon}</span>
+                  <span className={`status-badge ${record.status.toLowerCase()}`}>{record.status}</span>
+                  <span className="record-type">{record.type}</span>
+                </div>
+                <div className="record-content">
+                  <h4>{record.title}</h4>
+                  <p>{record.description}</p>
+                </div>
+                <button className="btn-sm" onClick={() => setExpandedRecords(!expandedRecords[record.id])}>
+                  {expandedRecords[record.id] ? 'Hide' : 'Edit'}
+                </button>
+                {expandedRecords[record.id] && (
+                  <div className="record-details">
+                    <p><strong>Created:</strong> {new Date(record.createdAt).toLocaleString()}</p>
+                    <p><strong>Tags:</strong> {record.tags?.join(', ') || 'none'}</p>
+                    <textarea
+                      className="form-input"
+                      value={record.description}
+                      onChange={(e) => {
+                        const newRecords = workspaceData.records.map(r =>
+                          r.id === record.id ? {...r, description: e.target.value} : r
+                        );
+                        setWorkspaceData({...workspaceData, records: newRecords});
+                      }}
+                      rows="3"
+                    />
+                  </div>
+                )}
+              </div>
+            ))}
+            {filteredRecords.length === 0 && (
+              <div className="empty-state">
+                <p>No records found. Create your first world record!</p>
+              </div>
+            )}
+          </div>
+
+          <div className="record-form">
+            <h3>Create New Record</h3>
+            <form id="record-form">
+              <div className="form-group">
+                <label className="form-label">Record Type</label>
+                <select className="form-input" id="record-type">
+                  <option>World</option>
+                  <option>Nation</option>
+                  <option>Character</option>
+                  <option>Faction</option>
+                  <option>Location</option>
+                  <option>Historical Event</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label className="form-label">Title</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  placeholder="Record title"
+                  id="record-title"
+                />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Description</label>
+                <textarea
+                  className="form-input"
+                  id="record-description"
+                  rows="4"
+                  placeholder="Describe this world record..."
+                ></textarea>
+              </div>
+              <div className="form-group">
+                <label className="form-label">Canon Label</label>
+                <select className="form-input" id="canon-label">
+                  <option value="Proposed">Proposed</option>
+                  <option value="Approved">Approved</option>
+                  <option value="Rejected">Rejected</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label className="form-label">Status</label>
+                <select className="form-input" id="record-status">
+                  <option value="Draft">Draft</option>
+                  <option value="Proposed">Proposed</option>
+                  <option value="Validated">Validated</option>
+                  <option value="Approved">Approved</option>
+                </select>
+              </div>
+              <button type="button" className="btn btn-primary" onClick={addRecord}>
+                Add Record
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section id="relationships" className="dashboard-section">
+        <div className="container">
+          <h2>Typed Relationships</h2>
+          <p>Create and browse relationships between world records.</p>
+
+          <div className="relationship-form">
+            <h4>Create Relationship</h4>
+            <form id="rel-form">
+              <div className="form-group">
+                <label htmlFor="rel-from">From</label>
+                <select className="form-input" id="rel-from" defaultValue="">
+                  <option value="" disabled>Select a source record</option>
+                  {workspaceData.records.map(r => <option key={r.id} value={r.id}>{r.title}</option>)}
+                </select>
+              </div>
+              <div className="form-group">
+                <label htmlFor="rel-to">To</label>
+                <select className="form-input" id="rel-to" defaultValue="">
+                  <option value="" disabled>Select a target record</option>
+                  {workspaceData.records.map(r => <option key={r.id} value={r.id}>{r.title}</option>)}
+                </select>
+              </div>
+              <div className="form-group">
+                <label htmlFor="rel-type">Type</label>
+                <select className="form-input" id="rel-type" defaultValue="supports">
+                  <option value="supports">Supports</option>
+                  <option value="contradicts">Contradicts</option>
+                  <option value="belongs_to">Belongs to</option>
+                  <option value="authored_by">Authored by</option>
+                  <option value="approved_by">Approved by</option>
+                  <option value="location_of">Location of</option>
+                </select>
+              </div>
+              <button type="button" className="btn btn-primary" onClick={addRelationship}>
+                Add Relationship
+              </button>
+            </form>
+          </div>
+
+          <div className="relationship-list">
+            <h4>Relationships ({workspaceData.relationships.length})</h4>
+            {workspaceData.relationships.map((rel, i) => (
+              <div key={i} className="relationship-item">
+                <span>{rel.from ? workspaceData.records.find(r => r.id === rel.from)?.title : 'Unknown'}</span>
+                <span className="relationship-type">{rel.type}</span>
+                <span>{rel.to ? workspaceData.records.find(r => r.id === rel.to)?.title : 'Unknown'}</span>
+              </div>
+            ))}
+            {workspaceData.relationships.length === 0 && (
+              <p className="empty-state">No relationships yet. Create one above.</p>
+            )}
+          </div>
+
+          <div className="relationship-explorer">
+            <h4>Relationship Explorer</h4>
+            <p className="section-hint">Browse and analyze relationships between records.</p>
+            <div className="relationship-filters">
+              <input
+                type="text"
+                placeholder="Filter relationships..."
+                className="search-input"
+                style={{ flex: '1', minWidth: '150px' }}
+              />
+              <select className="search-select" style={{ minWidth: '140px' }}>
+                <option value="all">All Types</option>
+                <option value="supports">supports</option>
+                <option value="contradicts">contradicts</option>
+                <option value="belongs_to">belongs_to</option>
+                <option value="authored_by">authored_by</option>
+                <option value="approved_by">approved_by</option>
+                <option value="location_of">location_of</option>
+              </select>
+            </div>
+            <div className="relationship-grid">
+              {workspaceData.relationships.map((rel, i) => (
+                <div key={i} className="relationship-card">
+                  <div className="relationship-card-header">
+                    <span className="relationship-card-from">{findRecordTitle(rel.from)}</span>
+                    <span className="relationship-card-arrow">&rarr;</span>
+                    <span className="relationship-card-to">{findRecordTitle(rel.to)}</span>
+                    <span className="relationship-card-type">{rel.type}</span>
+                  </div>
+                  <div className="relationship-card-stats">
+                    <span className="connection-count">{workspaceData.relationships.filter(r => r.from === rel.to || r.to === rel.to).length} incoming, {workspaceData.relationships.filter(r => r.from === rel.from || r.to === rel.from).length} outgoing</span>
+                  </div>
+                </div>
+              ))}
+              {workspaceData.relationships.length === 0 && (
+                <p className="empty-state">No relationships yet. Create one above.</p>
+              )}
+            </div>
+          </div>
+
+          <div className="entity-connections">
+            <h4>Entity Connection Views</h4>
+            <p className="section-hint">Explore how records connect to each other.</p>
+            <div className="entity-connection-list">
+              {workspaceData.records.map(record => {
+                const connections = findOrphanRelationships(record.id);
+                if (connections.length === 0) return null;
+                return (
+                  <div key={record.id} className="entity-connection-group">
+                    <h5>{record.title} ({connections.length} connections)</h5>
+                    <div className="entity-connection-list">
+                      {connections.map((conn, i) => (
+                        <span key={i} className="entity-connection-tag">
+                          {conn.from === record.id ? 'connected from ' : 'connected to '}
+                          {findRecordTitle(conn.from === record.id ? conn.to : conn.from)}
+                          <small>{conn.type}</small>
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+              {workspaceData.records.every(r => findOrphanRelationships(r.id).length === 0) && (
+                <p className="empty-state">No connections yet. Create relationships to see them here.</p>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="sources" className="dashboard-section">
+        <div className="container">
+          <h2>Source Registry</h2>
+          <p>Register sources and link them to records for evidence tracking.</p>
+
+          <div className="source-form">
+            <h4>Register New Source</h4>
+            <form id="source-form">
+              <div className="form-group">
+                <label className="form-label">Source Title</label>
+                <input type="text" className="form-input" id="source-title" placeholder="e.g., The Lord of the Rings" />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Source Type</label>
+                <select className="form-input" id="source-type">
+                  <option>Book</option>
+                  <option>Film</option>
+                  <option>Game</option>
+                  <option>Article</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label className="form-label">Description</label>
+                <textarea className="form-input" id="source-description" rows="3" placeholder="Describe the source..."></textarea>
+              </div>
+              <button type="button" className="btn btn-primary" onClick={addSource}>
+                Register Source
+              </button>
+            </form>
+          </div>
+
+          <div className="sources-list">
+            <h4>Registered Sources ({workspaceData.sources.length})</h4>
+            {workspaceData.sources.map(source => (
+              <div key={source.id} className="source-item">
+                <h4>{source.title}</h4>
+                <span className="source-type">{source.type}</span>
+              </div>
+            ))}
+            {workspaceData.sources.length === 0 && (
+              <p className="empty-state">No sources registered yet.</p>
+            )}
+          </div>
+        </div>
+      </section>
+
+      <section id="governance" className="dashboard-section">
+        <div className="container">
+          <h2>Governance &amp; Decisions</h2>
+          <p>Track decisions and canon statuses. All data stays in your browser.</p>
+
+          <div className="decision-form">
+            <h4>Propose a Decision</h4>
+            <form id="decision-form">
+              <div className="form-group">
+                <label className="form-label">Decision Title</label>
+                <input type="text" className="form-input" id="decision-title" placeholder="e.g., Adopt Unified Nexus Protocol" />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Rationale</label>
+                <textarea className="form-input" id="decision-rationale" rows="3" placeholder="Why is this decision needed?"></textarea>
+              </div>
+              <div className="form-group">
+                <label className="form-label">Reviewer(s)</label>
+                <input type="text" className="form-input" id="decision-reviewers" placeholder="e.g., Governance Lead" />
+              </div>
+              <button type="button" className="btn btn-primary" onClick={addDecision}>
+                Propose Decision
+              </button>
+            </form>
+          </div>
+
+          <div className="decisions-list">
+            <h4>Decisions ({workspaceData.decisions.length})</h4>
+            {workspaceData.decisions.map(decision => (
+              <div key={decision.id} className="decision-item">
+                <span className="canon-badge proposed">{decision.status}</span>
+                <h5>{decision.title}</h5>
+                <p>{decision.rationale}</p>
+                <span className="decision-date">{new Date(decision.createdAt).toLocaleDateString()}</span>
+              </div>
+            ))}
+            {workspaceData.decisions.length === 0 && (
+              <p className="empty-state">No decisions proposed yet.</p>
+            )}
+          </div>
+
+          <div className="change-request-panel">
+            <h4>Change Requests ({workspaceData.changeRequests.length})</h4>
+            <div className="change-request-list">
+              {workspaceData.changeRequests.map(cr => {
+                const current = findCurrentVersion(cr.targetId);
+                const versions = workspaceData.records.filter(r => r.id === cr.targetId);
+                return (
+                  <div key={cr.id} className="change-request-item">
+                    <div className="change-request-header">
+                      <strong>CR: {cr.id}</strong>
+                      <span className={`canon-badge ${cr.status.toLowerCase()}`}>{cr.status}</span>
+                    </div>
+                    <p className="change-request-target">
+                      Target: {cr.targetTitle} (v{cr.targetVersion} {cr.targetType})
+                    </p>
+                    <p className="change-request-reason">Reason: {cr.reason}</p>
+                    <p className="change-request-proposed">
+                      Proposed: {cr.proposedChanges.description || current?.description || 'No changes specified'}
+                    </p>
+                    <div className="change-request-actions">
+                      {cr.status === 'Proposed' && (
+                        <div className="change-request-actions-row">
+                          <button
+                            className="btn btn-sm btn-primary"
+                            onClick={() => approveChangeRequest(cr.id)}
+                          >
+                            Approve
+                          </button>
+                          <button
+                            className="btn btn-sm btn-secondary"
+                            onClick={() => rejectChangeRequest(cr.id)}
+                          >
+                            Reject
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+              {workspaceData.changeRequests.length === 0 && (
+                <p className="empty-state">No change requests yet.</p>
+              )}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="import-export" className="dashboard-section">
+        <div className="container">
+          <h2>JSON Import / Export</h2>
+          <p>Back up your workspace or share it with others. Import replaces current data.</p>
+
+          <div className="import-export-grid">
+            <div className="import-export-card">
+              <h4>Export Workspace</h4>
+              <button className="btn btn-primary" onClick={async () => {
+                const data = JSON.stringify({
+                  version: 3,
+                  records: workspaceData.records,
+                  relationships: workspaceData.relationships,
+                  sources: workspaceData.sources,
+                  decisions: workspaceData.decisions,
+                  changeRequests: workspaceData.changeRequests,
+                  reviews: workspaceData.reviews,
+                  activityLog: workspaceData.activityLog,
+                  exports: workspaceData.exports
+                }, null, 2);
+                const blob = new Blob([data], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `worldforge-export-${new Date().toISOString().slice(0,10)}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+              }}>
+                Download Backup
+              </button>
+            </div>
+            <div className="import-export-card">
+              <h4>Import Workspace</h4>
+              <input
+                type="file"
+                id="import-file"
+                accept=".json"
+                style={{ marginTop: "8px" }}
+                onChange={async (e) => {
+                  const file = e.target.files[0];
+                  if (!file) return;
+                  const text = await file.text();
+                  try {
+                    const imported = JSON.parse(text);
+                    if (imported.records && Array.isArray(imported.records)) {
+                      setWorkspaceData({
+                        records: imported.records,
+                        relationships: imported.relationships || [],
+                        sources: imported.sources || [],
+                        decisions: imported.decisions || [],
+                        changeRequests: imported.changeRequests || [],
+                        reviews: imported.reviews || [],
+                        activityLog: imported.activityLog || [],
+                        exports: imported.exports || []
+                      });
+                    } else {
+                      alert("Unexpected file format.");
+                    }
+                  } catch {
+                    alert("Invalid JSON file.");
+                  }
+                }}
+              />
+              <p className="form-hint">Select a JSON file to import. This replaces current workspace data.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="claims" className="dashboard-section">
+        <div className="container">
+          <h2>Claims Registry</h2>
+          <p>Track claims as first-class objects with version history, reviews, and audit events.</p>
+
+          <div className="search-filter">
+            <input
+              type="text"
+              placeholder="Search claims..."
+              className="search-input"
+              style={{ flex: '1', minWidth: '200px' }}
+            />
+            <select className="search-select" style={{ minWidth: '140px' }}>
+              <option value="all">All Types</option>
+              <option value="Proposed">Proposed</option>
+              <option value="Approved">Approved</option>
+              <option value="Rejected">Rejected</option>
+              <option value="Draft">Draft</option>
+              <option value="Superseded">Superseded</option>
+            </select>
+          </div>
+
+          <div className="claims-list">
+            {workspaceData.claims.map(claim => {
+              const currentVersion = findCurrentClaimVersion(claim.id);
+              const versions = claim.versions || [];
+              const latestVersion = versions.length > 0 ? versions[versions.length - 1] : null;
+              return (
+                <div key={claim.id} className="claim-card">
+                  <div className="claim-card-header">
+                    <div className="claim-card-main">
+                      <span className={`canon-badge ${claim.canonState?.toLowerCase() || 'proposed'}`}>{claim.canonState?.toUpperCase()}</span>
+                      <h4>{claim.statement}</h4>
+                      <span className="claim-entity">Entity: {claim.entityId}</span>
+                    </div>
+                    <div className="claim-card-meta">
+                      <span className="claim-version">v{claim.version}</span>
+                      <span className="claim-created">{new Date(claim.createdAt).toLocaleDateString()}</span>
+                      <span className="claim-status">{claim.status}</span>
+                    </div>
+                  </div>
+                  <div className="claim-card-body">
+                    <details>
+                      <summary>Version History ({versions.length})</summary>
+                      <div className="claim-versions">
+                        {versions.map(v => (
+                          <div key={v.version} className="claim-version-item">
+                            <span className="claim-version-number">v{v.version}</span>
+                            <span className={`canon-badge ${v.status?.toLowerCase() || 'proposed'}`}>{v.status || 'Proposed'}</span>
+                            <span className="claim-version-date">{new Date(v.createdAt).toLocaleDateString()}</span>
+                            <span className="claim-version-type">{v.changeType || 'Created'}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </details>
+                    <details>
+                      <summary>Proposal & Review History</summary>
+                      <div className="claim-proposals">
+                        {workspaceData.changeProposals.filter(p => p.claimId === claim.id).map(p => (
+                          <div key={p.id} className="claim-proposal-item">
+                            <strong>{p.status}</strong>
+                            <span>Base v{p.baseVersion}</span>
+                            <span>Proposed by: {p.proposedBy}</span>
+                            <span>{(new Date(p.createdAt).toLocaleString())}</span>
+                          </div>
+                        ))}
+                        {workspaceData.reviews.filter(r => r.claimId === claim.id).map(r => (
+                          <div key={r.id} className="claim-review-item">
+                            <strong>{r.decision}</strong>
+                            <span>Reviewed by: {r.reviewer}</span>
+                            <span>{(new Date(r.createdAt).toLocaleString())}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </details>
+                  </div>
+                </div>
+              );
+            })}
+            {workspaceData.claims.length === 0 && (
+              <div className="empty-state">
+                <p>No claims yet. Create your first claim using the form below.</p>
+              </div>
+            )}
+          </div>
+
+          <div className="claim-form-section">
+            <h3>Create a New Claim</h3>
+            <form id="claim-form">
+              <div className="form-group">
+                <label className="form-label">Entity</label>
+                <select className="form-input" id="claim-entity">
+                  <option>World</option>
+                  <option>Nation</option>
+                  <option>Character</option>
+                  <option>Faction</option>
+                  <option>Location</option>
+                  <option>Historical Event</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label className="form-label">Statement</label>
+                <textarea className="form-input" id="claim-statement" rows="4" placeholder="e.g. Aurelis was founded in 850 AE."></textarea>
+              </div>
+              <div className="form-group">
+                <label className="form-label">Status</label>
+                <select className="form-input" id="claim-status">
+                  <option value="Draft">Draft</option>
+                  <option value="Proposed">Proposed</option>
+                  <option value="Validated">Validated</option>
+                  <option value="Approved">Approved</option>
+                  <option value="Rejected">Rejected</option>
+                  <option value="Superseded">Superseded</option>
+                </select>
+              </div>
+              <button type="button" className="btn btn-primary" onClick={createClaim}>
+                Create Claim
+              </button>
+            </form>
+          </div>
+
+          <div className="claim-form-section">
+            <h3>Change Proposal</h3>
+            <form id="proposal-form">
+              <div className="form-group">
+                <label className="form-label">Target Claim</label>
+                <select className="form-input" id="proposal-claim">
+                  {workspaceData.claims.map(c => (
+                    <option key={c.id} value={c.id}>{c.statement} (v{c.version})</option>
+                  ))}
+                </select>
+              </div>
+              <div className="form-group">
+                <label className="form-label">Proposed Statement</label>
+                <textarea className="form-input" id="proposal-statement" rows="3" placeholder="New claim statement..."></textarea>
+              </div>
+              <div className="form-group">
+                <label className="form-label">Reason</label>
+                <input type="text" className="form-input" id="proposal-reason" placeholder="Why does the claim need to change?" />
+              </div>
+              <div className="form-group">
+                <label className="form-label">Proposer</label>
+                <input type="text" className="form-input" id="proposal-by" value="local-user" readOnly />
+              </div>
+              <button type="button" className="btn btn-primary" onClick={createClaimChangeProposal}>
+                Submit Proposal
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <section id="reviews" className="dashboard-section">
+        <div className="container">
+          <h2>Claim Reviews & Decision Traceability</h2>
+          <p>Track review records, linked decisions, and evidence for each claim.</p>
+
+          <div className="reviews-list">
+            {workspaceData.reviews.length === 0 && (
+              <div className="empty-state">
+                <p>No reviews yet. Propose changes to claims to create review records.</p>
+              </div>
+            )}
+            {workspaceData.reviews.map(review => {
+              const proposal = workspaceData.changeProposals.find(p => p.id === review.targetId);
+              const claim = findClaimById(proposal?.claimId);
+              return (
+                <div key={review.id} className="review-item">
+                  <div className="review-header">
+                    <span className={`canon-badge ${review.decision?.toLowerCase() || ''}`}>{rev
+```
