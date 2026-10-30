@@ -35,6 +35,7 @@ jobs:
         run: |
           node --check app.js
           node --check theory-validation.js
+          node --check progress-integrity.js
       - name: Verify required root application files
         run: |
           test -s index.html
@@ -45,13 +46,14 @@ jobs:
           test -s icon.svg
           test -s curriculum-data.js
           test -s theory-validation.js
+          test -s progress-integrity.js
       - name: Install Chromium for browser acceptance
         run: pnpm exec playwright install --with-deps chromium
       - name: Build the production site
         run: pnpm build
       - name: Copy static Learning Studio runtime assets into the Pages artifact
         run: |
-          cp app.js styles.css manifest.webmanifest sw.js icon.svg curriculum-data.js theory-validation.js dist/
+          cp app.js styles.css manifest.webmanifest sw.js icon.svg curriculum-data.js theory-validation.js progress-integrity.js dist/
       - name: Smoke-test the built root application
         run: |
           python3 -m http.server 4173 --directory dist > /tmp/learning-studio-http.log 2>&1 &
@@ -68,6 +70,7 @@ jobs:
           test -s dist/app.js
           test -s dist/curriculum-data.js
           test -s dist/theory-validation.js
+          test -s dist/progress-integrity.js
           test -s dist/manifest.webmanifest
           find dist -maxdepth 2 -type f
       - name: Upload verified Pages artifact
