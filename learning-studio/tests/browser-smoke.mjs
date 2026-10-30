@@ -40,10 +40,10 @@ try {
   await page.locator("#save-blueprint-work").click();
   assert.match(await page.locator("#modal").innerText(), /Saved to your local portfolio/);
 
-  const saved = await page.evaluate(() => JSON.parse(localStorage.getItem("ah-aios-learning-progress-v2")));
+  const saved = await page.evaluate(() => JSON.parse(localStorage.getItem("ah-aios-learning-studio-progress-v2")));
   assert.ok(saved && saved.portfolio.some(item => item.text.includes("Browser acceptance test")));
   await page.reload({ waitUntil: "networkidle" });
-  const persisted = await page.evaluate(() => JSON.parse(localStorage.getItem("ah-aios-learning-progress-v2")));
+  const persisted = await page.evaluate(() => JSON.parse(localStorage.getItem("ah-aios-learning-studio-progress-v2")));
   assert.ok(persisted.portfolio.some(item => item.text.includes("Browser acceptance test")));
 
   await page.locator("#tutor-start").click();
