@@ -4,6 +4,7 @@ import { chromium } from "playwright";
 const browser = await chromium.launch({ headless: true });
 const page = await browser.newPage();
 const pageErrors = [];
+page.on("dialog", dialog => dialog.accept());
 page.on("pageerror", error => pageErrors.push(error.message));
 
 try {
