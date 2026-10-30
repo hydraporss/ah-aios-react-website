@@ -51,6 +51,20 @@ try {
   await page.locator("#chat-form button").click();
   assert.match(await page.locator("#chat-log").innerText(), /governance/i);
 
+  const theoryFixture = [
+    ...Array.from({length:68},(_,i)=>({id:"REG-"+String(i+1).padStart(3,"0"),title:"Registry theory "+(i+1),origin:"registry"})),
+    ...Array.from({length:14},(_,i)=>({id:"SYN-"+String(i+1).padStart(3,"0"),title:"Synthesized theory "+(i+1),origin:"synthesized"}))
+  ];
+  const theoryChooser = page.waitForEvent("filechooser");
+  await page.locator("#import-theories").click();
+  await (await theoryChooser).setFiles({name:"theories-test.json",mimeType:"application/json",buffer:Buffer.from(JSON.stringify(theoryFixture))});
+  await page.waitForFunction(()=>document.querySelector("#theory-status")?.textContent.includes("82 records loaded"));
+  const storedTheories = await page.evaluate(()=>JSON.parse(localStorage.getItem("ah-aios-learning-theories-v1")));
+  assert.equal(storedTheories.length,82);
+  await page.reload({waitUntil:"networkidle"});
+  assert.match(await page.locator("#theory-status").innerText(),/82 records loaded/);
+  assert.match(await page.locator("#theory-source-status").innerText(),/provenance review pending/i);
+
   await page.locator("#modal-close").click();
   assert.equal(pageErrors.length, 0, "browser console page errors: " + pageErrors.join("; "));
   process.stdout.write("Learning Studio browser smoke checks passed: catalogue, search, course/lesson navigation, portfolio save, persistence after reload, local tutor, and no uncaught page errors.\n");
