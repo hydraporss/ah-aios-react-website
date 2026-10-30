@@ -140,3 +140,18 @@ Four lesson drafts added for AH-CORE-120 M1.1–M1.4. Sources: root README blob 
 ## AH-CORE-130 authoring milestone
 
 Four lesson drafts added for AH-CORE-130 M1.1–M1.4. Source lineage: `docs/learning/content-governance.md` blob `e9a2d234068eacf9327e18ef986448316e73f28d`; `src/governance.js` blob `8d21a745155e2463fea802c9325c3a68b972562d`; `tests/governance.test.js` blob `edb13f5c9405155dea176f10f2cd55299d85b894`; `tests/e2e-governance.mjs` blob `e0eb9491ab2b0e23dd9aa03f835c6e0beac3bf50`; `docs/v0.4-sprint-1-and-acceptance.md` blob `8526cccd8dda54f88b574c619eb371e89f23c89c`. Coverage includes asset/attack-surface inventory, policy-to-control enforcement, untrusted content handling, and evidence-bounded incident escalation. Gaps retained: no complete formal threat model, no implemented AI prompt-injection/instruction-conflict defense established by these sources, no full incident-response policy, and browser-local audit records are not tamper-proof. All four lessons are Authored draft / Not reviewed; not published.
+
+
+
+## AH-CORE-130 authoritative source verification — 30 October 2026
+
+Verified and recorded the current official external references:
+- NIST SP 800-61 Rev. 3 — final publication, 3 April 2025; incident-response guidance; supersedes Rev. 2.
+- NIST AI 100-2 E2025 — final publication, 24 March 2025; adversarial machine-learning taxonomy and terminology. The NIST publication page notes a potential errata/update item.
+- OWASP GenAI / LLM Top 10 2026 — current OWASP release, published 4 August 2026; includes prompt injection and related LLM application risks.
+
+The lesson mapping is intentionally bounded: NIST AI 100-2 E2025 supports M1.1 and M1.3 as an external taxonomy; OWASP 2026 supports M1.3 as an LLM risk-awareness reference; NIST SP 800-61 Rev. 3 supports M1.4 as general incident-response guidance. M1.2 remains based on repository policy/code/test evidence. Full details and source URLs are in `AH-CORE-130-SOURCE-VERIFICATION.md` and the external source catalog in `curriculum-data.js`.
+
+**Evidence boundary:** external references do not prove project-specific control implementation. The repository still does not establish a complete formal threat model, implemented prompt-injection defense, full operational incident-response policy, or tamper-proof browser-local audit history. All four AH-CORE-130 lessons remain Authored draft / Not reviewed. Source verification is not content approval or publication.
+
+Regression tests now verify the three external source records, publication metadata, canonical URLs, lesson mappings, and explicit implementation-limit language.
