@@ -17,7 +17,7 @@ try {
   await page.locator('[data-tab="worlds"]').click();
   await page.locator('#world-form input[name="name"]').fill('Browser Test World');
   await page.locator('#world-form textarea[name="description"]').fill('Automated acceptance fixture.');
-  await page.locator('#world-form button[type="submit"]').click();
+  await page.locator('#world-form button.accent-btn').click();
   await page.getByText('Browser Test World', { exact: true }).waitFor();
 
   await page.locator('[data-tab="entities"]').click();
@@ -25,7 +25,7 @@ try {
     await page.locator('#entity-form input[name="name"]').fill(name);
     await page.locator('#entity-form select[name="type"]').selectOption(type);
     await page.locator('#entity-world').selectOption({ label: 'Browser Test World' });
-    await page.locator('#entity-form button[type="submit"]').click();
+    await page.locator('#entity-form button.accent-btn').click();
     await page.getByText(name, { exact: true }).waitFor();
   }
 
@@ -33,7 +33,7 @@ try {
   await page.locator('#relation-source').selectOption({ label: 'Alpha Entity' });
   await page.locator('#relation-target').selectOption({ label: 'Beta Entity' });
   await page.locator('#relationship-form select[name="type"]').selectOption({ label: 'Allied with' });
-  await page.locator('#relationship-form button[type="submit"]').click();
+  await page.locator('#relationship-form button.accent-btn').click();
   await page.getByText('Alpha Entity → Beta Entity').waitFor();
 
   await page.locator('[data-tab="claims"]').click();
@@ -43,7 +43,7 @@ try {
   await page.locator('#claim-form input[name="sourceName"]').fill('Acceptance fixture');
   await page.locator('#claim-form input[name="sourceRef"]').fill('tests/fixture.md');
   await page.locator('#claim-form select[name="evidence"]').selectOption('Supported');
-  await page.locator('#claim-form button[type="submit"]').click();
+  await page.locator('#claim-form button.accent-btn').click();
   await page.getByText('Test claim', { exact: true }).waitFor();
 
   await page.locator('[data-tab="integrity"]').click();
