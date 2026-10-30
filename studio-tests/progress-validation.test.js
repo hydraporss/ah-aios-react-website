@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 const app=fs.readFileSync(new URL("../app.js",import.meta.url),"utf8");
 const theoryValidator=fs.readFileSync(new URL("../theory-validation.js",import.meta.url),"utf8");
+const integrity=fs.readFileSync(new URL("../progress-integrity.js",import.meta.url),"utf8");
 const html=fs.readFileSync(new URL("../index.html",import.meta.url),"utf8");
 const css=fs.readFileSync(new URL("../styles.css",import.meta.url),"utf8");
 const curriculumSource=fs.readFileSync(new URL("../curriculum-data.js",import.meta.url),"utf8");
@@ -11,7 +12,6 @@ const curriculum=JSON.parse(curriculumJson.replace(/^window\.AH_LEARNING_CURRICU
 const ids=[...html.matchAll(/id="([^"]+)"/g)].map(x=>x[1]);
 test("nine starter modules are declared",()=>assert.equal((app.match(/id:"(?:core|harness|world)-0[1-3]"/g)||[]).length,9));
 test("theory gate enforces 82 records and 68+14 split",()=>{assert.match(theoryValidator,/records\.length!==82/);assert.match(theoryValidator,/counts\.registry!==68/);assert.match(theoryValidator,/counts\.synthesized!==14/)});
-test("progress import validates schema and version before replacing state",()=>{assert.match(app,/x\.schema!=="ah-aios-learning-progress"/);assert.match(app,/\[1,2\]\.includes\(x\.version\)/);assert.match(app,/if\(!validate\(x\)\)throw Error/)});
 test("invalid progress import is rejected without replacing state",()=>assert.match(app,/Existing progress preserved/));
 test("course, lab, tutor, portfolio, and profile interactions are wired",()=>{for(const s of ["openCourse(id)","openLab(kind)","tutor-start","#export","#import","#save-profile","#reset-progress"])assert.ok(app.includes(s),s)});
 test("all internal navigation links resolve to a page section",()=>{const links=[...html.matchAll(/href="#([^"]+)"/g)].map(x=>x[1]);const missing=[...new Set(links.filter(x=>!ids.includes(x)))];assert.deepEqual(missing,[])});
@@ -32,7 +32,6 @@ test("reduced-motion preference is respected",()=>assert.match(css,/@media\(pref
 
 test("PWA cache includes the icon and only removes prior Learning Studio caches",()=>{const sw=fs.readFileSync(new URL("../sw.js",import.meta.url),"utf8");assert.match(sw,/\.\/icon\.svg/);assert.match(sw,/key\.startsWith\("ah-aios-learning-studio-"\)/);assert.doesNotMatch(sw,/keys\.filter\(key=>key!==CACHE\)/)});
 
-test("progress validator rejects malformed nested collections and non-boolean checks",()=>{assert.match(app,/new Set\(x\.completed\)\.size!==x\.completed\.length/);assert.match(app,/!record\(x\.checks\)/);assert.match(app,/typeof value==="boolean"/);assert.match(app,/entries\(x\.portfolio,\["title","text"\]\)/);assert.match(app,/entries\(x\.labs,\["kind","title","text"\]\)/);assert.match(app,/entries\(x\.activity,\["text","when"\]\)/)});
 
 test("source curriculum blueprint lists 6 Core, 7 AI Harness, 8 WorldForge, and 3 cross-cutting Stewardship courses",()=>{assert.equal((app.match(/\["AH-CORE-\d+"/g)||[]).length,6);assert.equal((app.match(/\["AH-HAR-\d+"/g)||[]).length,7);assert.equal((app.match(/\["AH-WF-\d+"/g)||[]).length,8);assert.equal((app.match(/\["AH-STW-\d+"/g)||[]).length,3);assert.equal(curriculum.courses.filter(c=>c.domain==="Human Stewardship").length,3)});
 test("curriculum blueprint is visibly separate from the nine interactive starter modules",()=>{assert.match(html,/id="curriculum-map"/);assert.match(html,/id="curriculum-roadmap"/);assert.match(html,/nine legacy primer checks/i);assert.equal(curriculum.courses.filter(c=>c.contentStatus==="Specified").length,23);assert.equal(curriculum.courses.filter(c=>c.contentStatus==="Authored draft").length,1)});
@@ -59,3 +58,6 @@ test("AH-CORE-130 security and safe operation lessons are complete and source-li
 
 test("AH-CORE-130 external authoritative sources are identified with canonical metadata",()=>{const refs=curriculum.externalSourceCatalog;assert.equal(refs.length,3);for(const id of ["NIST-SP-800-61-R3","NIST-AI-100-2-E2025","OWASP-GENAI-LLM-TOP10-2026"]){const s=refs.find(x=>x.id===id);assert.ok(s,"missing "+id);assert.match(s.url,/^https:\/\//);assert.ok(s.published);assert.ok(s.scope);assert.ok(s.limitations);}});
 test("AH-CORE-130 external sources map to relevant lessons without claiming implementation",()=>{const c=curriculum.courses.find(x=>x.id==="AH-CORE-130");assert.deepEqual(c.externalSourceRefs.sort(),["NIST-SP-800-61-R3","NIST-AI-100-2-E2025","OWASP-GENAI-LLM-TOP10-2026"].sort());const l1=c.lessons.find(x=>x.id==="M1.1").content;const l3=c.lessons.find(x=>x.id==="M1.3").content;const l4=c.lessons.find(x=>x.id==="M1.4").content;assert.ok(l1.references.some(x=>x.includes("nist.gov/pubs/ai/100/2/e2025")));assert.ok(l3.references.some(x=>x.includes("GenAI-LLM-Top10")));assert.ok(l4.references.some(x=>x.includes("nist.gov/pubs/sp/800/61/r3")));assert.match(JSON.stringify(c),/not evidence of implemented defenses|not an AH-AIOS response procedure|not project threat-model evidence/i);});
+
+test("progress import validates schema and version before replacing state",()=>{assert.match(integrity,/value.schema !== "ah-aios-learning-progress"/);assert.match(integrity,/\[1, 2\]\.includes\(value.version\)/);assert.match(app,/decodeImport\(reader\.result/);assert.match(app,/persistImport\(localStorage/);});
+test("progress validator rejects malformed nested collections and non-boolean checks",()=>{assert.match(integrity,/new Set\(value.completed\)\.size !== value.completed.length/);assert.match(integrity,/!isRecord\(value.checks\)/);assert.match(integrity,/typeof passed !== "boolean"/);assert.match(integrity,/portfolio/);assert.match(integrity,/labs/);assert.match(integrity,/activity/);});
