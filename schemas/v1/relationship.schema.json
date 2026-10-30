@@ -1,0 +1,19 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://hydraporss.github.io/ah-aios-react-website/schemas/v1/relationship.schema.json",
+  "title":"WorldForge Relationship Record","type":"object",
+  "allOf":[{"$ref":"./common.schema.json#/$defs/baseRecord"}],
+  "required":["id","record_type","schema_version","world_id","source_id","target_id","relationship_type","directionality","created_at","updated_at","created_by","updated_by","record_version","workflow_status","source_refs"],
+  "properties":{
+    "record_type":{"const":"relationship"},"world_id":{"$ref":"./common.schema.json#/$defs/id"},
+    "source_id":{"$ref":"./common.schema.json#/$defs/id"},"target_id":{"$ref":"./common.schema.json#/$defs/id"},
+    "relationship_type":{"type":"string","minLength":1,"maxLength":120},
+    "directionality":{"enum":["directed","symmetric"]},
+    "context":{"type":"string","maxLength":12000},
+    "valid_from":{"$ref":"./common.schema.json#/$defs/timestamp"},
+    "valid_to":{"$ref":"./common.schema.json#/$defs/timestamp"},
+    "allow_self_link":{"type":"boolean","default":false},
+    "allow_cycle":{"type":"boolean","default":false}
+  },
+  "not":{"properties":{"source_id":{"const":""},"target_id":{"const":""}}}
+}
