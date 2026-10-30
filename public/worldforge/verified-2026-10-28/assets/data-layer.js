@@ -74,7 +74,7 @@
   }
 
   let schemaValidatorPromise = null;
-  const SCHEMA_BASE = new URL('../../../../schemas/v1/', root.location ? root.location.href : 'http://localhost/worldforge/verified-2026-10-28/studio.html');
+  const SCHEMA_BASE = new URL('../../../schemas/v1/', root.location ? root.location.href : 'http://localhost/worldforge/verified-2026-10-28/studio.html');
   function stable(value) {
     if (Array.isArray(value)) return '[' + value.map(stable).join(',') + ']';
     if (value && typeof value === 'object') return '{' + Object.keys(value).sort().map(k => JSON.stringify(k)+':'+stable(value[k])).join(',') + '}';
