@@ -6,7 +6,7 @@
   "$defs": {
     "id": {"type":"string","minLength":3,"maxLength":160,"pattern":"^[A-Za-z0-9][A-Za-z0-9._:-]*$"},
     "timestamp": {"type":"string","format":"date-time"},
-    "workflowStatus": {"enum":["proposed","investigating","needs_evidence","validated","approved","rejected","superseded"]},
+    "workflowStatus": {"enum":["draft","proposed","investigating","needs_evidence","validated","approved","rejected","superseded"]},
     "evidenceState": {"enum":["unknown","unsupported","partially_supported","supported","contradicted","mixed"]},
     "canonStatus": {"enum":["not_canon","verify_under_review","canon_aligned_interpretation","approved_visualization","established_canon"]},
     "actor": {"type":"string","minLength":1,"maxLength":200},
