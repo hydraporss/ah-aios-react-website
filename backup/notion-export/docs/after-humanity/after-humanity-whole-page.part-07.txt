@@ -1,0 +1,726 @@
+<!-- Source: Notion page 40966662-b29d-8175-b9f4-c52794098143; original archive: after-humanity-whole-page.txt; chunked export; 2026-10-30 -->
+<b>Source repository:</b> [hydraporss/ah-aios-react-website](https://github.com/hydraporss/ah-aios-react-website)
+
+<b>Source branch:</b> main
+
+<b>Source path:</b> docs/after-humanity/after-humanity-whole-page.txt
+
+<b>Git blob SHA:</b> 4a8b3901e43fff36b30c48bde8ba586e7a816c3d
+
+<b>Part:</b> 7/10; character range 210001–245000. Concatenate parts in ascending order to reconstruct the source text. The original source is preserved verbatim inside the code block below.
+
+---
+
+```txt
+or:#111}.sectionhead{display:flex;align-items:end;justify-content:space-between;margin:22px 2px 12px}.sectionhead h2{font:23px Georgia,serif;margin:0}.sectionhead p{margin:3px 0 0;color:var(--muted);font-size:12px}.textbtn{border:0;background:none;color:var(--gold);font-size:12px}.content-grid{display:grid;grid-template-columns:repeat(5,minmax(130px,1fr)) minmax(205px,1.4fr);gap:10px}.card{border:1px solid var(--line);border-radius:11px;overflow:hidden;background:#0c1524;min-width:0;transition:.2s transform,.2s border-color}.card:hover{transform:translateY(-3px);border-color:#9b8450}.art{height:155px;display:flex;align-items:center;justify-content:center;font-size:57px;position:relative;overflow:hidden;background:var(--art);background-image:var(--gallery-sprite,var(--art));background-size:var(--art-size,cover);background-position:var(--art-position,center);background-repeat:no-repeat}.art:after{content:\"\";position:absolute;inset:35% 0 0;background:linear-gradient(transparent,#09111de8)}.art span{filter:drop-shadow(0 4px 8px #0008);z-index:1}.cardbody{padding:12px}.cardbody h3{font:16px Georgia,serif;letter-spacing:.05em;margin:0 0 4px}.cardbody p{font-size:11px;color:var(--muted);margin:0;min-height:32px}.arrow{display:block;color:var(--gold);text-align:right;margin-top:7px}.updates{padding:14px}.updates h3{font:18px Georgia,serif;margin:0 0 6px}.update{display:grid;grid-template-columns:47px 1fr;gap:9px;padding:10px 0;border-bottom:1px solid #ffffff12}.thumb{height:40px;border-radius:6px;background:var(--art);display:grid;place-items:center;font-size:20px}.update b{display:block;font-size:11px;font-weight:600}.update small{font-size:9px;color:var(--muted)}.quote{margin:12px 0 2px;color:#aab6c8;font:italic 12px Georgia,serif}.empty{padding:30px;text-align:center;color:var(--muted)}.toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,20px);background:#e8d08a;color:#151b28;padding:11px 17px;border-radius:24px;opacity:0;transition:.25s;pointer-events:none;z-index:10}.toast.show{opacity:1;transform:translate(-50%,0)}.mobilemenu{display:none}.footer{color:#718098;text-align:center;font-size:10px;padding:25px}\n@media(max-width:1050px){.content-grid{grid-template-columns:repeat(3,1fr)}.updates{grid-column:span 3}.updates-list{display:grid;grid-template-columns:repeat(2,1fr);gap:0 18px}.brand{min-width:190px}.search input{width:165px}}\n@media(max-width:720px){.shell{padding:8px}.topbar{height:auto;min-height:58px;padding:8px 12px;gap:8px;top:5px}.brand{min-width:0;flex:1}.brand strong{font-size:15px}.brand small{font-size:7px}.sigil{width:34px;height:34px}.nav{display:none}.search input{width:clamp(100px,30vw,180px)}.iconbtn{display:none}.mobilemenu{display:block}.layout{grid-template-columns:1fr;margin-top:9px}.side{display:none;position:fixed;z-index:6;top:72px;left:8px;max-width:230px;box-shadow:0 10px 40px #000b}.side.open{display:block}.hero{min-height:360px;padding:27px 23px;align-items:flex-start}.hero:after{width:75%;right:-8%;height:50%}.hero h1{font-size:43px}.hero .sub{font-size:10px}.content-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.card:last-of-type:nth-child(odd){grid-column:span 2}.updates{grid-column:auto}.updates-list{display:block}.art{height:130px}}\n</style></head>\n<body><div class=\"shell\">\n<header class=\"topbar\"><button class=\"iconbtn mobilemenu\" id=\"menuToggle\" aria-label=\"Open menu\">☰</button><div class=\"brand\"><div class=\"sigil\">✥</div><div><strong>AFTER HUMANITY</strong><small>WORLD BUILDING · LORE · CANON</small></div></div><nav class=\"nav\" aria-label=\"Main navigation\"><button class=\"active\" data-section=\"Home\">Home</button><button data-section=\"Worlds\">Worlds</button><button data-section=\"Characters\">Characters</button><button data-section=\"Races\">Races</button><button data-section=\"Lore\">Lore</button><button data-section=\"Gallery\">Gallery</button><button data-section=\"Tools\">Tools</button></nav><label class=\"search\"><input id=\"search\" placeholder=\"Search the universe…\" aria-label=\"Search the universe\"><span>⌕</span></label><button class=\"iconbtn\" id=\"profile\" aria-label=\"Profile\">♙</button><button class=\"iconbtn\" id=\"menuMore\" aria-label=\"More\">☷</button></header>\n<div class=\"layout\"><aside class=\"side\" id=\"side\"><h3>✧ &nbsp; EXPLORE</h3><button class=\"active\" data-section=\"Worlds\"><span class=\"ico\">◎</span><span>World Atlas<small>Planets · Locations · Timelines</small></span></button><button data-section=\"Characters\"><span class=\"ico\">♙</span><span>Identity Archive<small>Characters · Races · Technologies</small></span></button><button data-section=\"Relationships\"><span class=\"ico\">⌘</span><span>Relationship Explorer<small>Alliances · Conflicts · Lineages</small></span></button><button data-section=\"Sources\"><span class=\"ico\">◉</span><span>Source & Evidence Registry<small>Sources · Claims · Verification</small></span></button><button data-section=\"Canon\"><span class=\"ico\">⚙</span><span>Canon Governance<small>Proposals · Reviews · Decisions</small></span></button><button data-section=\"Gallery\"><span class=\"ico\">✧</span><span>Visual Archive Studio<small>Images · Prompts · Assessments</small></span></button></aside>\n<main class=\"main\"><section class=\"hero\"><div class=\"hero-content\"><div class=\"eyebrow\">A living universe · preserved through knowledge</div><h1>AFTER HUMANITY</h1><div class=\"sub\">A UNIVERSE TO EXPLORE</div><p>Explore the worlds, races, characters, and stories of a living universe of possibility, preserved through knowledge and governed by canon.</p><button class=\"goldbtn\" id=\"explore\">EXPLORE THE UNIVERSE &nbsp; →</button></div></section>\n<div class=\"sectionhead\"><div><h2 id=\"sectionTitle\">Explore the universe</h2><p id=\"sectionDesc\">Choose a path into the archive.</p></div><button class=\"textbtn\" id=\"reset\">Reset view ↺</button></div>\n<div class=\"content-grid\" id=\"cards\"></div>\n<div class=\"footer\">AFTER HUMANITY · KNOWLEDGE · EXPLORATION · PRESERVATION · CANON</div></main></div></div><div class=\"toast\" id=\"toast\" role=\"status\"></div>\n<script>\nconst entries=[\n {title:'WORLDS',section:'Worlds',desc:'Planets, locations, timelines and civilizations.',icon:'🪐',art:'radial-gradient(circle at 55% 38%,#d9efff,#348ed4 20%,#142d6a 48%,#10152b 73%)',imagePosition:'0%'},\n {title:'CHARACTERS',section:'Characters',desc:'Heroes, allies, and the stories that connect them.',icon:'👩🏻‍🚀',art:'radial-gradient(ellipse at 50% 32%,#f5c39f,#974c67 27%,#252149 58%,#0d1427)',imagePosition:'25%'},\n {title:'RACES',section:'Races',desc:'Species, origins, traits and cultures.',icon:'🧝🏽‍♀️',art:'radial-gradient(ellipse at 52% 32%,#ffb8cb,#a546a7 30%,#47226d 58%,#10152b)',imagePosition:'50%'},\n {title:'LORE',section:'Lore',desc:'History, events, theories and discoveries.',icon:'🌌',art:'radial-gradient(circle at 50% 45%,#e1c0ff,#7255d9 12%,#162361 42%,#080e20)',imagePosition:'75%'},\n {title:'VISUAL ARCHIVE',section:'Gallery',desc:'Approved images, concepts and artwork.',icon:'💎',art:'radial-gradient(ellipse at 50% 48%,#fff5cf,#63e8d2 14%,#197488 35%,#09182c 68%)',imagePosition:'100%'},\n];\nconst updates=[['WORLD','The ORI: Ascension and Beyond','Oct 25, 2025','🌅'],['NEW WORLD','Veyr Prime — Research Outpost','Oct 24, 2025','🪐'],['CHARACTER','Mara — Profile Updated','Oct 22, 2025','👩🏻‍🚀'],['VISUALS','The Cosmic Garden — Gallery','Oct 20, 2025','💠']];\nconst cards=document.querySelector('#cards'),toast=document.querySelector('#toast');let timer;\nfunction showToast(msg){toast.textContent=msg;toast.classList.add('show');clearTimeout(timer);timer=setTimeout(()=>toast.classList.remove('show'),2200)}\nfunction render(filter=''){cards.innerHTML='';const q=filter.trim().toLowerCase();let shown=0;entries.filter(x=>!q||`${x.title} ${x.section} ${x.desc}`.toLowerCase().includes(q)).forEach(x=>{shown++;const card=document.createElement('article');card.className='card';card.innerHTML=`<div class=\"art\" style=\"--art:${x.art};--art-size:500% 100%;--art-position:${x.imagePosition}\"></div><div class=\"cardbody\"><h3>${x.title}</h3><p>${x.desc}</p><span class=\"arrow\">→</span></div>`;card.tabIndex=0;card.setAttribute('role','button');card.setAttribute('aria-label',`Open ${x.title}`);const destinations={Worlds:'world-atlas.html',Characters:'characters.html',Races:'races.html',Lore:'lore.html',Gallery:'gallery.html'};card.onclick=()=>window.top.location.href=destinations[x.section]||'universe-explorer.html';card.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();card.click()}};cards.append(card)});if(!q){const box=document.createElement('aside');box.className='box updates';box.innerHTML='<h3>Latest updates <button class=\"textbtn\" style=\"float:right\" id=\"viewAll\">View all →</button></h3><div class=\"updates-list\">'+updates.map(u=>`<div class=\"update\"><div class=\"thumb\" style=\"--art:${entries.find(e=>e.section===u[0]||e.title===u[0])?.art||'linear-gradient(135deg,#233a6b,#b66d84)'}\">${u[3]}</div><div><small>${u[0]}</small><b>${u[1]}</b><small>${u[2]}</small></div></div>`).join('')+'</div><p class=\"quote\">“Not all that is lost is gone. Some things simply wait for a new world.”</p>';cards.append(box);box.querySelector('#viewAll').onclick=()=>window.top.location.href='latest-updates.html';box.querySelectorAll('.update').forEach((item,i)=>{item.tabIndex=0;item.setAttribute('role','link');item.onclick=()=>window.top.location.href=i===1?'world-atlas.html#veyr':i===2?'identity-archive.html#mara':i===3?'visual-archive-studio.html#cosmic-garden':'latest-updates.html';item.onkeydown=e=>{if(e.key==='Enter')item.click()}})}if(!shown)cards.innerHTML='<div class=\"empty\">No archive entries match that search.</div>'}\nrender();document.querySelector('#search').addEventListener('input',e=>render(e.target.value));document.querySelectorAll('[data-section]').forEach(b=>b.addEventListener('click',()=>{const section=b.dataset.section;if(section==='Worlds'){window.top.location.href=b.closest('.side')?'world-atlas.html':'world-atlas.html';return}if(section==='Characters'){window.top.location.href=b.closest('.side')?'identity-archive.html':'identity-archive.html';return}if(section==='Relationships'){window.top.location.href='relationship-explorer.html';return}if(section==='Sources'){window.top.location.href='evidence-registry.html';return}if(section==='Canon'){window.top.location.href='canon-governance.html';return}if(section==='Races'){window.top.location.href='races.html';return}if(section==='Lore'){window.top.location.href='lore.html';return}if(section==='Gallery'){window.top.location.href=b.closest('.side')?'visual-archive-studio.html':'visual-archive-studio.html';return}if(section==='Tools'){window.top.location.href='tools.html';return}document.querySelectorAll('[data-section]').forEach(x=>x.classList.toggle('active',x===b));document.querySelector('#sectionTitle').textContent=section==='Home'?'Explore the universe':section;document.querySelector('#sectionDesc').textContent=section==='Home'?'Choose a path into the archive.':`Browse the ${section.toLowerCase()} archive.`;document.querySelector('#search').value=section==='Home'?'':section;render(document.querySelector('#search').value);document.querySelector('#side').classList.remove('open')}));document.querySelector('#explore').onclick=()=>window.top.location.href='universe-explorer.html';document.querySelector('#reset').onclick=()=>{document.querySelector('#search').value='';document.querySelector('#sectionTitle').textContent='Explore the universe';document.querySelector('#sectionDesc').textContent='Choose a path into the archive.';render();showToast('View reset')};document.querySelector('#menuToggle').onclick=()=>document.querySelector('#side').classList.toggle('open');document.querySelector('#profile').onclick=()=>showToast('Profile menu — customize this action');document.querySelector('#menuMore').onclick=()=>showToast('More tools — customize this action');\n</script><script>(function(){const report=()=>window.parent.postMessage({source:'ah-after-humanity',height:document.documentElement.scrollHeight},'*');new ResizeObserver(report).observe(document.documentElement);window.addEventListener('load',report);setTimeout(report,0)})()</script></body></html>";
+
+function App() {
+  const [workspaceData, setWorkspaceData] = useState(() => {
+    try {
+      const saved = localStorage.getItem('ah-aios-worldforge');
+      const parsed = saved ? JSON.parse(saved) : {};
+      return {
+        records: parsed.records || [],
+        relationships: parsed.relationships || [],
+        sources: parsed.sources || [],
+        decisions: parsed.decisions || [],
+        changeRequests: parsed.changeRequests || [],
+        reviews: parsed.reviews || [],
+        changeProposals: parsed.changeProposals || [],
+        claims: parsed.claims || [],
+        activityLog: parsed.activityLog || [],
+        exports: parsed.exports || []
+      };
+    } catch {
+      return {
+        records: [],
+        relationships: [],
+        sources: [],
+        decisions: [],
+        changeRequests: [],
+        reviews: [],
+        changeProposals: [],
+        claims: [],
+        activityLog: [],
+        exports: []
+      };
+    }
+  });
+
+  const [activeView, setActiveView] = useState('dashboard');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterType, setFilterType] = useState('all');
+  const [expandedRecords, setExpandedRecords] = useState({});
+  const [promptInput, setPromptInput] = useState('');
+  const [copyStatus, setCopyStatus] = useState('');
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [afterHumanityHeight, setAfterHumanityHeight] = useState(1080);
+  const afterHumanityFrameRef = useRef(null);
+
+  useEffect(() => {
+    const handleArchiveResize = (event) => {
+      if (event.source !== afterHumanityFrameRef.current?.contentWindow || event.data?.source !== 'ah-after-humanity') return;
+      setAfterHumanityHeight(Math.max(600, Math.min(Number(event.data.height) || 1080, 4000)));
+    };
+    window.addEventListener('message', handleArchiveResize);
+    return () => window.removeEventListener('message', handleArchiveResize);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('ah-aios-worldforge', JSON.stringify(workspaceData));
+  }, [workspaceData]);
+
+  const addRecord = (e) => {
+    e.preventDefault();
+    const title = document.getElementById('record-title').value;
+    const description = document.getElementById('record-description').value;
+    const type = document.getElementById('record-type').value;
+    const canon = document.getElementById('canon-label').value;
+    const status = document.getElementById('record-status').value;
+
+    if (!title) return;
+
+    const record = {
+      id: Date.now().toString(36),
+      version: 1,
+      type,
+      title,
+      description,
+      canon,
+      status,
+      createdAt: new Date().toISOString(),
+      tags: ['synthetic', 'draft']
+    };
+
+    setWorkspaceData({
+      ...workspaceData,
+      records: [...workspaceData.records, record],
+      activityLog: [
+        ...workspaceData.activityLog,
+        {
+          id: Date.now(),
+          timestamp: new Date().toISOString(),
+          action: 'Record created',
+          target: record.title,
+          type: record.type
+        }
+      ]
+    });
+
+    document.getElementById('record-form').reset();
+    setExpandedRecords(prev => ({...prev, [record.id]: true}));
+  };
+
+  const findRecordTitle = (id) => {
+    return workspaceData.records.find(r => r.id === id)?.title || 'Unknown';
+  };
+
+  const resolveClaimVersion = (claimId, version) => {
+    const claim = workspaceData.claims.find(c => c.id === claimId);
+    if (!claim) return null;
+    const versions = claim.versions || [];
+    if (version !== undefined) {
+      return versions.find(v => v.version === version) || null;
+    }
+    return versions.length > 0 ? versions[versions.length - 1] : null;
+  };
+
+  const findClaimById = (claimId) => {
+    return workspaceData.claims.find(c => c.id === claimId);
+  };
+
+  const findCurrentClaimVersion = (claimId) => {
+    const claim = findClaimById(claimId);
+    if (!claim) return null;
+    const versions = claim.versions || [];
+    return versions.length > 0 ? versions[versions.length - 1] : null;
+  };
+
+  const getNextClaimVersion = (claim) => {
+    const versions = claim.versions || [];
+    return versions.length > 0 ? versions[versions.length - 1].version + 1 : 1;
+  };
+
+  const createClaim = (e) => {
+    e.preventDefault();
+    const entityId = document.getElementById('claim-entity').value;
+    const statement = document.getElementById('claim-statement').value;
+    const status = document.getElementById('claim-status').value || 'Proposed';
+
+    if (!entityId || !statement) return;
+
+    const claimId = `claim_${Date.now().toString(36)}`;
+    const version = 1;
+    const now = new Date().toISOString();
+
+    const claim = {
+      id: claimId,
+      entityId,
+      statement,
+      status: status || 'Proposed',
+      canonState: status || 'Proposed',
+      version,
+      previousVersion: null,
+      versions: [{
+        version: 1,
+        entityId,
+        statement,
+        status: status || 'Proposed',
+        canonState: status || 'Proposed',
+        sourceIds: [],
+        evidenceLinks: [],
+        createdAt: now,
+        createdBy: 'local-user',
+        changeType: 'Created',
+        changeProposalId: null,
+        reviewId: null,
+        restoredFromVersion: null
+      }],
+      createdAt: now,
+      updatedAt: now
+    };
+
+    setWorkspaceData({
+      ...workspaceData,
+      claims: [...workspaceData.claims, claim],
+      activityLog: [
+        ...workspaceData.activityLog,
+        {
+          id: Date.now(),
+          timestamp: now,
+          action: 'Claim created',
+          target: statement,
+          type: 'claim'
+        }
+      ]
+    });
+
+    document.getElementById('claim-form').reset();
+  };
+
+  const createClaimChangeProposal = (e) => {
+    e.preventDefault();
+    const claimId = document.getElementById('proposal-claim').value;
+    const statement = document.getElementById('proposal-statement').value;
+    const reason = document.getElementById('proposal-reason').value;
+    const proposedBy = document.getElementById('proposal-by').value || 'local-user';
+
+    const claim = findClaimById(claimId);
+    if (!claim) {
+      alert('Target claim not found.');
+      return;
+    }
+
+    const currentVersion = findCurrentClaimVersion(claimId);
+    if (!currentVersion) {
+      alert('Claim has no versions.');
+      return;
+    }
+
+    if (claim.status === 'Approved') {
+      alert('Approved claims cannot be modified directly. Use a change proposal instead.');
+      return;
+    }
+
+    const baseVersion = currentVersion.version;
+    const proposedChanges = {};
+    if (statement && statement !== currentVersion.statement) {
+      proposedChanges.statement = statement;
+    }
+
+    if (Object.keys(proposedChanges).length === 0) {
+      alert('No changes specified.');
+      return;
+    }
+
+    const proposalId = `ccp_${Date.now().toString(36)}`;
+    const now = new Date().toISOString();
+
+    const proposal = {
+      id: proposalId,
+      claimId,
+      baseVersion,
+      status: 'Proposed',
+      reason,
+      proposedChanges,
+      proposedBy,
+      createdAt: now,
+      resolvedAt: null,
+      reviewId: null
+    };
+
+    setWorkspaceData({
+      ...workspaceData,
+      changeProposals: [...workspaceData.changeProposals, proposal],
+      activityLog: [
+        ...workspaceData.activityLog,
+        {
+          id: Date.now(),
+          timestamp: now,
+          action: 'Claim proposal created',
+          target: `Claim ${claimId} v${baseVersion}`,
+          type: 'claim-proposal'
+        }
+      ]
+    });
+
+    document.getElementById('proposal-form').reset();
+    document.getElementById('proposal-by').value = 'local-user';
+  };
+
+  const reviewChangeProposal = (proposalId, decision, reviewer) => {
+    const proposal = workspaceData.changeProposals.find(p => p.id === proposalId);
+    if (!proposal) return;
+
+    const claim = findClaimById(proposal.claimId);
+    if (!claim) return;
+
+    const currentVersion = findCurrentClaimVersion(proposal.claimId);
+    if (!currentVersion) return;
+
+    if (proposal.baseVersion !== currentVersion.version) {
+      alert('Conflict: claim has changed since proposal was created. Create a fresh proposal.');
+      return;
+    }
+
+    const now = new Date().toISOString();
+
+    const review = {
+      id: `review_${Date.now().toString(36)}`,
+      targetType: 'ClaimChangeProposal',
+      targetId: proposalId,
+      claimId: proposal.claimId,
+      decision: decision,
+      fromState: proposal.status,
+      toState: decision,
+      reviewer: reviewer || 'local-user',
+      rationale: document.getElementById('review-rationale').value || '',
+      createdAt: now
+    };
+
+    const approvalEvent = {
+      id: `evt_${Date.now().toString(36)}`,
+      at: now,
+      actor: reviewer || 'local-user',
+      action: `Claim proposal ${decision.toLowerCase()}`,
+      targetType: 'ClaimChangeProposal',
+      targetId: proposalId,
+      claimId: claim.id,
+      claimVersion: currentVersion.version,
+      detail: decision === 'Approved' ? `Approved proposal ${proposalId}; version ${currentVersion.version + 1} created.` : 'Proposal rejected.'
+    };
+
+    setWorkspaceData({
+      ...workspaceData,
+      changeProposals: workspaceData.changeProposals.map(p =>
+        p.id === proposalId
+          ? {
+              ...p,
+              status: decision,
+              resolvedAt: now,
+              reviewId: review.id
+            }
+          : p
+      ),
+      reviews: [...workspaceData.reviews, review],
+      activityLog: [
+        ...workspaceData.activityLog,
+        {
+          id: Date.now(),
+          timestamp: now,
+          action: `Claim proposal ${decision.toLowerCase()}`,
+          target: `Claim ${proposal.claimId} v${currentVersion.version}`,
+          type: 'claim-proposal-review'
+        },
+        {
+          id: Date.now() + 1,
+          timestamp: now,
+          action: decision === 'Approved' ? 'Version created' : 'Proposal rejected',
+          target: `Claim ${proposal.claimId}`,
+          type: decision === 'Approved' ? 'version-creation' : 'claim-proposal-rejection'
+        }
+      ]
+    });
+
+    document.getElementById('review-rationale').value = '';
+  };
+
+  const getNextClaimEventId = () => {
+    const ids = workspaceData.activityLog.filter(a => a.type === 'audit-event').map(a => parseInt(a.id));
+    return Math.max(...ids, 0) + 1;
+  };
+
+  const filteredRecords = workspaceData.records.filter(record => {
+    const matchesSearch = record.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         record.description?.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesType = filterType === 'all' || record.type === filterType;
+    return matchesSearch && matchesType;
+  });
+
+  const findCurrentVersion = (recordId) => {
+    return workspaceData.records
+      .filter(r => r.id === recordId)
+      .sort((a, b) => b.version - a.version)[0];
+  };
+
+  const findSupersededVersions = (recordId) => {
+    return workspaceData.records
+      .filter(r => r.id === recordId)
+      .sort((a, b) => b.version - a.version);
+  };
+
+  const createChangeRequest = (e) => {
+    e.preventDefault();
+    const targetId = document.getElementById('cr-target').value;
+    const targetType = document.getElementById('cr-target-type').value;
+    const targetTitle = document.getElementById('cr-target-title').value;
+    const description = document.getElementById('cr-description').value;
+    const reason = document.getElementById('cr-reason').value;
+
+    if (!targetId || !targetTitle) return;
+
+    const current = findCurrentVersion(targetId);
+    if (!current) {
+      alert('Target entity not found.');
+      return;
+    }
+
+    const changeRequest = {
+      id: `cr_${Date.now().toString(36)}`,
+      targetType,
+      targetId,
+      targetTitle,
+      targetVersion: current.version,
+      proposedChanges: {
+        description: description || current.description,
+        population: description || current.description
+      },
+      reason,
+      status: 'Proposed',
+      createdBy: 'local-user',
+      createdAt: new Date().toISOString(),
+      reviewedBy: null,
+      reviewedAt: null,
+      decisionRationale: ''
+    };
+
+    setWorkspaceData({
+      ...workspaceData,
+      changeRequests: [...workspaceData.changeRequests, changeRequest],
+      activityLog: [
+        ...workspaceData.activityLog,
+        {
+          id: Date.now(),
+          timestamp: new Date().toISOString(),
+          action: 'Change request created',
+          target: `${targetTitle} v${current.version}`,
+          type: 'change-request'
+        }
+      ]
+    });
+
+    document.getElementById('cr-form').reset();
+  };
+
+  const approveChangeRequest = (crId) => {
+    const request = workspaceData.changeRequests.find(cr => cr.id === crId);
+    if (!request) return;
+
+    const current = findCurrentVersion(request.targetId);
+    if (!current) return;
+
+    const newVersion = {
+      id: current.id,
+      version: current.version + 1,
+      type: current.type,
+      title: current.title,
+      description: request.proposedChanges.description || current.description,
+      canon: request.proposedChanges.canon || current.canon,
+      status: current.status,
+      createdAt: new Date().toISOString(),
+      tags: current.tags
+    };
+
+    setWorkspaceData({
+      ...workspaceData,
+      records: [
+        ...workspaceData.records.map(r =>
+          r.id === current.id && r.version === current.version
+            ? { ...r, canon: 'Superseded' }
+            : r
+        ),
+        newVersion
+      ],
+      changeRequests: workspaceData.changeRequests.map(cr =>
+        cr.id === crId
+          ? { ...cr, status: 'Approved', reviewedBy: 'local-user', reviewedAt: new Date().toISOString(), decisionRationale: '' }
+          : cr
+      ),
+      activityLog: [
+        ...workspaceData.activityLog,
+        {
+          id: Date.now(),
+          timestamp: new Date().toISOString(),
+          action: 'Change request approved',
+          target: `${current.title} v${current.version} -> v${newVersion.version}`,
+          type: 'change-request-approval'
+        },
+        {
+          id: Date.now() + 1,
+          timestamp: new Date().toISOString(),
+          action: 'Version created',
+          target: `${current.title} v${newVersion.version}`,
+          type: 'version-creation'
+        }
+      ]
+    });
+  };
+
+  const rejectChangeRequest = (crId) => {
+    const request = workspaceData.changeRequests.find(cr => cr.id === crId);
+    if (!request) return;
+
+    setWorkspaceData({
+      ...workspaceData,
+      changeRequests: workspaceData.changeRequests.map(cr =>
+        cr.id === crId
+          ? { ...cr, status: 'Rejected', reviewedBy: 'local-user', reviewedAt: new Date().toISOString(), decisionRationale: 'Rejected by reviewer' }
+          : cr
+      ),
+      activityLog: [
+        ...workspaceData.activityLog,
+        {
+          id: Date.now(),
+          timestamp: new Date().toISOString(),
+          action: 'Change request rejected',
+          target: `${request.targetTitle} v${request.targetVersion}`,
+          type: 'change-request-rejection'
+        }
+      ]
+    });
+  };
+
+  const addAuditEvent = (eventType, entityId, fromVersion, toVersion) => {
+    const id = getNextClaimEventId();
+    setWorkspaceData({
+      ...workspaceData,
+      activityLog: [
+        ...workspaceData.activityLog,
+        {
+          id,
+          timestamp: new Date().toISOString(),
+          action: eventType,
+          target: entityId,
+          type: 'audit-event'
+        }
+      ]
+    });
+  };
+
+
+  const checkDuplicateRelationship = (from, to) => {
+    return workspaceData.relationships.some(rel =>
+      (rel.from === from && rel.to === to) || (rel.from === to && rel.to === from)
+    );
+  };
+
+  const findOrphanRelationships = (recordId) => {
+    return workspaceData.relationships.filter(rel =>
+      rel.from === recordId || rel.to === recordId
+    );
+  };
+
+  const addRelationship = (e) => {
+    e.preventDefault();
+    const from = document.getElementById('rel-from').value;
+    const to = document.getElementById('rel-to').value;
+    const type = document.getElementById('rel-type').value;
+
+    if (!from || !to || from === to) {
+      alert('Choose two different records before adding a relationship.');
+      return;
+    }
+
+    if (checkDuplicateRelationship(from, to)) {
+      alert('Duplicate relationship: this pair already exists.');
+      return;
+    }
+
+    const fromRecord = workspaceData.records.find(r => r.id === from);
+    const toRecord = workspaceData.records.find(r => r.id === to);
+    if (!fromRecord || !toRecord) {
+      alert('Orphan detection: both records must exist.');
+      return;
+    }
+
+    const relationship = {
+      id: Date.now().toString(36),
+      from,
+      to,
+      type
+    };
+
+    setWorkspaceData({
+      ...workspaceData,
+      relationships: [...workspaceData.relationships, relationship],
+      activityLog: [
+        ...workspaceData.activityLog,
+        {
+          id: Date.now(),
+          timestamp: new Date().toISOString(),
+          action: 'Relationship created',
+          target: `${fromRecord.title} ${type} ${toRecord.title}`,
+          type: 'relationship'
+        }
+      ]
+    });
+
+    document.getElementById('rel-form').reset();
+  };
+
+  const addSource = (e) => {
+    e.preventDefault();
+    const title = document.getElementById('source-title').value;
+    const type = document.getElementById('source-type').value;
+
+    if (!title) return;
+
+    const source = {
+      id: Date.now().toString(36),
+      title,
+      type,
+      createdAt: new Date().toISOString()
+    };
+
+    setWorkspaceData({
+      ...workspaceData,
+      sources: [...workspaceData.sources, source],
+      activityLog: [
+        ...workspaceData.activityLog,
+        {
+          id: Date.now(),
+          timestamp: new Date().toISOString(),
+          action: 'Source registered',
+          target: title,
+          type: 'source'
+        }
+      ]
+    });
+
+    document.getElementById('source-form').reset();
+  };
+
+  const addDecision = (e) => {
+    e.preventDefault();
+    const title = document.getElementById('decision-title').value;
+    const rationale = document.getElementById('decision-rationale').value;
+    const reviewers = document.getElementById('decision-reviewers').value;
+
+    if (!title) return;
+
+    const decision = {
+      id: Date.now().toString(36),
+      title,
+      rationale,
+      status: 'Proposed',
+      createdAt: new Date().toISOString()
+    };
+
+    setWorkspaceData({
+      ...workspaceData,
+      decisions: [...workspaceData.decisions, decision],
+      activityLog: [
+        ...workspaceData.activityLog,
+        {
+          id: Date.now(),
+          timestamp: new Date().toISOString(),
+          action: 'Decision proposed',
+          target: title,
+          type: 'decision'
+        }
+      ]
+    });
+
+    document.getElementById('decision-form').reset();
+  };
+
+  const generateComponent = (prompt) => {
+    const title = prompt.slice(0, 50) || 'My World';
+    return `import React from 'react';
+
+export default function ${title.replace(/[^a-zA-Z0-9]/g, '')}() {
+  return (
+    <div style={{
+      fontFamily: 'system-ui, sans-serif',
+      maxWidth: '800px',
+      margin: '0 auto',
+      padding: '2rem',
+      background: '#0f172a',
+      color: '#f1f5f9'
+    }}>
+      <header style={{textAlign: 'center', padding: '3rem 0'} }>
+        <h1 style={{color: '#59d1ff'}}>${title}</h1>
+      </header>
+      <main style={{padding: '2rem'}}>
+        <p>Generated world content goes here.</p>
+      </main>
+    </div>
+  );
+}`;
+  };
+
+  const getGeneratedComponent = () => {
+    return generateComponent(promptInput);
+  };
+
+  const copyComponent = () => {
+    const code = getGeneratedComponent();
+    navigator.clipboard.writeText(code);
+    setCopyStatus('Copied to clipboard!');
+    setTimeout(() => setCopyStatus(''), 2000);
+  };
+
+  const downloadComponent = () => {
+    const code = getGeneratedComponent();
+    const blob = new Blob([code], { type: 'text/javascript' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${workspaceData.records.length + 1}-${workspaceData.records.find(r => r.title)?.toLowerCase().replace(/\s+/g, '-')}`.slice(0, 50) || 'generated-component';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
+  return (
+    <div className="App">
+      <nav className="navbar">
+        <div className="nav-logo">
+          <div className="logo-icon">✦</div>
+          <span>AH-AIOS WorldForge</span>
+        </div>
+        <ul className={`nav-links ${menuOpen ? 'active' : ''}`}>
+          <li><a href="#dashboard" onClick={() => setActiveView('dashboard')}>Dashboard</a></li>
+          <li><a href="#worlds" onClick={() => setActiveView('worlds')}>Worlds</a></li>
+          <li><a href="#relationships" onClick={() => setActiveView('relationships')}>Relationships</a></li>
+          <li><a href="#sources" onClick={() => setActiveView('sources')}>Sources</a></li>
+          <li><a href="#governance" onClick={() => setActiveView('governance')}>Governance</a></li>
+          <li><a href="#import-export" onClick={() => setActiveView('import-export')}>Import/Export</a></li>
+          <li><a href="#prompt" onClick={() => setActiveView('prompt')}>Prompt Builder</a></li>
+          <li><a href="#after-humanity" onClick={() => setActiveView('sample')}>After Humanity Sample</a></li>
+        </ul>
+        <button
+          className="nav-cta"
+          style={{ backgroundColor: 'transparent', color: 'var(--text)', padding: '8px 16px', border: '1px solid var(--border)', cursor: 'pointer', gap: '8px', display: 'flex', alignItems: 'center' }}
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          <span style={{ fontSize: '1.2rem' }}>&#9776;</span>
+        </button>
+      </nav>
+
+      <section id="after-humanity" className="sample-world-section" style={{ scrollMarginTop: '82px' }}>
+        <iframe
+          ref={afterHumanityFrameRef}
+          title="After Humanity worldbuilding archive"
+          srcDoc={afterHumanityDocument}
+          sandbox
+```
