@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hydraporss.github.io/ah-aios-react-website/schemas/worldforge-workspace.schema.json",
+  "title": "AH-AIOS WorldForge Workspace Export",
+  "description": "Versioned workspace interchange format. Collection item internals remain application-defined until domain schemas are frozen.",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "records"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4,
+      "deprecated": true,
+      "description": "Legacy compatibility field. New exports should use schemaVersion."
+    },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "relationships": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "changeRequests": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "reviews": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "changeProposals": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "activityLog": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "exports": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "additionalProperties": false
+}
