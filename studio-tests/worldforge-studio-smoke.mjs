@@ -37,13 +37,13 @@ try {
   await page.getByRole('heading', { name: 'Alpha Entity → Beta Entity', exact: true }).waitFor();
 
   await page.locator('[data-tab="claims"]').click();
-  await page.locator('#claim-form input[name="title"]').fill('Test claim');
-  await page.locator('#claim-form textarea[name="statement"]').fill('A test statement with a recorded source.');
+  await page.locator('#studio-claim-form input[name="title"]').fill('Test claim');
+  await page.locator('#studio-claim-form textarea[name="statement"]').fill('A test statement with a recorded source.');
   await page.locator('#claim-world').selectOption({ label: 'Browser Test World' });
-  await page.locator('#claim-form input[name="sourceName"]').fill('Acceptance fixture');
-  await page.locator('#claim-form input[name="sourceRef"]').fill('tests/fixture.md');
-  await page.locator('#claim-form select[name="evidence"]').selectOption('Supported');
-  await page.locator('#claim-form button.accent-btn').click();
+  await page.locator('#studio-claim-form input[name="sourceName"]').fill('Acceptance fixture');
+  await page.locator('#studio-claim-form input[name="sourceRef"]').fill('tests/fixture.md');
+  await page.locator('#studio-claim-form select[name="evidence"]').selectOption('Supported');
+  await page.locator('#studio-claim-form button.accent-btn').click();
   await page.getByText('Test claim', { exact: true }).waitFor();
 
   await page.locator('[data-tab="integrity"]').click();
@@ -68,7 +68,7 @@ try {
   await page.getByText(/0 errors · 0 warnings/).waitFor();
 
   await page.locator('[data-tab="claims"]').click();
-  await page.locator('#claim-list [data-edit="claim"]').click();
+  await page.locator('#studio-claim-list [data-edit="claim"]').click();
   await page.getByRole('heading', { name: 'Edited test claim', exact: true }).waitFor();
   await page.locator('[data-tab="overview"]').click();
   await page.locator('#revision-history [data-restore-history]').first().click();
