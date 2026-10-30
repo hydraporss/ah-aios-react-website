@@ -180,7 +180,7 @@ async function resolveConflict(workspace,conflictId,choice){
   const db=await client(),r=await db.from(table).select('id,record_version').eq('id',conflict.remoteId).maybeSingle();if(r.error)throw r.error;
   if(!r.data||r.data.record_version!==conflict.remoteVersion)throw new Error('Remote record changed again while resolving. Run bidirectional sync to refresh the conflict.');
   map.lastSyncedVersions=map.lastSyncedVersions||{};map.lastSyncedVersions[key]=conflict.remoteVersion;
-  map.lastSyncedHashes=map.lastSyncedHashes||{};map.lastSyncedHashes[key]=conflict.remotePayloadHash;
+  map.lastSyncedHashes=map.lastSyncedHashes||{};map.lastSyncedHashes[key]=conflict.remotePayloadHash;map.lastSyncedLocalSnapshots=map.lastSyncedLocalSnapshots||{};map.lastSyncedLocalSnapshots[key]=validator.comparable(({worlds:'world',entities:'entity',relationships:'relationship',sources:'source',claims:'claim'}[conflict.type]||conflict.type),conflict.remoteSnapshot);
  }
  conflict.status='resolved';conflict.resolution=choice==='remote'?'keep_remote':'keep_local';conflict.resolvedAt=new Date().toISOString();
  saveMap(map);
