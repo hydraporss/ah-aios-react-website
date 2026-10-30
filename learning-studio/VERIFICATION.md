@@ -1,45 +1,37 @@
-# Verification — AH-AIOS Learning Studio 0.2.0
+# Verification — AH-AIOS Learning 0.2.0
 
-## Automated result
+## Automated checks
+The GitHub Actions workflow runs the Node test suite and static-file checks on changes to this application. The current redesign is under test; update this report with the latest run URL and outcome after CI completes.
 
-<badge>PASS — GitHub Actions</badge>
+The regression suite checks:
+- Nine starter course records.
+- 82-theory import count and 68+14 classification checks.
+- Progress schema/version validation and rejection of invalid imports.
+- Course, lab, tutor, portfolio, and profile interaction hooks.
+- Internal navigation anchors and required dashboard mount points.
+- Responsive CSS breakpoints and service-worker registration.
 
-- Workflow: `Learning Studio verification`
-- Run: [41013602437](https://github.com/hydraporss/ah-aios-react-website/actions/runs/41013602437)
-- Tested commit: `ef3c4b244cafbef9f816f655b44ecd096b9597f4`
-- Result: `success`
-- Runtime: GitHub-hosted Ubuntu runner, Node.js 22
-- Executed: `node --test tests/*.test.js`
-- Executed static-file checks for `index.html`, `app.js`, `styles.css`, `manifest.webmanifest`, and `sw.js`
-- All workflow steps completed successfully.
+## Implemented interactions
+- All sidebar, header, domain, library, footer, and course navigation anchors target page sections.
+- Course cards open lessons and exercises; answers are graded and update progress.
+- Course work can be saved to the learner portfolio.
+- Practice labs accept and save submissions.
+- Assessment cards launch course checks.
+- Competencies and certificates derive from completed course checks; completed path certificates can be printed.
+- Search filters the course catalogue.
+- Local tutor answers from the bundled course content; it is not connected to a live AI model.
+- Progress JSON export/import; imports validate schema/version/module IDs before replacing current progress.
+- Theory registry import requires exactly 82 records split into 68 registry and 14 synthesized, each with id and title. This is structural validation only.
+- Profile and progress persist in localStorage; reset requires confirmation.
+- Service worker caches the app shell for offline reopening after a successful first load.
 
-The test suite checks that nine starter modules are declared, the theory import gate requires 82 records with a 68+14 split, progress imports check schema/version before replacing state, invalid imports preserve current progress, and the service worker registration is present.
+## Not yet independently verified
+- Cross-browser UI behavior, keyboard/screen-reader accessibility, and mobile device acceptance.
+- Real-world PWA installation and offline behavior in Chromium, Firefox, and Safari.
+- Dedicated GitHub Pages deployment from a new repository.
+- Authoritative 82-theory content and provenance. The connected source repositories have not yielded the canonical records, so no records are fabricated.
+- Full conformity with the missing development procedure document.
+- Cloud accounts, multi-user sync, a backend, and a live AI Tutor are not implemented.
 
-## Implemented in source
-
-- Three learning paths and nine starter modules.
-- Lesson content, practice prompts, and knowledge checks.
-- Learner progress dashboard and browser-local persistence.
-- Practice lab, scenario feedback, and portfolio entries.
-- JSON progress export and schema-validated import.
-- Theory JSON import gate requiring 82 records, split 68 registry and 14 synthesized, with id/title fields.
-- PWA manifest and service worker shell cache.
-- Standalone GitHub Pages workflow template.
-
-## Not verified / source limitations
-
-- Browser rendering, keyboard/screen-reader accessibility, and mobile acceptance.
-- PWA installation and offline behavior in target browsers.
-- Real browser import/export round trips and storage failure recovery.
-- Deployment of the standalone app to a dedicated GitHub Pages repository.
-- Authenticity and content of the 82 theory records. No authoritative 82-record source was found in the connected GitHub repositories; the explorer starts empty and does not invent records.
-- Full curriculum conformity to the attached development procedures; the procedure document itself was not located in the connected repositories.
-- Theory import currently validates record count and required fields; it does not authenticate provenance or validate a canonical schema beyond those checks.
-
-## Required next verification
-
-1. Supply the authoritative 82-theory registry and verify all 68+14 records against source.
-2. Execute browser-level valid/invalid progress import/export round trips.
-3. Exercise all nine modules in a browser.
-4. Verify service-worker install/update/offline behavior in Chromium, Firefox, and Safari.
-5. Deploy from a dedicated repository and confirm its Pages URL.
+## Source integrity
+The three learning domains and nine starter modules are a functional starter curriculum based on available AH-AIOS architecture principles. This does not silently elevate course interpretations to canon or replace authoritative source records.
