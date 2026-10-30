@@ -5,6 +5,11 @@ on:
     paths:
       - "learning-studio/**"
       - ".github/workflows/learning-studio-verify.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "learning-studio/**"
+      - ".github/workflows/learning-studio-verify.yml"
   workflow_dispatch:
 permissions:
   contents: read
