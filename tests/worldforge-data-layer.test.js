@@ -56,3 +56,17 @@ test('Supabase adapter preserves governance boundaries and optimistic concurrenc
   assert.match(service,/delete next\.canon_status/);
   assert.doesNotMatch(readFileSync(join(process.cwd(),'public/worldforge/verified-2026-10-28/assets/supabase-config.js'),'utf8'),/service_role|secret_key/i);
 });
+
+test('three-way sync classifier distinguishes pull, push, no-op, and conflict',()=>{
+  const base={id:'claim-a',statement:'Base',recordType:'claim'};
+  const unchanged={...base};
+  const local={...base,statement:'Local edit'};
+  const remote={...base,statement:'Remote edit'};
+  assert.equal(api.classifyConflict(base,unchanged,unchanged).state,'unchanged');
+  assert.equal(api.classifyConflict(base,local,unchanged).state,'push');
+  assert.equal(api.classifyConflict(base,unchanged,remote).state,'pull');
+  assert.equal(api.classifyConflict(base,local,remote).state,'conflict');
+});
+test('records without a sync base are never silently reconciled',()=>{
+  assert.equal(api.classifyConflict(null,{id:'x'},{id:'x'}).state,'conflict');
+});
