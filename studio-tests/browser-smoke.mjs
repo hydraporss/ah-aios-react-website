@@ -76,7 +76,7 @@ try {
   assert.equal(storedTheories.length,82);
   await page.reload({waitUntil:"networkidle"});
   assert.match(await page.locator("#theory-status").innerText(),/82 records loaded/);
-  assert.match(await page.locator("#theory-source-status").innerText(),/provenance review pending/i);
+  assert.match(await page.locator("#theory-source-status").innerText(),/provenance review required/i);
 
   assert.equal(pageErrors.length, 0, "browser console page errors: " + pageErrors.join("; "));
   process.stdout.write("Learning Studio browser smoke checks passed: catalogue, search, course/lesson navigation, portfolio save, persistence after reload, local tutor, and no uncaught page errors.\n");
