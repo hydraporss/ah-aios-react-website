@@ -60,10 +60,21 @@ try {
     throw new Error('Export package did not preserve all created records.');
   }
 
-  page.on('dialog', dialog => dialog.accept());
+  page.on('dialog', dialog => dialog.accept(dialog.type() === 'prompt' ? 'Edited test claim' : undefined));
   await page.locator('#import-btn').click();
   await page.locator('#import-file').setInputFiles(exportPath);
   await page.getByText('Import completed and saved locally.').waitFor();
+  await page.locator('#run-validation').click();
+  await page.getByText(/0 errors · 0 warnings/).waitFor();
+
+  await page.locator('[data-tab="claims"]').click();
+  await page.locator('#claim-list [data-edit="claim"]').click();
+  await page.getByRole('heading', { name: 'Edited test claim', exact: true }).waitFor();
+  await page.locator('[data-tab="overview"]').click();
+  await page.locator('#revision-history [data-restore-history]').first().click();
+  await page.locator('[data-tab="claims"]').click();
+  await page.getByRole('heading', { name: 'Test claim', exact: true }).waitFor();
+  await page.locator('[data-tab="integrity"]').click();
   await page.locator('#run-validation').click();
   await page.getByText(/0 errors · 0 warnings/).waitFor();
 
