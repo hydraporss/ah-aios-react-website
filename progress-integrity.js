@@ -2,7 +2,6 @@
   "use strict";
   const FORMAT = "ah-aios-learning-studio-backup";
   const PACKAGE_VERSION = 1;
-  const own = (value) => Object.prototype.hasOwnProperty.call(value, "x");
   const isRecord = (value) => value !== null && typeof value === "object" && !Array.isArray(value);
   const isText = (value) => typeof value === "string";
   const clone = (value) => JSON.parse(JSON.stringify(value));
@@ -88,7 +87,14 @@
 
   function persistImport(storage, key, candidate, onCommit) {
     const serialized = JSON.stringify(candidate);
+    const previous = storage.getItem(key);
     storage.setItem(key, serialized);
+    const readBack = storage.getItem(key);
+    if (readBack !== serialized) {
+      if (previous === null) storage.removeItem(key);
+      else storage.setItem(key, previous);
+      throw new Error("Saved progress did not match the imported package; the previous record was restored.");
+    }
     if (typeof onCommit === "function") onCommit(candidate);
     return serialized;
   }
