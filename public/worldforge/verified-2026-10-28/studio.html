@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#030a14">
+<meta name="description" content="WorldForge Studio — structured world records, relationships, claims, provenance and integrity checks.">
+<title>WorldForge Studio · AH-AIOS</title>
+<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/studio.css">
+</head>
+<body data-page="studio">
+<div class="topline"></div>
+<header><div class="wrap nav">
+<a class="brand" href="index.html"><span class="brandmark">✥</span><span><span class="brandtag">AH-AIOS</span><span class="brandname">WorldForge</span></span></a>
+<button class="menu" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+<nav class="navlinks" aria-label="Main navigation">
+<a href="index.html">Home</a><a href="doctrine.html">Doctrine</a><a href="architecture.html">Architecture</a><a href="governance.html">Governance</a><a class="active" href="studio.html">World Studio</a><a href="constitution.html">Constitution</a><a href="explorer.html">Explorer</a>
+</nav></div></header>
+<main class="studio-shell">
+<aside class="studio-rail">
+<div class="rail-heading"><span class="eyebrow">WORKSPACE / 0.6</span><h1>World<br><em>Studio</em></h1><p>Build structured worlds. Keep every connection traceable.</p></div>
+<nav class="studio-tabs" aria-label="Studio workspace">
+<button class="active" data-tab="overview"><span>◈</span> Overview</button>
+<button data-tab="worlds"><span>◎</span> Worlds</button>
+<button data-tab="entities"><span>◇</span> Entities</button>
+<button data-tab="relationships"><span>⌘</span> Relationships</button>
+<button data-tab="claims"><span>✧</span> Claims &amp; Sources</button>
+<button data-tab="integrity"><span>✓</span> Integrity Check</button>
+</nav>
+<div class="rail-foot"><span class="local-dot"></span><span>Local workspace</span><small>Your data stays in this browser until you export it.</small></div>
+</aside>
+<section class="studio-main">
+<div class="studio-top"><div><div class="eyebrow">AFTER HUMANITY · AH-AIOS</div><div class="studio-breadcrumb">WorldForge <span>/</span> <strong id="current-section">Overview</strong></div></div><div class="toolbar"><button class="tool-btn" id="export-btn">↓ Export JSON</button><button class="tool-btn" id="import-btn">↑ Import JSON</button><input id="import-file" type="file" accept="application/json,.json" hidden></div></div>
+<div id="workspace" aria-live="polite">
+<section class="tab-panel active" data-panel="overview">
+<div class="welcome"><div><div class="eyebrow">STRUCTURE BEFORE NARRATIVE</div><h2>Your world.<br><span>One coherent model.</span></h2><p>Start with a world, add entities, connect relationships, and register claims with their sources. Validation checks the structure—not whether a claim is canon.</p><button class="accent-btn" data-go="worlds">Create your first world <span>↗</span></button></div><div class="welcome-mark" aria-hidden="true"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="orbit-core">W</div><i>ENTITY · RELATION · PROVENANCE</i></div></div>
+<div class="stat-grid"><article class="stat-card"><span>WORLDS</span><strong id="stat-worlds">0</strong><small>Structured environments</small></article><article class="stat-card"><span>ENTITIES</span><strong id="stat-entities">0</strong><small>Identified records</small></article><article class="stat-card"><span>RELATIONSHIPS</span><strong id="stat-relationships">0</strong><small>Connected references</small></article><article class="stat-card"><span>CLAIMS</span><strong id="stat-claims">0</strong><small>Traceable statements</small></article></div>
+<div class="overview-grid"><article class="studio-card"><div class="card-head"><div><span class="eyebrow">RECENT ACTIVITY</span><h3>Workspace history</h3></div><span class="subtle-tag">LOCAL AUDIT</span></div><div id="recent-activity" class="activity-list"><div class="empty-state">Your activity will appear here when you create or update records.</div></div></article><article class="studio-card principle-card"><span class="eyebrow">GOVERNANCE BOUNDARY</span><h3>Emergence is not canon.</h3><p>World Studio creates and validates structured records. A successful integrity check is not a canon decision. Canon status remains subject to the authorized governance process.</p><a href="governance.html">Open Governance Lab ↗</a></article></div>
+</section>
+<section class="tab-panel" data-panel="worlds">
+<div class="section-intro"><div class="eyebrow">01 / WORLD REGISTRY</div><h2>Worlds</h2><p>Create the root containers for your modeled realities. Each world receives a stable identifier.</p></div>
+<div class="form-card"><form id="world-form" class="studio-form"><label>World name<input name="name" required maxlength="120" placeholder="e.g. AFTER HUMANITY"></label><label>World identifier <small>Optional — generated if blank</small><input name="slug" maxlength="80" placeholder="after-humanity"></label><label class="full">Description<textarea name="description" rows="3" maxlength="1200" placeholder="What defines this world?"></textarea></label><div class="form-actions"><button class="accent-btn">Create world <span>＋</span></button></div></form></div>
+<div class="list-heading"><h3>Registered worlds</h3><span id="world-count" class="subtle-tag">0 RECORDS</span></div><div id="world-list" class="record-grid"><div class="empty-state">No worlds created yet.</div></div>
+</section>
+<section class="tab-panel" data-panel="entities">
+<div class="section-intro"><div class="eyebrow">02 / IDENTITY REGISTRY</div><h2>Entities</h2><p>Register people, civilizations, places, objects, organizations, concepts, and other identifiable subjects.</p></div>
+<div class="form-card"><form id="entity-form" class="studio-form"><label>Entity name<input name="name" required maxlength="140" placeholder="e.g. The Ancients"></label><label>Entity type<select name="type"><option>Person</option><option>Civilization</option><option>Place</option><option>Organization</option><option>Object</option><option>Concept</option><option>Species</option><option>Technology</option><option>Other</option></select></label><label>Belongs to world<select name="worldId" id="entity-world" required><option value="">Create a world first</option></select></label><label>Identity / status<input name="identity" maxlength="160" placeholder="e.g. Architects of the Metaphysical"></label><label class="full">Description<textarea name="description" rows="3" maxlength="2000" placeholder="Describe the entity and what distinguishes it."></textarea></label><div class="form-actions"><button class="accent-btn">Add entity <span>＋</span></button></div></form></div>
+<div class="list-heading"><h3>Entity register</h3><span id="entity-count" class="subtle-tag">0 RECORDS</span></div><div id="entity-list" class="record-grid"><div class="empty-state">No entities registered yet.</div></div>
+</section>
+<section class="tab-panel" data-panel="relationships">
+<div class="section-intro"><div class="eyebrow">03 / CONNECTION MODEL</div><h2>Relationships</h2><p>Connect two existing entities with an explicit relationship type and direction.</p></div>
+<div class="form-card"><form id="relationship-form" class="studio-form"><label>Source entity<select name="sourceId" id="relation-source" required><option value="">Add entities first</option></select></label><label>Relationship type<select name="type"><option>Related to</option><option>Created</option><option>Member of</option><option>Located in</option><option>Opposes</option><option>Allied with</option><option>Descended from</option><option>Part of</option><option>Caused</option><option>Precedes</option><option>Depends on</option><option>Other</option></select></label><label>Target entity<select name="targetId" id="relation-target" required><option value="">Add entities first</option></select></label><label>Direction<select name="direction"><option value="directed">Directed</option><option value="symmetric">Symmetric</option></select></label><label class="full">Context / provenance<textarea name="context" rows="2" maxlength="1000" placeholder="Why does this relationship exist?"></textarea></label><div class="form-actions"><button class="accent-btn">Connect entities <span>↗</span></button></div></form></div>
+<div class="list-heading"><h3>Relationship map</h3><span id="relationship-count" class="subtle-tag">0 LINKS</span></div><div id="relationship-list" class="record-grid"><div class="empty-state">No relationships created yet.</div></div>
+</section>
+<section class="tab-panel" data-panel="claims">
+<div class="section-intro"><div class="eyebrow">04 / KNOWLEDGE &amp; LINEAGE</div><h2>Claims &amp; sources</h2><p>Record a statement, classify what kind of knowledge it represents, and preserve where it came from.</p></div>
+<div class="form-card"><form id="claim-form" class="studio-form"><label>Claim title<input name="title" required maxlength="140" placeholder="A concise statement title"></label><label>Claim type<select name="type"><option>Observation</option><option>Fact assertion</option><option>Inference</option><option>Interpretation</option><option>Hypothesis</option><option>Proposal</option></select></label><label>World scope<select name="worldId" id="claim-world"><option value="">Unassigned / general</option></select></label><label>Source name<input name="sourceName" maxlength="180" placeholder="Document, chapter, file, conversation…"></label><label class="full">Statement<textarea name="statement" required rows="3" maxlength="3000" placeholder="Write one clear claim. Distinguish observation from inference."></textarea></label><label>Source reference / URL<input name="sourceRef" maxlength="1000" placeholder="Repository path, URL, or source ID"></label><label>Evidence state<select name="evidence"><option>Missing</option><option>Partial</option><option>Supported</option><option>Contested</option><option>Unverified</option></select></label><label class="full">Uncertainty / counterevidence<textarea name="uncertainty" rows="2" maxlength="1500" placeholder="What is unknown, disputed, or needs verification?"></textarea></label><div class="form-actions"><button class="accent-btn">Register claim <span>＋</span></button></div></form></div>
+<div class="list-heading"><h3>Claim register</h3><span id="claim-count" class="subtle-tag">0 RECORDS</span></div><div id="claim-list" class="record-grid"><div class="empty-state">No claims registered yet.</div></div>
+</section>
+<section class="tab-panel" data-panel="integrity">
+<div class="section-intro"><div class="eyebrow">05 / CONTINUOUS VERIFICATION</div><h2>Integrity check</h2><p>Run structural checks against your local workspace. Results are advisory and do not approve canon.</p></div>
+<div class="integrity-banner"><div><span class="eyebrow">WORLD MODEL VALIDATOR</span><h3>Check the integrity of your data.</h3><p>IDs · required fields · relationship endpoints · provenance · record versions</p></div><button class="accent-btn" id="run-validation">Run validation <span>✓</span></button></div>
+<div id="validation-summary" class="validation-summary"><div class="empty-state">Run a validation to inspect your workspace.</div></div>
+<div class="list-heading"><h3>Data portability</h3><span class="subtle-tag">JSON PACKAGE</span></div><div class="studio-card portability"><div><h3>Export your world model</h3><p>Download a versioned JSON package containing worlds, entities, relationships, claims, sources, and local audit history.</p></div><button class="tool-btn" id="export-btn-bottom">↓ Download JSON</button></div><div class="studio-card portability"><div><h3>Import a world model</h3><p>Validate a JSON package before replacing this browser's current workspace. Export a backup first.</p></div><button class="tool-btn" id="import-btn-bottom">↑ Choose JSON</button></div>
+<div class="local-warning"><strong>Prototype boundary</strong><p>This version stores data in browser localStorage. It is not a shared database, authenticated workspace, or secure production service. Use JSON exports for backups. Server persistence and role-based authorization are future stages.</p></div>
+</section>
+</div>
+</section>
+</main>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="assets/site.js"></script><script src="assets/studio.js"></script>
+</body></html>
