@@ -60,10 +60,9 @@ try {
     throw new Error('Export package did not preserve all created records.');
   }
 
-  page.once('dialog', dialog => dialog.accept());
+  page.on('dialog', dialog => dialog.accept());
   await page.locator('#import-btn').click();
   await page.locator('#import-file').setInputFiles(exportPath);
-  page.once('dialog', dialog => dialog.accept());
   await page.getByText('Import completed and saved locally.').waitFor();
   await page.locator('#run-validation').click();
   await page.getByText(/0 errors · 0 warnings/).waitFor();
