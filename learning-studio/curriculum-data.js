@@ -1486,5 +1486,178 @@ window.AH_LEARNING_CURRICULUM = {
       "branch": "ah-aios-learning-package",
       "url": "https://github.com/hydraporss/ah-aios-react-website/blob/ah-aios-learning-package/src/governance.js"
     }
+  ],
+  "projects": [
+    {
+      "id": "PROJECT-001",
+      "title": "AH-AIOS System Orientation Portfolio",
+      "level": "L1–L2",
+      "courses": [
+        "AH-CORE-100",
+        "AH-CORE-110",
+        "AH-STW-100"
+      ],
+      "tasks": "produce a domain map, architecture explanation, glossary, and evidence-status review",
+      "evidence": "diagram, glossary, explanation, and source list",
+      "acceptance": "boundaries are accurate, claims are sourced, and implementation status is not overstated.",
+      "status": "Specified"
+    },
+    {
+      "id": "PROJECT-002",
+      "title": "Governed Tool Workflow",
+      "level": "L2–L3",
+      "courses": [
+        "AH-HAR-120",
+        "AH-HAR-140",
+        "AH-HAR-150",
+        "AH-HAR-160"
+      ],
+      "tasks": "specify a tool, model a workflow, define approval gates, and build a test matrix",
+      "evidence": "tool contract, state model, permissions table, and test results",
+      "acceptance": "inputs/outputs and failure paths are defined; authority and human approval are explicit.",
+      "status": "Specified"
+    },
+    {
+      "id": "PROJECT-003",
+      "title": "Provenance-Aware Knowledge Workspace",
+      "level": "L2–L3",
+      "courses": [
+        "AH-WF-100",
+        "AH-WF-120",
+        "AH-WF-130",
+        "AH-WF-150"
+      ],
+      "tasks": "create a graph, register sources, formulate claims, attach evidence, and verify export",
+      "evidence": "model, graph snapshot, provenance trail, validation and export report",
+      "acceptance": "identifiers are stable, relationships validate, claims trace to sources, and export preserves records.",
+      "status": "Specified"
+    },
+    {
+      "id": "PROJECT-004",
+      "title": "Governed World and Continuity Case",
+      "level": "L3–L4",
+      "courses": [
+        "AH-WF-110",
+        "AH-WF-140",
+        "AH-WF-160",
+        "AH-WF-170",
+        "AH-STW-120"
+      ],
+      "tasks": "model an authorized fictional setting, record a contradiction, propose a change, assess continuity impact, and preserve review history",
+      "evidence": "world model, conflict register, change dossier, and continuity report",
+      "acceptance": "source and interpretation remain distinct; no unauthorized canon change occurs; prior versions remain traceable.",
+      "status": "Specified"
+    },
+    {
+      "id": "PROJECT-005",
+      "title": "Learning Content Authoring Practicum",
+      "level": "L3–L4",
+      "courses": [
+        "AH-CORE-140",
+        "AH-CORE-150",
+        "AH-STW-100",
+        "AH-STW-120"
+      ],
+      "tasks": "author a lesson, prepare an exercise and rubric, obtain review, and record publication status",
+      "evidence": "lesson package, review record, change history, and validation checklist",
+      "acceptance": "outcomes are measurable, references traceable, authority clear, and content status accurate.",
+      "status": "Specified"
+    }
+  ],
+  "assessmentFramework": {
+    "sourceId": "AH-LEARN-MASTER-001 §7",
+    "scale": [
+      {
+        "score": 1,
+        "label": "Insufficient"
+      },
+      {
+        "score": 2,
+        "label": "Developing"
+      },
+      {
+        "score": 3,
+        "label": "Competent"
+      },
+      {
+        "score": 4,
+        "label": "Strong"
+      }
+    ],
+    "dimensions": [
+      [
+        "Accuracy",
+        "Technical and conceptual correctness"
+      ],
+      [
+        "Traceability",
+        "Sources, inputs, decisions, and versions are identifiable"
+      ],
+      [
+        "Completeness",
+        "Required elements, edge cases, and limitations are addressed"
+      ],
+      [
+        "Reasoning",
+        "Assumptions, alternatives, and uncertainty are explicit"
+      ],
+      [
+        "Verification",
+        "Outcomes are tested against stated criteria"
+      ],
+      [
+        "Stewardship",
+        "Authority, protected assets, privacy, and change discipline are respected"
+      ],
+      [
+        "Communication",
+        "Results and limitations are clearly explained"
+      ]
+    ],
+    "rules": [
+      "Each score requires evidence and reviewer comments.",
+      "A total score must not conceal a critical failure.",
+      "Each course must publish mandatory criteria and minimum thresholds before assessment.",
+      "This plan does not establish credential thresholds."
+    ],
+    "remediation": [
+      "Record the unmet criterion and evidence.",
+      "Provide specific feedback and a relevant resource.",
+      "Define the resubmission scope.",
+      "Preserve the original submission and assessment history.",
+      "Reassess against the published rubric unless a formally versioned rubric change applies."
+    ]
+  },
+  "lessonStandard": [
+    "Stable lesson ID, title, course, module, version, and status.",
+    "Purpose and capability developed.",
+    "Observable, assessable learning outcomes.",
+    "Prerequisites.",
+    "Authoritative source base and versions.",
+    "Core explanation with definitions, principles, architecture, and limitations.",
+    "Complete worked example with reasoning and expected result.",
+    "Guided practice.",
+    "Independent exercise with inputs, instructions, and deliverables.",
+    "Knowledge check with answer rationale.",
+    "Assessment evidence.",
+    "Feedback guidance, common errors, and remediation.",
+    "Safety, privacy, and authority boundary.",
+    "References and change history, including author, reviewer, and revisions."
+  ],
+  "contentLifecycle": [
+    "Draft",
+    "In Review",
+    "Approved for Publication",
+    "Published",
+    "Retired"
+  ],
+  "courseDefinitionOfDone": [
+    "All planned lessons authored.",
+    "Every lesson has outcomes, sources, explanations, examples, exercises, and knowledge checks.",
+    "Practical assessment and rubric complete.",
+    "Instructor and reviewer materials available.",
+    "Required reviews recorded.",
+    "Pilot feedback addressed or retained as unresolved.",
+    "Version and publication status accurate."
   ]
 };
