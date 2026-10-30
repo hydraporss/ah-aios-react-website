@@ -62,3 +62,8 @@ See `VERIFICATION.md` for exact source hashes, CI evidence, and remaining conten
 ## AH-AIOS Core architecture lessons — 30 October 2026
 
 Four additional source-grounded lesson drafts have been authored for AH-CORE-110 (Architecture and System Boundaries). The drafts cover component responsibilities and separate data paths, documented interfaces/dependencies, browser-local versus server-backed trust boundaries, and the distinction between prototype, backend foundation, acceptance, deployment, and production assurance. They cite the repository README blob recorded in `curriculum-data.js`. The lesson explanations preserve the documented boundary that browser-to-backend acceptance remains unverified. Total authored drafts: 8 of 96; remaining 88 are specified-only. None is reviewed or published.
+
+
+## AH-CORE-110 authoring milestone
+
+Four source-grounded lesson drafts now cover architecture responsibilities and data paths, component interfaces and dependencies, trust/persistence boundaries, and the distinction between prototype, backend foundation, acceptance, deployment, and production assurance. Source basis: repository README (root `README.md`, blob `4a99342dfed4eab085162f22b464540e5cc99612`). The lesson wording preserves the documented separation between browser-local workflows and the Django Server Governance path, and does not claim browser-to-backend acceptance. These four lessons are authored drafts only; they are not reviewed or published.
