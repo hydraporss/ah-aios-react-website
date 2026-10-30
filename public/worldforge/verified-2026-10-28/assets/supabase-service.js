@@ -151,10 +151,16 @@ async function syncBidirectional(workspace){
  }
  if(conflicts.length){
   workspace.syncConflicts=workspace.syncConflicts||[];
-  const existing=new Set(workspace.syncConflicts.filter(c=>c.status==='open').map(c=>c.type+':'+c.recordId));
-  for(const c of conflicts)if(!existing.has(c.type+':'+c.recordId))workspace.syncConflicts.push(c);
+  const existingByKey=new Map(workspace.syncConflicts.filter(c=>c.status==='open').map(c=>[c.type+':'+c.recordId,c]));
+  for(const c of conflicts){const k=c.type+':'+c.recordId,old=existingByKey.get(k);if(old){Object.assign(old,c,{id:old.id,status:'open'});c.id=old.id}else{workspace.syncConflicts.push(c);existingByKey.set(k,c)}}
   if(workspace.syncConflicts.length>500)workspace.syncConflicts=workspace.syncConflicts.slice(-500);
-  for(const c of conflicts){if(!c.projectId)continue;const payload={id:c.id,project_id:c.projectId,record_type:c.type,local_record_id:c.recordId,remote_record_id:c.remoteId,base_version:map.lastSyncedVersions[c.type+':'+c.recordId]||null,remote_version:c.remoteVersion,base_snapshot:c.baseSnapshot,local_snapshot:c.localSnapshot,remote_snapshot:c.remoteSnapshot,status:'open',created_by:user.id};const ins=await db.from('sync_conflicts').insert(payload);if(ins.error&&ins.error.code!=='23505')console.warn('Conflict was retained locally but could not be stored remotely.',ins.error.message)}
+  for(const c of conflicts){
+   if(!c.projectId)continue;
+   const values={remote_record_id:c.remoteId,base_version:map.lastSyncedVersions[c.type+':'+c.recordId]||null,remote_version:c.remoteVersion,base_snapshot:c.baseSnapshot,local_snapshot:c.localSnapshot,remote_snapshot:c.remoteSnapshot,updated_at:new Date().toISOString()};
+   const prior=await db.from('sync_conflicts').update(values).eq('project_id',c.projectId).eq('record_type',c.type).eq('local_record_id',c.recordId).eq('status','open').select('id').maybeSingle();
+   if(prior.error){console.warn('Conflict was retained locally; remote refresh failed.',prior.error.message);continue}
+   if(!prior.data){const ins=await db.from('sync_conflicts').insert({id:c.id,project_id:c.projectId,record_type:c.type,local_record_id:c.recordId,...values,status:'open',created_by:user.id});if(ins.error&&ins.error.code!=='23505')console.warn('Conflict was retained locally but could not be stored remotely.',ins.error.message)}
+  }
   saveMap(map);return {pulled, pushed:{worlds:0,entities:0,relationships:0,claims:0,sources:0},conflicts:workspace.syncConflicts.filter(c=>c.status==='open'),blocked:true,at:new Date().toISOString(),note:'Conflict resolution is required before any push; no conflicting records were overwritten.'};
  }
  // Push local-only or local-only changes after remote changes have been pulled.
@@ -184,7 +190,7 @@ async function resolveConflict(workspace,conflictId,choice){
  }
  conflict.status='resolved';conflict.resolution=choice==='remote'?'keep_remote':'keep_local';conflict.resolvedAt=new Date().toISOString();
  saveMap(map);
- if(conflict.projectId){const db=await client();await db.from('sync_conflicts').update({status:'resolved',resolution:conflict.resolution,updated_at:conflict.resolvedAt,resolved_by:(await requireUser(db)).id}).eq('id',conflict.id)}
+ if(conflict.projectId){const db=await client();await db.from('sync_conflicts').update({status:'resolved',resolution:conflict.resolution,updated_at:conflict.resolvedAt,resolved_at:conflict.resolvedAt,resolved_by:(await requireUser(db)).id}).eq('id',conflict.id)}
  workspace.auditLog=workspace.auditLog||[];workspace.auditLog.push({id:uuid(),action:'sync-conflict-resolved',detail:conflict.type+':'+conflict.recordId+' → '+conflict.resolution,at:conflict.resolvedAt});
  return {resolved:true,workspace,conflict};
 }
