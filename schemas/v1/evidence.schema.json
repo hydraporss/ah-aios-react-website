@@ -1,0 +1,16 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://hydraporss.github.io/ah-aios-react-website/schemas/v1/evidence.schema.json",
+  "title":"WorldForge Evidence Record","type":"object",
+  "allOf":[{"$ref":"./common.schema.json#/$defs/baseRecord"}],
+  "required":["id","record_type","schema_version","world_id","claim_id","source_id","relation","created_at","updated_at","created_by","updated_by","record_version","workflow_status","source_refs"],
+  "properties":{
+    "record_type":{"const":"evidence"},
+    "world_id":{"anyOf":[{"$ref":"./common.schema.json#/$defs/id"},{"type":"null"}]},
+    "claim_id":{"$ref":"./common.schema.json#/$defs/id"},"source_id":{"$ref":"./common.schema.json#/$defs/id"},
+    "relation":{"enum":["supports","contradicts","qualifies","contextualizes"]},
+    "locator":{"type":"string","maxLength":4000},
+    "excerpt":{"type":"string","maxLength":12000},
+    "review_state":{"enum":["unreviewed","reviewed","disputed","unavailable"]}
+  }
+}
