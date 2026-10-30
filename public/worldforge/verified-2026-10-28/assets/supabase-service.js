@@ -42,7 +42,7 @@ async function syncWorkspace(workspace){
    }
    const last=map.lastSyncedVersions[key];
    if(last===undefined||existing.record_version!==last){conflicts.push({type,id:local.id,reason:'Remote revision changed since last sync.'});return null}
-   if(map.lastSyncedHashes[key]===payloadHash){synced[type]++;return existing}
+   if(map.lastSyncedHashes[key]===payloadHash){map.lastSyncedLocalSnapshots[key]=validator.comparable?validator.comparable(({worlds:'world',entities:'entity',relationships:'relationship',sources:'source',claims:'claim'}[type]||type),local):local;saveMap(map);synced[type]++;return existing}
    const next={...fields,record_version:existing.record_version+1};
    delete next.canon_status;delete next.governance_state;delete next.owner_id;delete next.created_by;
    const {data,error}=await db.from(table).update(next).eq('id',remoteId).eq('record_version',existing.record_version).select('id,record_version').maybeSingle();
@@ -123,7 +123,7 @@ async function syncBidirectional(workspace){
   for(const row of rows){
    const localId=remoteKey(type,row);if(!localId)continue;
    const remote=remoteLocal(type,row,localId,worldByRemote,entityByRemote);if(!remote)continue;
-   const remoteId=row.id,key=type+':'+localId,local=(workspace[localKey]||[]).find(x=>x.id===localId),base=map.lastSyncedLocalSnapshots[key];
+   const remoteId=row.id,scopeProjectId=type==='worlds'?row.id:row.project_id,key=type+':'+localId,local=(workspace[localKey]||[]).find(x=>x.id===localId),base=map.lastSyncedLocalSnapshots[key];
    map[type]=map[type]||{};map[type][localId]=remoteId;
    if(!local&&!base){
     setRecord(workspace,localKey,remote);
@@ -132,7 +132,7 @@ async function syncBidirectional(workspace){
     map.lastSyncedLocalSnapshots[key]=validator.comparable(({worlds:'world',entities:'entity',relationships:'relationship',sources:'source',claims:'claim'}[type]||type),remote);
     pulled[type]++;continue;
    }
-   if(!local&&base){conflicts.push({id:uuid(),type,recordId:localId,remoteId,projectId:row.project_id,reason:'Local record is missing although a prior sync base exists.',baseSnapshot:base,localSnapshot:null,remoteSnapshot:remote,remoteVersion:row.record_version||1,remotePayloadHash:JSON.stringify(rowFields(type,row,localId,worldByRemote[row.project_id],entityByRemote)),status:'open'});continue}
+   if(!local&&base){conflicts.push({id:uuid(),type,recordId:localId,remoteId,projectId:scopeProjectId,reason:'Local record is missing although a prior sync base exists.',baseSnapshot:base,localSnapshot:null,remoteSnapshot:remote,remoteVersion:row.record_version||1,remotePayloadHash:JSON.stringify(rowFields(type,row,localId,worldByRemote[row.project_id],entityByRemote)),status:'open'});continue}
    if(!base){conflicts.push({id:uuid(),type,recordId:localId,remoteId,projectId:row.project_id,reason:'A local record and remote record exist without a shared sync base.',baseSnapshot:null,localSnapshot:local,remoteSnapshot:remote,remoteVersion:row.record_version||1,remotePayloadHash:JSON.stringify(rowFields(type,row,localId,worldByRemote[row.project_id],entityByRemote)),status:'open'});continue}
    const localProjection=validator.comparable(({worlds:'world',entities:'entity',relationships:'relationship',sources:'source',claims:'claim'}[type]||type),local),remoteProjection=validator.comparable(({worlds:'world',entities:'entity',relationships:'relationship',sources:'source',claims:'claim'}[type]||type),remote);
    const decision=validator.classifyConflict(base,localProjection,remoteProjection);
