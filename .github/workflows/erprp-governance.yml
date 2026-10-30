@@ -69,6 +69,6 @@ jobs:
       - name: Check required governance language
         run: |
           grep -q "pending formal adoption" docs/erprp/ERPRP-CHARTER.md
-          grep -q "Unknown is not passed" docs/erprp/ERPRP-CHARTER.md
+          grep -q "No gate is passed by default" docs/erprp/ERPRP-CHARTER.md
           grep -q "G7 — Release Approval" docs/erprp/ERPRP-CHARTER.md
           grep -q "GitHub is the authoritative system of record" docs/erprp/GITHUB-AUTHORITY-AND-DATA-INTEGRITY.md
