@@ -30,3 +30,4 @@ jobs:
           test -s styles.css
           test -s manifest.webmanifest
           test -s sw.js
+          test -s icon.svg
