@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 
 const source = fs.readFileSync(new URL("../curriculum-data.js", import.meta.url), "utf8");
-const curriculum = JSON.parse(source.replace(/^window\.AH_LEARNING_CURRICULUM\s*=\s*/, "").replace(/;\s*$/, ""));
+const curriculum = JSON.parse(source.replace(/^window\.AH_LEARNING_CURRICULUM\s*=\s*/, "").replace(/;\s*window\.CURRICULUM_DATA\s*=\s*window\.AH_LEARNING_CURRICULUM;\s*$/, "").replace(/;\s*$/, ""));
 const courses = curriculum.courses;
 const lessons = courses.flatMap(course => course.lessons);
 const requiredFields = [
