@@ -23,6 +23,7 @@ async function syncWorkspace(workspace){
  const validator=root.WorldForgeDataLayer;if(!validator)throw new Error('WorldForge data validator is unavailable.');
  const report=validator.validateWorkspace(workspace);if(!report.valid)throw new Error('Local workspace failed integrity checks: '+report.errors.slice(0,4).map(x=>x.code).join(', '));
  const db=await client(),user=await requireUser(db),map=idMap();
+ for(const name of ['worlds','entities','relationships','claims','sources'])for(const record of workspace[name]||[])workflow(record.workflowStatus||record.status||'Draft');
  for(const k of ['worlds','entities','relationships','claims','sources'])map[k]=map[k]||{};
  map.lastSyncedVersions=map.lastSyncedVersions||{};map.lastSyncedHashes=map.lastSyncedHashes||{};
  const conflicts=[],synced={worlds:0,entities:0,relationships:0,claims:0,sources:0};
