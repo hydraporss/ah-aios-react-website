@@ -34,7 +34,7 @@ try {
   await page.locator('#relation-target').selectOption({ label: 'Beta Entity' });
   await page.locator('#relationship-form select[name="type"]').selectOption({ label: 'Allied with' });
   await page.locator('#relationship-form button.accent-btn').click();
-  await page.getByText('Alpha Entity → Beta Entity').waitFor();
+  await page.getByRole('heading', { name: 'Alpha Entity → Beta Entity', exact: true }).waitFor();
 
   await page.locator('[data-tab="claims"]').click();
   await page.locator('#claim-form input[name="title"]').fill('Test claim');
