@@ -21,3 +21,6 @@ Copy the contents of this folder to the root of a new GitHub repository. Copy th
 
 ## Data and limitations
 Learner progress/profile are stored in local browser storage. There is no login, backend, cloud sync, or real AI service. The 82-Theory Explorer is empty until the authoritative source registry is imported. Count/field validation does not authenticate provenance. Course materials are a starter curriculum based on the accessible AH-AIOS architecture descriptions; they do not replace an unavailable approved curriculum specification.
+
+- **3-Day AI Engineering Sprint:** Git/GitHub, Python + AI API integration, and testing/CI/CD. Fifteen task checkboxes persist locally and show completion progress.
+- Capstone blueprint for a Governance AI application with evidence, approvals, auditability, tests, and deployment checks.
