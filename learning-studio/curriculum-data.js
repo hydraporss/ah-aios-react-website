@@ -330,7 +330,11 @@ window.AH_LEARNING_CURRICULUM = {
       "contentStatus": "Specified",
       "publicationStatus": "Not published",
       "sourceRefs": [
-        "AH-LEARN-MASTER-001"
+        "AH-LEARN-MASTER-001",
+        "AH-LEARN-README-001",
+        "AH-LEARN-CURRICULUM-001",
+        "AH-LEARN-GOV-001",
+        "AH-LEARN-ASSESS-001"
       ]
     },
     {
@@ -368,7 +372,11 @@ window.AH_LEARNING_CURRICULUM = {
       "contentStatus": "Specified",
       "publicationStatus": "Not published",
       "sourceRefs": [
-        "AH-LEARN-MASTER-001"
+        "AH-LEARN-MASTER-001",
+        "AH-LEARN-README-001",
+        "AH-LEARN-CURRICULUM-001",
+        "AH-LEARN-GOV-001",
+        "AH-LEARN-ASSESS-001"
       ]
     },
     {
@@ -406,7 +414,11 @@ window.AH_LEARNING_CURRICULUM = {
       "contentStatus": "Specified",
       "publicationStatus": "Not published",
       "sourceRefs": [
-        "AH-LEARN-MASTER-001"
+        "AH-LEARN-MASTER-001",
+        "AH-LEARN-README-001",
+        "AH-LEARN-CURRICULUM-001",
+        "AH-LEARN-GOV-001",
+        "AH-LEARN-ASSESS-001"
       ]
     },
     {
@@ -444,7 +456,11 @@ window.AH_LEARNING_CURRICULUM = {
       "contentStatus": "Specified",
       "publicationStatus": "Not published",
       "sourceRefs": [
-        "AH-LEARN-MASTER-001"
+        "AH-LEARN-MASTER-001",
+        "AH-LEARN-README-001",
+        "AH-LEARN-CURRICULUM-001",
+        "AH-LEARN-GOV-001",
+        "AH-LEARN-ASSESS-001"
       ]
     },
     {
@@ -482,7 +498,11 @@ window.AH_LEARNING_CURRICULUM = {
       "contentStatus": "Specified",
       "publicationStatus": "Not published",
       "sourceRefs": [
-        "AH-LEARN-MASTER-001"
+        "AH-LEARN-MASTER-001",
+        "AH-LEARN-README-001",
+        "AH-LEARN-CURRICULUM-001",
+        "AH-LEARN-GOV-001",
+        "AH-LEARN-ASSESS-001"
       ]
     },
     {
@@ -520,7 +540,11 @@ window.AH_LEARNING_CURRICULUM = {
       "contentStatus": "Specified",
       "publicationStatus": "Not published",
       "sourceRefs": [
-        "AH-LEARN-MASTER-001"
+        "AH-LEARN-MASTER-001",
+        "AH-LEARN-README-001",
+        "AH-LEARN-CURRICULUM-001",
+        "AH-LEARN-GOV-001",
+        "AH-LEARN-ASSESS-001"
       ]
     },
     {
@@ -558,7 +582,14 @@ window.AH_LEARNING_CURRICULUM = {
       "contentStatus": "Specified",
       "publicationStatus": "Not published",
       "sourceRefs": [
-        "AH-LEARN-MASTER-001"
+        "AH-LEARN-MASTER-001",
+        "AH-LEARN-README-001",
+        "AH-LEARN-CURRICULUM-001",
+        "AH-LEARN-GOV-001",
+        "AH-LEARN-ASSESS-001",
+        "AH-LEARN-HAR-PATH-001",
+        "AH-LEARN-PLATFORM-001",
+        "WF-README-001"
       ]
     },
     {
@@ -596,7 +627,14 @@ window.AH_LEARNING_CURRICULUM = {
       "contentStatus": "Specified",
       "publicationStatus": "Not published",
       "sourceRefs": [
-        "AH-LEARN-MASTER-001"
+        "AH-LEARN-MASTER-001",
+        "AH-LEARN-README-001",
+        "AH-LEARN-CURRICULUM-001",
+        "AH-LEARN-GOV-001",
+        "AH-LEARN-ASSESS-001",
+        "AH-LEARN-HAR-PATH-001",
+        "AH-LEARN-PLATFORM-001",
+        "WF-README-001"
       ]
     },
     {
@@ -634,7 +672,14 @@ window.AH_LEARNING_CURRICULUM = {
       "contentStatus": "Specified",
       "publicationStatus": "Not published",
       "sourceRefs": [
-        "AH-LEARN-MASTER-001"
+        "AH-LEARN-MASTER-001",
+        "AH-LEARN-README-001",
+        "AH-LEARN-CURRICULUM-001",
+        "AH-LEARN-GOV-001",
+        "AH-LEARN-ASSESS-001",
+        "AH-LEARN-HAR-PATH-001",
+        "AH-LEARN-PLATFORM-001",
+        "WF-README-001"
       ]
     },
     {
@@ -672,7 +717,14 @@ window.AH_LEARNING_CURRICULUM = {
       "contentStatus": "Specified",
       "publicationStatus": "Not published",
       "sourceRefs": [
-        "AH-LEARN-MASTER-001"
+        "AH-LEARN-MASTER-001",
+        "AH-LEARN-README-001",
+        "AH-LEARN-CURRICULUM-001",
+        "AH-LEARN-GOV-001",
+        "AH-LEARN-ASSESS-001",
+        "AH-LEARN-HAR-PATH-001",
+        "AH-LEARN-PLATFORM-001",
+        "WF-README-001"
       ]
     },
     {
@@ -710,7 +762,14 @@ window.AH_LEARNING_CURRICULUM = {
       "contentStatus": "Specified",
       "publicationStatus": "Not published",
       "sourceRefs": [
-        "AH-LEARN-MASTER-001"
+        "AH-LEARN-MASTER-001",
+        "AH-LEARN-README-001",
+        "AH-LEARN-CURRICULUM-001",
+        "AH-LEARN-GOV-001",
+        "AH-LEARN-ASSESS-001",
+        "AH-LEARN-HAR-PATH-001",
+        "AH-LEARN-PLATFORM-001",
+        "WF-README-001"
       ]
     },
     {
@@ -748,7 +807,14 @@ window.AH_LEARNING_CURRICULUM = {
       "contentStatus": "Specified",
       "publicationStatus": "Not published",
       "sourceRefs": [
-        "AH-LEARN-MASTER-001"
+        "AH-LEARN-MASTER-001",
+        "AH-LEARN-README-001",
+        "AH-LEARN-CURRICULUM-001",
+        "AH-LEARN-GOV-001",
+        "AH-LEARN-ASSESS-001",
+        "AH-LEARN-HAR-PATH-001",
+        "AH-LEARN-PLATFORM-001",
+        "WF-README-001"
       ]
     },
     {
@@ -786,7 +852,14 @@ window.AH_LEARNING_CURRICULUM = {
       "contentStatus": "Specified",
       "publicationStatus": "Not published",
       "sourceRefs": [
-        "AH-LEARN-MASTER-001"
+        "AH-LEARN-MASTER-001",
+        "AH-LEARN-README-001",
+        "AH-LEARN-CURRICULUM-001",
+        "AH-LEARN-GOV-001",
+        "AH-LEARN-ASSESS-001",
+        "AH-LEARN-HAR-PATH-001",
+        "AH-LEARN-PLATFORM-001",
+        "WF-README-001"
       ]
     },
     {
@@ -824,7 +897,17 @@ window.AH_LEARNING_CURRICULUM = {
       "contentStatus": "Specified",
       "publicationStatus": "Not published",
       "sourceRefs": [
-        "AH-LEARN-MASTER-001"
+        "AH-LEARN-MASTER-001",
+        "AH-LEARN-README-001",
+        "AH-LEARN-CURRICULUM-001",
+        "AH-LEARN-GOV-001",
+        "AH-LEARN-ASSESS-001",
+        "AH-LEARN-WF-PATH-001",
+        "WF-README-001",
+        "WF-CONSTITUTION-001",
+        "WF-DOCTRINE-001",
+        "WF-GOVERNANCE-UI-001",
+        "WF-GOVERNANCE-CODE-001"
       ]
     },
     {
@@ -862,7 +945,17 @@ window.AH_LEARNING_CURRICULUM = {
       "contentStatus": "Specified",
       "publicationStatus": "Not published",
       "sourceRefs": [
-        "AH-LEARN-MASTER-001"
+        "AH-LEARN-MASTER-001",
+        "AH-LEARN-README-001",
+        "AH-LEARN-CURRICULUM-001",
+        "AH-LEARN-GOV-001",
+        "AH-LEARN-ASSESS-001",
+        "AH-LEARN-WF-PATH-001",
+        "WF-README-001",
+        "WF-CONSTITUTION-001",
+        "WF-DOCTRINE-001",
+        "WF-GOVERNANCE-UI-001",
+        "WF-GOVERNANCE-CODE-001"
       ]
     },
     {
@@ -900,7 +993,17 @@ window.AH_LEARNING_CURRICULUM = {
       "contentStatus": "Specified",
       "publicationStatus": "Not published",
       "sourceRefs": [
-        "AH-LEARN-MASTER-001"
+        "AH-LEARN-MASTER-001",
+        "AH-LEARN-README-001",
+        "AH-LEARN-CURRICULUM-001",
+        "AH-LEARN-GOV-001",
+        "AH-LEARN-ASSESS-001",
+        "AH-LEARN-WF-PATH-001",
+        "WF-README-001",
+        "WF-CONSTITUTION-001",
+        "WF-DOCTRINE-001",
+        "WF-GOVERNANCE-UI-001",
+        "WF-GOVERNANCE-CODE-001"
       ]
     },
     {
@@ -938,7 +1041,17 @@ window.AH_LEARNING_CURRICULUM = {
       "contentStatus": "Specified",
       "publicationStatus": "Not published",
       "sourceRefs": [
-        "AH-LEARN-MASTER-001"
+        "AH-LEARN-MASTER-001",
+        "AH-LEARN-README-001",
+        "AH-LEARN-CURRICULUM-001",
+        "AH-LEARN-GOV-001",
+        "AH-LEARN-ASSESS-001",
+        "AH-LEARN-WF-PATH-001",
+        "WF-README-001",
+        "WF-CONSTITUTION-001",
+        "WF-DOCTRINE-001",
+        "WF-GOVERNANCE-UI-001",
+        "WF-GOVERNANCE-CODE-001"
       ]
     },
     {
@@ -976,7 +1089,17 @@ window.AH_LEARNING_CURRICULUM = {
       "contentStatus": "Specified",
       "publicationStatus": "Not published",
       "sourceRefs": [
-        "AH-LEARN-MASTER-001"
+        "AH-LEARN-MASTER-001",
+        "AH-LEARN-README-001",
+        "AH-LEARN-CURRICULUM-001",
+        "AH-LEARN-GOV-001",
+        "AH-LEARN-ASSESS-001",
+        "AH-LEARN-WF-PATH-001",
+        "WF-README-001",
+        "WF-CONSTITUTION-001",
+        "WF-DOCTRINE-001",
+        "WF-GOVERNANCE-UI-001",
+        "WF-GOVERNANCE-CODE-001"
       ]
     },
     {
@@ -1014,7 +1137,17 @@ window.AH_LEARNING_CURRICULUM = {
       "contentStatus": "Specified",
       "publicationStatus": "Not published",
       "sourceRefs": [
-        "AH-LEARN-MASTER-001"
+        "AH-LEARN-MASTER-001",
+        "AH-LEARN-README-001",
+        "AH-LEARN-CURRICULUM-001",
+        "AH-LEARN-GOV-001",
+        "AH-LEARN-ASSESS-001",
+        "AH-LEARN-WF-PATH-001",
+        "WF-README-001",
+        "WF-CONSTITUTION-001",
+        "WF-DOCTRINE-001",
+        "WF-GOVERNANCE-UI-001",
+        "WF-GOVERNANCE-CODE-001"
       ]
     },
     {
@@ -1052,7 +1185,17 @@ window.AH_LEARNING_CURRICULUM = {
       "contentStatus": "Specified",
       "publicationStatus": "Not published",
       "sourceRefs": [
-        "AH-LEARN-MASTER-001"
+        "AH-LEARN-MASTER-001",
+        "AH-LEARN-README-001",
+        "AH-LEARN-CURRICULUM-001",
+        "AH-LEARN-GOV-001",
+        "AH-LEARN-ASSESS-001",
+        "AH-LEARN-WF-PATH-001",
+        "WF-README-001",
+        "WF-CONSTITUTION-001",
+        "WF-DOCTRINE-001",
+        "WF-GOVERNANCE-UI-001",
+        "WF-GOVERNANCE-CODE-001"
       ]
     },
     {
@@ -1090,7 +1233,17 @@ window.AH_LEARNING_CURRICULUM = {
       "contentStatus": "Specified",
       "publicationStatus": "Not published",
       "sourceRefs": [
-        "AH-LEARN-MASTER-001"
+        "AH-LEARN-MASTER-001",
+        "AH-LEARN-README-001",
+        "AH-LEARN-CURRICULUM-001",
+        "AH-LEARN-GOV-001",
+        "AH-LEARN-ASSESS-001",
+        "AH-LEARN-WF-PATH-001",
+        "WF-README-001",
+        "WF-CONSTITUTION-001",
+        "WF-DOCTRINE-001",
+        "WF-GOVERNANCE-UI-001",
+        "WF-GOVERNANCE-CODE-001"
       ]
     },
     {
@@ -1128,7 +1281,11 @@ window.AH_LEARNING_CURRICULUM = {
       "contentStatus": "Specified",
       "publicationStatus": "Not published",
       "sourceRefs": [
-        "AH-LEARN-MASTER-001"
+        "AH-LEARN-MASTER-001",
+        "AH-LEARN-README-001",
+        "AH-LEARN-CURRICULUM-001",
+        "AH-LEARN-GOV-001",
+        "AH-LEARN-ASSESS-001"
       ]
     },
     {
@@ -1166,7 +1323,11 @@ window.AH_LEARNING_CURRICULUM = {
       "contentStatus": "Specified",
       "publicationStatus": "Not published",
       "sourceRefs": [
-        "AH-LEARN-MASTER-001"
+        "AH-LEARN-MASTER-001",
+        "AH-LEARN-README-001",
+        "AH-LEARN-CURRICULUM-001",
+        "AH-LEARN-GOV-001",
+        "AH-LEARN-ASSESS-001"
       ]
     },
     {
@@ -1204,7 +1365,11 @@ window.AH_LEARNING_CURRICULUM = {
       "contentStatus": "Specified",
       "publicationStatus": "Not published",
       "sourceRefs": [
-        "AH-LEARN-MASTER-001"
+        "AH-LEARN-MASTER-001",
+        "AH-LEARN-README-001",
+        "AH-LEARN-CURRICULUM-001",
+        "AH-LEARN-GOV-001",
+        "AH-LEARN-ASSESS-001"
       ]
     }
   ],
@@ -1214,5 +1379,112 @@ window.AH_LEARNING_CURRICULUM = {
     "Reviewed": "Required subject and instructional reviews recorded.",
     "Approved": "Approved for publication by authorized approvers.",
     "Published": "Available in designated learning environment."
-  }
+  },
+  "sourceCatalog": [
+    {
+      "id": "AH-LEARN-MASTER-001",
+      "path": "docs/learning/content-master-plan.md",
+      "blobSha": "b124c7c55818b2a7e28899139c30745c3fcb343e",
+      "branch": "ah-aios-learning-package",
+      "url": "https://github.com/hydraporss/ah-aios-react-website/blob/ah-aios-learning-package/docs/learning/content-master-plan.md"
+    },
+    {
+      "id": "AH-LEARN-README-001",
+      "path": "docs/learning/README.md",
+      "blobSha": "22682025430ba788d5ec5bb5544bc5a7431880b2",
+      "branch": "ah-aios-learning-package",
+      "url": "https://github.com/hydraporss/ah-aios-react-website/blob/ah-aios-learning-package/docs/learning/README.md"
+    },
+    {
+      "id": "AH-LEARN-CURRICULUM-001",
+      "path": "docs/learning/curriculum.md",
+      "blobSha": "d58d9992e94bc2ed38a951500ce8813bb5c2259b",
+      "branch": "ah-aios-learning-package",
+      "url": "https://github.com/hydraporss/ah-aios-react-website/blob/ah-aios-learning-package/docs/learning/curriculum.md"
+    },
+    {
+      "id": "AH-LEARN-PLATFORM-001",
+      "path": "docs/learning/platform-definition.md",
+      "blobSha": "3ef1df9e6e829aa8f5c07dfed678538c9b7231d3",
+      "branch": "ah-aios-learning-package",
+      "url": "https://github.com/hydraporss/ah-aios-react-website/blob/ah-aios-learning-package/docs/learning/platform-definition.md"
+    },
+    {
+      "id": "AH-LEARN-GOV-001",
+      "path": "docs/learning/content-governance.md",
+      "blobSha": "e9a2d234068eacf9327e18ef986448316e73f28d",
+      "branch": "ah-aios-learning-package",
+      "url": "https://github.com/hydraporss/ah-aios-react-website/blob/ah-aios-learning-package/docs/learning/content-governance.md"
+    },
+    {
+      "id": "AH-LEARN-CORE-PATH-001",
+      "path": "docs/learning/paths/core.md",
+      "blobSha": "67da1fd2f28958598fa4cbb8d150dd8d10f31c60",
+      "branch": "ah-aios-learning-package",
+      "url": "https://github.com/hydraporss/ah-aios-react-website/blob/ah-aios-learning-package/docs/learning/paths/core.md"
+    },
+    {
+      "id": "AH-LEARN-HAR-PATH-001",
+      "path": "docs/learning/paths/ai-harness.md",
+      "blobSha": "062ec80cf587800c7058d01f208e26c41efc8326",
+      "branch": "ah-aios-learning-package",
+      "url": "https://github.com/hydraporss/ah-aios-react-website/blob/ah-aios-learning-package/docs/learning/paths/ai-harness.md"
+    },
+    {
+      "id": "AH-LEARN-WF-PATH-001",
+      "path": "docs/learning/paths/worldforge.md",
+      "blobSha": "e5a074ba1458291f4ba74c1b39f0820c185b04aa",
+      "branch": "ah-aios-learning-package",
+      "url": "https://github.com/hydraporss/ah-aios-react-website/blob/ah-aios-learning-package/docs/learning/paths/worldforge.md"
+    },
+    {
+      "id": "AH-LEARN-ASSESS-001",
+      "path": "docs/learning/assessment-portfolio.md",
+      "blobSha": "a52b5acbe827b21cde3c9d11d2cf7851163a1f85",
+      "branch": "ah-aios-learning-package",
+      "url": "https://github.com/hydraporss/ah-aios-react-website/blob/ah-aios-learning-package/docs/learning/assessment-portfolio.md"
+    },
+    {
+      "id": "AH-LEARN-LABS-001",
+      "path": "docs/learning/practice-labs.md",
+      "blobSha": "8153c4d7831bacf3243bfc8eb3a51ff5e5d53b09",
+      "branch": "ah-aios-learning-package",
+      "url": "https://github.com/hydraporss/ah-aios-react-website/blob/ah-aios-learning-package/docs/learning/practice-labs.md"
+    },
+    {
+      "id": "WF-README-001",
+      "path": "README.md",
+      "blobSha": "4a99342dfed4eab085162f22b464540e5cc99612",
+      "branch": "ah-aios-learning-package",
+      "url": "https://github.com/hydraporss/ah-aios-react-website/blob/ah-aios-learning-package/README.md"
+    },
+    {
+      "id": "WF-CONSTITUTION-001",
+      "path": "public/worldforge/verified-2026-10-28/assets/constitution.md",
+      "blobSha": "cdfb5aa517c046e1351716a1e544cec11e1b0dae",
+      "branch": "ah-aios-learning-package",
+      "url": "https://github.com/hydraporss/ah-aios-react-website/blob/ah-aios-learning-package/public/worldforge/verified-2026-10-28/assets/constitution.md"
+    },
+    {
+      "id": "WF-DOCTRINE-001",
+      "path": "public/worldforge/verified-2026-10-28/doctrine.html",
+      "blobSha": "327879bf96f021fc02ffb497551fef92586abe90",
+      "branch": "ah-aios-learning-package",
+      "url": "https://github.com/hydraporss/ah-aios-react-website/blob/ah-aios-learning-package/public/worldforge/verified-2026-10-28/doctrine.html"
+    },
+    {
+      "id": "WF-GOVERNANCE-UI-001",
+      "path": "public/worldforge/verified-2026-10-28/governance.html",
+      "blobSha": "99f0709895add8045a723511e659492ee5218eb1",
+      "branch": "ah-aios-learning-package",
+      "url": "https://github.com/hydraporss/ah-aios-react-website/blob/ah-aios-learning-package/public/worldforge/verified-2026-10-28/governance.html"
+    },
+    {
+      "id": "WF-GOVERNANCE-CODE-001",
+      "path": "src/governance.js",
+      "blobSha": "8d21a745155e2463fea802c9325c3a68b972562d",
+      "branch": "ah-aios-learning-package",
+      "url": "https://github.com/hydraporss/ah-aios-react-website/blob/ah-aios-learning-package/src/governance.js"
+    }
+  ]
 };
