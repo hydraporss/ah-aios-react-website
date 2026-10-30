@@ -47,7 +47,7 @@ jobs:
 
       - name: Generate SHA-256 inventory for every tracked file
         env:
-          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_SHA: \${{ github.sha }}
         run: |
           mkdir -p "$RUNNER_TEMP/ah-aios-backup-audit"
           python - <<'PY'
@@ -58,7 +58,7 @@ jobs:
           from pathlib import Path
 
           raw = subprocess.check_output(["git", "ls-files", "-z"])
-          paths = [p.decode("utf-8", "surrogateescape") for p in raw.split(b"\\0") if p]
+          paths = [p.decode("utf-8", "surrogateescape") for p in raw.split(b"\0") if p]
           records = []
           total_bytes = 0
           for name in paths:
@@ -79,11 +79,11 @@ jobs:
               "total_bytes": total_bytes,
               "algorithm": "SHA-256",
               "files": records
-          }, indent=2) + "\\n", encoding="utf-8")
+          }, indent=2) + "\n", encoding="utf-8")
 
-          with (out / "SHA256SUMS.txt").open("w", encoding="utf-8", newline="\\n") as f:
+          with (out / "SHA256SUMS.txt").open("w", encoding="utf-8", newline="\n") as f:
               for item in records:
-                  f.write(f'{item["sha256"]}  {item["path"]}\\n')
+                  f.write(f'{item["sha256"]}  {item["path"]}\n')
 
           print(f'Commit: {os.environ["GITHUB_SHA"]}')
           print(f'Tracked files: {len(records)}')
@@ -93,7 +93,7 @@ jobs:
       - name: Upload verification evidence
         uses: actions/upload-artifact@v4
         with:
-          name: ah-aios-backup-integrity-${{ github.sha }}
-          path: ${{ runner.temp }}/ah-aios-backup-audit/
+          name: ah-aios-backup-integrity-\${{ github.sha }}
+          path: \${{ runner.temp }}/ah-aios-backup-audit/
           if-no-files-found: error
           retention-days: 90
