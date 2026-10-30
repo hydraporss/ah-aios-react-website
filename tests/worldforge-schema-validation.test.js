@@ -18,9 +18,9 @@ const records={
   manifest:{package_type:'ah-aios-worldforge',schema_version:'1.0.0',exported_at:now,record_counts:{worlds:1,entities:2,relationships:1,claims:1,sources:1,evidence:1}}
 };
 function validate(schema,dataPath){
- const args=['dlx','--package=ajv-cli@5.0.0','ajv','validate','--spec=draft2020','-s',resolve(root,'schemas/v1/'+schema+'.schema.json')];
+ const args=['dlx','--package=ajv-cli@5.0.0','--package=ajv-formats@3.0.1','ajv','validate','--spec=draft2020','-s',resolve(root,'schemas/v1/'+schema+'.schema.json')];
  if(schema!=='manifest')args.push('-r',resolve(root,'schemas/v1/common.schema.json'));
- args.push('-d',dataPath);
+ args.push('-d',dataPath,'-c','ajv-formats');
  return spawnSync('pnpm',args,{cwd:root,encoding:'utf8',timeout:120000});
 }
 test('all WorldForge record schemas validate positive instances and reject invalid instances with Ajv Draft 2020-12',()=>{
