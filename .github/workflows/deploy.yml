@@ -48,6 +48,18 @@ jobs:
           test -s sw.js
           test -s icon.svg
           test -s curriculum-data.js
+      - name: Install Chromium for Learning Studio browser acceptance
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Test Learning Studio from its production subpath
+        run: |
+          python3 -m http.server 4173 --directory . > /tmp/learning-studio-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 20); do
+            if curl --fail --silent http://127.0.0.1:4173/learning-studio/ > /dev/null; then break; fi
+            sleep 1
+          done
+          node learning-studio/tests/browser-smoke.mjs
       - name: Build WorldForge production site
         run: pnpm build
       - name: Package Learning Studio under its own path
