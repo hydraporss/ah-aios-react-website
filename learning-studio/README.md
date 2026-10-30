@@ -1,4 +1,4 @@
-# AH-AIOS Learning — 0.2.0
+# AH-AIOS Learning Studio — 0.3.1
 
 A standalone, responsive learning website inspired by the supplied AH-AIOS Learning dashboard reference.
 
@@ -30,7 +30,7 @@ Learner progress/profile are stored in local browser storage. There is no login,
 
 This is a static, browser-local prototype. It contains nine starter course records (three per technical domain), three practice labs, a local curriculum tutor (not a live model), local progress/profile storage, JSON progress backup/restore, competency views, printable path-completion certificates, and a source-gated 82-Theory Explorer. It has no account system, backend, cloud learner sync, or live AI service.
 
-The source curriculum on branch `ah-aios-learning-package` specifies 21 specialist courses (6 Core, 7 AI Harness, 8 WorldForge) plus 3 cross-cutting Human Stewardship courses. The current nine-course catalogue is not the full specified programme. Human Stewardship is not a fourth technical domain. Each full lesson also requires outcomes, prerequisites, source references, worked examples, guided/independent practice, knowledge checks, evidence, feedback, safety boundaries, and review/version lineage. The current compact lesson format remains below that content-complete standard.
+The source curriculum on branch `ah-aios-learning-package` specifies 21 specialist courses (6 Core, 7 AI Harness, 8 WorldForge) plus 3 cross-cutting Human Stewardship courses. The current 24-course catalogue presents the full specified programme; content authoring and review remain incomplete. Human Stewardship is not a fourth technical domain. Each full lesson also requires outcomes, prerequisites, source references, worked examples, guided/independent practice, knowledge checks, evidence, feedback, safety boundaries, and review/version lineage. The current compact lesson format remains below that content-complete standard.
 
 Latest automated checks passed on commit `e86b1c72394f5fa9870b38d6cc028b9e3a8ad97e`: https://github.com/hydraporss/ah-aios-react-website/actions/runs/41023671203
 
@@ -52,7 +52,7 @@ The roadmap and responsive layout passed CI in run https://github.com/hydraporss
 
 The application now includes a source-traced interactive catalogue of all 24 courses and 96 lesson units from `docs/learning/content-master-plan.md` (AH-LEARN-MASTER-001 v0.1.0, **SUGGESTION / PROCESS**). It preserves the 6 AH-AIOS Core, 7 AI Harness, 8 WorldForge, and 3 cross-cutting Human Stewardship course structure. Each course opens its four specified lesson topics, source exercises, assessment evidence, and exact source links with Git blob hashes. Each lesson has a working reader and a local response-save path.
 
-Four AH-CORE-100 lesson units currently have authored drafts with outcomes, prerequisites, source references, interpretation-labeled explanations, worked examples, guided and independent practice, knowledge checks with rationales, assessment evidence, feedback, safety boundaries, and references. The remaining 92 lesson units retain their exact source outlines and are visibly marked **Specified only**; missing explanations, examples, checks, and safety notes are not invented. No lesson is reviewed or published.
+Four AH-CORE-100 lesson units have authored drafts with outcomes, prerequisites, source references, interpretation-labeled explanations, worked examples, guided and independent practice, knowledge checks with rationales, assessment evidence, feedback, safety boundaries, and references. The remaining lesson units retain their exact source outlines and are visibly marked **Specified only**; missing explanations, examples, checks, and safety notes are not invented. No lesson is reviewed or published.
 
 Five source-defined integrated project briefs and the common 1–4 assessment framework (seven dimensions and remediation steps) are available in the app. The common rubric does not establish course-specific thresholds or credentials. The nine legacy quick-start primers are labeled separately from the 24-course programme. No authorized credential issuer is configured.
 
@@ -89,7 +89,7 @@ These external sources support teaching concepts; they do not prove AH-AIOS or W
 
 ## Learning Studio 0.3.0 — content completion and verification work
 
-The current curriculum data contains 24 source-defined courses and 96 lesson units. Sixteen lessons are authored drafts across AH-CORE-100, AH-CORE-110, AH-CORE-120, and AH-CORE-130; the other 80 remain **Specified only**. All authored lessons remain **Not reviewed**, and no course is published. The source master plan remains **SUGGESTION / PROCESS**.
+The current curriculum data contains 24 source-defined courses and 96 lesson units. Twenty lessons are authored drafts across AH-CORE-100, AH-CORE-110, AH-CORE-120, AH-CORE-130, and AH-CORE-140; the other 76 remain **Specified only**. All authored lessons remain **Not reviewed**, and no course is published. The source master plan remains **SUGGESTION / PROCESS**.
 
 A new automated curriculum quality gate checks the 24/96 structure, 6/7/8/3 domain split, required instructional fields for every authored lesson, knowledge-check answer/rationale integrity, specified-only status for the remaining 80 lessons, and the non-promotion of drafts to reviewed or published status. It also protects the existing AH-CORE-140 lesson titles and specified-only state.
 
@@ -98,6 +98,17 @@ This is a verification milestone, not a claim that the Learning Studio is conten
 
 ## Deployment candidate 0.3.0
 
-The application is versioned as 0.3.0. Its deployment packaging is designed to preserve the existing WorldForge site at the repository root and publish Learning Studio separately under `/learning-studio/`. The root Pages workflow now runs both WorldForge governance tests and Learning Studio checks before building one artifact containing both applications. Only the Learning Studio runtime assets are copied to its public subdirectory.
+The application is versioned as 0.3.1. Its deployment packaging is designed to preserve the existing WorldForge site at the repository root and publish Learning Studio separately under `/learning-studio/`. The root Pages workflow now runs both WorldForge governance tests and Learning Studio checks before building one artifact containing both applications. Only the Learning Studio runtime assets are copied to its public subdirectory.
 
 See [DEPLOYMENT.md](./DEPLOYMENT.md) for the release layout, operational boundaries, and live acceptance checklist. The application remains browser-local: there is no account system, cloud progress sync, backend learner store, or live AI model connection. Deployment preparation does not mean the programme is content-complete or that the live site has passed acceptance.
+
+
+## Learning Studio 0.3.1 — AH-CORE-140 and data-integrity milestone
+
+Four source-grounded AH-CORE-140 lesson drafts now cover evidence classification, audit-event traceability, verification criteria and reproducibility, and reporting limitations. Sources include NIST SP 800-53 Rev. 5 (Release 5.2.0 update), NIST SP 800-53A Rev. 5 (Release 5.2.0 update), NIST SP 800-92, and the NIST Log Management Project page. The materials distinguish external guidance from evidence of AH-AIOS implementation. All four lessons remain Authored draft / Not reviewed.
+
+The 82-Theory import now has a dedicated validator. It rejects duplicate IDs, blank IDs/titles, ambiguous registry/synthesized classification, and incorrect 68/14 counts. Successful imports are persisted in the current browser profile and restored on reload. Structural checks do not authenticate provenance; the authoritative source dataset is still not bundled.
+
+CI now runs curriculum quality tests, theory-import validation tests, and deployment asset tests together. The curriculum gate verifies the 24/96 structure, 6/7/8/3 domain split, complete instructional fields for authored lessons, knowledge-check integrity, and that the remaining specified lessons and all review/publication statuses are not silently promoted.
+
+**Current content state:** 20/96 authored drafts; 76/96 specified only; 0 reviewed; 0 published. The full curriculum is not yet complete.
