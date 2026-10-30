@@ -67,6 +67,12 @@ jobs:
           test -s dist/theory-validation.js
           test -s dist/manifest.webmanifest
           find dist -maxdepth 2 -type f
+      - name: Upload verified Pages artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pages-site
+          path: dist
+          retention-days: 1
 
   deploy:
     if: github.event_name != 'pull_request'
