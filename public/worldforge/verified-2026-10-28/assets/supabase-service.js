@@ -181,6 +181,7 @@ async function resolveConflict(workspace,conflictId,choice){
   map.lastSyncedLocalSnapshots[key]=validator.comparable(({worlds:'world',entities:'entity',relationships:'relationship',sources:'source',claims:'claim'}[conflict.type]||conflict.type),conflict.remoteSnapshot);
   map.lastSyncedVersions[key]=conflict.remoteVersion;map.lastSyncedHashes[key]=conflict.remotePayloadHash||map.lastSyncedHashes[key];
  }else{
+  if(!(workspace[conflict.type]||[]).some(x=>x.id===conflict.recordId))throw new Error('No local record exists to keep. Restore or recreate it through an explicit reviewed workflow.');
   if(!conflict.remoteSnapshot||!conflict.remoteId||!conflict.remoteVersion)throw new Error('Cannot keep a local record against a missing remote record without explicit recreate review.');
   const table={worlds:'projects',entities:'entities',relationships:'relationships',sources:'sources',claims:'claims'}[conflict.type];
   const db=await client(),r=await db.from(table).select('id,record_version').eq('id',conflict.remoteId).maybeSingle();if(r.error)throw r.error;
