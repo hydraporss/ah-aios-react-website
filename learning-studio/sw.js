@@ -1,4 +1,4 @@
-const CACHE="ah-aios-learning-studio-0.2.0-v9";
+const CACHE="ah-aios-learning-studio-0.2.0-v10";
 const FILES=["./","./index.html","./styles.css","./app.js","./manifest.webmanifest","./icon.svg","./curriculum-data.js"];
 self.addEventListener("install",event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(FILES)).then(()=>self.skipWaiting())));
 self.addEventListener("activate",event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith("ah-aios-learning-studio-")&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
