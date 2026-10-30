@@ -51,13 +51,13 @@ async function syncWorkspace(workspace){
  const worldIds={};
  for(const w of workspace.worlds||[]){
    const res=await writeRecord('projects','worlds',w,null,{slug:String(w.id).slice(0,120),name:w.name,description:w.description||'',governance_state:'Draft'});
-   if(res)worldIds[w.id]=res.id;else if(map.worlds[w.id])worldIds[w.id]=map.worlds[w.id];
+   if(res)worldIds[w.id]=res.id;
  }
  const entityIds={};
  for(const e of workspace.entities||[]){
    const projectId=worldIds[e.worldId]||map.worlds[e.worldId];if(!projectId){conflicts.push({type:'entities',id:e.id,reason:'Owning world was not synchronized.'});continue}
    const fields={project_id:projectId,entity_type:e.type||e.entityType||'Other',name:e.name||'Unnamed entity',description:e.description||'',attributes:{worldforge_id:e.id,identity:e.identity||'',source_refs:e.sourceRefs||[]},workflow_status:workflow(e.workflowStatus),schema_version:'1.0.0'};
-   const res=await writeRecord('entities','entities',e,projectId,fields);if(res)entityIds[e.id]=res.id;else if(map.entities[e.id])entityIds[e.id]=map.entities[e.id];
+   const res=await writeRecord('entities','entities',e,projectId,fields);if(res)entityIds[e.id]=res.id;
  }
  for(const r of workspace.relationships||[]){
    const source=entityIds[r.sourceId]||map.entities[r.sourceId],target=entityIds[r.targetId]||map.entities[r.targetId];
@@ -69,7 +69,7 @@ async function syncWorkspace(workspace){
    if(res)synced.relationships++;
  }
  for(const source of workspace.sources||[]){
-   const worldId=source.worldId?worldIds[source.worldId]||map.worlds[source.worldId]:null;
+   const sourceWorld=source.worldId||((workspace.claims||[]).find(c=>c.sourceId===source.id)||{}).worldId;const worldId=sourceWorld?worldIds[sourceWorld]||map.worlds[sourceWorld]:null;
    if(!worldId){conflicts.push({type:'sources',id:source.id,reason:'A project/world scope is required by the existing service schema.'});continue}
    const res=await writeRecord('sources','sources',source,worldId,{project_id:worldId,title:source.name||source.title||'Untitled source',source_type:source.type||'document',uri:source.reference||source.uri||'',content_hash:source.contentHash||null,provenance:{worldforge_id:source.id,source_refs:source.sourceRefs||[]},workflow_status:workflow(source.workflowStatus),schema_version:'1.0.0'});
    if(res)synced.sources++;
