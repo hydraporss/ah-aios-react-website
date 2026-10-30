@@ -96,7 +96,7 @@ A new automated curriculum quality gate checks the 24/96 structure, 6/7/8/3 doma
 This is a verification milestone, not a claim that the Learning Studio is content-complete. Source recovery, the remaining 80 lesson authoring units, independent reviews, manual accessibility/browser/PWA acceptance, and release acceptance remain open.
 
 
-## Deployment candidate 0.3.0
+## Deployment candidate 0.3.1
 
 The application is versioned as 0.3.1. Its deployment packaging is designed to preserve the existing WorldForge site at the repository root and publish Learning Studio separately under `/learning-studio/`. The root Pages workflow now runs both WorldForge governance tests and Learning Studio checks before building one artifact containing both applications. Only the Learning Studio runtime assets are copied to its public subdirectory.
 
@@ -109,6 +109,6 @@ Four source-grounded AH-CORE-140 lesson drafts now cover evidence classification
 
 The 82-Theory import now has a dedicated validator. It rejects duplicate IDs, blank IDs/titles, ambiguous registry/synthesized classification, and incorrect 68/14 counts. Successful imports are persisted in the current browser profile and restored on reload. Structural checks do not authenticate provenance; the authoritative source dataset is still not bundled.
 
-CI now runs curriculum quality tests, theory-import validation tests, and deployment asset tests together. The curriculum gate verifies the 24/96 structure, 6/7/8/3 domain split, complete instructional fields for authored lessons, knowledge-check integrity, and that the remaining specified lessons and all review/publication statuses are not silently promoted.
+The GitHub Actions workflow is configured to run curriculum quality tests, theory-import validation tests, browser acceptance, and deployment asset checks before publishing. The curriculum gate verifies the 24/96 structure, 6/7/8/3 domain split, complete instructional fields for authored lessons, knowledge-check integrity, and that the remaining specified lessons and all review/publication statuses are not silently promoted.
 
 **Current content state:** 20/96 authored drafts; 76/96 specified only; 0 reviewed; 0 published. The full curriculum is not yet complete.
