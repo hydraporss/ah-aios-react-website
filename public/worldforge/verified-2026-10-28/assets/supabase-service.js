@@ -21,9 +21,9 @@ async function session(){const db=await client();const r=await db.auth.getSessio
 async function listWorlds(){const db=await client();await requireUser(db);const r=await db.from('projects').select('id,slug,name,description,governance_state,record_version,updated_at').order('created_at');if(r.error)throw r.error;return r.data}
 async function syncWorkspace(workspace){
  const validator=root.WorldForgeDataLayer;if(!validator)throw new Error('WorldForge data validator is unavailable.');
- const report=validator.validateWorkspace(workspace);if(!report.valid)throw new Error('Local workspace failed integrity checks: '+report.errors.slice(0,4).map(x=>x.code).join(', '));
+ const report=validator.validateWorkspace(workspace);if(!report.valid)throw new Error('Local workspace failed integrity checks: '+report.errors.slice(0,4).map(x=>x.code).join(', '));if(validator.validateWorkspaceSchemas){const schemaReport=await validator.validateWorkspaceSchemas(workspace);if(!schemaReport.valid)throw new Error('JSON Schema validation failed: '+schemaReport.errors.slice(0,4).map(x=>x.path+': '+x.message).join('; '));}
  const db=await client(),user=await requireUser(db),map=idMap();
- for(const name of ['worlds','entities','relationships','claims','sources'])for(const record of workspace[name]||[])workflow(record.workflowStatus||record.status||'Draft');
+ map.lastSyncedLocalSnapshots=map.lastSyncedLocalSnapshots||{};for(const name of ['worlds','entities','relationships','claims','sources'])for(const record of workspace[name]||[]){const key=name+':'+record.id,base=map.lastSyncedLocalSnapshots[key],projection=validator.comparable?validator.comparable(name.slice(0,-1),record):record;if(!base||validator.stable(projection)!==validator.stable(base))workflow(record.workflowStatus||'Draft');}
  for(const k of ['worlds','entities','relationships','claims','sources'])map[k]=map[k]||{};
  map.lastSyncedVersions=map.lastSyncedVersions||{};map.lastSyncedHashes=map.lastSyncedHashes||{};
  const conflicts=[],synced={worlds:0,entities:0,relationships:0,claims:0,sources:0};
@@ -38,7 +38,7 @@ async function syncWorkspace(workspace){
      else if(table==='entities'||table==='relationships'||table==='claims'||table==='sources')payload.created_by=user.id;
      const {data,error}=await db.from(table).insert(payload).select('id,record_version').single();
      if(error)throw new Error('Could not create '+type+' "'+(local.name||local.title||local.id)+'": '+error.message);
-     map.lastSyncedVersions[key]=data.record_version||1;map.lastSyncedHashes[key]=payloadHash;saveMap(map);synced[type]++;return data;
+     map.lastSyncedVersions[key]=data.record_version||1;map.lastSyncedHashes[key]=payloadHash;map.lastSyncedLocalSnapshots[key]=validator.comparable?validator.comparable(type.slice(0,-1),local):local;saveMap(map);synced[type]++;return data;
    }
    const last=map.lastSyncedVersions[key];
    if(last===undefined||existing.record_version!==last){conflicts.push({type,id:local.id,reason:'Remote revision changed since last sync.'});return null}
@@ -48,7 +48,7 @@ async function syncWorkspace(workspace){
    const {data,error}=await db.from(table).update(next).eq('id',remoteId).eq('record_version',existing.record_version).select('id,record_version').maybeSingle();
    if(error)throw error;
    if(!data){conflicts.push({type,id:local.id,reason:'Optimistic concurrency check failed.'});return null}
-   map.lastSyncedVersions[key]=data.record_version;map.lastSyncedHashes[key]=payloadHash;saveMap(map);synced[type]++;return data;
+   map.lastSyncedVersions[key]=data.record_version;map.lastSyncedHashes[key]=payloadHash;map.lastSyncedLocalSnapshots[key]=validator.comparable?validator.comparable(type.slice(0,-1),local):local;saveMap(map);synced[type]++;return data;
  }
  const worldIds={};
  for(const w of workspace.worlds||[]){
@@ -85,5 +85,108 @@ async function syncWorkspace(workspace){
  saveMap(map);
  return {synced,conflicts,at:new Date().toISOString(),note:conflicts.length?'Some records were skipped to avoid overwriting remote changes. Resolve conflicts and sync again.':'Sync completed; canon status was never promoted by sync.'};
 }
-root.WorldForgeSupabase=Object.freeze({configured:()=>!!(config()&&config().url&&config().publishableKey),client,signIn,signUp,signOut,session,listWorlds,syncWorkspace});
+
+function norm(v){return String(v||'Draft').toLowerCase().replaceAll(' ','_')}
+function tableRows(db,table){return (async()=>{const out=[],size=500;for(let offset=0;;offset+=size){const r=await db.from(table).select('*').order('created_at').range(offset,offset+size-1);if(r.error)throw r.error;out.push(...(r.data||[]));if(!r.data||r.data.length<size)break}return out})()}
+function rowFields(type,row,localId,projectLocalId,entityLocalIds){
+ if(type==='worlds')return {slug:row.slug,name:row.name,description:row.description||'',governance_state:'Draft'};
+ if(type==='entities')return {project_id:row.project_id,entity_type:row.entity_type,name:row.name,description:row.description||'',attributes:{worldforge_id:localId,identity:row.attributes?.identity||'',source_refs:row.attributes?.source_refs||[]},workflow_status:row.workflow_status,schema_version:row.schema_version||'1.0.0'};
+ if(type==='relationships')return {project_id:row.project_id,source_entity_id:row.source_entity_id,target_entity_id:row.target_entity_id,relationship_type:row.relationship_type,status:row.status,attributes:{worldforge_id:localId,direction:row.attributes?.direction||'directed',context:row.attributes?.context||''}};
+ if(type==='sources')return {project_id:row.project_id,title:row.title,source_type:row.source_type,uri:row.uri||'',content_hash:row.content_hash||null,provenance:{worldforge_id:localId,source_refs:row.provenance?.source_refs||[]},workflow_status:row.workflow_status,schema_version:row.schema_version||'1.0.0'};
+ if(type==='claims')return {project_id:row.project_id,statement:row.statement,status:row.status,provenance:{worldforge_id:localId,claim_type:row.provenance?.claim_type||'Interpretation',source_refs:row.provenance?.source_refs||[],source_id:row.provenance?.source_id||null,source_ref:row.provenance?.source_ref||'',uncertainty:row.provenance?.uncertainty||'',evidence_state:row.provenance?.evidence_state||'Unknown'},schema_version:row.schema_version||'1.0.0'};
+ return {};
+}
+function remoteLocal(type,row,localId,worldByRemote,entityByRemote){
+ const worldId=worldByRemote[row.project_id]||null;
+ if(type==='worlds')return {id:localId,name:row.name||'Unnamed world',description:row.description||'',status:'active',workflowStatus:'draft',version:row.record_version||1,updatedAt:row.updated_at,remoteId:row.id};
+ if(type==='entities')return {id:localId,worldId,type:row.entity_type||'Other',name:row.name||'Unnamed entity',description:row.description||'',identity:row.attributes?.identity||'',sourceRefs:row.attributes?.source_refs||[],workflowStatus:norm(row.workflow_status),version:row.record_version||1,updatedAt:row.updated_at,remoteId:row.id};
+ if(type==='relationships')return {id:localId,sourceId:entityByRemote[row.source_entity_id]||row.source_entity_id,targetId:entityByRemote[row.target_entity_id]||row.target_entity_id,worldId,type:row.relationship_type||'Related to',direction:row.attributes?.direction||'directed',context:row.attributes?.context||'',workflowStatus:norm(row.status),version:row.record_version||1,updatedAt:row.updated_at,remoteId:row.id};
+ if(type==='sources')return {id:localId,worldId,name:row.title||'Untitled source',type:row.source_type||'document',reference:row.uri||'',contentHash:row.content_hash||null,sourceRefs:row.provenance?.source_refs||[],workflowStatus:norm(row.workflow_status),version:row.record_version||1,updatedAt:row.updated_at,remoteId:row.id};
+ if(type==='claims')return {id:localId,worldId,statement:row.statement||'',type:row.provenance?.claim_type||'Interpretation',sourceRefs:row.provenance?.source_refs||[],sourceId:row.provenance?.source_id||null,sourceRef:row.provenance?.source_ref||'',uncertainty:row.provenance?.uncertainty||'',evidenceState:norm(row.provenance?.evidence_state||'unknown'),workflowStatus:norm(row.status),version:row.record_version||1,updatedAt:row.updated_at,remoteId:row.id};
+ return null;
+}
+function setRecord(workspace,type,record){const key=type;workspace[key]=workspace[key]||[];const i=workspace[key].findIndex(x=>x.id===record.id);if(i>=0){const old=workspace[key][i];workspace[key][i]={...record,...(type==='claims'&&old.canonStatus?{canonStatus:old.canonStatus}:{})}}else workspace[key].push(record)}
+function remoteKey(type,row){if(type==='worlds')return row.slug||row.id;if(type==='entities')return row.attributes?.worldforge_id;if(type==='relationships')return row.attributes?.worldforge_id;if(type==='sources')return row.provenance?.worldforge_id;if(type==='claims')return row.provenance?.worldforge_id;return null}
+async function syncBidirectional(workspace){
+ const validator=root.WorldForgeDataLayer;if(!validator)throw new Error('WorldForge data validator is unavailable.');
+ const db=await client(),user=await requireUser(db),map=idMap();map.lastSyncedLocalSnapshots=map.lastSyncedLocalSnapshots||{};map.lastSyncedVersions=map.lastSyncedVersions||{};map.lastSyncedHashes=map.lastSyncedHashes||{};
+ const report=validator.validateWorkspace(workspace);if(!report.valid)throw new Error('Local workspace failed integrity checks: '+report.errors.slice(0,4).map(x=>x.code).join(', '));
+ if(validator.validateWorkspaceSchemas){const sr=await validator.validateWorkspaceSchemas(workspace);if(!sr.valid)throw new Error('JSON Schema validation failed: '+sr.errors.slice(0,4).map(x=>x.path+': '+x.message).join('; '))}
+ const [projects,entities,relationships,sources,claims]=await Promise.all(['projects','entities','relationships','sources','claims'].map(t=>tableRows(db,t)));
+ const worldByRemote={},entityByRemote={},remoteSets={worlds:projects,entities,relationships,sources,claims},localTypes={worlds:'worlds',entities:'entities',relationships:'relationships',sources:'sources',claims:'claims'};
+ for(const row of projects){const id=remoteKey('worlds',row);if(id){worldByRemote[row.id]=id;map.worlds[id]=row.id}}
+ for(const row of entities){const id=remoteKey('entities',row);if(id){entityByRemote[row.id]=id;map.entities[id]=row.id}}
+ const conflicts=[],pulled={worlds:0,entities:0,relationships:0,sources:0,claims:0},remoteVersionByConflict={};
+ for(const type of ['worlds','entities','relationships','sources','claims']){
+  const localKey=localTypes[type],rows=remoteSets[type];
+  for(const row of rows){
+   const localId=remoteKey(type,row);if(!localId)continue;
+   const remote=remoteLocal(type,row,localId,worldByRemote,entityByRemote);if(!remote)continue;
+   const remoteId=row.id,key=type+':'+localId,local=(workspace[localKey]||[]).find(x=>x.id===localId),base=map.lastSyncedLocalSnapshots[key];
+   map[type]=map[type]||{};map[type][localId]=remoteId;
+   if(!local&&!base){
+    setRecord(workspace,localKey,remote);
+    map.lastSyncedVersions[key]=row.record_version||1;
+    map.lastSyncedHashes[key]=JSON.stringify(rowFields(type,row,localId,worldByRemote[row.project_id],entityByRemote));
+    map.lastSyncedLocalSnapshots[key]=validator.comparable(type.slice(0,-1),remote);
+    pulled[type]++;continue;
+   }
+   if(!local&&base){conflicts.push({id:uuid(),type,recordId:localId,remoteId,projectId:row.project_id,reason:'Local record is missing although a prior sync base exists.',baseSnapshot:base,localSnapshot:null,remoteSnapshot:remote,remoteVersion:row.record_version||1,remotePayloadHash:JSON.stringify(rowFields(type,row,localId,worldByRemote[row.project_id],entityByRemote)),status:'open'});continue}
+   if(!base){conflicts.push({id:uuid(),type,recordId:localId,remoteId,projectId:row.project_id,reason:'A local record and remote record exist without a shared sync base.',baseSnapshot:null,localSnapshot:local,remoteSnapshot:remote,remoteVersion:row.record_version||1,remotePayloadHash:JSON.stringify(rowFields(type,row,localId,worldByRemote[row.project_id],entityByRemote)),status:'open'});continue}
+   const localProjection=validator.comparable(type.slice(0,-1),local),remoteProjection=validator.comparable(type.slice(0,-1),remote);
+   const decision=validator.classifyConflict(base,localProjection,remoteProjection);
+   if(decision.state==='conflict'){
+    conflicts.push({id:uuid(),type,recordId:localId,remoteId,projectId:row.project_id,reason:'Both local and remote versions changed since the last acknowledged base.',baseSnapshot:base,localSnapshot:local,remoteSnapshot:remote,remoteVersion:row.record_version||1,remotePayloadHash:JSON.stringify(rowFields(type,row,localId,worldByRemote[row.project_id],entityByRemote)),status:'open'});continue;
+   }
+   if(decision.state==='pull'){
+    setRecord(workspace,localKey,remote);map.lastSyncedVersions[key]=row.record_version||1;map.lastSyncedHashes[key]=JSON.stringify(rowFields(type,row,localId,worldByRemote[row.project_id],entityByRemote));map.lastSyncedLocalSnapshots[key]=remoteProjection;pulled[type]++;
+   }
+  }
+ }
+ // Missing remote rows are never treated as deletions; create an explicit conflict.
+ for(const type of ['worlds','entities','relationships','sources','claims']){
+  const remoteIds=new Set((remoteSets[type]||[]).map(r=>r.id));
+  for(const local of workspace[localTypes[type]]||[]){const key=type+':'+local.id,remoteId=map[type]?.[local.id];if(remoteId&&!remoteIds.has(remoteId)){conflicts.push({id:uuid(),type,recordId:local.id,remoteId,reason:'Previously synchronized remote row is missing or no longer visible; deletion is not propagated.',baseSnapshot:map.lastSyncedLocalSnapshots[key]||null,localSnapshot:local,remoteSnapshot:null,remoteVersion:map.lastSyncedVersions[key]||null,status:'open'})}}
+ }
+ if(conflicts.length){
+  workspace.syncConflicts=workspace.syncConflicts||[];
+  const existing=new Set(workspace.syncConflicts.filter(c=>c.status==='open').map(c=>c.type+':'+c.recordId));
+  for(const c of conflicts)if(!existing.has(c.type+':'+c.recordId))workspace.syncConflicts.push(c);
+  if(workspace.syncConflicts.length>500)workspace.syncConflicts=workspace.syncConflicts.slice(-500);
+  for(const c of conflicts){if(!c.projectId)continue;const payload={id:c.id,project_id:c.projectId,record_type:c.type,local_record_id:c.recordId,remote_record_id:c.remoteId,base_version:map.lastSyncedVersions[c.type+':'+c.recordId]||null,remote_version:c.remoteVersion,base_snapshot:c.baseSnapshot,local_snapshot:c.localSnapshot,remote_snapshot:c.remoteSnapshot,status:'open',created_by:user.id};const ins=await db.from('sync_conflicts').insert(payload);if(ins.error&&ins.error.code!=='23505')console.warn('Conflict was retained locally but could not be stored remotely.',ins.error.message)}
+  saveMap(map);return {pulled, pushed:{worlds:0,entities:0,relationships:0,claims:0,sources:0},conflicts:workspace.syncConflicts.filter(c=>c.status==='open'),blocked:true,at:new Date().toISOString(),note:'Conflict resolution is required before any push; no conflicting records were overwritten.'};
+ }
+ // Push local-only or local-only changes after remote changes have been pulled.
+ saveMap(map);
+ const pushed=await syncWorkspace(workspace);
+ return {pulled,pushed:pushed.synced,conflicts:[],blocked:false,at:new Date().toISOString(),note:'Bidirectional sync completed. Canon status was not promoted.'};
+}
+async function resolveConflict(workspace,conflictId,choice){
+ const validator=root.WorldForgeDataLayer;if(!validator)throw new Error('WorldForge data validator is unavailable.');
+ const conflict=(workspace.syncConflicts||[]).find(c=>c.id===conflictId&&c.status==='open');if(!conflict)throw new Error('Open conflict was not found.');
+ if(!['local','remote','defer'].includes(choice))throw new Error('Unsupported conflict resolution choice.');
+ if(choice==='defer')return {resolved:false,workspace,conflict};
+ const map=idMap(),key=conflict.type+':'+conflict.recordId;
+ if(choice==='remote'){
+  if(!conflict.remoteSnapshot)throw new Error('Remote record is missing; deletion cannot be auto-accepted. Export a backup and resolve the missing record manually.');
+  setRecord(workspace,conflict.type,conflict.remoteSnapshot);
+  map.lastSyncedLocalSnapshots=map.lastSyncedLocalSnapshots||{};map.lastSyncedVersions=map.lastSyncedVersions||{};map.lastSyncedHashes=map.lastSyncedHashes||{};
+  map.lastSyncedLocalSnapshots[key]=validator.comparable(conflict.type.slice(0,-1),conflict.remoteSnapshot);
+  map.lastSyncedVersions[key]=conflict.remoteVersion;map.lastSyncedHashes[key]=conflict.remotePayloadHash||map.lastSyncedHashes[key];
+ }else{
+  if(!conflict.remoteSnapshot||!conflict.remoteId||!conflict.remoteVersion)throw new Error('Cannot keep a local record against a missing remote record without explicit recreate review.');
+  const table={worlds:'projects',entities:'entities',relationships:'relationships',sources:'sources',claims:'claims'}[conflict.type];
+  const db=await client(),r=await db.from(table).select('id,record_version').eq('id',conflict.remoteId).maybeSingle();if(r.error)throw r.error;
+  if(!r.data||r.data.record_version!==conflict.remoteVersion)throw new Error('Remote record changed again while resolving. Run bidirectional sync to refresh the conflict.');
+  map.lastSyncedVersions=map.lastSyncedVersions||{};map.lastSyncedVersions[key]=conflict.remoteVersion;
+  map.lastSyncedHashes=map.lastSyncedHashes||{};map.lastSyncedHashes[key]=conflict.remotePayloadHash;
+ }
+ conflict.status='resolved';conflict.resolution=choice==='remote'?'keep_remote':'keep_local';conflict.resolvedAt=new Date().toISOString();
+ saveMap(map);
+ if(conflict.projectId){const db=await client();await db.from('sync_conflicts').update({status:'resolved',resolution:conflict.resolution,updated_at:conflict.resolvedAt}).eq('id',conflict.id)}
+ workspace.auditLog=workspace.auditLog||[];workspace.auditLog.push({id:uuid(),action:'sync-conflict-resolved',detail:conflict.type+':'+conflict.recordId+' → '+conflict.resolution,at:conflict.resolvedAt});
+ return {resolved:true,workspace,conflict};
+}
+
+root.WorldForgeSupabase=Object.freeze({configured:()=>!!(config()&&config().url&&config().publishableKey),client,signIn,signUp,signOut,session,listWorlds,syncWorkspace,syncBidirectional,resolveConflict});
 })(window);
