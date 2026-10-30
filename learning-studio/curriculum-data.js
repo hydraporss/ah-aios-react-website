@@ -353,70 +353,70 @@ window.AH_LEARNING_CURRICULUM = {
           "status": "Authored draft",
           "content": {
             "status": "Authored draft",
-            "purpose": "Understand architecture as a map of responsibilities and relationships, using only the components and boundaries documented in the current WorldForge project.",
+            "purpose": "Describe architecture as documented responsibilities and relationships, rather than as a list of technologies.",
             "outcomes": [
-              "Identify the documented browser application, local prototype workflows, Django API foundation, and database role where stated.",
-              "Explain why two interfaces or screens do not necessarily share the same persistence path.",
-              "Separate implemented code from accepted end-to-end behavior and production capability."
+              "Identify the documented browser-local prototype and separate Server Governance path.",
+              "Trace where each path stores or retrieves data.",
+              "State the limits of any claimed connection between the two paths."
             ],
             "prerequisites": [
-              "AH-CORE-100 M1.1–M1.4"
+              "AH-CORE-100 orientation lessons"
             ],
             "sourceBase": [
-              "README.md — AH-AIOS WorldForge React Website, sections Overview, Included Features, Prototype and server-backed boundaries, Governance Maturity, and Implementation Boundaries."
+              "AH-AIOS WorldForge React Website README (repository root), blob 4a99342dfed4eab085162f22b464540e5cc99612."
             ],
-            "explanation": "The repository describes a React-based prototype with browser-local workflows and a separate React-to-Django Server Governance path. The browser-local World Model, relationship, source, claim, evidence, canon, and decision screens store data in the current browser profile. The Server Governance page calls the Django API for its own server-backed records. These paths are separate: the local prototype does not synchronize with Django. PostgreSQL is part of the backend foundation described in the project materials, but its presence does not mean every browser-local screen uses it. Architecture should therefore be explained through responsibility and data path, not just by listing technologies.",
+            "explanation": "The repository describes a React-based prototype with browser-local workflows and a separate React-to-Django Server Governance path. Main World Model, relationship, source, claim, evidence, canon, and decision screens store data in the current browser profile. The Server Governance page calls the Django API for its own server-backed records. The README explicitly says the local prototype does not synchronize with Django. PostgreSQL is part of the backend architecture; this does not mean that every browser-local screen uses it.",
             "workedExample": {
-              "title": "Classify the two data paths",
+              "title": "Trace two data paths",
               "steps": [
-                "Start with a user creating a world record in the main World Model screen.",
-                "Trace the documented local path: React screen → browser-profile localStorage.",
-                "Now start with a user working in the Server Governance page.",
-                "Trace the separate path: React Server Governance page → Django API → configured backend database.",
-                "Record that the repository explicitly says the local prototype does not synchronize with Django."
+                "A user creates an entity in the main World Model screen.",
+                "Trace the documented path to browser-profile localStorage.",
+                "A user works in the Server Governance page.",
+                "Trace the documented API path to Django and the configured backend database.",
+                "Mark the absence of synchronization between the two paths."
               ],
-              "result": "The project has two distinct paths. They should not be represented as one shared data store."
+              "result": "Two separate paths are documented; do not join them without evidence."
             },
             "guidedPractice": [
-              "Read the repository Overview and Prototype and server-backed boundaries sections.",
-              "Highlight each component and the responsibility the README explicitly assigns to it.",
-              "Draw two separate paths: browser-local and Server Governance.",
-              "Mark every connection that the README does not establish as unknown rather than drawing an assumed integration."
+              "Read the README sections describing the prototype and Server Governance.",
+              "List each component and its documented responsibility.",
+              "Draw one lane for browser-local data and one for API-backed Server Governance.",
+              "Mark undocumented links as unknown."
             ],
             "independentExercise": {
               "input": "The repository README and a blank architecture worksheet.",
-              "instructions": "Create a two-lane architecture map for the browser-local prototype and Server Governance. For every component, record its documented responsibility, persistence location, and one boundary or limitation.",
+              "instructions": "Draw a two-lane architecture map. Label components, responsibility, persistence location, and any boundary the README explicitly documents.",
               "deliverables": [
-                "Two-lane architecture diagram",
+                "Two-lane diagram",
                 "Component responsibility table",
-                "Three explicit unknowns or unverified boundaries"
+                "Three unknown or unverified boundaries"
               ]
             },
             "knowledgeCheck": [
               {
-                "question": "Which statement matches the documented architecture?",
+                "question": "Which statement matches the README?",
                 "options": [
-                  "All React screens synchronize with the Django database",
+                  "All React screens synchronize with Django",
                   "The browser-local prototype and Server Governance are separate data paths",
-                  "The dashboard figures are live database metrics"
+                  "All dashboard metrics are live database values"
                 ],
                 "answer": 1,
-                "rationale": "The README explicitly says the main prototype screens are browser-local and do not synchronize with Django."
+                "rationale": "The README explicitly says the local prototype does not synchronize with Django."
               },
               {
-                "question": "What does a technology appearing in the project overview prove?",
+                "question": "What does listing a technology prove?",
                 "options": [
                   "Every screen uses it",
-                  "The project is production-ready",
+                  "The system is production-ready",
                   "Only the documented role and scope can be claimed"
                 ],
                 "answer": 2,
-                "rationale": "A technology list does not prove that every feature uses it or that the system is production-ready."
+                "rationale": "A technology list does not prove universal use or production readiness."
               }
             ],
-            "assessmentEvidence": "Architecture map with two distinct data paths, responsibility assignments, and documented limitations.",
-            "feedback": "If your diagram joins the local prototype to the Django API, identify the source evidence for that link. The README explicitly says there is no synchronization between them.",
-            "safetyBoundary": "Use fictional/sample records only. Do not include credentials, private learner data, or secrets in diagrams or exercises.",
+            "assessmentEvidence": "Two-lane architecture map with documented responsibilities and boundaries.",
+            "feedback": "If your diagram joins the browser-local prototype to Django, cite evidence for that connection. The README says there is no synchronization.",
+            "safetyBoundary": "Use synthetic records. Do not include credentials, personal data, or secrets.",
             "references": [
               "README.md"
             ],
@@ -430,70 +430,70 @@ window.AH_LEARNING_CURRICULUM = {
           "status": "Authored draft",
           "content": {
             "status": "Authored draft",
-            "purpose": "Map documented components, interfaces, and dependencies without inferring undocumented runtime connections.",
+            "purpose": "Inventory documented components, interfaces, and dependencies while distinguishing declared architecture from verified integration.",
             "outcomes": [
-              "Name the documented React, Django REST API, and PostgreSQL components in the project architecture.",
-              "Record the documented API base path and the role of the Server Governance page.",
-              "Distinguish a declared interface from a verified end-to-end integration."
+              "Identify the React frontend, Django backend foundation, and PostgreSQL role as described.",
+              "Record the documented API base path and Server Governance call path.",
+              "Distinguish interface documentation from end-to-end acceptance evidence."
             ],
             "prerequisites": [
-              "AH-CORE-100 M1.1–M1.4"
+              "AH-CORE-100 orientation lessons"
             ],
             "sourceBase": [
-              "README.md — AH-AIOS WorldForge React Website, sections Overview, Included Features, Prototype and server-backed boundaries, Governance Maturity, and Implementation Boundaries."
+              "AH-AIOS WorldForge React Website README (repository root), blob 4a99342dfed4eab085162f22b464540e5cc99612."
             ],
-            "explanation": "The README identifies a React frontend and a Django backend foundation, with an API base of /api/v1 in the implementation documentation. The Server Governance page calls the Django API. The backend uses Django REST Framework, session authentication, and per-world membership roles for protected API operations. The repository also describes PostgreSQL as the backend database technology. These details establish documented components and an intended/request path, but not full browser acceptance: the end-to-end acceptance record says the Playwright browser workflow remained unverified because Edge could not be launched in that environment.",
+            "explanation": "The README identifies a React frontend and a Django backend foundation, with an API base path of /api/v1. The Server Governance page calls the Django API. The backend foundation uses Django REST Framework; the project describes PostgreSQL as its database technology. These statements document components and an interface. They do not prove that every workflow has passed browser acceptance. The recorded end-to-end acceptance status leaves the browser-to-backend Playwright workflow unverified because Edge could not be launched in that environment.",
             "workedExample": {
-              "title": "Build a dependency inventory",
+              "title": "Build a component inventory",
               "steps": [
-                "List React as the user-facing frontend described by the README.",
-                "List the Server Governance page as the frontend path that calls the API.",
-                "List Django REST Framework and the /api/v1 API base as the backend interface.",
-                "List PostgreSQL as the configured backend database technology in the project architecture.",
-                "Add a verification column: code present, isolated tests reported, browser acceptance unverified, production deployment not established."
+                "Record React as the user-facing frontend.",
+                "Record Server Governance as the frontend path that calls the API.",
+                "Record Django REST Framework and /api/v1 as the backend interface.",
+                "Record PostgreSQL as the documented backend database technology.",
+                "Add verification status separately from architecture description."
               ],
-              "result": "The inventory distinguishes documented architecture from verified integration status."
+              "result": "A component inventory that does not overstate integration or acceptance."
             },
             "guidedPractice": [
-              "Extract each named component from the README without adding a new service.",
-              "For each component, record its responsibility and the evidence supporting that responsibility.",
-              "Draw an arrow only where the source documents a call or dependency.",
-              "Label /api/v1 as the API base path, not as proof that every route or workflow passed acceptance."
+              "Extract component names and responsibilities from the README.",
+              "Draw arrows only for documented calls or dependencies.",
+              "Label /api/v1 as an API base path.",
+              "Mark browser-to-backend acceptance as unverified."
             ],
             "independentExercise": {
-              "input": "The project README and the v0.4 end-to-end acceptance record.",
-              "instructions": "Create a component/interface/dependency inventory. Include React, Server Governance, Django REST Framework, /api/v1, session authentication, per-world membership roles, and PostgreSQL. Add a separate status column for reported tests and browser acceptance.",
+              "input": "The repository README and the recorded v0.4 end-to-end acceptance result.",
+              "instructions": "Create a component/interface/dependency inventory with a separate evidence-status column.",
               "deliverables": [
                 "Component inventory",
                 "Dependency diagram",
-                "Evidence-status table with unresolved acceptance noted"
+                "Acceptance-status table"
               ]
             },
             "knowledgeCheck": [
               {
-                "question": "What is the strongest supported claim about the API?",
+                "question": "What is the strongest supported API claim?",
                 "options": [
-                  "Every frontend workflow has passed browser acceptance",
-                  "The Server Governance page calls the Django API, but browser-to-backend acceptance remains unverified",
+                  "Every frontend workflow passed browser acceptance",
+                  "The Server Governance page calls Django API; browser acceptance remains unverified",
                   "The API is a public production service"
                 ],
                 "answer": 1,
-                "rationale": "The README and acceptance record describe the API path but explicitly leave browser acceptance pending."
+                "rationale": "The README describes the call path, while acceptance material leaves browser workflow verification open."
               },
               {
-                "question": "What does /api/v1 represent in the architecture description?",
+                "question": "What does /api/v1 represent?",
                 "options": [
                   "A documented API base path",
                   "A database name",
                   "A production domain"
                 ],
                 "answer": 0,
-                "rationale": "The implementation documentation identifies /api/v1 as the API base."
+                "rationale": "The README identifies /api/v1 as the API base."
               }
             ],
-            "assessmentEvidence": "Component/interface inventory and dependency diagram with verification status for each asserted connection.",
-            "feedback": "Do not mark an interface as end-to-end accepted merely because code, unit tests, or an API base path exists.",
-            "safetyBoundary": "Do not put actual API keys, session cookies, credentials, or personal data into the worksheet.",
+            "assessmentEvidence": "Component inventory and dependency diagram with a distinct verification status.",
+            "feedback": "Do not mark an interface end-to-end accepted merely because code or an API base path exists.",
+            "safetyBoundary": "Never put API keys, cookies, credentials, or personal data into lesson artifacts.",
             "references": [
               "README.md"
             ],
@@ -507,70 +507,70 @@ window.AH_LEARNING_CURRICULUM = {
           "status": "Authored draft",
           "content": {
             "status": "Authored draft",
-            "purpose": "Trace data movement and identify the documented trust and persistence boundaries between browser-local workflows and server-backed API operations.",
+            "purpose": "Trace data movement and identify documented persistence and authorization boundaries.",
             "outcomes": [
-              "Trace a browser-local record to browser-profile localStorage.",
-              "Trace a Server Governance operation to the Django API and backend database.",
-              "Explain which controls are documented for protected API endpoints and which boundaries remain unverified."
+              "Trace a browser-local record to localStorage.",
+              "Trace a Server Governance operation to the Django API.",
+              "Identify documented server-side authorization controls and unverified edges."
             ],
             "prerequisites": [
-              "AH-CORE-100 M1.1–M1.4"
+              "AH-CORE-100 orientation lessons"
             ],
             "sourceBase": [
-              "README.md — AH-AIOS WorldForge React Website, sections Overview, Included Features, Prototype and server-backed boundaries, Governance Maturity, and Implementation Boundaries."
+              "AH-AIOS WorldForge React Website README (repository root), blob 4a99342dfed4eab085162f22b464540e5cc99612."
             ],
-            "explanation": "The README distinguishes browser-local storage from server-backed API operations. Local prototype records remain in the current browser profile and are not automatically synchronized or backed up online. The separate Server Governance API uses session identity and per-world membership roles for protected endpoints. The repository states that API authorization is enforced server-side, while browser-local workflows do not enforce organizational authority. The acceptance record further limits the claim: browser-to-backend acceptance was unverified, and production identity, deployment, audit retention, and PostgreSQL recovery were not established. A trust-boundary diagram must preserve these distinctions.",
+            "explanation": "The README distinguishes browser-local storage from server-backed API operations. Local prototype records remain in the current browser profile and are not automatically synchronized or backed up online. The separate Server Governance API uses session identity and per-world membership roles for protected endpoints. The README says authorization is enforced server-side. The recorded acceptance status leaves browser-to-backend acceptance unverified, and production deployment, audit retention, and recovery are not established by that acceptance record.",
             "workedExample": {
-              "title": "Trace two example requests",
+              "title": "Trace two requests",
               "steps": [
-                "Local request: create a sample entity in the browser-local World Model.",
+                "Create a synthetic entity in the browser-local World Model.",
                 "Record localStorage as the persistence boundary; do not draw a Django call.",
-                "Server request: create or review a claim through Server Governance.",
-                "Record the frontend API call, Django session identity and per-world membership authorization, and backend persistence path.",
-                "Annotate the browser acceptance result as unverified and production deployment as not established."
+                "Trace a Server Governance operation through its frontend API call.",
+                "Record the documented session identity and per-world membership checks.",
+                "Annotate browser acceptance as unverified."
               ],
-              "result": "The trace shows different control and persistence boundaries; it does not assume local prototype data crosses into the API."
+              "result": "Separate storage and authorization boundaries are visible in the trace."
             },
             "guidedPractice": [
-              "Mark the browser profile as a local storage boundary.",
-              "Mark the Django API as a server-side authorization boundary for protected endpoints.",
-              "Label the session identity and per-world membership role checks as documented API controls.",
-              "Add a separate warning that the browser-to-backend acceptance workflow was not verified in the recorded acceptance run."
+              "Mark browser profile/localStorage as one persistence boundary.",
+              "Mark Django API as the server-side authorization boundary for protected endpoints.",
+              "Label session identity and per-world membership checks.",
+              "Annotate unverified browser acceptance separately."
             ],
             "independentExercise": {
-              "input": "The README and v0.4 end-to-end acceptance record.",
-              "instructions": "Draw sequence diagrams for one local record creation and one Server Governance API operation. For each step, label actor, component, data location, authorization point, and verification status.",
+              "input": "Repository README and the v0.4 end-to-end acceptance result.",
+              "instructions": "Draw two sequence diagrams, one browser-local and one API-backed. Label actor, component, data location, authorization point, and verification status.",
               "deliverables": [
                 "Two sequence diagrams",
-                "Trust-boundary annotations",
-                "A short statement of what is not verified"
+                "Trust-boundary notes",
+                "Unverified-edge list"
               ]
             },
             "knowledgeCheck": [
               {
-                "question": "Where is a record created in the main browser-local World Model stored?",
+                "question": "Where does the main browser-local World Model store its records?",
                 "options": [
-                  "Automatically in the Django database",
-                  "In the current browser profile using localStorage",
-                  "In a shared cloud workspace"
+                  "Automatically in Django database",
+                  "In current browser profile using localStorage",
+                  "In shared cloud workspace"
                 ],
                 "answer": 1,
                 "rationale": "The README states that the main prototype stores records in the current browser profile."
               },
               {
-                "question": "Which control is documented for protected Django API endpoints?",
+                "question": "Which authorization control is documented for protected Django endpoints?",
                 "options": [
-                  "A user-selectable simulated role only",
+                  "Only a simulated browser role",
                   "Session identity and per-world membership roles",
                   "No server-side authorization"
                 ],
                 "answer": 1,
-                "rationale": "The README states that the Django API enforces session identity and workspace membership for protected endpoints."
+                "rationale": "The README describes server-side session and membership checks."
               }
             ],
-            "assessmentEvidence": "Two request traces with explicit storage, authorization, trust boundaries, and unverified edges.",
-            "feedback": "Do not imply that browser-local data is synchronized, encrypted, tamper-proof, or backed up online. The README explicitly warns against these assumptions.",
-            "safetyBoundary": "Use synthetic examples. Never place secrets or real personal records in localStorage or exercise artifacts.",
+            "assessmentEvidence": "Two request traces with storage, authorization, and verification boundaries.",
+            "feedback": "Do not claim local prototype data is synchronized, backed up online, or subject to server-side authorization.",
+            "safetyBoundary": "Use fictional data only. Never include real credentials or private records.",
             "references": [
               "README.md"
             ],
@@ -584,69 +584,69 @@ window.AH_LEARNING_CURRICULUM = {
           "status": "Authored draft",
           "content": {
             "status": "Authored draft",
-            "purpose": "Classify prototype, service-foundation, and production evidence so that implementation claims remain proportional to what has actually been verified.",
+            "purpose": "Classify prototype, backend foundation, test evidence, browser acceptance, deployment, and production assurance without conflating them.",
             "outcomes": [
-              "Distinguish implemented browser prototype behavior from a separate backend foundation.",
-              "Identify the acceptance evidence reported for tests and the browser workflow that remains unverified.",
-              "List production requirements that the README says are not established."
+              "Distinguish implemented browser prototype behavior from backend foundation.",
+              "State the reported automated test/build evidence and browser acceptance limitation.",
+              "Identify production capabilities that remain unestablished."
             ],
             "prerequisites": [
-              "AH-CORE-100 M1.1–M1.4"
+              "AH-CORE-100 orientation lessons"
             ],
             "sourceBase": [
-              "README.md — AH-AIOS WorldForge React Website, sections Overview, Included Features, Prototype and server-backed boundaries, Governance Maturity, and Implementation Boundaries."
+              "AH-AIOS WorldForge React Website README (repository root), blob 4a99342dfed4eab085162f22b464540e5cc99612."
             ],
-            "explanation": "The project README reports many browser-local prototype features and a separate Django service foundation. It states that the API has session identity and per-world membership authorization in code, but browser-to-backend acceptance and production deployment remain unverified. It also identifies production gaps such as deployed/shared backend service, configured production database, enterprise identity, independent audit retention, and multi-user synchronization. The end-to-end acceptance record reports isolated Django and React tests, a build, and an uncompleted Playwright browser workflow. Therefore a passing build or unit test is evidence for that check only; it is not proof of production readiness.",
+            "explanation": "The README reports browser-local prototype features and a separate Django service foundation. It describes session identity and per-world membership authorization in the API code, but browser-to-backend acceptance and production deployment remain unverified. The acceptance record reports isolated backend/frontend checks and a build, while the Playwright browser workflow remained unverified because Edge could not be launched. A successful build or unit test supports only that specific check; it does not prove production readiness.",
             "workedExample": {
-              "title": "Evaluate a status claim",
+              "title": "Correct an overstated status claim",
               "steps": [
-                "Claim: 'WorldForge is production-ready because the React build passed.'",
-                "Find the README's production requirements and acceptance boundary.",
-                "Find the acceptance record's browser workflow result: UNVERIFIED.",
-                "Rewrite the claim to state that the reported build passed while browser-to-backend acceptance and production readiness remain unverified."
+                "Read the claim: 'WorldForge is production-ready because the React build passed.'",
+                "Compare it with the documented browser acceptance result.",
+                "Separate build evidence from browser acceptance and deployment evidence.",
+                "Rewrite the claim to state what passed and what remains unverified."
               ],
-              "result": "The corrected report describes the exact evidence and does not promote a narrow test result into a broad assurance claim."
+              "result": "A status report proportional to its evidence."
             },
             "guidedPractice": [
-              "Read Project Status, Capability Maturity, Implementation Boundaries, and the acceptance gate.",
-              "Sort evidence into implemented prototype, backend foundation, automated test result, browser acceptance, deployment, and production assurance.",
-              "For each status, identify the exact artifact or test that supports it.",
-              "Leave unsupported statuses as unverified or not established."
+              "Read README sections on project status, maturity, and implementation boundaries.",
+              "Sort evidence into prototype, backend foundation, automated tests, browser acceptance, deployment, and production assurance.",
+              "Attach a source or test result to each asserted status.",
+              "Leave unsupported statuses as unverified."
             ],
             "independentExercise": {
-              "input": "A deliberately overstated release report and the repository README.",
-              "instructions": "Produce a corrected implementation-status report. Every sentence must identify the scope of evidence and distinguish code presence, automated test, browser acceptance, deployment, and production assurance.",
+              "input": "A deliberately overstated release claim and repository README/acceptance notes.",
+              "instructions": "Write a corrected implementation-status report and an evidence-to-claim matrix.",
               "deliverables": [
-                "Corrected report",
+                "Corrected status report",
                 "Evidence-to-claim matrix",
                 "Open acceptance checklist"
               ]
             },
             "knowledgeCheck": [
               {
-                "question": "Does a successful production build establish production readiness?",
+                "question": "Does a successful build establish production readiness?",
                 "options": [
-                  "Yes, by itself",
+                  "Yes",
                   "No; it verifies the build step only",
-                  "Yes, if the app has a README"
+                  "Yes, if README exists"
                 ],
                 "answer": 1,
-                "rationale": "The README explicitly says a successful build does not verify browser workflows, deployment behavior, security, or production acceptance."
+                "rationale": "A build does not verify browser workflows, deployment behavior, security, or production acceptance."
               },
               {
-                "question": "What was the recorded result of the React-to-Django Playwright acceptance workflow?",
+                "question": "What was the recorded Playwright browser acceptance result?",
                 "options": [
                   "Passed",
-                  "Failed due to a confirmed application defect",
-                  "Unverified because Edge could not be launched or controlled"
+                  "Failed due to a confirmed product defect",
+                  "Unverified because Edge could not be launched"
                 ],
                 "answer": 2,
-                "rationale": "The acceptance record explicitly marks the browser workflow UNVERIFIED."
+                "rationale": "The acceptance record labels the browser workflow unverified."
               }
             ],
-            "assessmentEvidence": "Evidence-to-claim matrix and corrected status report that preserves all open acceptance requirements.",
-            "feedback": "Do not label the system production-ready, fully accepted, or enterprise-secure unless the required evidence is present and the acceptance gate is met.",
-            "safetyBoundary": "Do not use test-host logs, credentials, session tokens, or production secrets in submitted evidence.",
+            "assessmentEvidence": "Evidence-to-claim matrix and corrected status report.",
+            "feedback": "Do not call the system production-ready or fully accepted without the required acceptance and deployment evidence.",
+            "safetyBoundary": "Do not include test-host credentials, session tokens, or production secrets.",
             "references": [
               "README.md"
             ],
