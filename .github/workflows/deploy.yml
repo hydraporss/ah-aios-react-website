@@ -1,25 +1,23 @@
-name: Deploy WorldForge and AH-AIOS Learning Studio
+name: Verify and deploy WorldForge + AH-AIOS Learning Studio
 
 on:
   push:
+    branches: [main]
+  pull_request:
     branches: [main]
   workflow_dispatch:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
-  group: github-pages
+  group: github-pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  verify:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    timeout-minutes: 20
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
@@ -41,6 +39,7 @@ jobs:
         run: |
           npm test
           node --check app.js
+          node --check theory-validation.js
           test -s index.html
           test -s app.js
           test -s styles.css
@@ -76,9 +75,33 @@ jobs:
           test -s dist/learning-studio/curriculum-data.js
           test -s dist/learning-studio/theory-validation.js
           find dist -maxdepth 2 -type f
+      - name: Upload verified Pages site artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pages-site
+          path: dist
+          retention-days: 1
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: verify
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Download verified Pages site artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: pages-site
+          path: dist
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
-      - name: Upload Pages artifact
+      - name: Upload Pages deployment artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
