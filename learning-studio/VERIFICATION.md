@@ -114,3 +114,14 @@ Latest GitHub Actions run [41025750155](https://github.com/hydraporss/ah-aios-re
 - No authorized credential issuer, production learner data policy, server-backed learner records, or production deployment is claimed.
 
 **Status:** 24-course/96-lesson source structure is interactive; four lesson drafts are authored. The programme is not content-complete, reviewed, published, or production-deployed.
+
+
+### Latest documentation and branch-head verification
+
+The README and verification record updates also passed GitHub Actions run [41025973776](https://github.com/hydraporss/ah-aios-react-website/actions/runs/41025973776) on commit `e115c5a472ddca428a584c1b2a78de3f457be6da`. The workflow completed its source regression suite, JavaScript syntax check, and required-file checks successfully.
+
+Current source artifact blob references at that commit:
+- `learning-studio/curriculum-data.js`: `e0531ffe850368e3e86a041b2e655c20ccdb2739` (24 courses, 96 lesson units, 15 source records, five projects, assessment framework, four authored lesson drafts).
+- `learning-studio/app.js`: `be36507465baaa2bae3e496df44b725a808e5e50` (interactive course/lesson reader, local portfolio save, project briefs, and source/status rendering).
+
+The PR remains open as a draft. No merge, root-site replacement, or production deployment has occurred.
