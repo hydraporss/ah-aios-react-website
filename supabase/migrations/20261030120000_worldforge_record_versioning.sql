@@ -82,7 +82,11 @@ begin
     else new.updated_by := auth.uid(); end if;
   else
     if new.id <> old.id then raise exception 'Record ID is immutable'; end if;
-    if new.record_version <> old.record_version + 1 then
+    if new.record_version = old.record_version then
+      -- Compatibility for older clients; the new service adapter supplies the next version
+      -- and filters updates by the version it originally read.
+      new.record_version := old.record_version + 1;
+    elsif new.record_version <> old.record_version + 1 then
       raise exception 'Version conflict: expected record_version %', old.record_version + 1;
     end if;
     new.updated_by := auth.uid();
