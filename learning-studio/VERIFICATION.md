@@ -158,3 +158,19 @@ Regression tests now verify the three external source records, publication metad
 
 
 The external-source verification additions and regression tests completed successfully in GitHub Actions run [41029942500](https://github.com/hydraporss/ah-aios-react-website/actions/runs/41029942500) on commit `9f810020a3165cf710e92cef1d7a298785a18b05`. This run validates the curriculum-data and regression-test changes. The final documentation-only update is recorded in the branch head after that run; a fresh branch-head run is being triggered to verify the exact final commit.
+
+
+## Learning Studio 0.3.0 — curriculum quality gate
+
+Added `tests/curriculum-quality-gate.test.js`. The new automated checks validate:
+- 24 unique courses and 96 lesson units, with four lessons per course.
+- The source-defined 6 Core / 7 AI Harness / 8 WorldForge / 3 cross-cutting Human Stewardship split.
+- All 14 required instructional fields for each of the 16 authored lesson drafts.
+- Non-empty explanations, source bases, references, and valid knowledge-check option/answer/rationale structures.
+- Exactly 80 remaining lessons stay **Specified** and have no authored content.
+- Authored lessons remain **Authored draft / Not reviewed**; no course is promoted to published.
+- The AH-CORE-140 course and its four source-defined lesson titles remain unchanged and specified-only.
+
+The quality gate is deliberately structural: it verifies completeness of required fields and status boundaries, not the factual correctness of every lesson explanation. Human subject-matter and instructional review remain necessary.
+
+At the time this gate was added, the curriculum contains 16 authored drafts and 80 specified-only lessons. This is not a content-complete or release-accepted programme. The new test must pass in GitHub Actions on the exact branch head before its result is treated as verified.
