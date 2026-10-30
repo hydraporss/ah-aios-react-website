@@ -18,7 +18,7 @@ try {
   await page.locator('#world-form input[name="name"]').fill('Browser Test World');
   await page.locator('#world-form textarea[name="description"]').fill('Automated acceptance fixture.');
   await page.locator('#world-form button.accent-btn').click();
-  await page.getByText('Browser Test World', { exact: true }).waitFor();
+  await page.getByRole('heading', { name: 'Browser Test World', exact: true }).waitFor();
 
   await page.locator('[data-tab="entities"]').click();
   for (const [name, type] of [['Alpha Entity', 'Civilization'], ['Beta Entity', 'Person']]) {
