@@ -1,0 +1,79 @@
+# AH-AIOS Notion Export Manifest
+
+{
+  "title": "AH-AIOS Notion-to-GitHub Export",
+  "exported_at": "2026-10-30",
+  "repository": "hydraporss/ah-aios-react-website",
+  "branch": "backup/notion-export-2026-10-30",
+  "scope": "Notion pages and text source exports retrieved during this transfer. This is not a local Windows-folder scan or a byte-for-byte Notion workspace mirror.",
+  "groups": {
+    "learning_package": [
+      "backup/notion-export/docs/learning/README.md",
+      "backup/notion-export/docs/learning/content-master-plan.md",
+      "backup/notion-export/docs/learning/curriculum.md",
+      "backup/notion-export/docs/learning/platform-definition.md",
+      "backup/notion-export/docs/learning/content-governance.md",
+      "backup/notion-export/docs/learning/theory-explorer.md",
+      "backup/notion-export/docs/learning/practice-labs.md",
+      "backup/notion-export/docs/learning/assessment-portfolio.md",
+      "backup/notion-export/docs/learning/paths/core.md",
+      "backup/notion-export/docs/learning/paths/ai-harness.md",
+      "backup/notion-export/docs/learning/paths/worldforge.md"
+    ],
+    "project_documents": [
+      "backup/notion-export/README.md",
+      "backup/notion-export/docs/v0.4-end-to-end-acceptance.md",
+      "backup/notion-export/docs/v0.4-sprint-1-and-acceptance.md",
+      "backup/notion-export/docs/after-humanity/README.md",
+      "backup/notion-export/learning-studio/README.md",
+      "backup/notion-export/learning-studio/VERIFICATION.md"
+    ],
+    "after_humanity_source_chunks": [
+      "backup/notion-export/docs/after-humanity/after-humanity-whole-page.part-01.txt",
+      "backup/notion-export/docs/after-humanity/after-humanity-whole-page.part-02.txt",
+      "backup/notion-export/docs/after-humanity/after-humanity-whole-page.part-03.txt",
+      "backup/notion-export/docs/after-humanity/after-humanity-whole-page.part-04.txt",
+      "backup/notion-export/docs/after-humanity/after-humanity-whole-page.part-05.txt",
+      "backup/notion-export/docs/after-humanity/after-humanity-whole-page.part-06.txt",
+      "backup/notion-export/docs/after-humanity/after-humanity-whole-page.part-07.txt",
+      "backup/notion-export/docs/after-humanity/after-humanity-whole-page.part-08.txt",
+      "backup/notion-export/docs/after-humanity/after-humanity-whole-page.part-09.txt",
+      "backup/notion-export/docs/after-humanity/after-humanity-whole-page.part-10.txt"
+    ],
+    "architecture_and_governance": [
+      "backup/notion-export/docs/after-humanity/core-ontology.md",
+      "backup/notion-export/docs/after-humanity/constitutional-governance-reckon-levels-115-150.md",
+      "backup/notion-export/docs/after-humanity/canonical-visual-identities-image-matrix.md",
+      "backup/notion-export/docs/architecture/ALEX-SPEC-2026-VAL-002-rev-1.1.0.md",
+      "backup/notion-export/docs/architecture/AH-WF-ARCH-001-v0.5-Draft-canon-status-record.md",
+      "backup/notion-export/docs/after-humanity/law-of-controlled-integration-canon-governance.md"
+    ],
+    "additional_notion_source_exports": [
+      "backup/notion-source-exports/README.md",
+      "backup/notion-source-exports/package.json",
+      "backup/notion-source-exports/docs/after-humanity/README.md",
+      "backup/notion-source-exports/src/ServerGovernancePage.jsx",
+      "backup/notion-source-exports/public/worldforge/characters.html",
+      "backup/notion-source-exports/pnpm-lock.yaml",
+      "backup/notion-source-exports/src/governance.js",
+      "backup/notion-source-exports/public/worldforge/lore.html"
+    ]
+  },
+  "counts": {
+    "learning_package": 11,
+    "project_documents": 6,
+    "after_humanity_source_chunks": 10,
+    "architecture_and_governance": 6,
+    "additional_notion_source_exports": 8,
+    "total": 41
+  },
+  "integrity_notes": [
+    "Each exported file was created as a GitHub text file from the corresponding Notion page content.",
+    "Notion page wrapper metadata was removed; page body was retained, with simple inline code and line-break normalization where applicable.",
+    "Some original Notion pages are themselves summaries or chunked source exports; the GitHub copies preserve what was present in those pages, not any missing original bytes.",
+    "ALEX-SPEC-2026-VAL-002 rev 1.1.0 source is incomplete in Notion; its recorded cutoff is preserved and no missing schema was invented.",
+    "AH-WF-ARCH-001 is preserved as the available Notion canon-status record; it is not represented as a recovered complete original specification.",
+    "Binary images, ZIP archives, native Notion attachments, the entire Notion workspace, Git history, and the local C:\\Users\\PORONG\\Documents\\Hermes\\AH-AIOS folder were not transferred in this pass."
+  ],
+  "notion_register": "https://app.notion.com/p/40966662b29d8162a8cbddd714487dc5"
+}
