@@ -4,6 +4,7 @@ import { chromium } from "playwright";
 const browser = await chromium.launch({ headless: true });
 const page = await browser.newPage();
 const pageErrors = [];
+page.on("dialog", dialog => dialog.accept());
 page.on("pageerror", error => pageErrors.push(error.message));
 
 try {
@@ -46,12 +47,37 @@ try {
   const persisted = await page.evaluate(() => JSON.parse(localStorage.getItem("ah-aios-learning-studio-progress-v2")));
   assert.ok(persisted.portfolio.some(item => item.text.includes("Browser acceptance test")));
 
+  await page.locator("#course-filter").fill("AH-CORE-140");
+  await page.locator("#all-courses [data-blueprint-course]").click();
+  await page.locator("#modal [data-blueprint-lesson]").first().click();
+  assert.match(await page.locator("#modal").innerText(), /What counts as evidence/);
+  assert.equal(await page.locator('#modal a[href="https://csrc.nist.gov/pubs/sp/800/53/a/r5/final"]').count(),1);
+  await page.locator("#modal-close").click();
+
   await page.locator("#tutor-start").click();
   await page.locator("#chat-input").fill("governance");
   await page.locator("#chat-form button").click();
   assert.match(await page.locator("#chat-log").innerText(), /governance/i);
+  await page.locator("#chat-form button").focus();
+  await page.keyboard.press("Tab");
+  assert.equal(await page.evaluate(()=>document.activeElement.id),"modal-close","modal Tab navigation should wrap to its close control");
+  await page.keyboard.press("Escape");
+  assert.equal(await page.evaluate(()=>document.activeElement.id),"tutor-start","closing the modal should restore focus to its opener");
 
-  await page.locator("#modal-close").click();
+  const theoryFixture = [
+    ...Array.from({length:68},(_,i)=>({id:"REG-"+String(i+1).padStart(3,"0"),title:"Registry theory "+(i+1),origin:"registry"})),
+    ...Array.from({length:14},(_,i)=>({id:"SYN-"+String(i+1).padStart(3,"0"),title:"Synthesized theory "+(i+1),origin:"synthesized"}))
+  ];
+  const theoryChooser = page.waitForEvent("filechooser");
+  await page.locator("#import-theories").click();
+  await (await theoryChooser).setFiles({name:"theories-test.json",mimeType:"application/json",buffer:Buffer.from(JSON.stringify(theoryFixture))});
+  await page.waitForFunction(()=>document.querySelector("#theory-status")?.textContent.includes("82 records loaded"));
+  const storedTheories = await page.evaluate(()=>JSON.parse(localStorage.getItem("ah-aios-learning-theories-v1")));
+  assert.equal(storedTheories.length,82);
+  await page.reload({waitUntil:"networkidle"});
+  assert.match(await page.locator("#theory-status").innerText(),/82 records loaded/);
+  assert.match(await page.locator("#theory-source-status").innerText(),/provenance review pending/i);
+
   assert.equal(pageErrors.length, 0, "browser console page errors: " + pageErrors.join("; "));
   process.stdout.write("Learning Studio browser smoke checks passed: catalogue, search, course/lesson navigation, portfolio save, persistence after reload, local tutor, and no uncaught page errors.\n");
 } finally {

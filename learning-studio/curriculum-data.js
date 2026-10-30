@@ -1400,29 +1400,357 @@ window.AH_LEARNING_CURRICULUM = {
           "id": "M1.1",
           "title": "What counts as evidence",
           "exercise": "sort observations, assertions, artifacts, and assumptions",
-          "status": "Specified"
+          "status": "Authored draft",
+          "content": {
+            "status": "Authored draft",
+            "id": "M1.1",
+            "title": "What counts as evidence",
+            "purpose": "Distinguish a claim, an observation, an artifact, an inference, and an assumption before deciding what a record supports.",
+            "outcomes": [
+              "Classify statements as claims, observations, artifacts, inferences, or assumptions.",
+              "Describe the provenance and context needed to interpret an artifact.",
+              "State the narrowest conclusion supported by the available evidence."
+            ],
+            "prerequisites": [
+              "AH-CORE-100 orientation",
+              "AH-CORE-110 architecture and system boundaries",
+              "AH-CORE-120 identity and access control",
+              "AH-CORE-130 security and policy foundations"
+            ],
+            "sourceBase": [
+              "docs/learning/content-governance.md (blob e9a2d234068eacf9327e18ef986448316e73f28d)",
+              "docs/learning/assessment-portfolio.md (blob a52b5acbe827b21cde3c9d11d2cf7851163a1f85)",
+              "NIST SP 800-53A Rev. 5 — assessment methods and evidence objects (external assessment reference, not project-specific proof)."
+            ],
+            "explanation": "A claim is a proposition that may be true or false. An observation is something directly noticed or measured in a stated context. An artifact is a retained object such as a test report, log entry, source file, configuration snapshot, or screenshot. An inference is a conclusion drawn from observations and artifacts. An assumption is accepted temporarily without sufficient evidence. These categories should not be collapsed. A test report can show that one test ran under stated conditions; it does not by itself prove that every deployment, user, or future state behaves the same way. Evidence quality depends on provenance, integrity, relevance, completeness, timing, and the question being answered. NIST SP 800-53A describes assessment methods including examination, interview, and testing; the method and objects must be chosen for the assessment objective. Project governance separately requires source attribution and explicit verification status. External guidance teaches a method; it does not prove project implementation.",
+            "workedExample": {
+              "title": "A test result is not a universal guarantee",
+              "steps": [
+                "Claim: an unauthorized creator cannot approve a protected record.",
+                "Observation: the recorded test run returned HTTP 403 for the creator approval attempt.",
+                "Artifact: the test output, test code, commit identifier, and execution environment.",
+                "Inference: the tested request was denied in that test context.",
+                "Limitation: other endpoints, configurations, identities, and production deployment were not thereby verified."
+              ],
+              "result": "A bounded evidence statement that identifies what happened, the artifact supporting it, and what remains outside the test."
+            },
+            "guidedPractice": [
+              "Read the assessment and content-governance source references.",
+              "Mark each sentence in a sample report as claim, observation, artifact, inference, or assumption.",
+              "For every artifact, record its source, version, date, and relevant test context.",
+              "Rewrite broad conclusions so they do not exceed the evidence."
+            ],
+            "independentExercise": {
+              "input": "A synthetic test report, one log entry, a source-code excerpt, and a reviewer statement.",
+              "instructions": "Create an evidence classification table. For each item, record its type, origin, version/time, integrity concern, what it supports, and what it cannot establish.",
+              "deliverables": [
+                "Evidence classification table",
+                "One source-to-claim trace",
+                "A bounded conclusion and an explicit uncertainty statement"
+              ]
+            },
+            "knowledgeCheck": [
+              {
+                "question": "A successful test run demonstrates which conclusion?",
+                "options": [
+                  "The entire system is secure in every environment",
+                  "The tested behavior passed under the recorded conditions",
+                  "All related controls are production-assured"
+                ],
+                "answer": 1,
+                "rationale": "A test result is bounded by its test case, environment, inputs, version, and execution evidence."
+              },
+              {
+                "question": "Which item is an inference rather than a direct artifact?",
+                "options": [
+                  "A timestamped test log",
+                  "A source-code commit",
+                  "The conclusion that the tested request was denied in that context"
+                ],
+                "answer": 2,
+                "rationale": "The conclusion is reasoned from artifacts and observations; it should remain traceable to them."
+              }
+            ],
+            "assessmentEvidence": "An evidence classification table and source-to-claim trace with a bounded conclusion.",
+            "feedback": "If a statement cannot be tied to an artifact or observation, label it as an assumption or unsupported claim. Do not use 'verified' as a synonym for 'described'.",
+            "safetyBoundary": "Use synthetic examples only. Do not include secrets, credentials, private learner information, or unredacted production logs. Do not treat a learning exercise or external reference as evidence that AH-AIOS has implemented a control.",
+            "references": [
+              "docs/learning/content-governance.md",
+              "docs/learning/assessment-portfolio.md",
+              "https://csrc.nist.gov/pubs/sp/800/53/a/r5/final"
+            ],
+            "reviewStatus": "Not reviewed"
+          }
         },
         {
           "id": "M1.2",
           "title": "Audit events and traceability",
           "exercise": "construct an event sequence for a sample operation",
-          "status": "Specified"
+          "status": "Authored draft",
+          "content": {
+            "status": "Authored draft",
+            "id": "M1.2",
+            "title": "Audit events and traceability",
+            "purpose": "Design a traceable event record and sequence that supports review without collecting unnecessary sensitive information.",
+            "outcomes": [
+              "Identify the core fields needed to interpret an audit event.",
+              "Construct a sequence linking actor, action, object, time, result, and related evidence.",
+              "Explain why log integrity, retention, access control, and privacy matter."
+            ],
+            "prerequisites": [
+              "AH-CORE-110 architecture and system boundaries",
+              "AH-CORE-120 identity and access control",
+              "AH-CORE-130 security and policy foundations",
+              "AH-CORE-140 M1.1"
+            ],
+            "sourceBase": [
+              "docs/learning/content-governance.md (blob e9a2d234068eacf9327e18ef986448316e73f28d)",
+              "docs/v0.4-end-to-end-acceptance.md (blob 668b72567dd22501b70b7b186bc9cc11fe39b4d1)",
+              "NIST SP 800-53 Rev. 5 — AU-2, AU-3, AU-8, AU-9, AU-11, AU-12 (external control reference, not an AH-AIOS conformance claim).",
+              "NIST SP 800-92 and NIST Log Management Project page — log-management lifecycle and current revision status."
+            ],
+            "explanation": "An audit event is a structured record of an observable action or occurrence. NIST SP 800-53 AU-3 identifies information that can establish what happened, when, where, the event source, the outcome, and the associated subjects or objects. AU-2 addresses selection and rationale for event types; AU-8 concerns time stamps; AU-9 protection of audit information; AU-11 retention; and AU-12 audit generation. A useful trace links related events with stable identifiers and records the system/component, actor or service identity, action, target object, timestamp and time basis, outcome, and correlation reference. Log management includes generation, transmission, storage, access, and disposal. Logging everything is not automatically safer: audit data can expose personal or sensitive information, so event selection, access, retention, and minimization need a defined purpose. NIST's original SP 800-92 is final but dated; its project page describes Rev. 1 as a draft planning guide. Neither reference proves that the Learning Studio or WorldForge meets these controls.",
+            "workedExample": {
+              "title": "Trace a governed change",
+              "steps": [
+                "Event 1: contributor submits proposal P-104 against record R-22 at a recorded time.",
+                "Event 2: the service validates the proposal and records the base version and request outcome.",
+                "Event 3: an authorized reviewer evaluates the proposal and records decision, rationale, and actor identity.",
+                "Event 4: the service records the resulting version identifier and links it to the decision event.",
+                "Review: verify timestamps, event ordering, actor/target identifiers, integrity protections, and whether any personal data is unnecessary."
+              ],
+              "result": "A linked event sequence from request to outcome, with enough context for a reviewer to reconstruct the operation."
+            },
+            "guidedPractice": [
+              "Read NIST AU-2 and AU-3 summaries and the project governance records.",
+              "Choose a sample operation and identify which events are significant to trace.",
+              "Build an event schema using actor, action, target, time, source, result, and correlation fields.",
+              "Add a privacy and retention note to the schema."
+            ],
+            "independentExercise": {
+              "input": "A fictional four-step record-change operation and a blank audit-event template.",
+              "instructions": "Create a trace with at least four events. Explain event selection, timestamp handling, linkage, access protection, retention assumptions, and privacy minimization. Mark policy choices that require an authorized owner.",
+              "deliverables": [
+                "Audit event schema",
+                "Chronological event trace",
+                "Retention/access/privacy questions",
+                "Source-to-field mapping"
+              ]
+            },
+            "knowledgeCheck": [
+              {
+                "question": "Which set most closely matches the core information described by NIST AU-3?",
+                "options": [
+                  "Event type, time, location, source, outcome, and associated identity/object",
+                  "Only the username and a free-text note",
+                  "Only a success/failure flag"
+                ],
+                "answer": 0,
+                "rationale": "AU-3 describes the event, time, where, source, outcome, and associated subjects or objects."
+              },
+              {
+                "question": "Why should audit logging not simply collect every possible input?",
+                "options": [
+                  "Logs are never useful",
+                  "Audit records can expose sensitive or personal information and should be purpose-limited",
+                  "More data always reduces risk"
+                ],
+                "answer": 1,
+                "rationale": "Audit design balances investigative value with privacy, access, storage, and retention concerns."
+              }
+            ],
+            "assessmentEvidence": "A traceable event schema and event sequence with privacy, integrity, and retention considerations.",
+            "feedback": "A list of timestamps alone is not traceability. Link events to actors, actions, targets, outcomes, and source records; state the limits of the log.",
+            "safetyBoundary": "Use synthetic examples only. Do not include secrets, credentials, private learner information, or unredacted production logs. Do not treat a learning exercise or external reference as evidence that AH-AIOS has implemented a control.",
+            "references": [
+              "docs/learning/content-governance.md",
+              "docs/v0.4-end-to-end-acceptance.md",
+              "https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final",
+              "https://csrc.nist.gov/pubs/sp/800/92/final",
+              "https://csrc.nist.gov/projects/log-management"
+            ],
+            "reviewStatus": "Not reviewed"
+          }
         },
         {
           "id": "M1.3",
           "title": "Verification criteria and reproducibility",
           "exercise": "turn vague success statements into testable criteria",
-          "status": "Specified"
+          "status": "Authored draft",
+          "content": {
+            "status": "Authored draft",
+            "id": "M1.3",
+            "title": "Verification criteria and reproducibility",
+            "purpose": "Convert a broad assurance statement into an assessable criterion, repeatable procedure, and evidence package.",
+            "outcomes": [
+              "Write measurable acceptance criteria with explicit scope and expected results.",
+              "Select examination, interview, or test methods appropriate to a stated objective.",
+              "Record environment, version, inputs, procedure, actual result, and deviations so a test can be repeated."
+            ],
+            "prerequisites": [
+              "AH-CORE-110 architecture and system boundaries",
+              "AH-CORE-130 security and policy foundations",
+              "AH-CORE-140 M1.1–M1.2"
+            ],
+            "sourceBase": [
+              "docs/learning/assessment-portfolio.md (blob a52b5acbe827b21cde3c9d11d2cf7851163a1f85)",
+              "docs/learning/content-master-plan.md (blob b124c7c55818b2a7e28899139c30745c3fcb343e)",
+              "NIST SP 800-53A Rev. 5 — assessment planning, examine/interview/test methods, and analysis of results."
+            ],
+            "explanation": "A verification statement must be testable. Replace 'import works' with a criterion such as: given a valid schema-versioned export containing specified collections, importing it restores those collections without loss; given malformed input, the importer rejects the file and preserves current state. Define the system version, environment, preconditions, input fixture, steps, expected result, actual result, and evidence location. NIST SP 800-53A provides a flexible assessment approach using examination of artifacts, interviews with responsible people, and tests of mechanisms. Select methods that match the objective and document the assessment scope. Reproducibility means another person can understand and repeat the procedure with the stated materials; it does not mean the result applies to untested environments or future versions. A passing test is evidence only for the criterion and conditions it actually exercises.",
+            "workedExample": {
+              "title": "Turn a vague statement into a test",
+              "steps": [
+                "Vague claim: 'progress import is safe'.",
+                "Criterion A: a valid version-2 progress file restores all supported fields and values.",
+                "Criterion B: a duplicate course identifier is rejected before state replacement.",
+                "Criterion C: after rejection, the previously stored progress is byte-for-byte or semantically unchanged.",
+                "Procedure: record app commit, browser/version, fixture hashes, steps, expected and actual outputs.",
+                "Evidence: retain test output, relevant fixture, and any failure trace; repeat after a code change."
+              ],
+              "result": "Three observable criteria with reproducible procedures and retained evidence, rather than an unbounded safety claim."
+            },
+            "guidedPractice": [
+              "Choose one feature and identify its intended behavior and failure boundary.",
+              "Write one positive and one negative criterion.",
+              "Select examine, interview, or test and explain why.",
+              "Record a test environment, version, input, steps, expected result, actual result, and evidence reference."
+            ],
+            "independentExercise": {
+              "input": "A feature description and a sample test environment.",
+              "instructions": "Create a mini verification plan with scope, assumptions, preconditions, positive and negative criteria, method, test data, expected outcomes, evidence artifacts, and repeat procedure.",
+              "deliverables": [
+                "Verification plan",
+                "At least three testable criteria",
+                "Reproducibility record",
+                "Known exclusions and limitations"
+              ]
+            },
+            "knowledgeCheck": [
+              {
+                "question": "What makes a verification criterion useful?",
+                "options": [
+                  "It says the feature should work well",
+                  "It defines observable conditions and an expected result",
+                  "It guarantees production readiness"
+                ],
+                "answer": 1,
+                "rationale": "A criterion must be assessable against observable behavior and a defined scope."
+              },
+              {
+                "question": "Which detail is necessary for meaningful reproducibility?",
+                "options": [
+                  "Only the test author's name",
+                  "The tested version, environment, inputs, procedure, and actual result",
+                  "A screenshot without context"
+                ],
+                "answer": 1,
+                "rationale": "A result cannot be interpreted or repeated reliably without context and procedure."
+              }
+            ],
+            "assessmentEvidence": "A mini verification plan with testable criteria, methods, reproducibility details, and exclusions.",
+            "feedback": "Avoid claims such as 'fully secure', 'always works', or 'production-ready' unless the scope and evidence genuinely support them.",
+            "safetyBoundary": "Use synthetic examples only. Do not include secrets, credentials, private learner information, or unredacted production logs. Do not treat a learning exercise or external reference as evidence that AH-AIOS has implemented a control.",
+            "references": [
+              "docs/learning/assessment-portfolio.md",
+              "docs/learning/content-master-plan.md",
+              "https://csrc.nist.gov/pubs/sp/800/53/a/r5/final"
+            ],
+            "reviewStatus": "Not reviewed"
+          }
         },
         {
           "id": "M1.4",
           "title": "Reporting limitations and unresolved results",
           "exercise": "write a report that preserves unknowns and failed checks",
-          "status": "Specified"
+          "status": "Authored draft",
+          "content": {
+            "status": "Authored draft",
+            "id": "M1.4",
+            "title": "Reporting limitations and unresolved results",
+            "purpose": "Write an evidence-based verification report that distinguishes passed, failed, untested, and inconclusive outcomes without hiding uncertainty.",
+            "outcomes": [
+              "Separate observed results from interpretation and overall assurance conclusions.",
+              "Report scope, method, environment, evidence, deviations, and exclusions.",
+              "Identify unresolved issues and state the next evidence or authorized decision needed."
+            ],
+            "prerequisites": [
+              "AH-CORE-140 M1.1–M1.3",
+              "AH-CORE-130 security and policy foundations"
+            ],
+            "sourceBase": [
+              "docs/learning/content-governance.md (blob e9a2d234068eacf9327e18ef986448316e73f28d)",
+              "docs/learning/assessment-portfolio.md (blob a52b5acbe827b21cde3c9d11d2cf7851163a1f85)",
+              "docs/v0.4-end-to-end-acceptance.md (blob 668b72567dd22501b70b7b186bc9cc11fe39b4d1)",
+              "NIST SP 800-53A Rev. 5 — analysis and reporting of assessment results.",
+              "NIST SP 800-92 / NIST Log Management Project — evidence collection and log-management context."
+            ],
+            "explanation": "A verification report should let a reader reconstruct what was assessed and what was not. State the question, scope, system version, environment, method, criteria, evidence references, actual results, deviations, and limitations. Use outcome labels consistently: Pass means the stated criterion was met in the tested scope; Fail means the criterion was not met; Not tested means no test was performed; Inconclusive means available evidence cannot support a determination. These labels are reporting conventions for this learning exercise, not a claim that NIST mandates this exact four-label scheme. Report unresolved issues separately from confirmed defects. A failed test is not automatically a security incident; a passing test is not proof of complete assurance. NIST SP 800-53A emphasizes analyzing assessment results and tailoring procedures to assessment objectives. The project acceptance record is an example of honest reporting: it distinguishes code and isolated tests that passed from browser-to-backend acceptance that remained unverified. Preserve that distinction rather than converting implementation into production assurance.",
+            "workedExample": {
+              "title": "Report a partial acceptance result",
+              "steps": [
+                "Scope: progress import/export and local persistence in one Chromium browser profile.",
+                "Result: valid import and reload persistence passed the recorded smoke test.",
+                "Result: malformed-file preservation was not exercised in this run.",
+                "Exclusion: no cross-browser, cross-device, or backend synchronization test was performed.",
+                "Conclusion: the tested local workflow passed the listed smoke checks; broader data integrity and cross-environment behavior remain unverified."
+              ],
+              "result": "A report that communicates success precisely while keeping untested behavior visible."
+            },
+            "guidedPractice": [
+              "Review the project acceptance record and identify implementation, test, and deployment statements.",
+              "Assign a reporting outcome to each criterion based only on recorded evidence.",
+              "List excluded environments and unresolved questions.",
+              "Write a concise conclusion whose strength does not exceed the evidence."
+            ],
+            "independentExercise": {
+              "input": "A mixed verification log with two passing checks, one failed check, one untested criterion, and one ambiguous observation.",
+              "instructions": "Write a release-verification report. Separate facts, interpretations, and assumptions; identify the evidence for each result; record limitations and a next action for every unresolved item.",
+              "deliverables": [
+                "Scope and method statement",
+                "Results table",
+                "Evidence and limitation register",
+                "Bounded conclusion and next-step record"
+              ]
+            },
+            "knowledgeCheck": [
+              {
+                "question": "A criterion was not executed. How should it be reported?",
+                "options": [
+                  "Pass because no failure was observed",
+                  "Not tested",
+                  "Fail automatically"
+                ],
+                "answer": 1,
+                "rationale": "No execution means there is no result for that criterion; absence of a failure is not a pass."
+              },
+              {
+                "question": "A browser smoke test passed but screen-reader acceptance was not run. Which conclusion is accurate?",
+                "options": [
+                  "The site is fully accessible",
+                  "The browser smoke test passed; screen-reader acceptance remains unverified",
+                  "All production requirements are satisfied"
+                ],
+                "answer": 1,
+                "rationale": "A report must preserve the exact scope of the executed test and explicitly state the untested area."
+              }
+            ],
+            "assessmentEvidence": "A verification report with result labels, traceable artifacts, exclusions, unresolved issues, and a bounded conclusion.",
+            "feedback": "Do not hide failures or untested checks in a summary. State what was run, what passed, what failed, what was not run, and what cannot yet be concluded.",
+            "safetyBoundary": "Use synthetic examples only. Do not include secrets, credentials, private learner information, or unredacted production logs. Do not treat a learning exercise or external reference as evidence that AH-AIOS has implemented a control.",
+            "references": [
+              "docs/learning/content-governance.md",
+              "docs/learning/assessment-portfolio.md",
+              "docs/v0.4-end-to-end-acceptance.md",
+              "https://csrc.nist.gov/pubs/sp/800/53/a/r5/final",
+              "https://csrc.nist.gov/projects/log-management"
+            ],
+            "reviewStatus": "Not reviewed"
+          }
         }
       ],
       "assessment": "evidence dossier with source references, criteria, results, and limitations.",
-      "contentStatus": "Specified",
+      "contentStatus": "Authored draft",
       "publicationStatus": "Not published",
       "sourceRefs": [
         "AH-LEARN-MASTER-001",
@@ -1432,7 +1760,11 @@ window.AH_LEARNING_CURRICULUM = {
         "AH-LEARN-ASSESS-001",
         "AH-LEARN-CORE-PATH-001",
         "AH-LEARN-PLATFORM-001",
-        "WF-README-001"
+        "WF-README-001",
+        "NIST-800-53-R5",
+        "NIST-800-53A-R5",
+        "NIST-800-92",
+        "NIST-LOG-MGMT-PROJECT"
       ]
     },
     {
@@ -2456,6 +2788,53 @@ window.AH_LEARNING_CURRICULUM = {
       "title": "WorldForge v0.4 sprint scope, audit limitations, and acceptance criteria",
       "blobSha": "8526cccd8dda54f88b574c619eb371e89f23c89c",
       "url": "https://github.com/hydraporss/ah-aios-react-website/blob/ah-aios-learning-package/docs/v0.4-sprint-1-and-acceptance.md"
+    },
+    {
+      "id": "NIST-800-53-R5",
+      "title": "Security and Privacy Controls for Information Systems and Organizations",
+      "publisher": "National Institute of Standards and Technology",
+      "documentId": "NIST SP 800-53 Rev. 5",
+      "published": "2020-09-23",
+      "updated": "2025-08-27",
+      "status": "Final; Release 5.2.0 updates noted by NIST",
+      "url": "https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final",
+      "scope": "Audit and Accountability controls including AU-2 event logging, AU-3 audit-record content, AU-8 timestamps, AU-9 audit-information protection, AU-11 retention, and AU-12 audit generation.",
+      "limitations": "A control catalogue is not proof that a project has selected, implemented, or assessed these controls. Tailoring and organizational authority are required."
+    },
+    {
+      "id": "NIST-800-53A-R5",
+      "title": "Assessing Security and Privacy Controls in Information Systems and Organizations",
+      "publisher": "National Institute of Standards and Technology",
+      "documentId": "NIST SP 800-53A Rev. 5",
+      "published": "2022-01-25",
+      "updated": "2025-08-27",
+      "status": "Final; Release 5.2.0 update noted by NIST",
+      "url": "https://csrc.nist.gov/pubs/sp/800/53/a/r5/final",
+      "scope": "Assessment methodology and procedures for determining whether controls are implemented correctly, operating as intended, and producing desired outcomes; includes examine, interview, and test methods.",
+      "limitations": "Assessment procedures are tailored to the system and assessment objectives; a generic checklist or one test does not establish complete assurance."
+    },
+    {
+      "id": "NIST-800-92",
+      "title": "Guide to Computer Security Log Management",
+      "publisher": "National Institute of Standards and Technology",
+      "documentId": "NIST SP 800-92",
+      "published": "2006-09-13",
+      "status": "Final 2006; NIST log-management project page describes Rev. 1 planning guide as draft",
+      "url": "https://csrc.nist.gov/pubs/sp/800/92/final",
+      "scope": "Foundational guidance for establishing log-management infrastructure and processes for generating, transmitting, storing, accessing, analyzing, and disposing of log data.",
+      "limitations": "The original guide is dated; consult the NIST log-management project page for the current revision status. It is guidance, not an implementation assessment."
+    },
+    {
+      "id": "NIST-LOG-MGMT-PROJECT",
+      "title": "NIST Log Management Project",
+      "publisher": "National Institute of Standards and Technology",
+      "documentId": "NIST Log Management Project",
+      "published": "2021-04-28",
+      "updated": "2025-11-20",
+      "status": "NIST project overview; SP 800-92 Rev. 1 listed as draft on the accessed project page",
+      "url": "https://csrc.nist.gov/projects/log-management",
+      "scope": "Current NIST project status and overview of cybersecurity log-management planning; explains that the Rev. 1 planning guide is intended to replace the original SP 800-92.",
+      "limitations": "Project status page is not itself a final technical standard or an implementation assessment."
     }
   ],
   "projects": [

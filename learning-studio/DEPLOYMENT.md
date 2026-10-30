@@ -1,4 +1,4 @@
-# Learning Studio 0.3.0 — deployment and operations
+# Learning Studio 0.3.1 — deployment and operations
 
 ## Deployment layout
 
@@ -18,6 +18,7 @@ The root GitHub Pages workflow builds and tests WorldForge, runs the Learning St
 - `app.js`
 - `styles.css`
 - `curriculum-data.js`
+- `theory-validation.js`
 - `manifest.webmanifest`
 - `sw.js`
 - `icon.svg`
@@ -40,10 +41,10 @@ Tests, source-verification records, ZIP archives, and authoring documentation ar
 
 This release candidate is a static, browser-local learning application. It has no user account system, server-side learner profile, cloud progress synchronization, or live AI model connection. Learner data is stored in the browser profile; users should export a JSON backup before changing devices or clearing site data.
 
-The 24-course / 96-lesson programme is not content-complete. Sixteen lessons are authored drafts and 80 are specified-only. No lessons are reviewed or published. The authoritative 82-Theory registry has not been imported. Website deployment does not imply curriculum approval or canonization.
+The 24-course / 96-lesson programme remains in content production. Twenty lessons are authored drafts and 76 are specified-only. All authored lessons remain unreviewed and no course is published. The authoritative 82-Theory dataset is not bundled; the import gate validates 68 registry + 14 synthesized records, unique IDs, titles, and unambiguous classification, then persists a valid import in the current browser. Structural validation does not authenticate source provenance. Website deployment does not imply curriculum approval or canonization.
 
 ## Release state
 
-**Prepared for deployment; not yet deployed or release-accepted.**
+**Merged to `main`; production deployment and live acceptance must be verified separately.**
 
-The PR must be reviewed and merged into `main` before the root deployment workflow publishes the combined site. Do not claim a public URL or successful production deployment until the GitHub Pages workflow and live-site checks succeed.
+The Learning Studio is published at `/learning-studio/` by the root GitHub Pages workflow. Do not claim a successful production deployment until the post-merge Pages workflow succeeds and the live routes and runtime assets are checked. Manual keyboard, screen-reader, cross-browser, mobile-device, install, and offline acceptance remain separate release gates.

@@ -194,3 +194,15 @@ Updated the root GitHub Pages workflow to retain the existing WorldForge root bu
 The branch-specific verification workflow runs on pushes to `learning-studio-0.2.0`. The root deployment workflow runs on pushes to `main` or manual dispatch. The current branch has not been merged, and no production deployment has been triggered by this change.
 
 **Not yet verified:** the new test suite's GitHub Actions result on the exact branch head; the merged deployment workflow; the public Pages URL; browser/device/accessibility acceptance; and real PWA install/offline behavior. See `DEPLOYMENT.md` for the required release checklist.
+
+
+## Learning Studio 0.3.1 verification additions — 30 October 2026
+
+- Added AH-CORE-140 M1.1–M1.4 as source-grounded authored drafts. All remain Not reviewed and unpublished.
+- Added automated curriculum quality tests for the 24-course / 96-lesson blueprint, 6/7/8/3 domain split, 20 authored drafts, 76 specified-only lessons, required instructional fields, knowledge-check integrity, and status preservation.
+- Added a dedicated 82-Theory import validator. It enforces exactly 82 records, 68 registry and 14 synthesized, non-empty unique IDs, non-empty titles, and unambiguous classification.
+- Valid theory imports now persist in the browser profile and restore on reload. Provenance authenticity remains a separate review requirement; no authoritative theory records were fabricated or bundled.
+- Updated the service-worker cache version and precache list for the validator.
+- Updated the Pages workflow to test and package the new runtime asset.
+
+The current curriculum remains 20/96 authored drafts, 76/96 specified-only, 0 reviewed, and 0 published. This is a verified implementation milestone, not a declaration that the programme is complete.

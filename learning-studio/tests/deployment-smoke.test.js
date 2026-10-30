@@ -8,9 +8,9 @@ const sw = read("sw.js");
 const manifest = JSON.parse(read("manifest.webmanifest"));
 const pkg = JSON.parse(read("package.json"));
 
-test("deployment candidate has a consistent 0.3.0 application version", () => {
-  assert.equal(pkg.version, "0.3.0");
-  assert.match(sw, /ah-aios-learning-studio-0\.3\.0-v1/);
+test("deployment candidate has a consistent 0.3.1 application version", () => {
+  assert.equal(pkg.version, "0.3.1");
+  assert.match(sw, /ah-aios-learning-studio-0\.3\.1-v1/);
 });
 
 test("HTML runtime asset references are relative and resolve to packaged files", () => {
@@ -32,7 +32,7 @@ test("PWA manifest stays scoped to its installation directory", () => {
 });
 
 test("service worker precaches the complete application shell and isolates its cache namespace", () => {
-  for (const asset of ["./", "./index.html", "./styles.css", "./app.js", "./manifest.webmanifest", "./icon.svg", "./curriculum-data.js"]) {
+  for (const asset of ["./", "./index.html", "./styles.css", "./app.js", "./manifest.webmanifest", "./icon.svg", "./curriculum-data.js", "./theory-validation.js"]) {
     assert.ok(sw.includes(JSON.stringify(asset)), "service worker missing " + asset);
   }
   assert.match(sw, /key\.startsWith\("ah-aios-learning-studio-"/);
