@@ -51,7 +51,7 @@
     if (!source || source.packageType !== 'ah-aios-worldforge') throw new Error('Unsupported WorldForge package.');
     const from = String(source.schemaVersion || '0.1.0');
     if (!['0.1.0','1.0.0'].includes(from)) throw new Error('Unsupported schema version: '+from);
-    const result = {packageType:'ah-aios-worldforge',schemaVersion:CURRENT_PACKAGE_VERSION,exportedAt:source.exportedAt || null,worlds:[],entities:[],relationships:[],claims:[],sources:source.sources || [],evidence:source.evidence || [],auditLog:Array.isArray(source.auditLog)?source.auditLog:[],migrationHistory:Array.isArray(source.migrationHistory)?source.migrationHistory:[]};
+    const result = {packageType:'ah-aios-worldforge',schemaVersion:CURRENT_PACKAGE_VERSION,exportedAt:source.exportedAt || null,worlds:[],entities:[],relationships:[],claims:[],sources:source.sources || [],evidence:source.evidence || [],auditLog:Array.isArray(source.auditLog)?source.auditLog:[],versionHistory:Array.isArray(source.versionHistory)?source.versionHistory:[],migrationHistory:Array.isArray(source.migrationHistory)?source.migrationHistory:[]};
     for (const key of ['worlds','entities','relationships','claims','sources','evidence']) {
       result[key] = Array.isArray(source[key]) ? source[key].map(record => {
         const r = {...record};
