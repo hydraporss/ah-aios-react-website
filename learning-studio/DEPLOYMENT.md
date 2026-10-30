@@ -1,4 +1,4 @@
-# Learning Studio 0.3.0 — deployment and operations
+# Learning Studio 0.3.1 — deployment and operations
 
 ## Deployment layout
 
