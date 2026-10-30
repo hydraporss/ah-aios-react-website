@@ -47,4 +47,4 @@ The 24-course / 96-lesson programme remains in content production. Twenty lesson
 
 **Merged to `main`; production deployment and live acceptance must be verified separately.**
 
-The Learning Studio is published at `/learning-studio/` by the root GitHub Pages workflow. Do not claim a successful production deployment until the post-merge Pages workflow succeeds and the live routes and runtime assets are checked. Manual keyboard, screen-reader, cross-browser, mobile-device, install, and offline acceptance remain separate release gates.
+The root GitHub Pages workflow is configured to publish the Learning Studio at `/learning-studio/` after the verification job succeeds. The live deployment must still be confirmed from the resulting Pages deployment and a live-site check. Do not claim a successful production deployment until the post-merge Pages workflow succeeds and the live routes and runtime assets are checked. Manual keyboard, screen-reader, cross-browser, mobile-device, install, and offline acceptance remain separate release gates.
