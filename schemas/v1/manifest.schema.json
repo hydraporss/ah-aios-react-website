@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hydraporss.github.io/ah-aios-react-website/schemas/v1/manifest.schema.json",
+  "title": "WorldForge Package Manifest",
+  "type": "object",
+  "required": ["package_type", "schema_version", "exported_at", "record_counts"],
+  "properties": {
+    "package_type": { "const": "ah-aios-worldforge" },
+    "schema_version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[A-Za-z0-9.-]+)?$" },
+    "exported_at": { "type": "string", "format": "date-time" },
+    "record_counts": {
+      "type": "object",
+      "required": ["worlds", "entities", "relationships", "claims", "sources", "evidence"],
+      "properties": {
+        "worlds": { "type": "integer", "minimum": 0 },
+        "entities": { "type": "integer", "minimum": 0 },
+        "relationships": { "type": "integer", "minimum": 0 },
+        "claims": { "type": "integer", "minimum": 0 },
+        "sources": { "type": "integer", "minimum": 0 },
+        "evidence": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

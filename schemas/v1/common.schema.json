@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hydraporss.github.io/ah-aios-react-website/schemas/v1/common.schema.json",
+  "title": "WorldForge Common Record Definitions",
+  "type": "object",
+  "$defs": {
+    "id": {"type":"string","minLength":3,"maxLength":160,"pattern":"^[A-Za-z0-9][A-Za-z0-9._:-]*$"},
+    "timestamp": {"type":"string","format":"date-time"},
+    "workflowStatus": {"enum":["draft","proposed","investigating","needs_evidence","validated","approved","rejected","superseded"]},
+    "evidenceState": {"enum":["unknown","unsupported","partially_supported","supported","contradicted","mixed"]},
+    "canonStatus": {"enum":["not_canon","verify_under_review","canon_aligned_interpretation","approved_visualization","established_canon"]},
+    "actor": {"type":"string","minLength":1,"maxLength":200},
+    "baseRecord": {
+      "type":"object",
+      "required":["id","record_type","schema_version","world_id","created_at","updated_at","created_by","updated_by","record_version","workflow_status","source_refs"],
+      "properties":{
+        "id":{"$ref":"#/$defs/id"},
+        "record_type":{"type":"string","minLength":1},
+        "schema_version":{"type":"string","pattern":"^[0-9]+\\.[0-9]+\\.[0-9]+(-[A-Za-z0-9.-]+)?$"},
+        "world_id":{"anyOf":[{"$ref":"#/$defs/id"},{"type":"null"}]},
+        "created_at":{"$ref":"#/$defs/timestamp"},
+        "updated_at":{"$ref":"#/$defs/timestamp"},
+        "created_by":{"$ref":"#/$defs/actor"},
+        "updated_by":{"$ref":"#/$defs/actor"},
+        "record_version":{"type":"integer","minimum":1},
+        "workflow_status":{"$ref":"#/$defs/workflowStatus"},
+        "source_refs":{"type":"array","uniqueItems":true,"items":{"$ref":"#/$defs/id"}},
+        "supersedes":{"$ref":"#/$defs/id"},
+        "superseded_by":{"$ref":"#/$defs/id"},
+        "content_hash":{"type":"string","pattern":"^sha256:[a-f0-9]{64}$"}
+      },
+      "additionalProperties":true
+    }
+  }
+}

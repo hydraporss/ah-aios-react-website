@@ -1,0 +1,20 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://hydraporss.github.io/ah-aios-react-website/schemas/v1/claim.schema.json",
+  "title":"WorldForge Claim Record","type":"object",
+  "allOf":[{"$ref":"./common.schema.json#/$defs/baseRecord"}],
+  "required":["id","record_type","schema_version","world_id","statement","claim_type","evidence_refs","workflow_status","evidence_state","canon_status","created_at","updated_at","created_by","updated_by","record_version","source_refs"],
+  "properties":{
+    "record_type":{"const":"claim"},
+    "world_id":{"anyOf":[{"$ref":"./common.schema.json#/$defs/id"},{"type":"null"}]},
+    "title":{"type":"string","maxLength":240},
+    "statement":{"type":"string","minLength":1,"maxLength":30000},
+    "claim_type":{"enum":["observation","fact_assertion","inference","interpretation","hypothesis","proposal"]},
+    "evidence_refs":{"type":"array","uniqueItems":true,"items":{"$ref":"./common.schema.json#/$defs/id"}},
+    "evidence_state":{"$ref":"./common.schema.json#/$defs/evidenceState"},
+    "canon_status":{"$ref":"./common.schema.json#/$defs/canonStatus"},
+    "uncertainty":{"type":"string","maxLength":4000},
+    "contradiction_refs":{"type":"array","uniqueItems":true,"items":{"$ref":"./common.schema.json#/$defs/id"}},
+    "reviewer_refs":{"type":"array","uniqueItems":true,"items":{"$ref":"./common.schema.json#/$defs/id"}}
+  }
+}
