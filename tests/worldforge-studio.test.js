@@ -18,7 +18,7 @@ test('World Studio ships its runtime assets and all primary workspace panels', (
 });
 
 test('World Studio exposes the structured world-model workflow', () => {
-  for (const field of ['world-form', 'entity-form', 'relationship-form', 'claim-form']) {
+  for (const field of ['world-form', 'entity-form', 'relationship-form', 'studio-claim-form']) {
     assert.match(html, new RegExp(`id="${field}"`));
   }
   for (const feature of ['worlds', 'entities', 'relationships', 'claims', 'sources', 'auditLog']) {
