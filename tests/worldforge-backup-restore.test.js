@@ -5,7 +5,7 @@ import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import vm from 'node:vm';
 
-const sandbox={console,Date,Set,Map,JSON,Object,Array,String,Number,Error};
+const sandbox={console,Date,Set,Map,JSON,Object,Array,String,Number,Error,URL};
 vm.createContext(sandbox);
 vm.runInContext(readFileSync(join(process.cwd(),'public/worldforge/verified-2026-10-28/assets/data-layer.js'),'utf8'),sandbox);
 const api=sandbox.WorldForgeDataLayer;
