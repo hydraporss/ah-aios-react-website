@@ -130,3 +130,8 @@ The PR remains open as a draft. No merge, root-site replacement, or production d
 ## AH-CORE-110 authoring milestone
 
 Four lesson drafts added for AH-CORE-110 M1.1–M1.4. Source: root `README.md`, blob `4a99342dfed4eab085162f22b464540e5cc99612`. The drafts cover component responsibilities, separate browser-local and Django Server Governance paths, API/interface boundaries, persistence and authorization boundaries, and evidence limits for prototype versus production claims. The source states that the local prototype does not synchronize with Django. Browser-to-backend acceptance remains unverified; lesson wording retains that limitation. All four lessons are marked Authored draft / Not reviewed. No publication or credential claim is made.
+
+
+## AH-CORE-120 authoring milestone
+
+Four lesson drafts added for AH-CORE-120 M1.1–M1.4. Sources: root README blob `4a99342dfed4eab085162f22b464540e5cc99612`; `docs/v0.4-end-to-end-acceptance.md` blob `668b72567dd22501b70b7b186bc9cc11fe39b4d1`. Coverage: session identity/authentication versus authorization; documented per-world owner/editor/viewer roles; scoped-access and access-lifecycle gaps; access-decision and audit evidence. The cited sources do not provide a complete action-level permission matrix or full grant/change/revoke/expiry/review lifecycle. Those remain open evidence requirements. The Django API's server-side session and membership checks are documented, while browser-to-backend acceptance remains unverified. All four are Authored draft / Not reviewed; none published.
