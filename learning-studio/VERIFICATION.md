@@ -173,7 +173,7 @@ Added `tests/curriculum-quality-gate.test.js`. The new automated checks validate
 
 The quality gate is deliberately structural: it verifies completeness of required fields and status boundaries, not the factual correctness of every lesson explanation. Human subject-matter and instructional review remain necessary.
 
-At the time this gate was added, the curriculum contains 16 authored drafts and 80 specified-only lessons. This is not a content-complete or release-accepted programme. The new test must pass in GitHub Actions on the exact branch head before its result is treated as verified.
+At the time the original 0.3.0 gate was added, the curriculum contained 16 authored drafts and 80 specified-only lessons. The 0.3.1 update below supersedes those counts with 20 authored drafts and 76 specified-only lessons. The new test must pass in GitHub Actions on the exact branch head before its result is treated as verified.
 
 
 ## Deployment candidate 0.3.0 — packaging and smoke checks
@@ -191,9 +191,9 @@ Updated the root GitHub Pages workflow to retain the existing WorldForge root bu
 - Copy the Learning Studio runtime files to `dist/learning-studio/`.
 - Verify both root and Learning Studio production entry points before uploading the single Pages artifact.
 
-The branch-specific verification workflow runs on pushes to `learning-studio-0.2.0`. The root deployment workflow runs on pushes to `main` or manual dispatch. The current branch has not been merged, and no production deployment has been triggered by this change.
+Historical 0.2.0 checkpoint: the branch-specific verification workflow ran on pushes to `learning-studio-0.2.0`; the root deployment workflow ran on pushes to `main` or manual dispatch. This checkpoint is superseded by the 0.3.1 workflow described below.
 
-**Not yet verified:** the new test suite's GitHub Actions result on the exact branch head; the merged deployment workflow; the public Pages URL; browser/device/accessibility acceptance; and real PWA install/offline behavior. See `DEPLOYMENT.md` for the required release checklist.
+**Historical 0.2.0 release gates:** exact branch-head CI, merged deployment workflow, public Pages URL, browser/device/accessibility acceptance, and real PWA install/offline behavior remained open at that checkpoint. See the 0.3.1 section and `DEPLOYMENT.md` for the current release gates.
 
 
 ## Learning Studio 0.3.1 verification additions — 30 October 2026
@@ -205,4 +205,4 @@ The branch-specific verification workflow runs on pushes to `learning-studio-0.2
 - Updated the service-worker cache version and precache list for the validator.
 - Updated the Pages workflow to test and package the new runtime asset.
 
-The current curriculum remains 20/96 authored drafts, 76/96 specified-only, 0 reviewed, and 0 published. This is a verified implementation milestone, not a declaration that the programme is complete.
+The current curriculum remains 20/96 authored drafts, 76/96 specified-only, 0 reviewed, and 0 published. This is an implementation milestone, not a declaration that the programme is complete. Post-merge GitHub Actions and live Pages deployment results must be checked before calling this release accepted.
