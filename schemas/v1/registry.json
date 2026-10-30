@@ -1,0 +1,16 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"WorldForge Schema Registry v1",
+  "schema_dialect":"https://json-schema.org/draft/2020-12/schema",
+  "schema_version":"1.0.0",
+  "schemas":[
+    {"record_type":"world","path":"world.schema.json","version":"1.0.0"},
+    {"record_type":"entity","path":"entity.schema.json","version":"1.0.0"},
+    {"record_type":"relationship","path":"relationship.schema.json","version":"1.0.0"},
+    {"record_type":"claim","path":"claim.schema.json","version":"1.0.0"},
+    {"record_type":"source","path":"source.schema.json","version":"1.0.0"},
+    {"record_type":"evidence","path":"evidence.schema.json","version":"1.0.0"},
+    {"record_type":"manifest","path":"manifest.schema.json","version":"1.0.0"}
+  ],
+  "policy":{"unknown_schema":"reject","unknown_status":"reject","canon_promotion_on_migration":false}
+}
