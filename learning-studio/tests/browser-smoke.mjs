@@ -7,7 +7,7 @@ const pageErrors = [];
 page.on("pageerror", error => pageErrors.push(error.message));
 
 try {
-  await page.goto("http://127.0.0.1:4173/", { waitUntil: "networkidle" });
+  await page.goto("http://127.0.0.1:4173/learning-studio/", { waitUntil: "domcontentloaded" });
   await page.locator("#curriculum-roadmap").waitFor();
   assert.match(await page.locator("#curriculum-roadmap").innerText(), /24 courses/);
   assert.match(await page.locator("#curriculum-roadmap").innerText(), /96 lesson units/);
