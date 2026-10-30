@@ -47,7 +47,7 @@ jobs:
 
       - name: Generate SHA-256 inventory for every tracked file
         env:
-          GITHUB_SHA: \${{ github.sha }}
+          GITHUB_SHA: ${{ github.sha }}
         run: |
           mkdir -p "$RUNNER_TEMP/ah-aios-backup-audit"
           python - <<'PY'
@@ -93,7 +93,7 @@ jobs:
       - name: Upload verification evidence
         uses: actions/upload-artifact@v4
         with:
-          name: ah-aios-backup-integrity-\${{ github.sha }}
-          path: \${{ runner.temp }}/ah-aios-backup-audit/
+          name: ah-aios-backup-integrity-${{ github.sha }}
+          path: ${{ runner.temp }}/ah-aios-backup-audit/
           if-no-files-found: error
           retention-days: 90
