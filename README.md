@@ -14,6 +14,10 @@ The root of this repository is the Learning Studio website. Its current release 
 - PWA manifest and service-worker app-shell caching.
 - Automated curriculum, data-integrity, deployment, and browser smoke tests.
 
+## ERPRP governance
+
+This repository also contains the proposed AH-AIOS Ecosystem Realization & Production Readiness Program (ERPRP) governance package. It defines GitHub authority, system boundaries, data-integrity expectations, and the G0–G7 readiness gates. The charter remains proposed pending formal adoption; the register does not declare any application production-ready. See [`docs/erprp/README.md`](docs/erprp/README.md). A dedicated GitHub Actions workflow validates the governance package structure on relevant pull requests and pushes.
+
 ## Run locally
 
 Requirements: Node.js 24+ and pnpm 11.
