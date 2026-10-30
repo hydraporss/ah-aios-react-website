@@ -31,3 +31,4 @@ jobs:
           test -s manifest.webmanifest
           test -s sw.js
           test -s icon.svg
+          test -s curriculum-data.js
