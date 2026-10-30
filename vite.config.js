@@ -1,5 +1,5 @@
 const base = process.env.GITHUB_ACTIONS === 'true'
-  ? '/ah-aios-react-website/'
+  ? '/learning-studio/'
   : '/';
 
 export default {

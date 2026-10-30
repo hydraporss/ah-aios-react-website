@@ -1,7 +1,8 @@
 {
-  "name": "ah-aios-worldforge-react",
+  "name": "learning-studio",
+  "version": "0.3.1",
   "private": true,
-  "version": "0.1.0",
+  "description": "Learning Studio — an AH-AIOS learning platform for AI systems, governance, and WorldForge.",
   "type": "module",
   "packageManager": "pnpm@11.25.0",
   "engines": {
@@ -11,7 +12,9 @@
     "dev": "vite",
     "build": "vite build --configLoader runner",
     "preview": "vite preview",
-    "test": "node --test --test-isolation=none",
+    "test": "node --test tests/*.test.js studio-tests/*.test.js",
+    "test:browser": "node studio-tests/browser-smoke.mjs",
+    "test:worldforge": "node --test tests/governance.test.js",
     "test:e2e": "powershell -NoProfile -ExecutionPolicy Bypass -File tests/run-governance-acceptance.ps1"
   },
   "dependencies": {
