@@ -26,7 +26,7 @@ try {
     await page.locator('#entity-form select[name="type"]').selectOption(type);
     await page.locator('#entity-world').selectOption({ label: 'Browser Test World' });
     await page.locator('#entity-form button.accent-btn').click();
-    await page.getByText(name, { exact: true }).waitFor();
+    await page.getByRole('heading', { name, exact: true }).waitFor();
   }
 
   await page.locator('[data-tab="relationships"]').click();
