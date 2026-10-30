@@ -14,6 +14,7 @@ const temp = mkdtempSync(join(tmpdir(), 'worldforge-studio-'));
 try {
   await page.goto(base + 'studio.html', { waitUntil: 'networkidle' });
   await page.getByRole('heading', { name: /World Studio/ }).waitFor();
+  await page.locator('[data-tab="worlds"]').click();
   await page.locator('#world-form input[name="name"]').fill('Browser Test World');
   await page.locator('#world-form textarea[name="description"]').fill('Automated acceptance fixture.');
   await page.locator('#world-form button[type="submit"]').click();
