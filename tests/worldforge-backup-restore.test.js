@@ -13,7 +13,10 @@ const fixture={packageType:'ah-aios-worldforge',schemaVersion:'1.0.0',worlds:[{i
 
 test('portable backup/restore round trip preserves stable IDs, relationships, audit lineage, and canon status',()=>{
  const bytes=JSON.stringify(fixture);const checksum=createHash('sha256').update(bytes).digest('hex');
- const restored=api.migrateWorkspace(JSON.parse(bytes));
+ const backup={format:'ah-aios-worldforge-backup-v1',sha256:checksum,payload:JSON.parse(bytes)};
+ assert.equal(createHash('sha256').update(JSON.stringify(backup.payload)).digest('hex'),backup.sha256,'Backup checksum must verify before restore.');
+ const tampered=JSON.parse(JSON.stringify(backup));tampered.payload.claims[0].statement='tampered';assert.notEqual(createHash('sha256').update(JSON.stringify(tampered.payload)).digest('hex'),tampered.sha256,'Tampered backup must be detected.');
+ const restored=api.migrateWorkspace(JSON.parse(JSON.stringify(backup.payload)));
  const restoredBytes=JSON.stringify(restored);const restoredAgain=api.migrateWorkspace(JSON.parse(restoredBytes));
  assert.equal(restoredAgain.worlds[0].id,'world-a');
  assert.equal(restoredAgain.relationships[0].sourceId,'entity-a');
@@ -21,6 +24,6 @@ test('portable backup/restore round trip preserves stable IDs, relationships, au
  assert.equal(restoredAgain.claims[0].canonStatus,'not_canon');
  assert.equal(restoredAgain.auditLog[0].id,'audit-a');
  assert.equal(restoredAgain.versionHistory[0].id,'rev-a');
- assert.equal(createHash('sha256').update(bytes).digest('hex'),checksum);
+ assert.equal(backup.sha256,checksum);
  assert.equal(api.validateWorkspace(restoredAgain).valid,true);
 });
