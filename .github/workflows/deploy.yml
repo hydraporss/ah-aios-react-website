@@ -49,6 +49,9 @@ jobs:
         run: pnpm exec playwright install --with-deps chromium
       - name: Build the production site
         run: pnpm build
+      - name: Copy static Learning Studio runtime assets into the Pages artifact
+        run: |
+          cp app.js styles.css manifest.webmanifest sw.js icon.svg curriculum-data.js theory-validation.js dist/
       - name: Smoke-test the built root application
         run: |
           python3 -m http.server 4173 --directory dist > /tmp/learning-studio-http.log 2>&1 &
