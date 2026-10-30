@@ -37,3 +37,12 @@ Latest automated checks passed on commit `e86b1c72394f5fa9870b38d6cc028b9e3a8ad9
 The service worker caches the SVG app icon and only cleans up older Learning Studio cache versions. Learner profile name is reflected in the header and certificates. Progress import validates nested records and preserves current data on invalid input.
 
 Manual cross-browser/accessibility and PWA acceptance, full course authoring/review, authoritative 82-Theory data/provenance, and production deployment remain outstanding.
+
+
+## Curriculum roadmap
+
+The Learning Studio now displays the full source-defined course blueprint from `docs/learning/content-master-plan.md`: 6 AH-AIOS Core courses, 7 AI Harness courses, 8 WorldForge courses, and 3 cross-cutting Human Stewardship courses. Each blueprint entry shows its proposed course ID, target competency level, main evidence, and status **Specified · authoring pending**. Human Stewardship is not a fourth technical domain.
+
+The blueprint is not a claim that all courses have been authored. The interactive catalogue still contains nine starter modules. The full lessons, worked examples, exercises, rubrics, source references, review records, and publication workflow remain to be completed against the source standard.
+
+The roadmap and responsive layout passed CI in run https://github.com/hydraporss/ah-aios-react-website/actions/runs/41024000678.
