@@ -25,3 +25,5 @@ test("keyboard skip link, named navigation landmarks, and visible focus are prov
 test("mobile navigation exposes its expanded state to assistive technology",()=>{assert.match(html,/id="menu-toggle" aria-label="Toggle navigation" aria-controls="sidebar" aria-expanded="false"/);assert.match(app,/button\.setAttribute\("aria-expanded",String\(open\)\)/)});
 test("profile heading and avatar reflect the saved learner identity",()=>{assert.match(html,/id="profile-heading"/);assert.match(html,/id="profile-avatar"/);assert.match(app,/heading\.textContent=name/);assert.match(app,/avatar\.textContent=initials/)});
 test("reduced-motion preference is respected",()=>assert.match(css,/@media\(prefers-reduced-motion:reduce\)/));
+
+test("PWA cache includes the icon and only removes prior Learning Studio caches",()=>{const sw=fs.readFileSync(new URL("../sw.js",import.meta.url),"utf8");assert.match(sw,/\.\/icon\.svg/);assert.match(sw,/key\.startsWith\("ah-aios-learning-studio-"\)/);assert.doesNotMatch(sw,/keys\.filter\(key=>key!==CACHE\)/)});
