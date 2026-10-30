@@ -3,7 +3,7 @@
   'use strict';
   const CURRENT_PACKAGE_VERSION = '1.0.0';
   const CURRENT_SCHEMA_VERSION = '1.0.0';
-  const WORKFLOW = new Set(['proposed','investigating','needs_evidence','validated','approved','rejected','superseded']);
+  const WORKFLOW = new Set(['draft','proposed','investigating','needs_evidence','validated','approved','rejected','superseded']);
   const CANON = new Set(['not_canon','verify_under_review','canon_aligned_interpretation','approved_visualization','established_canon']);
   const EVIDENCE = new Set(['unknown','unsupported','partially_supported','supported','contradicted','mixed']);
   const clone = value => JSON.parse(JSON.stringify(value));
