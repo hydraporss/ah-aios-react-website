@@ -9,8 +9,8 @@ const manifest = JSON.parse(read("manifest.webmanifest"));
 const pkg = JSON.parse(read("package.json"));
 
 test("deployment candidate has a consistent 0.3.1 application version", () => {
-  assert.equal(pkg.version, "0.3.0");
-  assert.match(sw, /ah-aios-learning-studio-0\.3\.0-v1/);
+  assert.equal(pkg.version, "0.3.1");
+  assert.match(sw, /ah-aios-learning-studio-0\.3\.1-v1/);
 });
 
 test("HTML runtime asset references are relative and resolve to packaged files", () => {
