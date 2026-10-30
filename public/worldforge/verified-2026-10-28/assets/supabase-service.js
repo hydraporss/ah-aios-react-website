@@ -159,7 +159,7 @@ async function syncBidirectional(workspace){
    const values={remote_record_id:c.remoteId,base_version:map.lastSyncedVersions[c.type+':'+c.recordId]||null,remote_version:c.remoteVersion,base_snapshot:c.baseSnapshot,local_snapshot:c.localSnapshot,remote_snapshot:c.remoteSnapshot,updated_at:new Date().toISOString()};
    const prior=await db.from('sync_conflicts').update(values).eq('project_id',c.projectId).eq('record_type',c.type).eq('local_record_id',c.recordId).eq('status','open').select('id').maybeSingle();
    if(prior.error){console.warn('Conflict was retained locally; remote refresh failed.',prior.error.message);continue}
-   if(!prior.data){const ins=await db.from('sync_conflicts').insert({id:c.id,project_id:c.projectId,record_type:c.type,local_record_id:c.recordId,...values,status:'open',created_by:user.id});if(ins.error&&ins.error.code!=='23505')console.warn('Conflict was retained locally but could not be stored remotely.',ins.error.message)}
+   if(prior.data){c.id=prior.data.id;}else{const ins=await db.from('sync_conflicts').insert({id:c.id,project_id:c.projectId,record_type:c.type,local_record_id:c.recordId,...values,status:'open',created_by:user.id}).select('id').single();if(ins.error){if(ins.error.code==='23505'){const existing=await db.from('sync_conflicts').select('id').eq('project_id',c.projectId).eq('record_type',c.type).eq('local_record_id',c.recordId).eq('status','open').maybeSingle();if(existing.error||!existing.data){console.warn('Conflict was retained locally but its remote identity could not be recovered.',existing.error?.message||'No open conflict row found.');continue;}c.id=existing.data.id;}else{console.warn('Conflict was retained locally but could not be stored remotely.',ins.error.message);continue;}}else if(ins.data)c.id=ins.data.id;}
   }
   saveMap(map);return {pulled, pushed:{worlds:0,entities:0,relationships:0,claims:0,sources:0},conflicts:workspace.syncConflicts.filter(c=>c.status==='open'),blocked:true,at:new Date().toISOString(),note:'Conflict resolution is required before any push; no conflicting records were overwritten.'};
  }
@@ -172,26 +172,45 @@ async function resolveConflict(workspace,conflictId,choice){
  const validator=root.WorldForgeDataLayer;if(!validator)throw new Error('WorldForge data validator is unavailable.');
  const conflict=(workspace.syncConflicts||[]).find(c=>c.id===conflictId&&c.status==='open');if(!conflict)throw new Error('Open conflict was not found.');
  if(!['local','remote','defer'].includes(choice))throw new Error('Unsupported conflict resolution choice.');
- if(choice==='defer')return {resolved:false,workspace,conflict};
+ const db=await client();const user=await requireUser(db);
+ const table={worlds:'projects',entities:'entities',relationships:'relationships',sources:'sources',claims:'claims'}[conflict.type];
+ if(!table)throw new Error('Unsupported conflict record type: '+conflict.type);
  const map=idMap(),key=conflict.type+':'+conflict.recordId;
+ if(choice==='local'){
+  if(!(workspace[conflict.type]||[]).some(x=>x.id===conflict.recordId))throw new Error('No local record exists to keep. Restore or recreate it through an explicit reviewed workflow.');
+  if(!conflict.remoteSnapshot||!conflict.remoteId||!conflict.remoteVersion)throw new Error('Cannot keep a local record against a missing remote record without explicit recreate review.');
+  const remote=await db.from(table).select('id,record_version').eq('id',conflict.remoteId).maybeSingle();if(remote.error)throw remote.error;
+  if(!remote.data||remote.data.record_version!==conflict.remoteVersion)throw new Error('Remote record changed again while resolving. Run bidirectional sync to refresh the conflict.');
+ }
+ if(choice==='remote'&&!conflict.remoteSnapshot)throw new Error('Remote record is missing; deletion cannot be auto-accepted. Export a backup and resolve the missing record manually.');
+ if(conflict.projectId){
+  const patch=choice==='defer'?{status:'deferred',updated_at:new Date().toISOString()}:{status:'resolved',resolution:choice==='remote'?'keep_remote':'keep_local',updated_at:new Date().toISOString(),resolved_at:new Date().toISOString(),resolved_by:user.id};
+  let persisted=await db.from('sync_conflicts').update(patch).eq('id',conflict.id).select('id').maybeSingle();
+  if(persisted.error)throw persisted.error;
+  if(!persisted.data){
+   persisted=await db.from('sync_conflicts').update(patch).eq('project_id',conflict.projectId).eq('record_type',conflict.type).eq('local_record_id',conflict.recordId).eq('status','open').select('id').maybeSingle();
+   if(persisted.error)throw persisted.error;
+   if(!persisted.data)throw new Error('The persistent conflict record could not be found or updated. Local resolution was not applied.');
+   conflict.id=persisted.data.id;
+  }
+ }
+ if(choice==='defer'){
+  conflict.status='deferred';conflict.deferredAt=new Date().toISOString();
+  workspace.auditLog=workspace.auditLog||[];workspace.auditLog.push({id:uuid(),action:'sync-conflict-deferred',detail:conflict.type+':'+conflict.recordId,at:conflict.deferredAt});
+  return {resolved:false,workspace,conflict};
+ }
  if(choice==='remote'){
-  if(!conflict.remoteSnapshot)throw new Error('Remote record is missing; deletion cannot be auto-accepted. Export a backup and resolve the missing record manually.');
   setRecord(workspace,conflict.type,conflict.remoteSnapshot);
   map.lastSyncedLocalSnapshots=map.lastSyncedLocalSnapshots||{};map.lastSyncedVersions=map.lastSyncedVersions||{};map.lastSyncedHashes=map.lastSyncedHashes||{};
   map.lastSyncedLocalSnapshots[key]=validator.comparable(({worlds:'world',entities:'entity',relationships:'relationship',sources:'source',claims:'claim'}[conflict.type]||conflict.type),conflict.remoteSnapshot);
   map.lastSyncedVersions[key]=conflict.remoteVersion;map.lastSyncedHashes[key]=conflict.remotePayloadHash||map.lastSyncedHashes[key];
  }else{
-  if(!(workspace[conflict.type]||[]).some(x=>x.id===conflict.recordId))throw new Error('No local record exists to keep. Restore or recreate it through an explicit reviewed workflow.');
-  if(!conflict.remoteSnapshot||!conflict.remoteId||!conflict.remoteVersion)throw new Error('Cannot keep a local record against a missing remote record without explicit recreate review.');
-  const table={worlds:'projects',entities:'entities',relationships:'relationships',sources:'sources',claims:'claims'}[conflict.type];
-  const db=await client(),r=await db.from(table).select('id,record_version').eq('id',conflict.remoteId).maybeSingle();if(r.error)throw r.error;
-  if(!r.data||r.data.record_version!==conflict.remoteVersion)throw new Error('Remote record changed again while resolving. Run bidirectional sync to refresh the conflict.');
   map.lastSyncedVersions=map.lastSyncedVersions||{};map.lastSyncedVersions[key]=conflict.remoteVersion;
-  map.lastSyncedHashes=map.lastSyncedHashes||{};map.lastSyncedHashes[key]=conflict.remotePayloadHash;map.lastSyncedLocalSnapshots=map.lastSyncedLocalSnapshots||{};map.lastSyncedLocalSnapshots[key]=validator.comparable(({worlds:'world',entities:'entity',relationships:'relationship',sources:'source',claims:'claim'}[conflict.type]||conflict.type),conflict.remoteSnapshot);
+  map.lastSyncedHashes=map.lastSyncedHashes||{};map.lastSyncedHashes[key]=conflict.remotePayloadHash;
+  map.lastSyncedLocalSnapshots=map.lastSyncedLocalSnapshots||{};map.lastSyncedLocalSnapshots[key]=validator.comparable(({worlds:'world',entities:'entity',relationships:'relationship',sources:'source',claims:'claim'}[conflict.type]||conflict.type),conflict.remoteSnapshot);
  }
  conflict.status='resolved';conflict.resolution=choice==='remote'?'keep_remote':'keep_local';conflict.resolvedAt=new Date().toISOString();
  saveMap(map);
- if(conflict.projectId){const db=await client();await db.from('sync_conflicts').update({status:'resolved',resolution:conflict.resolution,updated_at:conflict.resolvedAt,resolved_at:conflict.resolvedAt,resolved_by:(await requireUser(db)).id}).eq('id',conflict.id)}
  workspace.auditLog=workspace.auditLog||[];workspace.auditLog.push({id:uuid(),action:'sync-conflict-resolved',detail:conflict.type+':'+conflict.recordId+' → '+conflict.resolution,at:conflict.resolvedAt});
  return {resolved:true,workspace,conflict};
 }
