@@ -67,3 +67,8 @@ Four additional source-grounded lesson drafts have been authored for AH-CORE-110
 ## AH-CORE-110 authoring milestone
 
 Four source-grounded lesson drafts now cover architecture responsibilities and data paths, component interfaces and dependencies, trust/persistence boundaries, and the distinction between prototype, backend foundation, acceptance, deployment, and production assurance. Source basis: repository README (root `README.md`, blob `4a99342dfed4eab085162f22b464540e5cc99612`). The lesson wording preserves the documented separation between browser-local workflows and the Django Server Governance path, and does not claim browser-to-backend acceptance. These four lessons are authored drafts only; they are not reviewed or published.
+
+
+## AH-CORE-120 authoring milestone
+
+Four source-grounded lesson drafts now cover identity/authentication/authorization, per-world owner/editor/viewer roles, access-scope and lifecycle gaps, and access-decision evidence. Sources are the root README (blob `4a99342dfed4eab085162f22b464540e5cc99612`) and the WorldForge v0.4 End-to-End Acceptance Record (blob `668b72567dd22501b70b7b186bc9cc11fe39b4d1`). The lessons distinguish documented API session and membership checks from the unauthenticated browser-local demo. The available sources do not define a complete action-by-action role matrix or full membership lifecycle; those remain explicit evidence gaps. All four lessons are authored drafts, not reviewed or published.
