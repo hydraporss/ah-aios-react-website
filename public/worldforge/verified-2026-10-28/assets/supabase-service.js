@@ -38,7 +38,7 @@ async function syncWorkspace(workspace){
      else if(table==='entities'||table==='relationships'||table==='claims'||table==='sources')payload.created_by=user.id;
      const {data,error}=await db.from(table).insert(payload).select('id,record_version').single();
      if(error)throw new Error('Could not create '+type+' "'+(local.name||local.title||local.id)+'": '+error.message);
-     map.lastSyncedVersions[key]=data.record_version||1;map.lastSyncedHashes[key]=payloadHash;synced[type]++;return data;
+     map.lastSyncedVersions[key]=data.record_version||1;map.lastSyncedHashes[key]=payloadHash;saveMap(map);synced[type]++;return data;
    }
    const last=map.lastSyncedVersions[key];
    if(last===undefined||existing.record_version!==last){conflicts.push({type,id:local.id,reason:'Remote revision changed since last sync.'});return null}
@@ -48,7 +48,7 @@ async function syncWorkspace(workspace){
    const {data,error}=await db.from(table).update(next).eq('id',remoteId).eq('record_version',existing.record_version).select('id,record_version').maybeSingle();
    if(error)throw error;
    if(!data){conflicts.push({type,id:local.id,reason:'Optimistic concurrency check failed.'});return null}
-   map.lastSyncedVersions[key]=data.record_version;map.lastSyncedHashes[key]=payloadHash;synced[type]++;return data;
+   map.lastSyncedVersions[key]=data.record_version;map.lastSyncedHashes[key]=payloadHash;saveMap(map);synced[type]++;return data;
  }
  const worldIds={};
  for(const w of workspace.worlds||[]){
