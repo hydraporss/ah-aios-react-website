@@ -58,7 +58,7 @@ test("rejects unsupported top-level fields rather than silently discarding them"
 
 test("storage failure leaves the application commit callback untouched", () => {
   let committed = false;
-  const failingStorage = { setItem() { throw new Error("quota exceeded"); } };
+  const failingStorage = { getItem() { return null; }, setItem() { throw new Error("quota exceeded"); }, removeItem() {} };
   assert.throws(() => integrity.persistImport(failingStorage, "progress", valid, () => { committed = true; }), /quota exceeded/);
   assert.equal(committed, false);
 });
@@ -66,9 +66,23 @@ test("storage failure leaves the application commit callback untouched", () => {
 test("successful storage commit updates state only after persistence succeeds", () => {
   let stored = null;
   let committed = null;
-  const storage = { setItem(key, value) { stored = { key, value }; } };
+  const storage = { getItem() { return stored?.value ?? null; }, setItem(key, value) { stored = { key, value }; }, removeItem() { stored = null; } };
   integrity.persistImport(storage, "progress", valid, (value) => { committed = value; });
   assert.equal(stored.key, "progress");
   assert.deepEqual(JSON.parse(stored.value), valid);
   assert.equal(committed, valid);
+});
+
+test("read-back mismatch restores the previous stored value and does not commit state", () => {
+  let value = "previous-record";
+  let committed = false;
+  let reads = 0;
+  const storage = {
+    getItem() { reads += 1; return reads === 1 ? value : "corrupted-readback"; },
+    setItem(key, next) { value = next; },
+    removeItem() { value = null; }
+  };
+  assert.throws(() => integrity.persistImport(storage, "progress", valid, () => { committed = true; }), /previous record was restored/);
+  assert.equal(value, "previous-record");
+  assert.equal(committed, false);
 });
