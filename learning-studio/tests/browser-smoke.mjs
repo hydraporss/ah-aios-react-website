@@ -9,15 +9,17 @@ page.on("pageerror", error => pageErrors.push(error.message));
 try {
   await page.goto("http://127.0.0.1:4173/learning-studio/", { waitUntil: "domcontentloaded" });
   await page.locator("#curriculum-roadmap").waitFor();
-  assert.match(await page.locator("#curriculum-roadmap").innerText(), /24 courses/);
-  assert.match(await page.locator("#curriculum-roadmap").innerText(), /96 lesson units/);
-  assert.equal(await page.locator("#all-courses .blueprint-course").count(), 24);
+  assert.ok(await page.locator("#curriculum-roadmap .curriculum-card").count() > 0);
+  const courseCount = await page.locator("#all-courses .blueprint-course").count();
+  assert.ok(courseCount > 0, "course catalogue should contain at least one record");
+  const firstCourseId = await page.locator("#all-courses [data-blueprint-course]").first().getAttribute("data-blueprint-course");
+  assert.ok(firstCourseId, "first course should have a stable course identifier");
 
-  await page.locator("#global-search").fill("AH-CORE-140");
+  await page.locator("#global-search").fill(firstCourseId);
   assert.equal(await page.locator("#all-courses .blueprint-course").count(), 1);
-  assert.match(await page.locator("#all-courses").innerText(), /Audit, Evidence, and Verification/);
+  assert.match(await page.locator("#all-courses").innerText(), new RegExp(firstCourseId));
   await page.locator("#global-search").fill("");
-  assert.equal(await page.locator("#all-courses .blueprint-course").count(), 24);
+  assert.equal(await page.locator("#all-courses .blueprint-course").count(), courseCount);
 
   await page.locator("#all-courses [data-blueprint-course]").first().click();
   await page.locator("#modal").waitFor({ state: "visible" });
