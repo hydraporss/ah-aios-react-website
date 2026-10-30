@@ -48,7 +48,7 @@ async function syncWorkspace(workspace){
    const {data,error}=await db.from(table).update(next).eq('id',remoteId).eq('record_version',existing.record_version).select('id,record_version').maybeSingle();
    if(error)throw error;
    if(!data){conflicts.push({type,id:local.id,reason:'Optimistic concurrency check failed.'});return null}
-   map.lastSyncedVersions[key]=data.record_version;map.lastSyncedHashes[key]=payloadHash;map.lastSyncedLocalSnapshots[key]=validator.comparable?validator.comparable(type.slice(0,-1),local):local;saveMap(map);synced[type]++;return data;
+   map.lastSyncedVersions[key]=data.record_version;map.lastSyncedHashes[key]=payloadHash;map.lastSyncedLocalSnapshots[key]=validator.comparable?validator.comparable(({worlds:'world',entities:'entity',relationships:'relationship',sources:'source',claims:'claim'}[type]||type),local):local;saveMap(map);synced[type]++;return data;
  }
  const worldIds={};
  for(const w of workspace.worlds||[]){
@@ -129,12 +129,12 @@ async function syncBidirectional(workspace){
     setRecord(workspace,localKey,remote);
     map.lastSyncedVersions[key]=row.record_version||1;
     map.lastSyncedHashes[key]=JSON.stringify(rowFields(type,row,localId,worldByRemote[row.project_id],entityByRemote));
-    map.lastSyncedLocalSnapshots[key]=validator.comparable(type.slice(0,-1),remote);
+    map.lastSyncedLocalSnapshots[key]=validator.comparable(({worlds:'world',entities:'entity',relationships:'relationship',sources:'source',claims:'claim'}[type]||type),remote);
     pulled[type]++;continue;
    }
    if(!local&&base){conflicts.push({id:uuid(),type,recordId:localId,remoteId,projectId:row.project_id,reason:'Local record is missing although a prior sync base exists.',baseSnapshot:base,localSnapshot:null,remoteSnapshot:remote,remoteVersion:row.record_version||1,remotePayloadHash:JSON.stringify(rowFields(type,row,localId,worldByRemote[row.project_id],entityByRemote)),status:'open'});continue}
    if(!base){conflicts.push({id:uuid(),type,recordId:localId,remoteId,projectId:row.project_id,reason:'A local record and remote record exist without a shared sync base.',baseSnapshot:null,localSnapshot:local,remoteSnapshot:remote,remoteVersion:row.record_version||1,remotePayloadHash:JSON.stringify(rowFields(type,row,localId,worldByRemote[row.project_id],entityByRemote)),status:'open'});continue}
-   const localProjection=validator.comparable(type.slice(0,-1),local),remoteProjection=validator.comparable(type.slice(0,-1),remote);
+   const localProjection=validator.comparable(({worlds:'world',entities:'entity',relationships:'relationship',sources:'source',claims:'claim'}[type]||type),local),remoteProjection=validator.comparable(({worlds:'world',entities:'entity',relationships:'relationship',sources:'source',claims:'claim'}[type]||type),remote);
    const decision=validator.classifyConflict(base,localProjection,remoteProjection);
    if(decision.state==='conflict'){
     conflicts.push({id:uuid(),type,recordId:localId,remoteId,projectId:row.project_id,reason:'Both local and remote versions changed since the last acknowledged base.',baseSnapshot:base,localSnapshot:local,remoteSnapshot:remote,remoteVersion:row.record_version||1,remotePayloadHash:JSON.stringify(rowFields(type,row,localId,worldByRemote[row.project_id],entityByRemote)),status:'open'});continue;
@@ -172,7 +172,7 @@ async function resolveConflict(workspace,conflictId,choice){
   if(!conflict.remoteSnapshot)throw new Error('Remote record is missing; deletion cannot be auto-accepted. Export a backup and resolve the missing record manually.');
   setRecord(workspace,conflict.type,conflict.remoteSnapshot);
   map.lastSyncedLocalSnapshots=map.lastSyncedLocalSnapshots||{};map.lastSyncedVersions=map.lastSyncedVersions||{};map.lastSyncedHashes=map.lastSyncedHashes||{};
-  map.lastSyncedLocalSnapshots[key]=validator.comparable(conflict.type.slice(0,-1),conflict.remoteSnapshot);
+  map.lastSyncedLocalSnapshots[key]=validator.comparable(({worlds:'world',entities:'entity',relationships:'relationship',sources:'source',claims:'claim'}[conflict.type]||conflict.type),conflict.remoteSnapshot);
   map.lastSyncedVersions[key]=conflict.remoteVersion;map.lastSyncedHashes[key]=conflict.remotePayloadHash||map.lastSyncedHashes[key];
  }else{
   if(!conflict.remoteSnapshot||!conflict.remoteId||!conflict.remoteVersion)throw new Error('Cannot keep a local record against a missing remote record without explicit recreate review.');
