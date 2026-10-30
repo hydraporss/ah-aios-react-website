@@ -1,0 +1,347 @@
+{
+  "schema": "ah-aios-source-verification-register",
+  "version": "1.0.0",
+  "taskId": "AH-CORE-130-SV-001",
+  "courseId": "AH-CORE-130",
+  "prepared": "2026-10-30",
+  "taskStatus": "Source set verified and mapped; independent subject-matter review pending",
+  "lessonStatus": "Authored draft / Not reviewed",
+  "publicationStatus": "Not published",
+  "scope": {
+    "lessonIds": [
+      "M1.1",
+      "M1.2",
+      "M1.3",
+      "M1.4"
+    ],
+    "excludes": [
+      "new course creation",
+      "course catalogue changes",
+      "AH-CORE-140",
+      "lesson approval or publication"
+    ]
+  },
+  "sources": [
+    {
+      "id": "NIST-800-30-R1",
+      "title": "Guide for Conducting Risk Assessments",
+      "issuer": "National Institute of Standards and Technology (NIST), Joint Task Force Transformation Initiative",
+      "version": "SP 800-30 Rev. 1",
+      "publicationDate": "2012-09-17",
+      "status": "Final",
+      "type": "NIST risk-assessment guidance",
+      "officialUrl": "https://csrc.nist.gov/pubs/sp/800/30/r1/final",
+      "doi": "https://doi.org/10.6028/NIST.SP.800-30r1",
+      "relevantSections": [
+        "Risk assessment process",
+        "Risk assessment tasks",
+        "Threat sources and threat events",
+        "Vulnerabilities and predisposing conditions",
+        "Likelihood and impact determination"
+      ],
+      "lessonIds": [
+        "M1.1"
+      ],
+      "supports": [
+        "Bounded asset/threat/risk inventory",
+        "Distinguishing documented conditions from assessed risk and uncertainty"
+      ],
+      "limitations": [
+        "Does not provide an AH-AIOS threat model",
+        "Does not establish project-specific risk scores or penetration-test results"
+      ]
+    },
+    {
+      "id": "NIST-AI-100-2-E2025",
+      "title": "Adversarial Machine Learning: A Taxonomy and Terminology of Attacks and Mitigations",
+      "issuer": "NIST Trustworthy and Responsible AI",
+      "version": "NIST AI 100-2 E2025",
+      "publicationDate": "2025-03",
+      "status": "Final; corrected PDF uploaded 2025-04-01; NIST records potential errata note 2025-06-03",
+      "type": "NIST taxonomy and terminology report",
+      "officialUrl": "https://csrc.nist.gov/pubs/ai/100/2/e2025/final",
+      "doi": "https://doi.org/10.6028/NIST.AI.100-2e2025",
+      "relevantSections": [
+        "Taxonomy hierarchy",
+        "Machine-learning lifecycle",
+        "Attacker goals, objectives, capabilities, and knowledge",
+        "Attack and mitigation terminology",
+        "Glossary"
+      ],
+      "lessonIds": [
+        "M1.1",
+        "M1.3"
+      ],
+      "supports": [
+        "Adversarial-ML vocabulary",
+        "Lifecycle-aware attacker and attack descriptions"
+      ],
+      "limitations": [
+        "Not a prompt-injection implementation assessment",
+        "Not a project control baseline"
+      ]
+    },
+    {
+      "id": "NIST-800-53-R5",
+      "title": "Security and Privacy Controls for Information Systems and Organizations",
+      "issuer": "NIST Joint Task Force",
+      "version": "SP 800-53 Rev. 5",
+      "publicationDate": "2020-09-23",
+      "status": "Final; NIST publication record notes errata update 2020-12-10",
+      "type": "NIST security and privacy control catalogue",
+      "officialUrl": "https://csrc.nist.gov/pubs/sp/800/53/r5/final",
+      "doi": "https://doi.org/10.6028/NIST.SP.800-53r5",
+      "relevantSections": [
+        "AC-3 Access Enforcement",
+        "AC-6 Least Privilege",
+        "AU-6 Audit Record Review, Analysis, and Reporting",
+        "AU-9 Protection of Audit Information",
+        "AU-11 Audit Record Retention",
+        "IR-4 Incident Handling"
+      ],
+      "lessonIds": [
+        "M1.2",
+        "M1.4"
+      ],
+      "supports": [
+        "Policy-to-control mapping",
+        "Access enforcement and least privilege",
+        "Audit protection and incident-handling control vocabulary"
+      ],
+      "limitations": [
+        "Does not prove AH-AIOS conformity or implementation",
+        "Controls must be selected, tailored, implemented, and assessed in context"
+      ]
+    },
+    {
+      "id": "NIST-800-61-R3",
+      "title": "Incident Response Recommendations and Considerations for Cybersecurity Risk Management: A CSF 2.0 Community Profile",
+      "issuer": "NIST",
+      "version": "SP 800-61 Rev. 3",
+      "publicationDate": "2025-04-03",
+      "status": "Final; supersedes Rev. 2",
+      "type": "NIST incident-response guidance",
+      "officialUrl": "https://csrc.nist.gov/pubs/sp/800/61/r3/final",
+      "doi": "https://doi.org/10.6028/NIST.SP.800-61r3",
+      "relevantSections": [
+        "CSF 2.0 preparation: Govern, Identify, Protect",
+        "Incident lifecycle: Detect, Respond, Recover",
+        "Continuous improvement"
+      ],
+      "lessonIds": [
+        "M1.4"
+      ],
+      "supports": [
+        "Incident-response lifecycle",
+        "Integration with broader cybersecurity risk management"
+      ],
+      "limitations": [
+        "Does not define an AH-AIOS response team, severity matrix, notification deadlines, on-call rota, or escalation authority"
+      ]
+    },
+    {
+      "id": "OWASP-LLM-TOP10-2026",
+      "title": "OWASP Top 10 for LLM Applications 2026",
+      "issuer": "OWASP GenAI Security Project",
+      "version": "2026",
+      "publicationDate": "2026-08-03",
+      "status": "Official resource page dated 2026-08-03; downloaded PDF contains unresolved publication-date placeholders",
+      "type": "Community-developed LLM security risk guide",
+      "officialUrl": "https://genai.owasp.org/resource/owasp-genai-llm-top-10-2026/",
+      "pdfUrl": "https://genai.owasp.org/download/56857/",
+      "relevantSections": [
+        "LLM01:2026 Prompt Injection (PDF pp. 10–17)",
+        "LLM03:2026 Excessive Agency",
+        "Appendix B: LLM Application Architecture and Threat Modeling"
+      ],
+      "lessonIds": [
+        "M1.1",
+        "M1.3"
+      ],
+      "supports": [
+        "Prompt-injection delivery surfaces and propagation",
+        "Direct and indirect prompt injection",
+        "Multimodal and retrieved-content risks",
+        "Architecture-level mitigation and threat-modeling concepts"
+      ],
+      "limitations": [
+        "Landing page is dated 2026-08-03 but PDF publication-date fields remain placeholders",
+        "Community guidance, not a statutory standard",
+        "Does not prove AH-AIOS implemented mitigations"
+      ]
+    },
+    {
+      "id": "OWASP-AUTHORIZATION-CS",
+      "title": "Authorization Cheat Sheet",
+      "issuer": "OWASP Cheat Sheet Series",
+      "version": "Maintained guidance; no fixed edition asserted",
+      "publicationDate": null,
+      "accessed": "2026-10-30",
+      "type": "OWASP implementation guidance",
+      "officialUrl": "https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html",
+      "relevantSections": [
+        "Deny by Default",
+        "Validate the Permissions on Every Request",
+        "Least Privilege"
+      ],
+      "lessonIds": [
+        "M1.2"
+      ],
+      "supports": [
+        "Default-deny authorization",
+        "Per-request permission checks",
+        "Least privilege and permission review"
+      ],
+      "limitations": [
+        "Does not prove every AH-AIOS endpoint is protected or tested"
+      ]
+    },
+    {
+      "id": "OWASP-LLM-PIP-CS",
+      "title": "LLM Prompt Injection Prevention",
+      "issuer": "OWASP Cheat Sheet Series",
+      "version": "Maintained guidance; no fixed edition asserted",
+      "publicationDate": null,
+      "accessed": "2026-10-30",
+      "type": "OWASP implementation guidance",
+      "officialUrl": "https://cheatsheetseries.owasp.org/cheatsheets/LLM_Prompt_Injection_Prevention_Cheat_Sheet.html",
+      "relevantSections": [
+        "Common Attack Types",
+        "Primary Defenses",
+        "Structured Prompts with Clear Separation",
+        "Human-in-the-Loop Controls",
+        "Least Privilege",
+        "Secure Implementation Pipeline",
+        "Testing for Vulnerabilities"
+      ],
+      "lessonIds": [
+        "M1.3"
+      ],
+      "supports": [
+        "Untrusted-content separation",
+        "Permission enforcement at tool boundaries",
+        "Least privilege",
+        "High-risk human approval",
+        "Output validation and adversarial testing"
+      ],
+      "limitations": [
+        "Labels or prompt wording alone do not enforce security boundaries",
+        "Does not prove any defense is implemented in AH-AIOS"
+      ]
+    },
+    {
+      "id": "OWASP-LOGGING-CS",
+      "title": "Logging Cheat Sheet",
+      "issuer": "OWASP Cheat Sheet Series",
+      "version": "Maintained guidance; no fixed edition asserted",
+      "publicationDate": null,
+      "accessed": "2026-10-30",
+      "type": "OWASP operational implementation guidance",
+      "officialUrl": "https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html",
+      "relevantSections": [
+        "Event data sources",
+        "Which events to log",
+        "Event attributes",
+        "Data to exclude",
+        "Verification",
+        "Protection",
+        "Monitoring of events",
+        "Disposal of logs"
+      ],
+      "lessonIds": [
+        "M1.4"
+      ],
+      "supports": [
+        "Evidence-aware event records",
+        "Authentication and authorization failure logging",
+        "Log integrity protection, verification, monitoring, and retention planning"
+      ],
+      "limitations": [
+        "Does not make browser-local audit events immutable or independently trustworthy"
+      ]
+    }
+  ],
+  "internalEvidence": [
+    {
+      "path": "docs/learning/content-governance.md",
+      "branch": "ah-aios-learning-package",
+      "gitBlobSha": "e9a2d234068eacf9327e18ef986448316e73f28d",
+      "supports": [
+        "Source attribution",
+        "Content-status separation",
+        "Revision history",
+        "Authorization and data-handling policy statements"
+      ]
+    },
+    {
+      "path": "src/governance.js",
+      "branch": "ah-aios-learning-package",
+      "gitBlobSha": "8d21a745155e2463fea802c9325c3a68b972562d",
+      "supports": [
+        "Application-layer roles and capabilities",
+        "Legal state transitions",
+        "Explicit UI visibility is not authorization comment"
+      ]
+    },
+    {
+      "path": "docs/v0.4-sprint-1-and-acceptance.md",
+      "branch": "ah-aios-learning-package",
+      "gitBlobSha": "8526cccd8dda54f88b574c619eb371e89f23c89c",
+      "supports": [
+        "Sprint scope and limitations",
+        "No authenticated identities/server persistence/tamper-resistant audit storage",
+        "Browser-local audit events editable/deletable"
+      ]
+    },
+    {
+      "path": "tests/e2e-governance.mjs",
+      "branch": "ah-aios-learning-package",
+      "gitBlobSha": "e0eb9491ab2b0e23dd9aa03f835c6e0beac3bf50",
+      "supports": [
+        "CSRF token use",
+        "Anonymous approval 401",
+        "Creator/reviewer approval 403",
+        "Authorized approval",
+        "Audit verification and archive export"
+      ]
+    },
+    {
+      "path": "tests/governance.test.js",
+      "branch": "ah-aios-learning-package",
+      "gitBlobSha": "edb13f5c9405155dea176f10f2cd55299d85b894",
+      "supports": [
+        "Application-level governance tests",
+        "Denied creator approval and transition constraints"
+      ]
+    }
+  ],
+  "lessonDisposition": {
+    "M1.1": "External threat/risk sources mapped; no complete project threat model evidenced.",
+    "M1.2": "Policy/enforcement guidance mapped; full endpoint coverage and complete role matrix not evidenced.",
+    "M1.3": "OWASP 2026 prompt-injection source verified; no implemented defense evidenced.",
+    "M1.4": "Incident lifecycle/logging sources mapped; no complete operational incident response procedure evidenced."
+  },
+  "prohibitedClaims": [
+    "AH-AIOS has a complete formal threat model.",
+    "AH-AIOS is NIST SP 800-53 compliant.",
+    "All application/API routes enforce authorization.",
+    "AH-AIOS has implemented prompt-injection prevention.",
+    "Prompt injection is prevented by provenance, RAG, or prompt wording alone.",
+    "Browser-local audit history is immutable or tamper-proof.",
+    "AH-AIOS has a complete production incident-response capability.",
+    "A test-denied request proves that a security incident occurred."
+  ],
+  "acceptance": {
+    "existingLessonIdsPreserved": true,
+    "officialSourcesRecorded": true,
+    "publisherAndVersionMetadataRecorded": true,
+    "lessonClaimMappingRecorded": true,
+    "limitationsRecorded": true,
+    "internalBlobHashesCrossChecked": true,
+    "courseCatalogueChanged": false,
+    "newCourseCreated": false,
+    "ahCore140Changed": false,
+    "lessonStatusChanged": false,
+    "independentSecurityReview": "Pending"
+  }
+}
