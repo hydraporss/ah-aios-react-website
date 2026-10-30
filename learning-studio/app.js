@@ -43,4 +43,22 @@ document.querySelector("#export").onclick=()=>download("ah-aios-learning-progres
 document.querySelector("#tutor-start").onclick=()=>modal('<p class="eyebrow">LOCAL LEARNING ASSISTANT</p><h2 id="modal-title">AI Tutor</h2><p>This prototype tutor provides guidance from the included starter lessons. It is not connected to a live AI model or external service.</p><div id="chat-log" class="chat-log"><p><b>Tutor:</b> Ask about governance, provenance, world models, bounded actions, or verification.</p></div><form id="chat-form"><input id="chat-input" placeholder="Ask a learning question…" required><button class="primary-btn">Ask</button></form>');document.querySelector("#chat-form").onsubmit=e=>{e.preventDefault();const q=document.querySelector("#chat-input").value,logel=document.querySelector("#chat-log");const hits=MODULES.filter(m=>(m.title+" "+m.lesson+" "+m.summary).toLowerCase().includes(q.toLowerCase()));const answer=hits.length?hits.slice(0,2).map(m=>m.title+": "+m.lesson).join("\n\n"):"Try searching for a course on governance, world model, provenance, bounded actions, or verification. This offline tutor answers from the local starter curriculum only.";logel.innerHTML+='<p><b>You:</b> '+esc(q)+'</p><p><b>Tutor:</b> '+esc(answer)+'</p>';document.querySelector("#chat-input").value=""};
 document.querySelector("#profile-open").onclick=()=>document.querySelector("#profile").scrollIntoView();document.querySelector("#save-profile").onclick=()=>{localStorage.setItem(PROFILE,document.querySelector("#display-name").value);alert("Local profile saved.")};try{document.querySelector("#display-name").value=localStorage.getItem(PROFILE)||"Alex Rivera"}catch{}
 document.querySelector("#reset-progress").onclick=()=>{if(confirm("Reset all locally stored course progress, labs, and portfolio entries? This cannot be undone unless you exported a backup.")){state=blank();save()}};document.querySelector("#compact-mode").onchange=e=>document.body.classList.toggle("compact-mode",e.target.checked);document.querySelector("#menu-toggle").onclick=()=>document.querySelector("#sidebar").classList.toggle("show");document.querySelectorAll(".side-link").forEach(a=>a.addEventListener("click",()=>{document.querySelectorAll(".side-link").forEach(x=>x.classList.remove("active"));a.classList.add("active");document.querySelector("#sidebar").classList.remove("show")}));document.querySelector("#notify").onclick=()=>modal('<h2 id="modal-title">Notifications</h2><p>You are all caught up. New course and lab activity will appear here.</p>');
-if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));let deferred;window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferred=e});render();
+if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+const SPRINT_KEY="ah-aios-learning-sprint-v1";
+let sprintState={};
+try{sprintState=JSON.parse(localStorage.getItem(SPRINT_KEY)||"{}")}catch{sprintState={}}
+function renderSprint(){
+ const boxes=[...document.querySelectorAll("[data-sprint]")];
+ boxes.forEach(b=>{b.checked=!!sprintState[b.dataset.sprint]});
+ const done=boxes.filter(b=>b.checked).length,total=boxes.length;
+ const label=document.querySelector("#sprint-progress"),bar=document.querySelector("#sprint-bar");
+ if(label)label.textContent=done+" / "+total+" tasks";
+ if(bar)bar.style.width=(total?done/total*100:0)+"%";
+}
+document.querySelectorAll("[data-sprint]").forEach(box=>box.addEventListener("change",()=>{
+ sprintState[box.dataset.sprint]=box.checked;
+ localStorage.setItem(SPRINT_KEY,JSON.stringify(sprintState));
+ renderSprint();
+}));
+
+let deferred;window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferred=e});render();renderSprint();
