@@ -69,3 +69,16 @@ The source curriculum also requires each lesson to include observable outcomes, 
 - Production hosting, root-site promotion, privacy/retention policy, and any multi-user/backend claims.
 
 **Status:** Latest automated code checks pass. The Learning Studio is not yet content-complete, manually accessibility-tested, PWA-accepted, or production-deployed.
+
+
+## Curriculum roadmap implementation — 30 October 2026
+
+Added a visible, responsive curriculum blueprint sourced from `docs/learning/content-master-plan.md` on branch `ah-aios-learning-package`. It lists all 24 specified course records with their proposed course IDs, target competency levels, and main assessment evidence:
+- 6 AH-AIOS Core courses.
+- 7 AI Harness courses.
+- 8 WorldForge courses.
+- 3 Human Stewardship courses, explicitly presented as cross-cutting rather than a fourth technical domain.
+
+The 24-course roadmap is clearly labeled **Specified · authoring pending**. It is not represented as published or interactive lesson content. The nine interactive starter modules remain separately labeled. The page links to the source master plan.
+
+Regression tests verify the 6/7/8/3 course counts, visible roadmap, and distinction between specified blueprint and starter lessons. GitHub Actions run [41024000678](https://github.com/hydraporss/ah-aios-react-website/actions/runs/41024000678) completed successfully on commit `f9d6d2cebc1769270a2a3ed7068dfe15f2836f09`.
