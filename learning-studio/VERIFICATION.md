@@ -1,7 +1,7 @@
 # Verification — AH-AIOS Learning 0.2.0
 
 ## Automated checks
-The GitHub Actions workflow runs the Node test suite and static-file checks on changes to this application. The current redesign is under test; update this report with the latest run URL and outcome after CI completes.
+The redesigned application passed GitHub Actions on commit `7042600560cece5461d92eef2a0950df8dbfad81`. Run: https://github.com/hydraporss/ah-aios-react-website/actions/runs/41014665635 (completed, success). The workflow executed `node --test tests/*.test.js` and checked required static app files.
 
 The regression suite checks:
 - Nine starter course records.
