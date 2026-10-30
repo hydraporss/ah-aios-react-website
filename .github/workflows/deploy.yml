@@ -29,8 +29,10 @@ jobs:
           cache: pnpm
       - name: Install locked dependencies
         run: pnpm install --frozen-lockfile
-      - name: Run Learning Studio and preserved WorldForge regression tests
+      - name: Run Learning Studio and WorldForge regression tests
         run: pnpm test
+      - name: Check WorldForge Studio JavaScript syntax
+        run: node --check public/worldforge/verified-2026-10-28/assets/studio.js
       - name: Check Learning Studio JavaScript syntax
         run: |
           node --check app.js
@@ -62,6 +64,7 @@ jobs:
             sleep 1
           done
           pnpm test:browser
+          node studio-tests/worldforge-studio-smoke.mjs
       - name: Verify production artifact
         run: |
           test -s dist/index.html
