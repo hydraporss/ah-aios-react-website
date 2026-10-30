@@ -1,0 +1,39 @@
+<!-- Notion source export 40966662-b29d-816b-b747-c2495b718c7c; original repository path package.json; exported 2026-10-30. -->
+
+<b>Repository:</b> [hydraporss/ah-aios-react-website](https://github.com/hydraporss/ah-aios-react-website)
+<b>Branch:</b> `main`
+<b>Source path:</b> `package.json`
+<b>Size:</b> 609 bytes
+<b>Git blob SHA:</b> `de53ac18467f423c552e8a17201b4c1317c3c954`
+<b>GitHub source:</b> [Open original](https://github.com/hydraporss/ah-aios-react-website/blob/main/package.json)
+
+---
+
+```json
+{
+  "name": "ah-aios-worldforge-react",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "packageManager": "pnpm@11.25.0",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build --configLoader runner",
+    "preview": "vite preview",
+    "test": "node --test --test-isolation=none",
+    "test:e2e": "powershell -NoProfile -ExecutionPolicy Bypass -File tests/run-governance-acceptance.ps1"
+  },
+  "dependencies": {
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.64.1",
+    "vite": "^8.3.0"
+  }
+}
+
+```
