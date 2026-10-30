@@ -29,6 +29,7 @@ AH-AIOS Learning is the learning and capability-development environment for unde
 - [Practice labs and applied projects](practice-labs.md)
 - [Assessment, portfolio, and credentials](assessment-portfolio.md)
 - [Content governance and data model](content-governance.md)
+- [Learning Content Master Plan](content-master-plan.md)
 
 ## Learning-resource status
 
