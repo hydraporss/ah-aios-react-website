@@ -87,11 +87,11 @@ Verified three current authoritative references and mapped them to the relevant 
 These external sources support teaching concepts; they do not prove AH-AIOS or WorldForge has implemented the controls they describe. Existing repository evidence and known gaps remain separate. All four AH-CORE-130 lessons remain Authored draft / Not reviewed; no lesson is approved or published.
 
 
-## Learning Studio 0.3.0 — content completion and verification work
+## Learning Studio 0.3.1 — curriculum quality gate
 
 The current curriculum data contains 24 source-defined courses and 96 lesson units. Twenty lessons are authored drafts across AH-CORE-100, AH-CORE-110, AH-CORE-120, AH-CORE-130, and AH-CORE-140; the other 76 remain **Specified only**. All authored lessons remain **Not reviewed**, and no course is published. The source master plan remains **SUGGESTION / PROCESS**.
 
-A new automated curriculum quality gate checks the 24/96 structure, 6/7/8/3 domain split, required instructional fields for every authored lesson, knowledge-check answer/rationale integrity, specified-only status for the remaining 80 lessons, and the non-promotion of drafts to reviewed or published status. It also protects the existing AH-CORE-140 lesson titles and specified-only state.
+A new automated curriculum quality gate checks the 24/96 structure, 6/7/8/3 domain split, required instructional fields for every authored lesson, knowledge-check answer/rationale integrity, specified-only status for the remaining 76 lessons, and the non-promotion of drafts to reviewed or published status. It also protects the AH-CORE-140 authored-draft content and its unreviewed/unpublished state.
 
 This is a verification milestone, not a claim that the Learning Studio is content-complete. Source recovery, the remaining 80 lesson authoring units, independent reviews, manual accessibility/browser/PWA acceptance, and release acceptance remain open.
 
