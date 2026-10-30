@@ -77,3 +77,11 @@ Four source-grounded lesson drafts now cover identity/authentication/authorizati
 ## AH-CORE-130 authoring milestone
 
 Four source-grounded lessons now cover project assets and attack surfaces; policy-to-control mapping; untrusted source content and instruction conflicts; and incident recognition, evidence preservation, and escalation. Sources include the learning content-governance policy, WorldForge governance state machine and unit tests, server end-to-end authorization tests, and v0.4 sprint/acceptance notes. The lessons preserve key limitations: no complete formal threat model, no documented AI prompt-injection defense, no complete operational incident-response procedure, and browser-local audit records are not tamper-proof. All four lessons are Authored draft / Not reviewed.
+
+
+
+## AH-CORE-130 external source verification — 30 October 2026
+
+Verified three current authoritative references and mapped them to the relevant security lesson drafts: NIST SP 800-61 Rev. 3 (incident response, final April 2025), NIST AI 100-2 E2025 (adversarial machine-learning taxonomy, final March 2025), and the OWASP GenAI / LLM Top 10 2026 (current release, published 4 August 2026). Exact publication metadata, canonical URLs, lesson mappings, and scope limitations are recorded in `AH-CORE-130-SOURCE-VERIFICATION.md` and `curriculum-data.js`.
+
+These external sources support teaching concepts; they do not prove AH-AIOS or WorldForge has implemented the controls they describe. Existing repository evidence and known gaps remain separate. All four AH-CORE-130 lessons remain Authored draft / Not reviewed; no lesson is approved or published.
