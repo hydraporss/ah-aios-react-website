@@ -16,7 +16,7 @@ test('all registered JSON schemas parse and declare Draft 2020-12', () => {
   assert.ok(readdirSync(schemaDir).includes('common.schema.json'));
 });
 
-const sandbox = { console, Date, Set, Map, JSON, Object, Array, String, Number, Error };
+const sandbox = { console, Date, Set, Map, JSON, Object, Array, String, Number, Error, URL };
 vm.createContext(sandbox);
 vm.runInContext(readFileSync(join(process.cwd(),'public/worldforge/verified-2026-10-28/assets/data-layer.js'),'utf8'),sandbox);
 const api = sandbox.WorldForgeDataLayer;
