@@ -20,3 +20,8 @@ test("sprint progress is persisted locally and restored",()=>{assert.match(app,/
 test("sprint security guidance forbids committing credentials",()=>assert.match(html,/Never commit \.env, tokens or keys/));
 
 test("learner profile is reflected in header identity and completion certificates",()=>{assert.match(app,/function syncProfile\(\)/);assert.match(app,/localStorage\.setItem\(PROFILE,learnerName\)/);assert.match(app,/esc\(learnerName\)/);assert.doesNotMatch(app,/\>Alex Rivera\<\/b\>/)});
+
+test("keyboard skip link, named navigation landmarks, and visible focus are provided",()=>{assert.match(html,/class="skip-link" href="#home"/);assert.match(html,/<nav class="topnav" aria-label="Primary navigation">/);assert.match(html,/<aside class="sidebar" id="sidebar" aria-label="Learning navigation">/);assert.match(css,/:focus-visible/)});
+test("mobile navigation exposes its expanded state to assistive technology",()=>{assert.match(html,/id="menu-toggle" aria-label="Toggle navigation" aria-controls="sidebar" aria-expanded="false"/);assert.match(app,/button\.setAttribute\("aria-expanded",String\(open\)\)/)});
+test("profile heading and avatar reflect the saved learner identity",()=>{assert.match(html,/id="profile-heading"/);assert.match(html,/id="profile-avatar"/);assert.match(app,/heading\.textContent=name/);assert.match(app,/avatar\.textContent=initials/)});
+test("reduced-motion preference is respected",()=>assert.match(css,/@media\(prefers-reduced-motion:reduce\)/));
