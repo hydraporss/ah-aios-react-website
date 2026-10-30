@@ -1,6 +1,6 @@
 # Learning Studio — Data Integrity v1 Implementation Record
 
-**Status:** Implemented on an isolated development branch; automated verification pending.  
+**Status:** Implemented; exact feature-branch CI verification passed. Manual acceptance and review remain open.  
 **Branch:** `feat/learning-studio-data-integrity-v1`  
 **Baseline:** `docs/learning-studio-architecture-v1.0`  
 **Scope:** Browser-local learner progress export, import, validation, persistence, and recovery.
@@ -21,7 +21,9 @@
 
 ## Verification boundary
 
-The tests are committed but must pass in GitHub Actions before this milestone is marked verified. No local browser/device acceptance, cross-browser PWA acceptance, or production release is claimed here.
+GitHub Actions run [41144839143](https://github.com/hydraporss/ah-aios-react-website/actions/runs/41144839143) passed on exact branch-head commit `6bba6faaaa5967fb19fc6a52cf3a4777b157d05a`. The run passed regression tests, syntax checks, required-file checks, Chromium installation, production build, browser smoke test, and artifact verification. The deploy job was correctly skipped for this feature branch.
+
+No separate manual browser/device acceptance, cross-browser PWA acceptance, or production release is claimed here.
 
 ## Data protection boundary
 
@@ -29,9 +31,9 @@ This is browser-local persistence only. It does not introduce accounts, remote s
 
 ## Acceptance criteria
 
-- [ ] Feature-branch GitHub Actions run succeeds on the exact branch head.
-- [ ] Progress package tests pass.
-- [ ] Production build and static artifact checks pass.
-- [ ] Browser smoke test passes.
+- [x] Feature-branch GitHub Actions run succeeds on the exact branch head.
+- [x] Progress package tests pass.
+- [x] Production build and static artifact checks pass.
+- [x] Browser smoke test passes.
 - [ ] Manual import/export and browser-storage failure scenarios are reviewed.
 - [ ] Changes are reviewed before any merge to `main`.
