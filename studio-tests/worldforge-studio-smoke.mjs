@@ -8,7 +8,7 @@ const browser = await chromium.launch({ headless: true });
 const context = await browser.newContext({ acceptDownloads: true });
 const page = await context.newPage();
 const errors = [];
-page.on('pageerror', error => errors.push(error.message));
+page.on('pageerror', error => errors.push(error.stack || error.message));
 const temp = mkdtempSync(join(tmpdir(), 'worldforge-studio-'));
 
 try {
