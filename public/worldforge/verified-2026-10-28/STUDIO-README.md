@@ -39,3 +39,13 @@ See the WorldForge Project Documentation Hub in Notion and AH-WF-ARCH-001. These
 - Supabase migrations `20261030112015_worldforge_record_versioning.sql` and `20261030112052_worldforge_function_privilege_hardening.sql` add version snapshots, audit events, optimistic version increments, a controlled canon-status RPC, and restricted function privileges.
 - Authentication and Row Level Security are required. Only the public publishable key is used in the browser. Do not add service-role keys to frontend files.
 - Supabase project schema changes have been applied to the configured development project and checked with Supabase security advisors. Production readiness, full bidirectional sync, and restore drills remain unverified.
+
+
+## Bidirectional sync, validation, and recovery milestone
+
+- Full JSON Schema Draft 2020-12 instance validation uses a pinned Ajv 8.17.1 browser module and the repository schema registry. Import, export, integrity review, and cloud sync are blocked when schema validation fails. Local structural integrity checks remain separate.
+- Conflict snapshots are stored locally and, when RLS allows, in the RLS-protected `sync_conflicts` table. Conflicts retain base/local/remote snapshots and server versions. No automatic last-write-wins or deletion propagation is used.
+- Schema validation and conflict classification have automated tests. CI also runs Ajv CLI fixtures for valid and invalid instances.
+- Optional live authorization tests use two disposable authenticated test users and project IDs supplied only through environment variables: `WORLDFORGE_TEST_SUPABASE_URL`, `WORLDFORGE_TEST_SUPABASE_PUBLISHABLE_KEY`, `WORLDFORGE_TEST_USER_A_EMAIL`, `WORLDFORGE_TEST_USER_A_PASSWORD`, `WORLDFORGE_TEST_PROJECT_A_ID`, and corresponding `USER_B` / `PROJECT_B` values. They are skipped if these variables are not configured.
+- Package-level backup/restore round-trip and tamper-detection tests are automated. A true database backup restoration into a separate Supabase target remains a release gate; no separate target was created by this change.
+- Supabase migration `20261030114246_worldforge_sync_conflicts_v1` adds RLS-protected persistent conflict records. Security advisors must be clean before the PR can be considered.
