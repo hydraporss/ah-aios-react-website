@@ -72,5 +72,98 @@
     const expected = Number(previous.version || 1);
     return {...clone(next),id:previous.id,version:expected+1,updatedAt:new Date().toISOString(),updatedBy:actor || 'system',revisionReason:reason || ''};
   }
-  root.WorldForgeDataLayer = Object.freeze({CURRENT_PACKAGE_VERSION,CURRENT_SCHEMA_VERSION,validateWorkspace,migrateWorkspace,makeRevision});
+
+  let schemaValidatorPromise = null;
+  const SCHEMA_BASE = new URL('../../../../schemas/v1/', root.location ? root.location.href : 'http://localhost/worldforge/verified-2026-10-28/studio.html');
+  function stable(value) {
+    if (Array.isArray(value)) return '[' + value.map(stable).join(',') + ']';
+    if (value && typeof value === 'object') return '{' + Object.keys(value).sort().map(k => JSON.stringify(k)+':'+stable(value[k])).join(',') + '}';
+    return JSON.stringify(value);
+  }
+  function comparable(type, record) {
+    const copy = clone(record || {});
+    for (const key of ['version','record_version','updatedAt','updated_at','createdAt','created_at','remoteId','created_by','updated_by','canonStatus','canon_status','lastSyncedAt']) delete copy[key];
+    copy.recordType = type;
+    return copy;
+  }
+  function classifyConflict(base, local, remote) {
+    if (!base) return { state: local && remote ? 'conflict' : local ? 'local_only' : remote ? 'remote_only' : 'unchanged' };
+    const baseHash = stable(base), localHash = stable(local), remoteHash = stable(remote);
+    const localChanged = localHash !== baseHash, remoteChanged = remoteHash !== baseHash;
+    return { state: localChanged && remoteChanged ? 'conflict' : localChanged ? 'push' : remoteChanged ? 'pull' : 'unchanged', localChanged, remoteChanged };
+  }
+  function toCanonicalRecord(type, r, workspace) {
+    const now = r.updatedAt || r.updated_at || new Date().toISOString();
+    const created = r.createdAt || r.created_at || now;
+    const id = String(r.id || '');
+    const worldId = r.worldId || r.world_id || null;
+    const common = { id, record_type:type, schema_version:'1.0.0', world_id:worldId, created_at:created, updated_at:now, created_by:String(r.createdBy || r.created_by || 'local:browser'), updated_by:String(r.updatedBy || r.updated_by || 'local:browser'), record_version:Number(r.version || r.record_version || 1), workflow_status:String(r.workflowStatus || r.workflow_status || 'proposed').toLowerCase().replaceAll(' ','_'), source_refs:Array.isArray(r.sourceRefs)?r.sourceRefs:(Array.isArray(r.source_refs)?r.source_refs:[]) };
+    if (r.canonStatus || r.canon_status) common.canon_status=String(r.canonStatus||r.canon_status).toLowerCase().replaceAll(' ','_');
+    if (type==='world') return {...common,world_id:null,name:String(r.name||''),description:String(r.description||''),status:['active','draft','archived','retired'].includes(String(r.status||'active').toLowerCase())?String(r.status||'active').toLowerCase():'active',metadata:r.metadata||{}};
+    if (type==='entity') {
+      const kind=String(r.type||r.entityType||r.entity_type||'other').toLowerCase();
+      return {...common,name:String(r.name||''),entity_type:['person','civilization','place','object','organization','concept','species','technology','other'].includes(kind)?kind:'other',description:String(r.description||''),identity_notes:String(r.identity||r.identity_notes||''),attributes:r.attributes||{}};
+    }
+    if (type==='relationship') return {...common,source_id:String(r.sourceId||r.source_id||''),target_id:String(r.targetId||r.target_id||''),relationship_type:String(r.type||r.relationshipType||r.relationship_type||'Related to'),directionality:r.directionality==='symmetric'?'symmetric':'directed',context:String(r.context||''),allow_self_link:!!r.allowSelfLink,allow_cycle:!!r.allowCycle};
+    if (type==='claim') {
+      const raw=String(r.type||r.claimType||r.claim_type||'interpretation').toLowerCase().replaceAll(' ','_');
+      const claimType=['observation','fact_assertion','inference','interpretation','hypothesis','proposal'].includes(raw)?raw:'interpretation';
+      const ev=String(r.evidenceState||r.evidence_state||'unknown').toLowerCase().replaceAll(' ','_');
+      return {...common,world_id:worldId,statement:String(r.statement||r.title||''),claim_type:claimType,evidence_refs:Array.isArray(r.evidenceRefs)?r.evidenceRefs:[],evidence_state:['unknown','unsupported','partially_supported','supported','contradicted','mixed'].includes(ev)?ev:'unknown',canon_status:common.canon_status||'not_canon',uncertainty:String(r.uncertainty||''),contradiction_refs:Array.isArray(r.contradictionRefs)?r.contradictionRefs:[],reviewer_refs:Array.isArray(r.reviewerRefs)?r.reviewerRefs:[]};
+    }
+    if (type==='source') {
+      const raw=String(r.type||r.sourceType||r.source_type||'document').toLowerCase();
+      const sourceType=['document','conversation','image','audio','video','webpage','book','dataset','other'].includes(raw)?raw:'other';
+      const out={...common,world_id:worldId,title:String(r.name||r.title||''),source_type:sourceType,origin_locator:String(r.reference||r.uri||r.origin_locator||''),attribution:String(r.attribution||''),access_classification:'unknown'};
+      if (r.contentHash || r.content_hash) out.content_hash=String(r.contentHash||r.content_hash);
+      return out;
+    }
+    if (type==='evidence') return {...common,world_id:worldId,claim_id:String(r.claimId||r.claim_id||''),source_id:String(r.sourceId||r.source_id||''),relation:['supports','contradicts','qualifies','contextualizes'].includes(r.relation)?r.relation:'contextualizes',locator:String(r.locator||''),excerpt:String(r.excerpt||''),review_state:['unreviewed','reviewed','disputed','unavailable'].includes(r.reviewState)?r.reviewState:'unreviewed'};
+    return {...common};
+  }
+  async function loadSchemaValidator() {
+    if (schemaValidatorPromise) return schemaValidatorPromise;
+    schemaValidatorPromise = (async () => {
+      const [ajvModule, formatsModule] = await Promise.all([
+        import('https://esm.sh/ajv@8.17.1/dist/2020?bundle'),
+        import('https://esm.sh/ajv-formats@3.0.1?bundle')
+      ]);
+      const Ajv2020 = ajvModule.default;
+      const addFormats = formatsModule.default;
+      const ajv = new Ajv2020({allErrors:true,strict:false,validateFormats:true,loadSchema:undefined});
+      addFormats(ajv);
+      const names=['common.schema.json','world.schema.json','entity.schema.json','relationship.schema.json','claim.schema.json','source.schema.json','evidence.schema.json','manifest.schema.json'];
+      for (const name of names) {
+        const response=await fetch(new URL(name,SCHEMA_BASE),{cache:'force-cache'});
+        if(!response.ok)throw new Error('Could not load JSON Schema '+name+' ('+response.status+').');
+        const schema=await response.json();
+        ajv.addSchema(schema,schema.$id);
+      }
+      const compiled={};
+      for (const type of ['world','entity','relationship','claim','source','evidence']) {
+        compiled[type]=ajv.getSchema('https://hydraporss.github.io/ah-aios-react-website/schemas/v1/'+type+'.schema.json');
+        if(!compiled[type])throw new Error('Schema compiler did not register '+type+'.');
+      }
+      compiled.manifest=ajv.getSchema('https://hydraporss.github.io/ah-aios-react-website/schemas/v1/manifest.schema.json');
+      return {ajv,compiled};
+    })();
+    try { return await schemaValidatorPromise; } catch (e) { schemaValidatorPromise=null; throw e; }
+  }
+  async function validateWorkspaceSchemas(workspace) {
+    const structure=validateWorkspace(workspace), errors=structure.errors.map(e=>({...e,validator:'integrity'})), warnings=structure.warnings.map(e=>({...e,validator:'integrity'}));
+    if(errors.length) return {valid:false,errors,warnings,checkedAt:new Date().toISOString(),schemaVersion:CURRENT_SCHEMA_VERSION};
+    const {compiled}=await loadSchemaValidator();
+    const types={world:'worlds',entity:'entities',relationship:'relationships',claim:'claims',source:'sources',evidence:'evidence'};
+    for(const [type,key] of Object.entries(types)) {
+      for(const [index,record] of (workspace[key]||[]).entries()) {
+        const canonical=toCanonicalRecord(type,record,workspace), validator=compiled[type];
+        if(!validator(canonical)) for(const err of (validator.errors||[])) errors.push({code:'JSON_SCHEMA_INVALID',path:key+'['+index+']'+(err.instancePath||''),message:(err.keyword||'schema')+': '+err.message,validator:'json-schema',schema:type});
+      }
+    }
+    const manifest={package_type:'ah-aios-worldforge',schema_version:String(workspace.schemaVersion||CURRENT_PACKAGE_VERSION),exported_at:workspace.exportedAt||new Date().toISOString(),record_counts:{worlds:(workspace.worlds||[]).length,entities:(workspace.entities||[]).length,relationships:(workspace.relationships||[]).length,claims:(workspace.claims||[]).length,sources:(workspace.sources||[]).length,evidence:(workspace.evidence||[]).length}};
+    if(compiled.manifest&&!compiled.manifest(manifest))for(const err of compiled.manifest.errors||[])errors.push({code:'MANIFEST_SCHEMA_INVALID',path:'manifest'+(err.instancePath||''),message:(err.keyword||'schema')+': '+err.message,validator:'json-schema',schema:'manifest'});
+    return {valid:errors.length===0,errors,warnings,checkedAt:new Date().toISOString(),schemaVersion:CURRENT_SCHEMA_VERSION};
+  }
+
+  root.WorldForgeDataLayer = Object.freeze({CURRENT_PACKAGE_VERSION,CURRENT_SCHEMA_VERSION,validateWorkspace,validateWorkspaceSchemas,migrateWorkspace,makeRevision,stable,comparable,classifyConflict,toCanonicalRecord});
 })(typeof window !== 'undefined' ? window : globalThis);
