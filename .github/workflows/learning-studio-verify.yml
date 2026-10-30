@@ -19,6 +19,9 @@ jobs:
       - name: Run Learning Studio source checks
         working-directory: learning-studio
         run: node --test tests/*.test.js
+      - name: Check application JavaScript syntax
+        working-directory: learning-studio
+        run: node --check app.js
       - name: Check required static app files
         working-directory: learning-studio
         run: |
