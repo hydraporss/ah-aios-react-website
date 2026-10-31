@@ -3059,5 +3059,6 @@ window.AH_LEARNING_CURRICULUM = {
     }
   ]
 };
+
 // Expose the source-traced catalogue under the application runtime name.
 window.CURRICULUM_DATA = window.AH_LEARNING_CURRICULUM;
