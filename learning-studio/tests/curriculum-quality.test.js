@@ -21,6 +21,13 @@ test("curriculum preserves the 24-course / 96-lesson source structure",()=>{
   assert.ok(curriculum.courses.every(course=>course.lessons.length===4));
 });
 
+test("visible curriculum status matches the authored and specified lesson inventory",()=>{
+  const html=fs.readFileSync(new URL("../index.html",import.meta.url),"utf8");
+  assert.match(html,/Twenty-four lesson units have authored drafts across AH-CORE-100 through AH-CORE-150/);
+  assert.match(html,/72 remain specified only across AI Harness, WorldForge, and Human Stewardship/);
+  assert.match(html,/All 24 drafts remain unreviewed and unpublished/);
+});
+
 test("course and lesson identifiers are unique within their defined scope",()=>{
   const courseIds=curriculum.courses.map(course=>course.id);
   assert.equal(new Set(courseIds).size,courseIds.length);
