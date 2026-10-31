@@ -19,7 +19,7 @@ a,button{outline-color:#f2c95f}
 .sidebar{display:none;position:fixed;z-index:15;top:82px;bottom:14px;left:14px;width:245px;overflow:auto;border-color:#4a3d22;box-shadow:0 18px 55px #000b}
 .sidebar.open{display:flex}
 .content{max-width:1500px;padding:22px clamp(14px,3vw,42px) 0}
-.hero{min-height:390px;grid-template-columns:minmax(300px,.68fr) minmax(220px,1fr);border:1px solid #504326;border-radius:3px;background:linear-gradient(90deg,#050706f7 0%,#050706e8 31%,#05070678 51%,#05070608 100%),url("../after-humanity-prompt-builder-archive/assets/worldforge-hero-art.png") center center/cover no-repeat;box-shadow:0 20px 55px #0008}
+.hero{min-height:390px;grid-template-columns:minmax(300px,.68fr) minmax(220px,1fr);border:1px solid #504326;border-radius:3px;background:linear-gradient(90deg,#050706f7 0%,#050706e8 31%,#05070678 51%,#05070608 100%),url("./after-humanity-prompt-builder-archive/assets/worldforge-hero-art.png") center center/cover no-repeat;box-shadow:0 20px 55px #0008}
 .hero:before{display:none}.hero:after{display:none}
 .hero-copy{max-width:560px;padding:clamp(25px,4vw,55px);align-self:center;background:linear-gradient(90deg,#050706cc 0%,#05070666 75%,transparent)}
 .hero .eyebrow{color:#e9c45d;font-size:10px;letter-spacing:.23em}
