@@ -234,3 +234,14 @@ The current curriculum remains 20/96 authored drafts, 76/96 specified-only, 0 re
 - No learner account, remote database, cloud synchronization, or server-side assessment record is claimed.
 - Pull request #11 remains a draft and has not been merged. The successful PR verification is not a production deployment; post-merge Pages deployment and live acceptance remain outstanding.
 - Manual accessibility, screen-reader, cross-browser, mobile, install, and offline acceptance remain outstanding.
+
+
+## Assessment integrity hardening — 31 October 2026
+
+The assessment workflow was hardened to reject records with an incorrect schema identity/version, missing creation/update timestamps, malformed feedback ratings, invalid audit events, incomplete revision requests, or appeals that assert an unsupported outcome. Self-review input now rejects null or malformed rating objects before attempting to read their fields.
+
+Regression coverage now exercises malformed persisted nested records, malformed direct review input, schema identity/version, missing timestamps, incomplete revision-request metadata, non-credential boundaries, and preservation of existing data when import or load validation fails.
+
+The learner-visible curriculum status is now asserted against the source data: 24 authored drafts across AH-CORE-100 through AH-CORE-150, 72 specified-only lessons across AI Harness, WorldForge, and Human Stewardship, 0 reviewed, and 0 published. The 24 authored drafts remain drafts; this update does not approve or publish them.
+
+**Verification state:** changes are committed on the open PR branch. Final branch-head CI evidence is pending; this section does not claim a successful run for the latest commit, merge, or deployment.
