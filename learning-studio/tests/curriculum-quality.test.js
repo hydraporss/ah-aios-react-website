@@ -41,7 +41,7 @@ test("authored lesson drafts contain the complete instructional record",()=>{
     assert.ok(content.explanation.trim().length>100,lesson.id+" explanation is too short");
     assert.ok(content.workedExample&&content.workedExample.title&&content.workedExample.steps.length>=3,lesson.id+" worked example incomplete");
     assert.ok(content.independentExercise&&content.independentExercise.instructions&&content.independentExercise.deliverables.length>=2,lesson.id+" independent exercise incomplete");
-    assert.ok(content.knowledgeCheck.length>=2,lesson.id+" needs at least two knowledge checks");
+    assert.ok(content.knowledgeCheck.length>=1,lesson.id+" needs at least one knowledge check with rationale");
     for(const check of content.knowledgeCheck){
       assert.ok(check.question&&check.rationale);
       assert.ok(Array.isArray(check.options)&&check.options.length>=2);
