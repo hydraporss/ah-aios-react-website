@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0d12">
+  <meta name="description" content="AH-AIOS WorldForge integrated workspace.">
+  <title>WorldForge — Integrated Workspace</title>
+  <link rel="stylesheet" href="./workspace.css">
+  <script src="./workspace.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#home" aria-label="WorldForge home">
+        <span class="brand-mark">✦</span>
+        <span><strong>WORLDFORGE</strong><small>AH-AIOS WORKSPACE</small></span>
+      </a>
+      <div class="workspace-label">WORKSPACE</div>
+      <label class="nav-search">
+        <span aria-hidden="true">⌕</span>
+        <input id="module-search" type="search" placeholder="Find a module…" autocomplete="off" aria-label="Find a module">
+        <kbd>/</kbd>
+      </label>
+      <nav class="module-nav" id="module-nav" aria-label="WorldForge modules">
+        <div class="nav-group-label">WORLD MODEL</div>
+        <button class="nav-item active" data-module="home"><span class="nav-number">01</span><span>Home</span></button>
+        <button class="nav-item" data-module="world-atlas"><span class="nav-number">02</span><span>World Atlas</span></button>
+        <button class="nav-item" data-module="entity-registry"><span class="nav-number">03</span><span>Entity Registry</span></button>
+        <button class="nav-item" data-module="relationship-explorer"><span class="nav-number">04</span><span>Relationship Explorer</span></button>
+        <button class="nav-item" data-module="event-chronicle"><span class="nav-number">05</span><span>Event Chronicle</span></button>
+        <div class="nav-group-label">KNOWLEDGE & GOVERNANCE</div>
+        <button class="nav-item" data-module="claims-evidence"><span class="nav-number">06</span><span>Claims &amp; Evidence</span></button>
+        <button class="nav-item" data-module="source-library"><span class="nav-number">07</span><span>Source Library</span></button>
+        <button class="nav-item" data-module="governance"><span class="nav-number">08</span><span>Governance</span></button>
+        <button class="nav-item" data-module="constitution"><span class="nav-number">09</span><span>Constitution</span></button>
+        <button class="nav-item" data-module="doctrine"><span class="nav-number">10</span><span>Doctrine</span></button>
+        <div class="nav-group-label">TOOLS & SYSTEM</div>
+        <button class="nav-item" data-module="prompt-builder"><span class="nav-number">11</span><span>Prompt Builder</span></button>
+        <button class="nav-item" data-module="system-architecture"><span class="nav-number">12</span><span>System Architecture</span></button>
+        <button class="nav-item" data-module="settings"><span class="nav-number">13</span><span>Settings</span></button>
+      </nav>
+      <div class="sidebar-footer"><span class="status-dot"></span><span>Integrated shell · Step 01</span><span class="version">v0.1</span></div>
+    </aside>
+    <main class="main-panel">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobile-menu" type="button" aria-label="Toggle module navigation">☰</button>
+        <div class="breadcrumbs"><span>AH-AIOS</span><span class="crumb-separator">/</span><strong id="breadcrumb-current">Home</strong></div>
+        <div class="topbar-right"><span class="environment"><i></i> DEVELOPMENT</span><span class="avatar" aria-label="Local workspace">W</span></div>
+      </header>
+      <section class="content" id="module-content" aria-live="polite" tabindex="-1">
+        <div class="eyebrow">AH-AIOS / WORLDFORGE</div>
+        <h1>WorldForge workspace</h1>
+        <p class="lead">One governed environment for worlds, entities, relationships, events, evidence, and canon.</p>
+        <div class="welcome-panel">
+          <div class="welcome-copy">
+            <div class="panel-kicker">INTEGRATION MILESTONE 01</div>
+            <h2>The application shell is established.</h2>
+            <p>The 13-module navigation is now in one workspace. Each module will be connected and verified individually. Existing prototypes remain preserved while integration proceeds.</p>
+            <span class="milestone-status"><i></i> SHELL READY · MODULES NOT YET INTEGRATED</span>
+          </div>
+          <div class="orbit-art" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit-core">✦</div></div>
+        </div>
+        <div class="section-heading"><div><div class="eyebrow">MODULE DIRECTORY</div><h2>Thirteen connected areas</h2></div><span class="muted" id="module-count">13 modules</span></div>
+        <div class="module-grid" id="module-grid">
+          <button class="module-card" data-module="world-atlas"><span>02 / WORLD MODEL</span><strong>World Atlas</strong><small>Worlds, locations, timelines and settings</small></button>
+          <button class="module-card" data-module="entity-registry"><span>03 / WORLD MODEL</span><strong>Entity Registry</strong><small>Characters, civilizations, objects and concepts</small></button>
+          <button class="module-card" data-module="relationship-explorer"><span>04 / WORLD MODEL</span><strong>Relationship Explorer</strong><small>Connections, dependencies and conflicts</small></button>
+          <button class="module-card" data-module="event-chronicle"><span>05 / WORLD MODEL</span><strong>Event Chronicle</strong><small>Events, sequences and historical causality</small></button>
+          <button class="module-card" data-module="claims-evidence"><span>06 / KNOWLEDGE</span><strong>Claims &amp; Evidence</strong><small>Claims, evidence links and verification</small></button>
+          <button class="module-card" data-module="source-library"><span>07 / KNOWLEDGE</span><strong>Source Library</strong><small>Source records and provenance</small></button>
+          <button class="module-card" data-module="governance"><span>08 / GOVERNANCE</span><strong>Governance</strong><small>Review workflows, decisions and status</small></button>
+          <button class="module-card" data-module="constitution"><span>09 / GOVERNANCE</span><strong>Constitution</strong><small>Constitutional laws and constraints</small></button>
+          <button class="module-card" data-module="doctrine"><span>10 / GOVERNANCE</span><strong>Doctrine</strong><small>Principles, definitions and standards</small></button>
+          <button class="module-card" data-module="prompt-builder"><span>11 / TOOLS</span><strong>Prompt Builder</strong><small>Structured prompt creation and validation</small></button>
+          <button class="module-card" data-module="system-architecture"><span>12 / SYSTEM</span><strong>System Architecture</strong><small>AH-AIOS layers, services and interfaces</small></button>
+          <button class="module-card" data-module="settings"><span>13 / SYSTEM</span><strong>Settings</strong><small>Workspace configuration and data controls</small></button>
+        </div>
+        <footer class="content-footer">AH-AIOS WORLDFORGE <span>STRUCTURE BEFORE NARRATIVE · CANON IS GOVERNED</span></footer>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
