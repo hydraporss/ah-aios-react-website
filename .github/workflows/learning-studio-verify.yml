@@ -1,7 +1,7 @@
 name: Learning Studio verification
 on:
   push:
-    branches: [learning-studio-0.2.0]
+    branches: [learning-studio-0.2.0, feat/learning-studio-assessment-workflow-v1]
     paths:
       - "learning-studio/**"
       - ".github/workflows/learning-studio-verify.yml"
@@ -56,6 +56,9 @@ jobs:
           test -s sw.js
           test -s icon.svg
           test -s curriculum-data.js
+          test -s theory-validation.js
+          test -s assessment-workflow.mjs
+          test -s assessment-ui.mjs
       - name: Run existing WorldForge governance tests
         run: pnpm test
       - name: Build the WorldForge production site
@@ -63,7 +66,7 @@ jobs:
       - name: Package Learning Studio alongside WorldForge
         run: |
           mkdir -p dist/learning-studio
-          cp learning-studio/index.html learning-studio/app.js learning-studio/styles.css learning-studio/manifest.webmanifest learning-studio/sw.js learning-studio/icon.svg learning-studio/curriculum-data.js dist/learning-studio/
+          cp learning-studio/index.html learning-studio/app.js learning-studio/styles.css learning-studio/manifest.webmanifest learning-studio/sw.js learning-studio/icon.svg learning-studio/curriculum-data.js learning-studio/theory-validation.js learning-studio/assessment-workflow.mjs learning-studio/assessment-ui.mjs dist/learning-studio/
       - name: Verify the combined production artifact
         run: |
           test -s dist/index.html

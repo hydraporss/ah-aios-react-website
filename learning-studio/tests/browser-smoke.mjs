@@ -78,6 +78,36 @@ try {
   assert.match(await page.locator("#theory-status").innerText(),/82 records loaded/);
   assert.match(await page.locator("#theory-source-status").innerText(),/provenance review pending/i);
 
+
+  // Assessment evidence workflow: draft, formative submission, self-review, and persistence.
+  await page.locator("#assessment-workspace").waitFor({ state: "visible" });
+  assert.match(await page.locator("#assessment-workspace").innerText(), /Formal assessment not configured/);
+  await page.locator("#assessment-response").fill("I reviewed the claim, traced its source, checked the evidence, and documented the remaining approval gap.");
+  await page.locator("#assessment-contribution").fill("I authored the analysis and identified the missing evidence.");
+  await page.locator("#assessment-tools").fill("Source comparison, structured review, and manual verification.");
+  await page.locator("#assessment-draft-form button[type=submit]").click();
+  await page.locator("#assessment-submissions .assessment-record-card").first().waitFor({ state: "visible" });
+  await page.locator('#assessment-submissions [data-assessment-action="submit"]').first().click();
+  const reviewDetails = page.locator("#assessment-submissions details").filter({ hasText: "Complete formative self-review" }).first();
+  await reviewDetails.locator("summary").click();
+  await reviewDetails.locator('textarea[name="summary"]').fill("The work is traceable; I should add more detail about verification evidence.");
+  const assessmentDimensions = ["accuracy","traceability","completeness","reasoning","verification","stewardship","communication"];
+  for (const dimension of assessmentDimensions) {
+    await reviewDetails.locator('select[name="score-' + dimension + '"]').selectOption("3");
+    await reviewDetails.locator('textarea[name="evidence-' + dimension + '"]').fill("Evidence: the submitted analysis contains a concrete example for " + dimension + ".");
+    await reviewDetails.locator('textarea[name="comment-' + dimension + '"]').fill("Self-review comment for " + dimension + ".");
+  }
+  await reviewDetails.locator('button[type="submit"]').click();
+  assert.match(await page.locator("#assessment-submissions").innerText(), /not a competency decision/i);
+  const assessmentKey = "ah-aios-learning-assessment-workflow-v1";
+  const savedAssessment = await page.evaluate(key => JSON.parse(localStorage.getItem(key)), assessmentKey);
+  assert.equal(savedAssessment.submissions.length, 1);
+  assert.equal(savedAssessment.submissions[0].status, "feedback_recorded");
+  assert.equal(savedAssessment.submissions[0].competencyDecision, null);
+  await page.reload({ waitUntil: "networkidle" });
+  assert.match(await page.locator("#assessment-submissions").innerText(), /formative self-review/i);
+  assert.match(await page.locator("#assessment-workspace").innerText(), /Formal assessment not configured/);
+
   assert.equal(pageErrors.length, 0, "browser console page errors: " + pageErrors.join("; "));
   process.stdout.write("Learning Studio browser smoke checks passed: catalogue, search, course/lesson navigation, portfolio save, persistence after reload, local tutor, and no uncaught page errors.\n");
 } finally {

@@ -21,6 +21,13 @@ test("curriculum preserves the 24-course / 96-lesson source structure",()=>{
   assert.ok(curriculum.courses.every(course=>course.lessons.length===4));
 });
 
+test("visible curriculum status matches the authored and specified lesson inventory",()=>{
+  const html=fs.readFileSync(new URL("../index.html",import.meta.url),"utf8");
+  assert.match(html,/Twenty-four lesson units have authored drafts across AH-CORE-100 through AH-CORE-150/);
+  assert.match(html,/72 remain specified only across AI Harness, WorldForge, and Human Stewardship/);
+  assert.match(html,/All 24 drafts remain unreviewed and unpublished/);
+});
+
 test("course and lesson identifiers are unique within their defined scope",()=>{
   const courseIds=curriculum.courses.map(course=>course.id);
   assert.equal(new Set(courseIds).size,courseIds.length);
@@ -29,8 +36,8 @@ test("course and lesson identifiers are unique within their defined scope",()=>{
 });
 
 test("authored lesson drafts contain the complete instructional record",()=>{
-  assert.equal(authored.length,20);
-  assert.equal(specified.length,76);
+  assert.equal(authored.length,24);
+  assert.equal(specified.length,72);
   for(const lesson of authored){
     assert.equal(lesson.status,"Authored draft",lesson.id);
     const content=lesson.content;
@@ -70,4 +77,19 @@ test("AH-CORE-140 drafts cite the current NIST assessment and audit references",
     assert.ok(curriculum.sourceCatalog.some(source=>source.id===id),"missing source "+id);
     assert.ok(course.sourceRefs.includes(id),"course does not reference "+id);
   }
+});
+
+
+test("AH-CORE-150 governance drafts are complete instructional records and remain unpublished",()=>{
+  const course=curriculum.courses.find(item=>item.id==="AH-CORE-150");
+  assert.ok(course);
+  assert.equal(course.contentStatus,"Authored draft");
+  assert.equal(course.publicationStatus,"Not published");
+  assert.deepEqual(course.lessons.map(item=>item.title),[
+    "Governance authority and scope",
+    "Change proposals and rationale",
+    "Protected assets, conflicts, and history",
+    "Release, rollback, and post-change verification"
+  ]);
+  assert.ok(course.lessons.every(item=>item.status==="Authored draft" && item.content.reviewStatus==="Not reviewed"));
 });

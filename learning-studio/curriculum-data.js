@@ -230,6 +230,16 @@ window.AH_LEARNING_CURRICULUM = {
                 ],
                 "answer": 1,
                 "rationale": "Creative canon and software implementation evidence have different scopes."
+              },
+              {
+                "question": "Does creative canon authority prove that a software feature has been implemented?",
+                "options": [
+                  "Yes; an authoritative story statement proves implementation",
+                  "No; software implementation requires its own code, deployment, and verification evidence",
+                  "Only when the story and software use the same terminology"
+                ],
+                "answer": 1,
+                "rationale": "Creative authority is scoped to the creative-world claim. Software behavior requires separate implementation and environment-specific verification evidence."
               }
             ],
             "assessmentEvidence": "A two-resource authority classification with supported and unsupported claims.",
@@ -1776,30 +1786,379 @@ window.AH_LEARNING_CURRICULUM = {
         {
           "id": "M1.1",
           "title": "Governance authority and scope",
-          "exercise": "classify who may propose, review, approve, and implement a sample change",
-          "status": "Specified"
+          "status": "Authored draft",
+          "content": {
+            "status": "Authored draft",
+            "purpose": "Understand what governance controls, who or what has authority to decide, and why a workflow must distinguish authority from capability.",
+            "outcomes": [
+              "Define governance authority and scope in a technical learning or knowledge system.",
+              "Distinguish a system capability from permission to exercise that capability.",
+              "Identify the asset, decision, authorized actor, evidence requirement, and boundary in a governance decision."
+            ],
+            "prerequisites": [
+              "AH-CORE-100 M1.4: Vocabulary and status language.",
+              "AH-CORE-140: Audit, Evidence, and Verification."
+            ],
+            "sourceBase": [
+              "AH-LEARN-MASTER-001 § Learning domains, course progression, and lesson standards (source plan; SUGGESTION / PROCESS).",
+              "AH-AIOS World Model Architecture Principles, 2026-10-27, user-provided: Structure Before Narrative; Canon Is Governed; Knowledge Requires Lineage.",
+              "AH-AIOS governance rule: AI generation is not canon creation; Proposed → Investigated → Validated → Approved, with Rejected / Needs Evidence / Superseded outcomes."
+            ],
+            "explanation": "Governance defines the conditions under which a decision may be made, the assets and actions within scope, the people or services allowed to act, and the evidence needed to justify the result. A system may technically be able to edit a record, issue a document, or call a service; that capability does not itself establish authority. Authority comes from an explicit rule, assigned role, valid scope, and applicable review process. Scope answers what is governed: which record, project, version, environment, action, and consequence. A sound decision therefore identifies (1) the protected asset, (2) the proposed action, (3) the governing rule, (4) the authorized decision-maker, (5) the evidence, and (6) the permitted outcome. Governance also separates technical implementation status from knowledge status. A feature described in a specification is not thereby implemented; a generated explanation is not thereby approved; and a successful test is evidence only for the behavior the test actually covers. In AH-AIOS, controlled change and explicit status labels prevent accidental promotion of proposals or interpretations into authoritative records.",
+            "workedExample": {
+              "title": "Can an AI tutor approve a lesson?",
+              "steps": [
+                "The tutor can generate an explanation and recommend edits; this is a capability.",
+                "The content-governance process assigns review and approval to an authorized human reviewer or designated governance role.",
+                "The lesson is currently an authored draft, so the tutor's output cannot change its review status.",
+                "A reviewer checks source lineage, accuracy, assessment alignment, and safety boundaries, then records a decision and rationale.",
+                "The lesson status changes only through the authorized workflow, with the prior version and review evidence retained."
+              ],
+              "result": "The tutor may assist analysis, but it does not possess approval authority merely because it can generate content."
+            },
+            "guidedPractice": [
+              "Choose one governed asset: a lesson, a learner assessment, a credential, or a world-model claim.",
+              "Write the proposed action in one sentence and identify the affected version and environment.",
+              "Find the rule that authorizes or prohibits the action; if no rule is available, mark the decision Needs Evidence rather than inventing authority.",
+              "Name the authorized actor and the evidence that must be retained."
+            ],
+            "independentExercise": {
+              "input": "A proposed change would mark a draft lesson as approved after an AI tutor reports that the lesson is clear and complete.",
+              "instructions": "Write a 150–200 word governance decision. Identify the asset, action, applicable authority, authorized reviewer, evidence required, and the correct current outcome. Explain why model confidence is not approval authority.",
+              "deliverables": [
+                "Governance decision record",
+                "Authority and scope table",
+                "Evidence checklist",
+                "One unresolved question, if any"
+              ]
+            },
+            "knowledgeCheck": [
+              {
+                "question": "What gives an actor authority to approve a governed record?",
+                "options": [
+                  "The technical ability to edit it",
+                  "A generated answer that recommends approval",
+                  "An explicit governance rule, assigned authority, and applicable scope"
+                ],
+                "answer": 2,
+                "rationale": "Capability is not authorization. Approval must follow a defined authority and scope."
+              },
+              {
+                "question": "A specification describes a credential service, but no service is deployed. What is the correct statement?",
+                "options": [
+                  "The credential service is implemented because it is specified",
+                  "The credential service is specified; implementation has not been demonstrated",
+                  "The service is approved because the specification is detailed"
+                ],
+                "answer": 1,
+                "rationale": "Specification, implementation, testing, and production assurance are distinct states."
+              },
+              {
+                "question": "When the applicable approval authority cannot be established, what should happen?",
+                "options": [
+                  "Assume the most senior available user may approve",
+                  "Let the AI tutor decide",
+                  "Record the uncertainty and hold the transition pending evidence"
+                ],
+                "answer": 2,
+                "rationale": "Missing authority is a governance gap; it must not be filled by assumption."
+              }
+            ],
+            "assessmentEvidence": "A completed governance decision record identifying the asset, action, authority, scope, evidence, and outcome.",
+            "feedback": "If your decision relies on a user's technical access, a model recommendation, or a specification alone, revisit the distinction between capability and authority. If authority is unclear, preserve the uncertainty rather than promoting the record.",
+            "safetyBoundary": "Do not include real credentials, private learner data, or confidential records. Do not change production governance states during this exercise.",
+            "references": [
+              "AH-LEARN-MASTER-001 § Learning progression and governance boundaries",
+              "AH-AIOS World Model Architecture Principles (user-provided, 2026-10-27)",
+              "AH-AIOS controlled workflow: Proposed → Investigated → Validated → Approved; alternate outcomes Rejected / Needs Evidence / Superseded"
+            ],
+            "reviewStatus": "Not reviewed"
+          }
         },
         {
           "id": "M1.2",
           "title": "Change proposals and rationale",
-          "exercise": "prepare a change record with source, impact, and verification plan",
-          "status": "Specified"
+          "status": "Authored draft",
+          "content": {
+            "status": "Authored draft",
+            "purpose": "Learn to describe a proposed change precisely, justify it with evidence, and preserve the distinction between proposal, investigation, validation, and approval.",
+            "outcomes": [
+              "Create a change proposal with a bounded scope and explicit rationale.",
+              "Separate observed problem, proposed solution, expected benefit, risk, and acceptance criteria.",
+              "Define evidence that could validate or reject the proposal."
+            ],
+            "prerequisites": [
+              "AH-CORE-150 M1.1: Governance authority and scope.",
+              "AH-CORE-140 M1.3: Verification criteria and reproducibility."
+            ],
+            "sourceBase": [
+              "AH-LEARN-MASTER-001 § Governance workflow and lesson standards (source plan; SUGGESTION / PROCESS).",
+              "AH-AIOS World Model Architecture Principles, 2026-10-27, user-provided: Canon Is Governed and Knowledge Requires Lineage.",
+              "AH-AIOS controlled workflow: Proposed → Investigated → Validated → Approved; Rejected / Needs Evidence / Superseded."
+            ],
+            "explanation": "A change proposal is a request to alter a governed asset, process, rule, interface, or system behavior. It is not the change itself. A useful proposal states the observed problem, the affected asset and version, the proposed modification, the reason for making it, expected benefits, foreseeable risks, dependencies, rollback considerations, and measurable acceptance criteria. Rationale must be traceable: identify what was observed, where the evidence came from, what is inferred, and what remains uncertain. Avoid circular reasoning such as 'make this change because the new version is better.' Instead, define a testable claim: 'The current import process accepts duplicate identifiers; adding a uniqueness check should reject duplicates without changing valid records.' Investigation examines feasibility, dependencies, impact, and alternatives. Validation checks the proposal against acceptance criteria and relevant evidence. Approval is a separate authorized decision. A proposal may be rejected, returned for evidence, or superseded; those are legitimate governance outcomes, not failures to be hidden. A proposal must not silently rewrite the source record or erase its history.",
+            "workedExample": {
+              "title": "Propose duplicate-ID protection",
+              "steps": [
+                "Observed problem: an import fixture contains two records with the same stable ID and the current check does not reject it.",
+                "Affected asset: the curriculum or knowledge-record import validator, including its current version and tests.",
+                "Proposal: reject duplicate IDs before any records are persisted.",
+                "Rationale: duplicate identifiers make references ambiguous and can cause updates to target the wrong record.",
+                "Acceptance criteria: duplicate fixture fails with a clear error; valid unique fixture imports; failed import leaves prior data unchanged.",
+                "Risk and rollback: verify compatibility with existing legitimate datasets and retain the previous validator version."
+              ],
+              "result": "The proposal is specific, testable, bounded, and can be investigated without prematurely claiming that the validator has changed."
+            },
+            "guidedPractice": [
+              "Rewrite a vague request such as 'improve data integrity' as an observable problem.",
+              "Identify the record, process, or interface affected by the proposed change.",
+              "Separate facts from assumptions and state what evidence would change your conclusion.",
+              "Write at least two acceptance criteria and one rollback condition."
+            ],
+            "independentExercise": {
+              "input": "A learner reports that lesson progress disappears after switching browsers. No server-side learner account or cloud synchronization has been verified.",
+              "instructions": "Prepare a change proposal for investigating persistent learner progress. Do not assume cloud sync already exists. Distinguish the observed report from the hypothesized cause, compare at least two solution options, and define tests for the selected proposal.",
+              "deliverables": [
+                "Change proposal",
+                "Evidence and assumption register",
+                "Options comparison",
+                "Acceptance and rollback criteria"
+              ]
+            },
+            "knowledgeCheck": [
+              {
+                "question": "Which statement belongs in a well-formed change proposal?",
+                "options": [
+                  "The change is complete and approved",
+                  "The observed problem, affected scope, rationale, risks, and testable acceptance criteria",
+                  "A promise that the change will solve every related issue"
+                ],
+                "answer": 1,
+                "rationale": "A proposal makes the intended change and its justification reviewable and testable."
+              },
+              {
+                "question": "What does validation establish?",
+                "options": [
+                  "That the proposal has met defined criteria based on evidence",
+                  "That an implementation has automatically been deployed",
+                  "That the proposal no longer needs an authorized approval decision"
+                ],
+                "answer": 0,
+                "rationale": "Validation checks evidence against criteria; approval remains a distinct governance decision."
+              },
+              {
+                "question": "Why preserve rejected and superseded proposals?",
+                "options": [
+                  "They can be silently reused as approved changes",
+                  "They preserve decision history, rationale, and learning about alternatives",
+                  "They increase the number of approved changes"
+                ],
+                "answer": 1,
+                "rationale": "A traceable history explains what was considered and why a decision was made."
+              }
+            ],
+            "assessmentEvidence": "A complete change proposal with traceable rationale, explicit assumptions, acceptance criteria, risks, and rollback conditions.",
+            "feedback": "A proposal is not testable if it has no observable problem or acceptance criteria. Mark assumptions explicitly and do not describe an unimplemented change as completed.",
+            "safetyBoundary": "Use synthetic examples. Do not modify production data, deploy code, or expose secrets while completing this exercise.",
+            "references": [
+              "AH-LEARN-MASTER-001 § Governance workflow",
+              "AH-AIOS World Model Architecture Principles (user-provided, 2026-10-27)",
+              "AH-AIOS controlled workflow and canon-status governance"
+            ],
+            "reviewStatus": "Not reviewed"
+          }
         },
         {
           "id": "M1.3",
           "title": "Protected assets, conflicts, and history",
-          "exercise": "preserve a conflicting record without overwriting history",
-          "status": "Specified"
+          "status": "Authored draft",
+          "content": {
+            "status": "Authored draft",
+            "purpose": "Understand how governance protects authoritative assets, resolves conflicting records without erasing evidence, and preserves a reliable history of change.",
+            "outcomes": [
+              "Identify protected assets and the invariants that must remain true across changes.",
+              "Distinguish conflict detection from conflict resolution.",
+              "Describe how versions, provenance, decisions, and supersession preserve historical answerability."
+            ],
+            "prerequisites": [
+              "AH-CORE-150 M1.1: Governance authority and scope.",
+              "AH-CORE-150 M1.2: Change proposals and rationale.",
+              "AH-CORE-140 M1.2: Audit events and traceability."
+            ],
+            "sourceBase": [
+              "AH-LEARN-MASTER-001 § Knowledge lineage and governance boundaries (source plan; SUGGESTION / PROCESS).",
+              "AH-AIOS World Model Architecture Principles, 2026-10-27, user-provided: Structure Before Narrative; Knowledge Requires Lineage.",
+              "AH-AIOS governance statuses: ESTABLISHED CANON, CANON-ALIGNED INTERPRETATION, APPROVED VISUALIZATION, VERIFY / UNDER REVIEW, NOT CANON."
+            ],
+            "explanation": "Protected assets are records or system properties whose integrity must survive ordinary editing, imports, synchronization, and release activity. Examples include stable identifiers, source lineage, approved governance decisions, version history, and records explicitly designated as protected. A conflict occurs when two records or proposed changes cannot both be accepted under the current rules—for example, two versions claim incompatible values for the same governed field. Detecting a conflict does not authorize an automatic winner. A safe process preserves the competing snapshots, records their provenance and versions, identifies the rule or evidence needed for adjudication, and assigns the decision to an authorized reviewer. Resolution may keep one version, combine compatible parts, defer pending evidence, or supersede an older record. It should never erase the fact that a conflict existed. Version history supports reconstruction: what changed, who or what initiated it, when it changed, why it changed, what evidence supported the decision, and which version resulted. A current narrative view is not a substitute for the underlying records and lineage. Governance also distinguishes canon status from workflow status; a draft workflow state must not be confused with an established canon status.",
+            "workedExample": {
+              "title": "Two conflicting claims about a world entity",
+              "steps": [
+                "Record A states that an entity has a particular title and cites source S1.",
+                "Record B states a different title and cites source S2; both records and source references are retained.",
+                "The system flags a conflict and records the versions, authorship, timestamps, and source lineage.",
+                "A reviewer checks source authority, scope, chronology, and whether the claims refer to the same entity or different contexts.",
+                "The reviewer records a reasoned outcome: select a supported claim, preserve both as context-dependent, request evidence, or supersede one record.",
+                "The audit trail retains the original claims and the decision; the generated narrative view is updated only after the governed record changes."
+              ],
+              "result": "Conflict resolution is an accountable decision over preserved evidence, not silent deletion or whichever value was edited last."
+            },
+            "guidedPractice": [
+              "List the protected fields in a sample entity record: stable ID, source references, governance status, version, and decision history.",
+              "Create two deliberately conflicting synthetic claims with different source references.",
+              "Record what can be established from each source and what remains unresolved.",
+              "Propose a resolution path and specify which evidence or authority is still required."
+            ],
+            "independentExercise": {
+              "input": "Two imported records share an identifier but contain different titles, source references, and update timestamps.",
+              "instructions": "Write a conflict-handling record. Preserve both snapshots, identify the conflict type, list the checks needed to determine whether this is a duplicate or a legitimate version/context difference, and recommend a resolution state without inventing missing evidence.",
+              "deliverables": [
+                "Conflict record",
+                "Preserved competing snapshots",
+                "Provenance comparison",
+                "Resolution recommendation and rationale"
+              ]
+            },
+            "knowledgeCheck": [
+              {
+                "question": "What should happen when two governed records conflict?",
+                "options": [
+                  "Overwrite the older record immediately",
+                  "Preserve both versions and evidence, then follow an authorized resolution process",
+                  "Delete the record with fewer fields"
+                ],
+                "answer": 1,
+                "rationale": "Conflict detection is not permission to discard evidence or select a winner automatically."
+              },
+              {
+                "question": "What is the purpose of version history?",
+                "options": [
+                  "To make the newest version automatically authoritative",
+                  "To reconstruct changes, actors, rationale, evidence, and resulting state",
+                  "To hide rejected proposals"
+                ],
+                "answer": 1,
+                "rationale": "History preserves traceability and supports review, correction, and accountability."
+              },
+              {
+                "question": "Are workflow status and canon status interchangeable?",
+                "options": [
+                  "Yes, both describe the same state",
+                  "No, workflow status tracks process while canon status expresses a distinct governance classification",
+                  "Only for imported records"
+                ],
+                "answer": 1,
+                "rationale": "Different status systems answer different questions and must not be conflated."
+              }
+            ],
+            "assessmentEvidence": "A conflict record with preserved snapshots, provenance comparison, explicit uncertainty, and a reasoned resolution recommendation.",
+            "feedback": "If your resolution deletes the losing record or chooses the newest timestamp without examining authority and provenance, the exercise is incomplete. Preserve the evidence and explain the decision path.",
+            "safetyBoundary": "Use synthetic records only. Do not edit protected canon records or make irreversible changes in a live workspace.",
+            "references": [
+              "AH-LEARN-MASTER-001 § Knowledge lineage",
+              "AH-AIOS World Model Architecture Principles (user-provided, 2026-10-27)",
+              "AH-AIOS canon-status system and Law of Controlled Integration"
+            ],
+            "reviewStatus": "Not reviewed"
+          }
         },
         {
           "id": "M1.4",
           "title": "Release, rollback, and post-change verification",
-          "exercise": "produce a release checklist and rollback conditions",
-          "status": "Specified"
+          "status": "Authored draft",
+          "content": {
+            "status": "Authored draft",
+            "purpose": "Learn to release governed changes through explicit checks, preserve rollback capability, and verify the resulting system state after deployment.",
+            "outcomes": [
+              "Define pre-release gates and a bounded release plan.",
+              "Distinguish rollback of software from reversal of historical consequences or decisions.",
+              "Create post-change verification evidence and report unresolved failures accurately."
+            ],
+            "prerequisites": [
+              "AH-CORE-150 M1.1–M1.3.",
+              "AH-CORE-140 M1.3: Verification criteria and reproducibility.",
+              "AH-CORE-140 M1.4: Reporting limitations and unresolved results."
+            ],
+            "sourceBase": [
+              "AH-LEARN-MASTER-001 § Learning progression and lesson standards (source plan; SUGGESTION / PROCESS).",
+              "AH-AIOS World Model Architecture Principles, 2026-10-27, user-provided: Canon Is Governed and Knowledge Requires Lineage.",
+              "Repository verification and release practices documented in the Learning Studio package; deployment evidence must be distinguished from production assurance."
+            ],
+            "explanation": "A release is a controlled transition from one known version to another. Before release, identify the approved change, target environment, exact artifact or commit, dependencies, migration effects, backup or recovery point, test results, operator, and stop conditions. Release gates should be proportionate to impact: a content-only update may need source and curriculum checks, while an authentication or data migration change needs security, access-control, backup, and integration checks. Rollback is a recovery plan, not a promise that all consequences can be undone. Code may be reverted, a database may be restored from a valid recovery point, and a release may be disabled; however, issued credentials, learner notifications, external actions, or downstream copies may require separate correction and answerability. After release, verify the deployed artifact and actual behavior in the target environment. Record test scope, environment, timestamp, result, failures, and unresolved risks. A green automated test suite is evidence for the checks it ran, not proof of complete security, accessibility, or production readiness. If verification fails, stop promotion, preserve logs and artifacts, invoke the documented recovery path, and report the actual outcome without marking the release complete.",
+            "workedExample": {
+              "title": "Release a new lesson-validation rule",
+              "steps": [
+                "Confirm the change proposal has completed investigation, validation, and authorized approval.",
+                "Identify the exact commit and target environment; verify the build artifact matches that commit.",
+                "Run curriculum schema checks, knowledge-check integrity tests, and regression tests for previously valid lessons.",
+                "Back up the current data and define a rollback or forward-fix decision before deployment.",
+                "Deploy to the intended environment and verify the live version, lesson rendering, and rejection of a deliberately invalid fixture.",
+                "Record evidence, failures, and limitations; do not claim production assurance if only automated checks were run."
+              ],
+              "result": "The release is considered verified only to the extent that the documented checks actually passed in the target environment."
+            },
+            "guidedPractice": [
+              "Choose a low-risk synthetic change and define its target environment.",
+              "Write three pre-release gates and two stop conditions.",
+              "Define a recovery action and identify consequences that rollback cannot automatically reverse.",
+              "Write a post-release verification checklist that names the evidence each check will produce."
+            ],
+            "independentExercise": {
+              "input": "A new Learning Studio release passes unit tests but has not been checked with a real account, live tutor provider, credential verification endpoint, or production data.",
+              "instructions": "Prepare a release decision. Identify what the current test result proves, what remains unverified, whether the release may be described as production-ready, and the next acceptance checks required. Include a rollback plan and post-release evidence record.",
+              "deliverables": [
+                "Release checklist",
+                "Evidence-to-claim matrix",
+                "Rollback and recovery plan",
+                "Post-release verification report with unresolved items"
+              ]
+            },
+            "knowledgeCheck": [
+              {
+                "question": "What does a passing automated test suite establish?",
+                "options": [
+                  "Every production risk has been eliminated",
+                  "The behaviors covered by those tests passed in the tested environment",
+                  "The release is externally accredited"
+                ],
+                "answer": 1,
+                "rationale": "Verification claims must stay within the actual scope and environment of the tests."
+              },
+              {
+                "question": "Why is rollback not always a complete reversal?",
+                "options": [
+                  "Because code cannot be reverted",
+                  "Because external actions, issued records, notifications, and downstream effects may persist",
+                  "Because release history should be deleted"
+                ],
+                "answer": 1,
+                "rationale": "Some consequences require correction, revocation, notification, or separate remediation."
+              },
+              {
+                "question": "What should happen when a required post-release check fails?",
+                "options": [
+                  "Mark the release complete if unit tests passed",
+                  "Hide the failed result and retry later",
+                  "Stop promotion, preserve evidence, invoke recovery or remediation, and report the unresolved result"
+                ],
+                "answer": 2,
+                "rationale": "Failure handling must preserve evidence and prevent an unsupported completion claim."
+              }
+            ],
+            "assessmentEvidence": "A release decision package containing pre-release gates, exact artifact reference, test evidence, rollback plan, and post-release verification report.",
+            "feedback": "Do not label a release production-ready based only on unit tests or a successful build. State exactly which environment and behaviors were checked, and keep unverified integrations visible.",
+            "safetyBoundary": "Do not deploy to production or run destructive migrations for this exercise. Use a local or disposable test environment and synthetic data.",
+            "references": [
+              "AH-LEARN-MASTER-001 § Learning progression and lesson standards",
+              "AH-AIOS World Model Architecture Principles (user-provided, 2026-10-27)",
+              "Learning Studio verification and deployment documentation in the repository"
+            ],
+            "reviewStatus": "Not reviewed"
+          }
         }
       ],
       "assessment": "governed change dossier. Real canon changes always require the applicable explicit authorization.",
-      "contentStatus": "Specified",
+      "contentStatus": "Authored draft",
       "publicationStatus": "Not published",
       "sourceRefs": [
         "AH-LEARN-MASTER-001",

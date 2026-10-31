@@ -35,7 +35,7 @@ The production build is generated in `dist/`. GitHub Actions verifies the applic
 
 ## Content and trust boundaries
 
-The curriculum catalogue defines 24 courses and 96 lesson units: 6 AH-AIOS Core, 7 AI Harness, 8 WorldForge, and 3 cross-cutting Human Stewardship courses. Current content status: **20 authored drafts, 76 specified-only, 0 reviewed, 0 published**. Drafts are not approved curriculum.
+The curriculum catalogue defines 24 courses and 96 lesson units: 6 AH-AIOS Core, 7 AI Harness, 8 WorldForge, and 3 cross-cutting Human Stewardship courses. Current content status: **24 authored drafts, 72 specified-only, 0 reviewed, 0 published**. Drafts are not approved curriculum.
 
 The authoritative 82-Theory dataset is not bundled. The import validator checks the expected count, classification, unique IDs, and required titles; structural validation does not authenticate source provenance. No missing theory records are fabricated.
 
