@@ -1,5 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { ROUTES, resolveRoute, routeForSection } from "../shell-router.js";
 
 test("shell routes have unique paths and map to real workspace sections", () => {
@@ -31,4 +33,22 @@ test("legacy section links resolve to the same route registry", () => {
   assert.equal(routeForSection("labs").path, "/practice");
   assert.equal(routeForSection("govern").path, "/stewardship");
   assert.equal(routeForSection("missing-section"), null);
+});
+
+test("every registered route targets a section present in the root website", () => {
+  const root = new URL("../index.html", import.meta.url);
+  const html = readFileSync(fileURLToPath(root), "utf8");
+  for (const route of ROUTES) {
+    assert.match(html, new RegExp('id="' + route.section + '"'), route.path + " must target an existing section");
+  }
+});
+
+test("the shared shell exposes the three domains and context panel", () => {
+  const root = new URL("../index.html", import.meta.url);
+  const html = readFileSync(fileURLToPath(root), "utf8");
+  for (const domain of ["all", "core", "harness", "worldforge"]) {
+    assert.match(html, new RegExp('option value="' + domain + '"'));
+  }
+  assert.match(html, /id="context-panel"/);
+  assert.match(html, /id="context-toggle"/);
 });
