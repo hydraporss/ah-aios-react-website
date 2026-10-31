@@ -74,6 +74,9 @@ jobs:
           done
           pnpm test:browser
           node learning-studio/tests/browser-smoke.mjs
+          curl --fail --silent http://127.0.0.1:4173/worldforge/workspace/ > /dev/null
+          curl --fail --silent http://127.0.0.1:4173/worldforge/workspace/workspace.css > /dev/null
+          curl --fail --silent http://127.0.0.1:4173/worldforge/workspace/workspace.js > /dev/null
       - name: Verify production artifact
         run: |
           test -s dist/index.html
@@ -84,6 +87,9 @@ jobs:
           test -s dist/learning-studio/index.html
           test -s dist/learning-studio/assessment-workflow.mjs
           test -s dist/learning-studio/assessment-ui.mjs
+          test -s dist/worldforge/workspace/index.html
+          test -s dist/worldforge/workspace/workspace.css
+          test -s dist/worldforge/workspace/workspace.js
           find dist -maxdepth 2 -type f
       - name: Upload verified Pages artifact
         uses: actions/upload-artifact@v4
