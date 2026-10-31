@@ -10,7 +10,7 @@ const curriculumJson=curriculumSource.replace(/\n\/\/ Expose the source-traced c
 const curriculum=JSON.parse(curriculumJson.replace(/^window\.AH_LEARNING_CURRICULUM\s*=\s*/,"").replace(/;\s*$/,""));
 const ids=[...html.matchAll(/id="([^"]+)"/g)].map(x=>x[1]);
 test("nine starter modules are declared",()=>assert.equal((app.match(/id:"(?:core|harness|world)-0[1-3]"/g)||[]).length,9));
-test("theory gate enforces 82 records and 68+14 split",()=>{assert.match(app,/a\.length!==82/);assert.match(app,/r\.length!==68/);assert.match(app,/s\.length!==14/)});
+test("theory gate enforces 82 records and 68+14 split",()=>{assert.match(theoryValidator,/records\\.length!==82/);assert.match(theoryValidator,/counts\\.registry!==68/);assert.match(theoryValidator,/counts\\.synthesized!==14/)});
 test("progress import validates schema and version before replacing state",()=>{assert.match(app,/x\.schema!=="ah-aios-learning-progress"/);assert.match(app,/\[1,2\]\.includes\(x\.version\)/);assert.match(app,/if\(!validate\(x\)\)throw Error/)});
 test("invalid progress import is rejected without replacing state",()=>assert.match(app,/Existing progress preserved/));
 test("course, lab, tutor, portfolio, and profile interactions are wired",()=>{for(const s of ["openCourse(id)","openLab(kind)","tutor-start","#export","#import","#save-profile","#reset-progress"])assert.ok(app.includes(s),s)});
