@@ -116,6 +116,8 @@ test("learner state stores assessment attempts and submitted labs are not marked
   const app = fs.readFileSync(new URL("../app.js", import.meta.url), "utf8");
   assert.match(app, /attempts:\[\]/);
   assert.match(app, /state\.attempts\.unshift\(result\)/);
-  assert.match(app, /submitted_pending_review/);
+  const practiceSource = fs.readFileSync(new URL("../engines/practice-engine.js", import.meta.url), "utf8");
+  assert.match(practiceSource, /submitted_pending_review/);
+  assert.match(app, /status:submission.status/);
   assert.match(app, /Submitted lab for review/);
 });
