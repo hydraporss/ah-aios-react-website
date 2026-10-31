@@ -55,3 +55,14 @@ body.context-collapsed footer{margin-right:0}
  .profile-chip>span:not(.avatar){display:none}
  .context-panel{top:60px}
 }
+
+
+/* Curriculum navigation and domain filtering */
+.curriculum-card{display:flex;flex-direction:column;justify-content:space-between;gap:16px;min-height:205px}
+.curriculum-card h3{margin:0 0 8px}
+.curriculum-card p{font-size:12px;line-height:1.6;color:var(--muted)}
+.curriculum-card strong{display:block;margin-top:12px;font-size:12px;color:var(--text)}
+.curriculum-card small{display:block;margin-top:6px;font-size:10px;line-height:1.5;color:var(--muted)}
+.curriculum-card .outline-btn{align-self:flex-start}
+#all-courses{scroll-margin-top:92px}
+#curriculum-roadmap{scroll-margin-top:90px}
