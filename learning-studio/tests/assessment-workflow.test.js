@@ -246,6 +246,34 @@ test("rejects malformed nested feedback and audit entries without crashing valid
   assert.equal(storage.getItem("ah-aios-learning-assessment-workflow-v1"), JSON.stringify(persisted));
 });
 
+test("rejects assessment records with missing schema identity or incomplete state metadata", () => {
+  const { engine } = makeWorkflow();
+  const draft = engine.createDraft(validDraft);
+  const backup = engine.exportBackup();
+
+  backup.submissions[0].schema = "unknown-schema";
+  assert.equal(engine.validateBackup(backup).valid, false);
+
+  backup.submissions[0].schema = "ahls.assessment-workflow";
+  backup.submissions[0].version = 1;
+  backup.submissions[0].createdAt = null;
+  assert.equal(engine.validateBackup(backup).valid, false);
+
+  const submitted = engine.submitForFormativeReview(draft.id);
+  engine.recordSelfReview(draft.id, {
+    summary: "A complete formative self-review.",
+    ratings: validRatings()
+  });
+  engine.requestRevision(draft.id, {
+    reason: "The verification record needs more detail.",
+    requiredChanges: "Document the exact verification steps and results."
+  });
+  const revisionBackup = engine.exportBackup();
+  revisionBackup.submissions[0].revisionRequest = null;
+  assert.equal(engine.validateBackup(revisionBackup).valid, false);
+  assert.equal(submitted.status, "formative_submitted");
+});
+
 test("rejects a backup containing an invalid competency or credential claim", () => {
   const { engine } = makeWorkflow();
   const draft = engine.createDraft(validDraft);
