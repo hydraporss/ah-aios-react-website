@@ -67,6 +67,8 @@ jobs:
         run: |
           mkdir -p dist/worldforge
           rsync -a --exclude='*.zip' --exclude='README.md' public/worldforge/verified-2026-10-28/ dist/worldforge/
+          mkdir -p dist/worldforge/after-humanity-prompt-builder-archive/assets
+          cp public/worldforge/after-humanity-prompt-builder-archive/assets/worldforge-hero-art.png dist/worldforge/after-humanity-prompt-builder-archive/assets/
       - name: Run WorldForge production package checks
         run: pnpm test:worldforge-site
         env:
