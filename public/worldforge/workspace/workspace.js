@@ -20,6 +20,7 @@
   const breadcrumb = document.getElementById("breadcrumb-current");
   const sidebar = document.getElementById("sidebar");
   const grid = document.getElementById("module-grid");
+  const homeWorkbench = content.querySelector(".home-workbench");
   let active = "home";
 
   function setActive(id, updateHash = true) {
@@ -40,6 +41,7 @@
       content.querySelector(".welcome-panel").hidden = false;
       content.querySelector(".section-heading").hidden = false;
       grid.hidden = false;
+      homeWorkbench.hidden = false;
     } else {
       content.querySelector(".eyebrow").textContent = item.group.toUpperCase() + " / MODULE " + String(modules.indexOf(item)+1).padStart(2,"0");
       content.querySelector("h1").textContent = item.name;
@@ -47,6 +49,7 @@
       content.querySelector(".welcome-panel").hidden = true;
       content.querySelector(".section-heading").hidden = true;
       grid.hidden = true;
+      homeWorkbench.hidden = true;
       let notice = content.querySelector(".module-placeholder");
       if (!notice) {
         notice = document.createElement("section");
@@ -66,6 +69,10 @@
   }
 
   nav.addEventListener("click", event => {
+    const button = event.target.closest("[data-module]");
+    if (button) setActive(button.dataset.module);
+  });
+  homeWorkbench.querySelector(".quick-actions").addEventListener("click", event => {
     const button = event.target.closest("[data-module]");
     if (button) setActive(button.dataset.module);
   });
