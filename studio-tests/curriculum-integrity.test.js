@@ -53,6 +53,8 @@ test("curriculum cards and domain selector are wired to real filtering handlers"
   const app = read("../app.js");
   const router = read("../shell-router.js");
   assert.match(app, /data-curriculum-domain/);
+  assert.match(app, /submit-blueprint-check/);
+  assert.match(app, /Practice result:/);
   assert.match(app, /learning-studio:domain-change/);
   assert.match(router, /learning-studio:domain-change/);
   assert.match(router, /selectedDomain/);
