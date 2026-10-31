@@ -99,6 +99,12 @@ export class AssessmentWorkflow {
     if (!isObject(record)) return { valid: false, errors: ["Submission must be an object."] };
 
     const errors = [];
+    if (record.schema !== ASSESSMENT_WORKFLOW_SCHEMA || record.version !== ASSESSMENT_WORKFLOW_VERSION) {
+      errors.push("Submission schema or version is invalid.");
+    }
+    if (!nonEmpty(record.createdAt) || !nonEmpty(record.updatedAt)) {
+      errors.push("Submission creation and update timestamps are required.");
+    }
     if (!nonEmpty(record.id)) errors.push("Missing submission ID.");
     if (!nonEmpty(record.learnerId)) errors.push("Missing learner ID.");
     if (!nonEmpty(record.courseId)) errors.push("Missing course ID.");
@@ -127,6 +133,22 @@ export class AssessmentWorkflow {
     if (record.status === "feedback_recorded" || record.status === "revision_requested" || record.status === "appealed") {
       if (!validateFeedback(record.feedback, this.dimensions.map(d => d.id))) {
         errors.push("Formative feedback is incomplete or invalid.");
+      }
+    }
+    if (record.status === "revision_requested") {
+      if (!isObject(record.revisionRequest)
+          || !nonEmpty(record.revisionRequest.reason)
+          || !nonEmpty(record.revisionRequest.requiredChanges)
+          || !nonEmpty(record.revisionRequest.requestedAt)) {
+        errors.push("Revision request record is incomplete.");
+      }
+    }
+    if (record.status === "appealed") {
+      if (!isObject(record.appeal)
+          || !nonEmpty(record.appeal.reason)
+          || !nonEmpty(record.appeal.submittedAt)
+          || record.appeal.outcome !== null) {
+        errors.push("Appeal record is incomplete or asserts an unsupported outcome.");
       }
     }
     if (record.formalAssessment !== false || record.competencyDecision !== null || record.credentialEligible !== false) {
