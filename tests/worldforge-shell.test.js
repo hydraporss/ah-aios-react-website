@@ -30,3 +30,27 @@ test('WorldForge shell clearly distinguishes navigation from implemented modules
   assert.match(html, /MODULES NOT YET INTEGRATED/);
   assert.match(js, /MODULE IMPLEMENTATION PENDING/);
 });
+
+test('WorldForge Home presents honest implementation and data readiness', () => {
+  assert.match(html, /class="home-overview"/);
+  assert.match(html, /MODULES DEFINED/);
+  assert.match(html, /MODULES TO BUILD/);
+  assert.match(html, /No records or shared database are being claimed/);
+  assert.match(html, /Shared persistence/);
+  assert.match(html, /Not implemented/);
+});
+
+test('WorldForge Home quick actions navigate to their corresponding modules', () => {
+  for (const id of ['entity-registry','source-library','claims-evidence','governance']) {
+    assert.match(html, new RegExp('class="quick-action" data-module="' + id + '"'));
+  }
+  assert.match(js, /homeWorkbench\.querySelector\("\.quick-actions"\)\.addEventListener/);
+  assert.match(js, /homeWorkbench\.hidden = false/);
+  assert.match(js, /homeWorkbench\.hidden = true/);
+});
+
+test('Home dashboard styling includes responsive overview and workbench layouts', () => {
+  assert.match(css, /\.home-overview/);
+  assert.match(css, /\.home-workbench/);
+  assert.match(css, /@media\(max-width:520px\)/);
+});
