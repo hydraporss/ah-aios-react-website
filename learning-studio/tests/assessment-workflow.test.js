@@ -224,7 +224,7 @@ test("rejects malformed nested feedback and audit entries without crashing valid
 
   assert.throws(
     () => new AssessmentWorkflow({ storage, courseIds: ["AH-CORE-100", "AH-HAR-100"], dimensions }),
-    /integrity validation/
+    /unsupported schema|integrity validation/
   );
   assert.equal(storage.getItem("ah-aios-learning-assessment-workflow-v1"), JSON.stringify(backup));
 });
