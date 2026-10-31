@@ -1,8 +1,7 @@
-"use strict";
-const test = require("node:test");
-const assert = require("node:assert/strict");
-const fs = require("node:fs");
-const path = require("node:path");
+import test from "node:test";
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
 
 const siteRoot = path.resolve(process.env.WORLDFORGE_SITE_DIR || "public/worldforge/verified-2026-10-28");
 const requiredPages = [
