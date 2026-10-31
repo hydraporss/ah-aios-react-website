@@ -206,6 +206,29 @@ test("refuses to load corrupted persisted assessment data without resetting it",
   assert.equal(storage.getItem(key), "{invalid-json");
 });
 
+
+test("rejects malformed nested feedback and audit entries without crashing validation", () => {
+  const storage = new MemoryStorage();
+  const { engine } = makeWorkflow(storage);
+  const draft = engine.createDraft(validDraft);
+  engine.submitForFormativeReview(draft.id);
+  engine.recordSelfReview(draft.id, {
+    summary: "A complete formative self-review.",
+    ratings: validRatings()
+  });
+
+  const backup = engine.exportBackup();
+  backup.submissions[0].feedback.ratings[0] = null;
+  backup.submissions[0].events.push(null);
+  storage.setItem("ah-aios-learning-assessment-workflow-v1", JSON.stringify(backup));
+
+  assert.throws(
+    () => new AssessmentWorkflow({ storage, courseIds: ["AH-CORE-100", "AH-HAR-100"], dimensions }),
+    /integrity validation/
+  );
+  assert.equal(storage.getItem("ah-aios-learning-assessment-workflow-v1"), JSON.stringify(backup));
+});
+
 test("rejects a backup containing an invalid competency or credential claim", () => {
   const { engine } = makeWorkflow();
   const draft = engine.createDraft(validDraft);
