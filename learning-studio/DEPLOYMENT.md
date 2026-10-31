@@ -1,4 +1,4 @@
-# Learning Studio 0.3.1 — deployment and operations
+# Learning Studio 0.3.2 — deployment and operations
 
 ## Deployment layout
 
@@ -48,3 +48,10 @@ The 24-course / 96-lesson programme remains in content production. Twenty lesson
 **Merged to `main`; production deployment and live acceptance must be verified separately.**
 
 The root GitHub Pages workflow is configured to publish the Learning Studio at `/learning-studio/` after the verification job succeeds. The live deployment must still be confirmed from the resulting Pages deployment and a live-site check. Do not claim a successful production deployment until the post-merge Pages workflow succeeds and the live routes and runtime assets are checked. Manual keyboard, screen-reader, cross-browser, mobile-device, install, and offline acceptance remain separate release gates.
+
+
+## 0.3.2 assessment workflow assets
+
+The production subdirectory package must include `assessment-workflow.mjs` and `assessment-ui.mjs` alongside the existing HTML, CSS, application, curriculum, theory-validation, manifest, icon, and service-worker assets. The service worker precaches both assessment modules under cache version `ah-aios-learning-studio-0.3.2-v1`.
+
+The root Pages workflow now runs the Learning Studio Node suite and browser smoke test, copies the complete Learning Studio runtime into `dist/learning-studio/`, and verifies the assessment modules in the combined artifact. PR verification does not deploy to production; merge and a successful post-merge Pages run are still required.
