@@ -1,0 +1,16 @@
+{
+  "variables": {
+    "system": "execution_context",
+    "entity": "worldforge_entity",
+    "evidence": "evidence_ref",
+    "source": "source_data",
+    "memory": "context_memory",
+    "claim": "claim_id"
+  },
+  "documentation": {
+    "description": "Variable definitions for the AI Harness Command Builder",
+    "version": "1.0",
+    "created": "2026-10-31",
+    "note": "These variables are placeholders and will be replaced with actual data at runtime."
+  }
+}
