@@ -126,3 +126,10 @@ The GitHub Actions workflow is configured to run curriculum quality tests, theor
 Four complete instructional drafts now cover governance authority and scope; change proposals and rationale; protected assets, conflicts, and history; and release, rollback, and post-change verification. Each lesson includes outcomes, prerequisites, source lineage, explanation, worked example, guided practice, independent exercise, three knowledge checks with rationales, assessment evidence, feedback, and safety boundaries. The content preserves the distinction between capability and authority, proposal and approval, conflict detection and resolution, and test results and production assurance.
 
 All four lessons remain **Authored draft / Not reviewed**. AH-CORE-150 remains **Not published**. The course is not approved teaching content until an independent review verifies its source alignment, instructional quality, assessment accuracy, and safety boundaries.
+
+
+## Assessment integrity hardening — 31 October 2026
+
+The formative assessment workflow now validates each persisted submission's schema identity and version, required creation/update timestamps, revision sequence, audit-event structure and uniqueness, feedback dimensions, revision-request metadata, appeal metadata, and non-credential boundaries. Malformed nested self-review rating objects are rejected before property access. Corrupted or unsupported records are rejected without silently resetting the existing browser data.
+
+The regression suite includes malformed nested feedback/audit records, malformed rating entries, schema/version mismatch, missing timestamps, incomplete revision requests, invalid credential claims, and backup-import collision protection. These are local data-integrity controls; they do not provide tamper-resistant server storage or authenticated reviewer identity.
