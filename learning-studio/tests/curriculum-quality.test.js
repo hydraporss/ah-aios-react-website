@@ -29,8 +29,8 @@ test("course and lesson identifiers are unique within their defined scope",()=>{
 });
 
 test("authored lesson drafts contain the complete instructional record",()=>{
-  assert.equal(authored.length,20);
-  assert.equal(specified.length,76);
+  assert.equal(authored.length,24);
+  assert.equal(specified.length,72);
   for(const lesson of authored){
     assert.equal(lesson.status,"Authored draft",lesson.id);
     const content=lesson.content;
@@ -70,4 +70,19 @@ test("AH-CORE-140 drafts cite the current NIST assessment and audit references",
     assert.ok(curriculum.sourceCatalog.some(source=>source.id===id),"missing source "+id);
     assert.ok(course.sourceRefs.includes(id),"course does not reference "+id);
   }
+});
+
+
+test("AH-CORE-150 governance drafts are complete instructional records and remain unpublished",()=>{
+  const course=curriculum.courses.find(item=>item.id==="AH-CORE-150");
+  assert.ok(course);
+  assert.equal(course.contentStatus,"Authored draft");
+  assert.equal(course.publicationStatus,"Not published");
+  assert.deepEqual(course.lessons.map(item=>item.title),[
+    "Governance authority and scope",
+    "Change proposals and rationale",
+    "Protected assets, conflicts, and history",
+    "Release, rollback, and post-change verification"
+  ]);
+  assert.ok(course.lessons.every(item=>item.status==="Authored draft" && item.content.reviewStatus==="Not reviewed"));
 });
