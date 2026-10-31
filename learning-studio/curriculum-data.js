@@ -230,6 +230,16 @@ window.AH_LEARNING_CURRICULUM = {
                 ],
                 "answer": 1,
                 "rationale": "Creative canon and software implementation evidence have different scopes."
+              },
+              {
+                "question": "Does creative canon authority prove that a software feature has been implemented?",
+                "options": [
+                  "Yes; an authoritative story statement proves implementation",
+                  "No; software implementation requires its own code, deployment, and verification evidence",
+                  "Only when the story and software use the same terminology"
+                ],
+                "answer": 1,
+                "rationale": "Creative authority is scoped to the creative-world claim. Software behavior requires separate implementation and environment-specific verification evidence."
               }
             ],
             "assessmentEvidence": "A two-resource authority classification with supported and unsupported claims.",
@@ -3049,6 +3059,5 @@ window.AH_LEARNING_CURRICULUM = {
     }
   ]
 };
-
 // Expose the source-traced catalogue under the application runtime name.
 window.CURRICULUM_DATA = window.AH_LEARNING_CURRICULUM;
