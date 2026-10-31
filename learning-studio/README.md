@@ -1,4 +1,4 @@
-# AH-AIOS Learning Studio — 0.3.1
+# AH-AIOS Learning Studio — 0.3.2
 
 A standalone, responsive learning website inspired by the supplied AH-AIOS Learning dashboard reference.
 
@@ -25,6 +25,13 @@ Learner progress/profile are stored in local browser storage. There is no login,
 - **3-Day AI Engineering Sprint:** Git/GitHub, Python + AI API integration, and testing/CI/CD. Fifteen task checkboxes persist locally and show completion progress.
 - Capstone blueprint for a Governance AI application with evidence, approvals, auditability, tests, and deployment checks.
 
+
+
+## Assessment evidence workflow — 0.3.2
+
+The assessment workspace now supports local evidence drafts, formative submission, seven-dimension learner self-review, preserved revision history, revision requests, appeals, and validated JSON backup import/export. Each dimension rating requires supporting evidence and a comment.
+
+**Formal assessment remains gated:** no course-specific rubric with published mandatory criteria and minimum thresholds is configured. Formative self-review does not create a competency decision, pass/fail result, or credential. Assessment records remain in browser-local storage; there is no learner account, authenticated reviewer, remote synchronization, or server-side assessment store.
 
 ## Current implementation and content status
 
