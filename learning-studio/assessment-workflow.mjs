@@ -336,6 +336,10 @@ export class AssessmentWorkflow {
       throw new Error("A review summary and dimension ratings are required.");
     }
 
+    if (!ratings.every(isObject)) {
+      throw new Error("Every dimension rating must be a valid object.");
+    }
+
     const dimensionIds = this.dimensions.map(d => d.id);
     const ids = ratings.map(rating => rating.dimensionId);
     if (ids.length !== dimensionIds.length || new Set(ids).size !== ids.length
