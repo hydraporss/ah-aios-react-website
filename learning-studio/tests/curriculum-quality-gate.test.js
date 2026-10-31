@@ -29,7 +29,7 @@ test("domain counts remain 6 Core, 7 AI Harness, 8 WorldForge, and 3 cross-cutti
 
 test("all authored lessons contain every required instructional field", () => {
   const authored = lessons.filter(lesson => lesson.content);
-  assert.equal(authored.length, 20);
+  assert.equal(authored.length, 24);
   for (const lesson of authored) {
     assert.equal(lesson.status, "Authored draft", lesson.id + " status");
     for (const field of requiredFields) {
@@ -57,9 +57,9 @@ test("every authored knowledge check has a valid answer index and rationale", ()
   }
 });
 
-test("the other 76 lessons remain specified-only rather than receiving invented content", () => {
+test("the other 72 lessons remain specified-only rather than receiving invented content", () => {
   const specified = lessons.filter(lesson => !lesson.content);
-  assert.equal(specified.length, 76);
+  assert.equal(specified.length, 72);
   assert.ok(specified.every(lesson => lesson.status === "Specified"));
 });
 
@@ -82,4 +82,13 @@ test("AH-CORE-140 has four authored draft lessons and remains unpublished", () =
   assert.ok(course.lessons.every(lesson => lesson.content.reviewStatus === "Not reviewed"));
   assert.equal(course.contentStatus, "Authored draft");
   assert.equal(course.publicationStatus, "Not published");
+});
+
+
+test("AH-CORE-150 governance course remains a four-lesson unreviewed draft",()=>{
+  const course=courses.find(item=>item.id==="AH-CORE-150");
+  assert.ok(course);
+  assert.equal(course.contentStatus,"Authored draft");
+  assert.equal(course.publicationStatus,"Not published");
+  assert.ok(course.lessons.every(lesson=>lesson.status==="Authored draft" && lesson.content?.reviewStatus==="Not reviewed"));
 });
