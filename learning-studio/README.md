@@ -96,11 +96,11 @@ These external sources support teaching concepts; they do not prove AH-AIOS or W
 
 ## Learning Studio 0.3.1 — curriculum quality gate
 
-The current curriculum data contains 24 source-defined courses and 96 lesson units. Twenty lessons are authored drafts across AH-CORE-100, AH-CORE-110, AH-CORE-120, AH-CORE-130, and AH-CORE-140; the other 76 remain **Specified only**. All authored lessons remain **Not reviewed**, and no course is published. The source master plan remains **SUGGESTION / PROCESS**.
+The current curriculum data contains 24 source-defined courses and 96 lesson units. Twenty-four lessons are authored drafts across AH-CORE-100, AH-CORE-110, AH-CORE-120, AH-CORE-130, AH-CORE-140, and AH-CORE-150; the other 72 remain **Specified only**. All authored lessons remain **Not reviewed**, and no course is published. The source master plan remains **SUGGESTION / PROCESS**.
 
-A new automated curriculum quality gate checks the 24/96 structure, 6/7/8/3 domain split, required instructional fields for every authored lesson, knowledge-check answer/rationale integrity, specified-only status for the remaining 76 lessons, and the non-promotion of drafts to reviewed or published status. It also protects the AH-CORE-140 authored-draft content and its unreviewed/unpublished state.
+A new automated curriculum quality gate checks the 24/96 structure, 6/7/8/3 domain split, required instructional fields for every authored lesson, knowledge-check answer/rationale integrity, specified-only status for the remaining 72 lessons, and the non-promotion of drafts to reviewed or published status. It also protects the AH-CORE-140 authored-draft content and its unreviewed/unpublished state.
 
-This is a verification milestone, not a claim that the Learning Studio is content-complete. Source recovery, the remaining 80 lesson authoring units, independent reviews, manual accessibility/browser/PWA acceptance, and release acceptance remain open.
+This is a verification milestone, not a claim that the Learning Studio is content-complete. Source recovery, the remaining 72 lesson authoring units, independent reviews, manual accessibility/browser/PWA acceptance, and release acceptance remain open.
 
 
 ## Deployment candidate 0.3.1
@@ -118,4 +118,11 @@ The 82-Theory import now has a dedicated validator. It rejects duplicate IDs, bl
 
 The GitHub Actions workflow is configured to run curriculum quality tests, theory-import validation tests, browser acceptance, and deployment asset checks before publishing. The curriculum gate verifies the 24/96 structure, 6/7/8/3 domain split, complete instructional fields for authored lessons, knowledge-check integrity, and that the remaining specified lessons and all review/publication statuses are not silently promoted.
 
-**Current content state:** 20/96 authored drafts; 76/96 specified only; 0 reviewed; 0 published. The full curriculum is not yet complete.
+**Current content state:** 24/96 authored drafts; 72/96 specified only; 0 reviewed; 0 published. The full curriculum is not yet complete.
+
+
+## AH-CORE-150 authoring milestone — governance and controlled change
+
+Four complete instructional drafts now cover governance authority and scope; change proposals and rationale; protected assets, conflicts, and history; and release, rollback, and post-change verification. Each lesson includes outcomes, prerequisites, source lineage, explanation, worked example, guided practice, independent exercise, three knowledge checks with rationales, assessment evidence, feedback, and safety boundaries. The content preserves the distinction between capability and authority, proposal and approval, conflict detection and resolution, and test results and production assurance.
+
+All four lessons remain **Authored draft / Not reviewed**. AH-CORE-150 remains **Not published**. The course is not approved teaching content until an independent review verifies its source alignment, instructional quality, assessment accuracy, and safety boundaries.
