@@ -49,6 +49,8 @@ function validateFeedback(feedback, dimensionIds) {
       || feedback.credentialEligible !== false
       || !Array.isArray(feedback.ratings)) return false;
 
+  if (!feedback.ratings.every(isObject)) return false;
+
   const ids = feedback.ratings.map(item => item.dimensionId);
   if (ids.length !== dimensionIds.length || new Set(ids).size !== ids.length) return false;
   if (!dimensionIds.every(id => ids.includes(id))) return false;
@@ -116,8 +118,11 @@ export class AssessmentWorkflow {
     if (!Array.isArray(record.events) || !record.events.every(validateEvent)) {
       errors.push("Invalid audit event history.");
     }
-    if (new Set((record.events ?? []).map(event => event.id)).size !== (record.events ?? []).length) {
-      errors.push("Duplicate audit event IDs.");
+    if (Array.isArray(record.events)) {
+      const validEventIds = record.events.filter(isObject).map(event => event.id);
+      if (new Set(validEventIds).size !== validEventIds.length) {
+        errors.push("Duplicate audit event IDs.");
+      }
     }
     if (record.status === "feedback_recorded" || record.status === "revision_requested" || record.status === "appealed") {
       if (!validateFeedback(record.feedback, this.dimensions.map(d => d.id))) {
