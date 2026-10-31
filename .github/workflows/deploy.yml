@@ -35,6 +35,7 @@ jobs:
         run: |
           node --check app.js
           node --check theory-validation.js
+          node --check shell-router.js
       - name: Verify required root application files
         run: |
           test -s index.html
@@ -45,6 +46,7 @@ jobs:
           test -s icon.svg
           test -s curriculum-data.js
           test -s theory-validation.js
+          test -s shell-router.js
       - name: Install Chromium for browser acceptance
         run: pnpm exec playwright install --with-deps chromium
       - name: Build the production site
