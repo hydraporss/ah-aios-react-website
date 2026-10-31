@@ -217,16 +217,16 @@ test("rejects malformed nested feedback and audit entries without crashing valid
     ratings: validRatings()
   });
 
-  const backup = engine.exportBackup();
-  backup.submissions[0].feedback.ratings[0] = null;
-  backup.submissions[0].events.push(null);
-  storage.setItem("ah-aios-learning-assessment-workflow-v1", JSON.stringify(backup));
+  const persisted = JSON.parse(storage.getItem("ah-aios-learning-assessment-workflow-v1"));
+  persisted.submissions[0].feedback.ratings[0] = null;
+  persisted.submissions[0].events.push(null);
+  storage.setItem("ah-aios-learning-assessment-workflow-v1", JSON.stringify(persisted));
 
   assert.throws(
     () => new AssessmentWorkflow({ storage, courseIds: ["AH-CORE-100", "AH-HAR-100"], dimensions }),
     /unsupported schema|integrity validation/
   );
-  assert.equal(storage.getItem("ah-aios-learning-assessment-workflow-v1"), JSON.stringify(backup));
+  assert.equal(storage.getItem("ah-aios-learning-assessment-workflow-v1"), JSON.stringify(persisted));
 });
 
 test("rejects a backup containing an invalid competency or credential claim", () => {
