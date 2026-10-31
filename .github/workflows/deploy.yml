@@ -2,7 +2,7 @@ name: Learning Studio — verify and deploy
 
 on:
   push:
-    branches: [main]
+    branches: [main, docs/learning-studio-architecture-v1.0]
   pull_request:
     branches: [main]
   workflow_dispatch:
@@ -80,7 +80,7 @@ jobs:
           retention-days: 1
 
   deploy:
-    if: github.event_name != 'pull_request'
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
     needs: verify
     runs-on: ubuntu-latest
     permissions:
