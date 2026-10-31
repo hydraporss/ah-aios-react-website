@@ -20,11 +20,12 @@ export const ROUTES = [
   { path: "/domains/worldforge", title: "WorldForge", section: "paths", domain: "worldforge", description: "Learn structured knowledge, provenance, evidence and canon governance.", objective: "Represent knowledge as governed records with traceable lineage.", prerequisites: "Start with knowledge representation and source integrity.", evidence: "A structured record with source references and a review state." }
 ];
 
-const SECTION_TO_PATH = Object.fromEntries(ROUTES.map(route => [route.section, route.path]));
+const SECTION_TO_PATH = Object.fromEntries(ROUTES.filter((route, index, all) => all.findIndex(item => item.section === route.section) === index).map(route => [route.section, route.path]));
 const DOMAIN_TO_PATH = { all: "/curriculum/domains", core: "/domains/core", harness: "/domains/harness", worldforge: "/domains/worldforge" };
 
 export function resolveRoute(path) {
-  const normalized = String(path || "").replace(/^#/, "").replace(/\\/$/, "") || "/dashboard";
+  const raw = String(path || "").replace(/^#/, "") || "/dashboard";
+  const normalized = raw.endsWith("/") ? raw.slice(0, -1) : raw;
   return ROUTES.find(route => route.path === normalized) || ROUTES[0];
 }
 
