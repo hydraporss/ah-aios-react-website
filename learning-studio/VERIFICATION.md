@@ -206,3 +206,31 @@ Historical 0.2.0 checkpoint: the branch-specific verification workflow ran on pu
 - Updated the Pages workflow to test and package the new runtime asset.
 
 The current curriculum remains 20/96 authored drafts, 76/96 specified-only, 0 reviewed, and 0 published. This is an implementation milestone, not a declaration that the programme is complete. Post-merge GitHub Actions and live Pages deployment results must be checked before calling this release accepted.
+
+
+## Learning Studio 0.3.2 — Assessment Evidence Workflow — 31 October 2026
+
+**Branch:** `feat/learning-studio-assessment-workflow-v1`  
+**Pull request:** [#11 — Assessment evidence and formative review workflow](https://github.com/hydraporss/ah-aios-react-website/pull/11)  
+**State:** Draft pull request; not merged.  
+**Verified branch head:** `ec61cedff78840ce9391cccbd6a3e7a1fce6ac65`
+
+### Implemented
+- Added a browser-local assessment evidence workflow with draft creation, formative submission, seven-dimension learner self-review, revision requests, preserved revision history, and appeals.
+- Each self-review dimension requires a 1–4 rating, concrete evidence, and a comment.
+- Added append-only workflow events, versioned records, read-back-verified persistence, corruption rejection, backup validation, and duplicate-import protection.
+- Added the Assessment Evidence Workspace to the Learning Studio interface.
+- Added browser acceptance coverage for draft creation, formative submission, self-review, and persistence after reload.
+- Added the assessment modules to the service-worker app shell and both production artifact packaging paths.
+- Reconciled legacy curriculum regression checks with the current source state: 20 authored drafts, 76 specified-only lessons, 0 reviewed, 0 published. Added the missing second knowledge check to AH-CORE-100 M1.3 without changing its draft/review status.
+
+### Automated verification evidence
+- [Learning Studio verification — run 41160161774](https://github.com/hydraporss/ah-aios-react-website/actions/runs/41160161774): passed on the verified branch head. Node regression tests, JavaScript checks, browser acceptance, required-file checks, preserved WorldForge tests, production build, Learning Studio packaging, and combined artifact verification all passed.
+- [Root Pages verification — run 41160165251](https://github.com/hydraporss/ah-aios-react-website/actions/runs/41160165251): passed on the same branch head. This run also executed the Learning Studio test suite and browser smoke test against the combined production artifact and uploaded the verified artifact.
+
+### Explicit limits
+- The workflow is formative and learner-local. It does not provide authenticated instructor review, a formal competency decision, pass/fail grading, or credential issuance.
+- Formal assessment remains blocked until each course has an approved, published rubric with mandatory criteria and minimum thresholds. The shared seven-dimension framework is not treated as a substitute.
+- No learner account, remote database, cloud synchronization, or server-side assessment record is claimed.
+- Pull request #11 remains a draft and has not been merged. The successful PR verification is not a production deployment; post-merge Pages deployment and live acceptance remain outstanding.
+- Manual accessibility, screen-reader, cross-browser, mobile, install, and offline acceptance remain outstanding.
