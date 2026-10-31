@@ -29,12 +29,18 @@ jobs:
           cache: pnpm
       - name: Install locked dependencies
         run: pnpm install --frozen-lockfile
-      - name: Run Learning Studio and preserved WorldForge regression tests
+      - name: Run preserved WorldForge regression tests
         run: pnpm test
+      - name: Run Learning Studio curriculum and assessment tests
+        working-directory: learning-studio
+        run: npm test
       - name: Check Learning Studio JavaScript syntax
         run: |
           node --check app.js
           node --check theory-validation.js
+          node --check learning-studio/app.js
+          node --check learning-studio/assessment-workflow.mjs
+          node --check learning-studio/assessment-ui.mjs
       - name: Verify required root application files
         run: |
           test -s index.html
@@ -45,6 +51,9 @@ jobs:
           test -s icon.svg
           test -s curriculum-data.js
           test -s theory-validation.js
+          test -s learning-studio/index.html
+          test -s learning-studio/assessment-workflow.mjs
+          test -s learning-studio/assessment-ui.mjs
       - name: Install Chromium for browser acceptance
         run: pnpm exec playwright install --with-deps chromium
       - name: Build the production site
@@ -52,6 +61,8 @@ jobs:
       - name: Copy static Learning Studio runtime assets into the Pages artifact
         run: |
           cp app.js styles.css manifest.webmanifest sw.js icon.svg curriculum-data.js theory-validation.js dist/
+          mkdir -p dist/learning-studio
+          cp learning-studio/index.html learning-studio/app.js learning-studio/styles.css learning-studio/manifest.webmanifest learning-studio/sw.js learning-studio/icon.svg learning-studio/curriculum-data.js learning-studio/theory-validation.js learning-studio/assessment-workflow.mjs learning-studio/assessment-ui.mjs dist/learning-studio/
       - name: Smoke-test the built root application
         run: |
           python3 -m http.server 4173 --directory dist > /tmp/learning-studio-http.log 2>&1 &
@@ -62,6 +73,7 @@ jobs:
             sleep 1
           done
           pnpm test:browser
+          node learning-studio/tests/browser-smoke.mjs
       - name: Verify production artifact
         run: |
           test -s dist/index.html
@@ -69,6 +81,9 @@ jobs:
           test -s dist/curriculum-data.js
           test -s dist/theory-validation.js
           test -s dist/manifest.webmanifest
+          test -s dist/learning-studio/index.html
+          test -s dist/learning-studio/assessment-workflow.mjs
+          test -s dist/learning-studio/assessment-ui.mjs
           find dist -maxdepth 2 -type f
       - name: Upload verified Pages artifact
         uses: actions/upload-artifact@v4
