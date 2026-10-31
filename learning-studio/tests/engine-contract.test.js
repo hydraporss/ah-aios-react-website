@@ -98,3 +98,24 @@ test("learning graph rejects duplicate IDs and dangling assessment references", 
   assert.ok(result.errors.some(error => error.includes("Duplicate course ID")));
   assert.ok(result.errors.some(error => error.includes("unknown course")));
 });
+
+import fs from "node:fs";
+
+test("browser application loads engines before its application controller", () => {
+  const html = fs.readFileSync(new URL("../index.html", import.meta.url), "utf8");
+  const app = fs.readFileSync(new URL("../app.js", import.meta.url), "utf8");
+  assert.ok(html.indexOf('src="./engines/data-integrity.js"') < html.indexOf('src="./app.js"'));
+  assert.ok(html.indexOf('src="./engines/practice-engine.js"') < html.indexOf('src="./app.js"'));
+  assert.ok(html.indexOf('src="./engines/assessment-engine.js"') < html.indexOf('src="./app.js"'));
+  assert.match(app, /AHAssessmentEngine\.gradeKnowledgeCheck/);
+  assert.match(app, /AHPracticeEngine\.createSubmission/);
+  assert.match(app, /AHLearningDataIntegrity\.prepareProgressImport/);
+});
+
+test("learner state stores assessment attempts and submitted labs are not marked complete", () => {
+  const app = fs.readFileSync(new URL("../app.js", import.meta.url), "utf8");
+  assert.match(app, /attempts:\[\]/);
+  assert.match(app, /state\.attempts\.unshift\(result\)/);
+  assert.match(app, /submitted_pending_review/);
+  assert.match(app, /Submitted lab for review/);
+});
