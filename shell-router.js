@@ -99,7 +99,9 @@ export function initShellRouter(doc = globalThis.document, win = globalThis.wind
   });
 
   if (domainSelect) domainSelect.addEventListener("change", () => {
-    const route = resolveRoute(DOMAIN_TO_PATH[domainSelect.value] || DOMAIN_TO_PATH.all);
+    const selectedDomain = domainSelect.value;
+    const route = resolveRoute(DOMAIN_TO_PATH[selectedDomain] || DOMAIN_TO_PATH.all);
+    win.dispatchEvent(new CustomEvent("learning-studio:domain-change", { detail: { domain: selectedDomain } }));
     navigate(route);
   });
   if (contextToggle && panel) contextToggle.addEventListener("click", () => {
