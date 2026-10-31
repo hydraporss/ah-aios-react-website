@@ -2158,7 +2158,7 @@ window.AH_LEARNING_CURRICULUM = {
         }
       ],
       "assessment": "governed change dossier. Real canon changes always require the applicable explicit authorization.",
-      "contentStatus": "Specified",
+      "contentStatus": "Authored draft",
       "publicationStatus": "Not published",
       "sourceRefs": [
         "AH-LEARN-MASTER-001",
@@ -3408,3 +3408,6 @@ window.AH_LEARNING_CURRICULUM = {
     }
   ]
 };
+
+// Expose the source-traced catalogue under the application runtime name.
+window.CURRICULUM_DATA = window.AH_LEARNING_CURRICULUM;
