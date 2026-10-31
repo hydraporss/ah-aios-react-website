@@ -63,6 +63,14 @@ jobs:
           cp app.js styles.css manifest.webmanifest sw.js icon.svg curriculum-data.js theory-validation.js dist/
           mkdir -p dist/learning-studio
           cp learning-studio/index.html learning-studio/app.js learning-studio/styles.css learning-studio/manifest.webmanifest learning-studio/sw.js learning-studio/icon.svg learning-studio/curriculum-data.js learning-studio/theory-validation.js learning-studio/assessment-workflow.mjs learning-studio/assessment-ui.mjs dist/learning-studio/
+      - name: Stage the verified WorldForge website
+        run: |
+          mkdir -p dist/worldforge
+          rsync -a --exclude='*.zip' --exclude='README.md' public/worldforge/verified-2026-10-28/ dist/worldforge/
+      - name: Run WorldForge production package checks
+        run: pnpm test:worldforge-site
+        env:
+          WORLDFORGE_SITE_DIR: dist/worldforge
       - name: Smoke-test the built root application
         run: |
           python3 -m http.server 4173 --directory dist > /tmp/learning-studio-http.log 2>&1 &
@@ -74,6 +82,8 @@ jobs:
           done
           pnpm test:browser
           node learning-studio/tests/browser-smoke.mjs
+          curl --fail --silent http://127.0.0.1:4173/worldforge/ > /dev/null
+          curl --fail --silent http://127.0.0.1:4173/worldforge/governance.html > /dev/null
       - name: Verify production artifact
         run: |
           test -s dist/index.html
@@ -84,6 +94,10 @@ jobs:
           test -s dist/learning-studio/index.html
           test -s dist/learning-studio/assessment-workflow.mjs
           test -s dist/learning-studio/assessment-ui.mjs
+          test -s dist/worldforge/index.html
+          test -s dist/worldforge/governance.html
+          test -s dist/worldforge/assets/site.css
+          test -s dist/worldforge/assets/site.js
           find dist -maxdepth 2 -type f
       - name: Upload verified Pages artifact
         uses: actions/upload-artifact@v4
