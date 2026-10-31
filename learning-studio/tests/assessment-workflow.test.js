@@ -116,6 +116,23 @@ test("requires every common rubric rating to include score, evidence, and commen
   );
 });
 
+test("rejects null or malformed self-review rating entries without throwing a type error", () => {
+  const { engine } = makeWorkflow();
+  const draft = engine.createDraft(validDraft);
+  engine.submitForFormativeReview(draft.id);
+
+  const ratings = validRatings();
+  ratings[0] = null;
+  assert.throws(
+    () => engine.recordSelfReview(draft.id, {
+      summary: "A complete formative self-review.",
+      ratings
+    }),
+    /valid object/
+  );
+  assert.equal(engine.getSubmission(draft.id).status, "formative_submitted");
+});
+
 test("records formative self-review without producing a competency decision", () => {
   const { engine } = makeWorkflow();
   const draft = engine.createDraft(validDraft);
