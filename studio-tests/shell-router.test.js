@@ -26,6 +26,7 @@ test("all three technical domains have explicit route identities", () => {
 
 test("legacy section links resolve to the same route registry", () => {
   assert.equal(routeForSection("home").path, "/dashboard");
+  assert.equal(routeForSection("paths").path, "/curriculum/domains");
   assert.equal(routeForSection("curriculum-map").path, "/curriculum");
   assert.equal(routeForSection("labs").path, "/practice");
   assert.equal(routeForSection("govern").path, "/stewardship");
