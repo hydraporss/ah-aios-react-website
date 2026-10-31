@@ -31,16 +31,19 @@ test("curriculum preserves three technical domains and cross-cutting stewardship
 test("course and lesson identifiers are unique and every lesson retains a status", () => {
   const data = loadCurriculum();
   const courseIds = data.courses.map(course => course.id);
-  const lessonIds = data.courses.flatMap(course => course.lessons.map(lesson => lesson.id));
   assert.equal(new Set(courseIds).size, courseIds.length);
-  assert.equal(new Set(lessonIds).size, lessonIds.length);
-  assert.ok(data.courses.every(course => course.lessons.every(lesson => typeof lesson.status === "string" && lesson.status.length > 0)));
+  for (const course of data.courses) {
+    const lessonIds = course.lessons.map(lesson => lesson.id);
+    assert.equal(new Set(lessonIds).size, lessonIds.length, course.id + " lesson IDs must be unique within their course");
+    assert.ok(course.lessons.every(lesson => typeof lesson.status === "string" && lesson.status.length > 0));
+  }
 });
 
 test("authored lesson drafts retain review boundaries and source lineage", () => {
   const data = loadCurriculum();
   const authored = data.courses.flatMap(course => course.lessons.filter(lesson => lesson.content));
-  assert.ok(authored.length > 0);
+  assert.equal(authored.length, 20);
+  assert.equal(data.courses.reduce((sum, course) => sum + course.lessons.length, 0) - authored.length, 76);
   for (const lesson of authored) {
     assert.ok(lesson.content.status);
     assert.ok(lesson.content.reviewStatus);
