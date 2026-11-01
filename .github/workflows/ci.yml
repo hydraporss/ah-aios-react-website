@@ -1,0 +1,24 @@
+name: ci
+on:
+  pull_request:
+  push:
+    branches-ignore: [main]   # main is tested by the pages workflow before it deploys
+  workflow_call:
+
+jobs:
+  static:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - name: Syntax check
+        run: |
+          for f in learning/app.js learning/explorer.js learning/workbench.js \
+                   learning/theory-validation.js learning/sw.js \
+                   harness/js/prompt-builder.js scripts/*.js; do
+            node --check "$f"
+          done
+      - run: npm test
+      - run: npm run check:links
+      - run: npm run check:sync
