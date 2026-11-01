@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#061323">
+<title>AH-AIOS Local Site — Hub</title>
+<link rel="icon" href="learning/icon.svg" type="image/svg+xml">
+<style>
+:root{color-scheme:dark;--bg:#050d19;--panel:#0d1b2d;--line:#1c3550;--text:#edf5ff;--muted:#9eb2ca;--blue:#269eff;--cyan:#42e2e5;--violet:#b06bff;--gold:#e5c27b}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1200px 500px at 70% -10%,#16345a55,transparent),var(--bg);color:var(--text);font:15px/1.6 "DM Sans",system-ui,-apple-system,Segoe UI,sans-serif}
+a{color:inherit;text-decoration:none}
+header{display:flex;align-items:center;gap:14px;padding:16px clamp(18px,4vw,48px);border-bottom:1px solid #20364b;background:#061323ee;position:sticky;top:0;backdrop-filter:blur(14px);z-index:5}
+.mark{width:38px;height:38px;display:grid;place-items:center;font:800 26px system-ui;color:#36a8ff;text-shadow:0 0 16px #147bff}
+.brand b{letter-spacing:.2em;font-size:15px}.brand small{display:block;letter-spacing:.3em;font-size:9px;color:#9bb2ce}
+nav{margin-left:auto;display:flex;gap:20px;font-size:13px;color:#c6d5e7;flex-wrap:wrap}
+nav a:hover{color:#66caff}
+main{max-width:1180px;margin:0 auto;padding:44px clamp(18px,4vw,48px) 60px}
+.eyebrow{letter-spacing:.19em;color:#8ed9f4;font-size:11px;font-weight:700}
+h1{font-size:clamp(34px,5vw,56px);line-height:1.05;letter-spacing:-.03em;margin:10px 0 14px}
+h1 span{background:linear-gradient(90deg,#67d9ff,#c18aff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:#cfe0f3;max-width:720px;font-size:17px}
+.cta{display:inline-flex;gap:14px;margin-top:20px;padding:13px 22px;border-radius:30px;font-weight:700;font-size:13px;background:linear-gradient(100deg,#13b7e8,#367bff 65%,#a84de9);box-shadow:0 7px 25px #087bd655}
+h2{font-size:20px;margin:46px 0 6px}
+.sub{color:var(--muted);margin:0 0 18px;font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:16px}
+.card{background:linear-gradient(145deg,#10233a,#091727);border:1px solid #234563;border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:8px;transition:.15s}
+.card:hover{border-color:#42c5ff;transform:translateY(-2px)}
+.card .ic{width:38px;height:38px;border-radius:9px;display:grid;place-items:center;font-size:20px;background:#153b5d;color:#70caff}
+.card.cyan .ic{background:#104448;color:#6df2e5}.card.violet .ic{background:#39214e;color:#d7a4ff}.card.gold .ic{background:#3b2f17;color:var(--gold)}
+.card h3{margin:6px 0 0;font-size:16px}.card p{margin:0;color:var(--muted);font-size:13px;flex:1}
+.card .go{color:#83d0ff;font-size:12px;font-weight:700;margin-top:6px}
+.tag{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#f2cb8a;border:1px solid #80633d;border-radius:20px;padding:2px 9px;align-self:flex-start}
+.tag.ok{color:#7ee2bb;border-color:#2f7a5f}
+.notice{background:#201b15;border:1px solid #705637;border-radius:10px;padding:18px 22px;color:#d6c8ae;font-size:13px}
+.notice ul{margin:8px 0 0;padding-left:20px}.notice li{margin:4px 0}
+code{background:#0a1a2b;border:1px solid #274562;border-radius:5px;padding:1px 6px;font-size:12px}
+footer{border-top:1px solid #20354a;padding:20px clamp(18px,4vw,48px);color:#8ba2bb;font-size:12px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="index.html" style="display:flex;align-items:center;gap:10px"><span class="mark">A</span><span class="brand"><b>AH-AIOS</b><small>ALL PARTS</small></span></a>
+  <nav aria-label="Primary"><a href="learning/index.html">Learning Studio</a><a href="worldforge-app/index.html">WorldForge App</a><a href="learning/worldforge/index.html">Archive</a><a href="harness/index.html">AI Harness</a><a href="docs/architecture-spec.html">Docs</a></nav>
+</header>
+<main>
+  <p class="eyebrow">AH-AIOS · LEARN · BUILD · GOVERN · CREATE</p>
+  <h1>One local site.<br><span>Everything connected.</span></h1>
+  <p class="lead">Every recovered part of AH-AIOS in a single folder. Double-click this file — no server, install or internet connection needed (web fonts are optional).</p>
+  <a class="cta" href="learning/index.html">Start in Learning Studio <b>→</b></a>
+
+  <h2>Open a part</h2>
+  <p class="sub">All of these run directly from this folder.</p>
+  <div class="grid">
+    <a class="card" href="learning/index.html"><span class="ic">⌘</span><span class="tag ok">Works offline</span><h3>Learning Studio</h3><p>24-course programme, starter checks, practice labs, 3-Day Sprint, local tutor, portfolio with JSON export/import.</p><span class="go">Open →</span></a>
+    <a class="card violet" href="worldforge-app/index.html"><span class="ic">✥</span><span class="tag ok">Works offline</span><h3>WorldForge App</h3><p>React build: local-first world records, relationships, evidence and canon review. Data is saved in this browser.</p><span class="go">Open →</span></a>
+    <a class="card cyan" href="harness/index.html"><span class="ic">⌬</span><span class="tag ok">Works offline</span><h3>AI Harness Command Builder</h3><p>Prompt/command builder prototype with templates, live preview and validation.</p><span class="go">Open →</span></a>
+    <a class="card gold" href="learning/worldforge/index.html"><span class="ic">◇</span><span class="tag ok">Works offline</span><h3>WorldForge Archive</h3><p>Static archive: lore, worlds, races, characters, atlas, evidence registry, canon governance, visual archive.</p><span class="go">Open →</span></a>
+    <a class="card gold" href="learning/worldforge/verified-2026-10-28/index.html"><span class="ic">✓</span><span class="tag ok">Works offline</span><h3>Verified Website 2026-10-28</h3><p>Verified edition: constitution, governance, architecture, doctrine and explorer pages.</p><span class="go">Open →</span></a>
+    <a class="card" href="learning/worldforge/tools.html"><span class="ic">⚙</span><span class="tag ok">Works offline</span><h3>WorldForge Tools</h3><p>Prompt tools, relationship explorer and universe explorer from the archive.</p><span class="go">Open →</span></a>
+  </div>
+
+  <h2>Documents</h2>
+  <p class="sub">Specifications rendered as readable pages (raw Markdown is alongside in <code>docs/</code>).</p>
+  <div class="grid">
+    <a class="card" href="workbench.html"><span class="ic">▣</span><h3>Workbench Map</h3><p>46 modules from LS-WB-ARCH-001 with honest implementation status.</p><span class="go">Open →</span></a>
+    <a class="card" href="docs/workbench-architecture.html"><span class="ic">▤</span><h3>Workbench Architecture Spec</h3><p>LS-WB-ARCH-001 v1.0.0 — the complete specification, rendered.</p><span class="go">Read →</span></a>
+    <a class="card" href="docs/architecture-spec.html"><span class="ic">▤</span><h3>Architecture Specification</h3><p>LS-ARCH-WEB-001 — a proposed specification, not proof of implementation.</p><span class="go">Read →</span></a>
+    <a class="card" href="docs/notion-product-summary.html"><span class="ic">▤</span><h3>Notion Product Summary</h3><p>Product summary generated from the combined archive.</p><span class="go">Read →</span></a>
+    <a class="card" href="docs/original-readme.html"><span class="ic">▤</span><h3>Original AH-AIOS README</h3><p>Kept for provenance.</p><span class="go">Read →</span></a>
+  </div>
+
+  <h2>Optional: full Flask backend</h2>
+  <p class="sub">Worlds, races, governance proposals, sign-in and admin need Python. They are not part of the double-click site.</p>
+  <div class="notice"><b>To run it:</b> Windows — <code>start-flask-backend.bat</code> · Mac/Linux — <code>./start-flask-backend.command</code>, then open <code>http://127.0.0.1:8080/hub</code>. Needs Python 3 and internet on first run (installs Flask, Flask-Login, Flask-SQLAlchemy). Source is in <code>optional-flask-backend/</code>.</div>
+
+  <h2>Status boundaries</h2>
+  <div class="notice"><ul>
+    <li>The WorldForge <em>generator</em> source (<code>src/wof</code>) was not in the recovered archive; nothing is invented in its place.</li>
+    <li>The Learning Studio tutor is local content, not a live AI model. Progress lives in browser storage — not synced and not authenticated.</li>
+    <li>The Command Builder is a prototype interface.</li>
+    <li>Being linked together does not verify, canonize or deploy any part. The Flask test suite has not been run.</li>
+  </ul></div>
+</main>
+<footer><span>AH-AIOS Local Site · v0.2.0 static package</span><span>Better Learners · Safer AI · A Stronger Tomorrow</span></footer>
+</body>
+</html>

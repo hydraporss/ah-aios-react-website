@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Hub · AH-AIOS{% endblock %}
+{% block content %}
+<h1>AH-AIOS Connected Workbench</h1>
+<p class="muted">One local link for the recovered parts. Each part keeps its own status; being linked here does not make it verified, canon, or production-ready.</p>
+<div class="grid">
+{% for c in components if c.id != 'hub' %}
+<section class="panel">
+  <h2>{{ c.name }}</h2>
+  <p class="muted">{{ c.note }}</p>
+  {% if c.present %}<a class="btn" href="{{ c.url }}">Open</a>{% else %}<span class="tag">Files not found in this package</span>{% endif %}
+</section>
+{% endfor %}
+</div>
+<section class="panel"><h2>Boundaries</h2>
+<ul class="muted">
+<li>The WorldForge generator source (<code>src/wof</code>) is not in the recovered archive; generation routes return 503 rather than inventing a WorldState.</li>
+<li>The Learning Studio tutor is local and not connected to a live AI model. Learner progress is browser storage, not authenticated records.</li>
+<li>The Command Builder is a prototype interface. A test file existing is not proof that tests passed.</li>
+</ul></section>
+{% endblock %}

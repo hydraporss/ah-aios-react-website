@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}New Proposal · AH-AIOS{% endblock %}
+{% block content %}
+<h1>{{ title|default('New Change Proposal') }}</h1><form method="post" class="panel"><label>Description</label><textarea name="description" required></textarea><label>Artifact type</label><input name="artifact_type" value="GENERAL"><label>Artifact ID</label><input name="artifact_id"><label>Rationale</label><textarea name="rationale"></textarea><button type="submit">Submit proposal</button></form>
+{% endblock %}

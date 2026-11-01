@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}Users · AH-AIOS{% endblock %}
+{% block content %}
+<h1>Users</h1><p><a class="btn" href="{{ url_for('admin.create_user') }}">New user</a></p><section class="panel">{% for item in users %}<p>{{ item.email }} · {{ item.role }}</p>{% else %}<p class="muted">No users found.</p>{% endfor %}</section>
+{% endblock %}

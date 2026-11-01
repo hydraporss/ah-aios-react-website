@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}World Form · AH-AIOS{% endblock %}
+{% block content %}
+<h1>{{ title|default('World Submission') }}</h1><form method="post" class="panel"><label>World name</label><input name="name" required><label>Realm</label><input name="realm"><label>Description</label><textarea name="description"></textarea><label>Rationale</label><textarea name="rationale"></textarea><button type="submit">Submit proposal</button></form>
+{% endblock %}

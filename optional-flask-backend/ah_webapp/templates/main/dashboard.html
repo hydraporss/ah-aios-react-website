@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · AH-AIOS{% endblock %}
+{% block content %}
+<h1>{{ title|default("Worldbuilding Dashboard") }}</h1><div class="grid"><section class="panel"><h2>WorldForge Workbench</h2><p>Local Flask interface is running.</p><p class="muted">WorldForge generation package: <b>not installed</b>. Other available routes remain accessible.</p><a class="btn" href="{{ url_for('main.worlds') }}">Open Worlds</a></section><section class="panel"><h2>Governance</h2><p>Proposal review and classification routes are available where their data and templates are present.</p><a class="btn" href="{{ url_for('governance.proposals') }}">Open Proposals</a></section><section class="panel"><h2>Connected parts</h2><p>Learning Studio, WorldForge archive, AI Harness and documents.</p><a class="btn" href="/hub">Open Hub</a></section></div>
+{% endblock %}

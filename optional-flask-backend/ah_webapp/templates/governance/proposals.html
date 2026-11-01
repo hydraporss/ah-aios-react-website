@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}Proposals · AH-AIOS{% endblock %}
+{% block content %}
+<h1>Governance Proposals</h1><p><a class="btn" href="{{ url_for('governance.create_proposal') }}">New Proposal</a></p><section class="panel">{% for proposal in proposals %}<p><b>{{ proposal.proposal_id }}</b> · {{ proposal.description }} · {{ proposal.status }} <a href="{{ url_for('governance.review_proposal',proposal_id=proposal.proposal_id) }}">Review</a></p>{% else %}<p class="muted">No proposals yet.</p>{% endfor %}</section>
+{% endblock %}

@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}Worlds · AH-AIOS{% endblock %}
+{% block content %}
+<h1>World Atlas</h1><p><a class="btn" href="{{ url_for('main.create_world') }}">Submit a World</a></p><section class="panel">{% for world in worlds %}<p><b>{{ world.name }}</b> <span class="muted">{{ world.realm or '' }}</span> — {{ world.description or '' }} <a href="{{ url_for('main.generate_world',world_id=world.id) }}">Generate</a></p>{% else %}<p class="muted">No worlds recorded yet.</p>{% endfor %}</section>
+{% endblock %}

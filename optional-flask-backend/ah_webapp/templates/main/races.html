@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}Races · AH-AIOS{% endblock %}
+{% block content %}
+<h1>Identity Archive</h1><section class="panel">{% for race in races %}<p><b>{{ race.name }}</b> — {{ race.description or '' }}</p>{% else %}<p class="muted">No races recorded.</p>{% endfor %}</section>
+{% endblock %}
