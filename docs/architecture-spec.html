@@ -1,0 +1,1995 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Architecture Specification (LS-ARCH-WEB-001)</title>
+<style>body{margin:0;background:#0b0e14;color:#edf1f7;font:15px/1.65 system-ui,sans-serif}header{padding:12px 24px;background:#111722;border-bottom:1px solid #30394a;position:sticky;top:0}header a{color:#e4c985;text-decoration:none}main{max-width:900px;margin:24px auto;padding:0 20px 60px}h1,h2,h3{color:#e4c985}a{color:#7fd0ff}code,pre{background:#111722;border-radius:6px}code{padding:2px 5px}pre{padding:14px;overflow:auto}table{border-collapse:collapse;width:100%;display:block;overflow:auto}td,th{border:1px solid #30394a;padding:6px 10px}blockquote{border-left:3px solid #d6b66f;margin:0;padding-left:14px;color:#b9c4d6}</style></head>
+<body><header><a href="../index.html">&larr; Hub</a> &nbsp;<b style="color:#d6b66f">Architecture Specification (LS-ARCH-WEB-001)</b></header><main><h1 id="ah-aios-learning-studio">AH-AIOS LEARNING STUDIO</h1>
+<h2 id="complete-system-architecture-specification">Complete System Architecture Specification</h2>
+<p><strong>Document ID:</strong> LS-ARCH-WEB-001
+<strong>Document Title:</strong> AH-AIOS Learning Studio — Complete System Architecture Specification
+<strong>Architecture Reference Version:</strong> 1.0.0
+<strong>Implementation Reference Version:</strong> 0.3.1
+<strong>Specification Version:</strong> 1.1.0 — Comprehensive Architecture
+<strong>Date:</strong> 31 October 2026
+<strong>System:</strong> AH-AIOS Learning Studio
+<strong>Repository:</strong> <code>hydraporss/ah-aios-react-website</code>
+<strong>Implementation Directory:</strong> <code>learning-studio/</code>
+<strong>Status:</strong> Proposed Complete Specification — implementation alignment and acceptance verification required</p>
+<h3 id="document-purpose">Document purpose</h3>
+<p>This document defines the complete system architecture for AH-AIOS Learning Studio. It specifies the system's purpose, scope, components, navigation, curriculum, data, workflows, interfaces, validation, security, deployment, verification, and future development requirements.</p>
+<p>It is the architectural reference against which implementation can be developed, inspected, tested, and accepted.</p>
+<p>The existing website and its source files remain the implementation reference. This specification does not automatically change the implementation or assert that unimplemented requirements are already operational.</p>
+<h3 id="architectural-governance-statement">Architectural governance statement</h3>
+<p><strong>Specify deliberately. Implement incrementally. Validate against evidence. Preserve source lineage. Approve explicitly.</strong></p>
+<p>A specification is not an implementation. An implementation is not automatically verified. Verification does not, by itself, authorize publication or establish a credential.</p>
+<hr />
+<h1 id="1-system-definition-and-purpose">1. SYSTEM DEFINITION AND PURPOSE</h1>
+<h2 id="11-definition">1.1 Definition</h2>
+<p>AH-AIOS Learning Studio is the educational application of the AH-AIOS ecosystem.</p>
+<p>It provides a structured environment through which users can learn the system architecture, develop technical skills, practise operational workflows, understand governance constraints, produce learning artifacts, and demonstrate competencies through documented evidence.</p>
+<p>The application combines:</p>
+<ul>
+<li>A learning dashboard.</li>
+<li>Structured learning paths.</li>
+<li>A course and lesson catalogue.</li>
+<li>Practical learning laboratories.</li>
+<li>Integrated projects.</li>
+<li>A local curriculum tutor.</li>
+<li>Assessments.</li>
+<li>Competency tracking.</li>
+<li>A certification and completion interface.</li>
+<li>A knowledge library.</li>
+<li>Learner profiles.</li>
+<li>A learning portfolio.</li>
+<li>Progress management.</li>
+<li>A guided engineering sprint.</li>
+<li>Application settings and help.</li>
+</ul>
+<p>The target system must preserve a clear distinction between learning content, operational tools, assessment evidence, governance decisions, and official credentials.</p>
+<h2 id="12-mission">1.2 Mission</h2>
+<p>Enable users to progress from understanding AH-AIOS concepts to applying them responsibly, creating technical artifacts, evaluating evidence, and participating in governed system development.</p>
+<h2 id="13-primary-objectives">1.3 Primary objectives</h2>
+<ul>
+<li><strong>LS-OBJ-001</strong> — Provide a coherent entry point into the AH-AIOS learning programme.</li>
+<li><strong>LS-OBJ-002</strong> — Organize learning around AH-AIOS Core, AI Harness, and WorldForge.</li>
+<li><strong>LS-OBJ-003</strong> — Include Human Stewardship as a cross-cutting learning dimension.</li>
+<li><strong>LS-OBJ-004</strong> — Present curriculum content with explicit learning objectives and source references.</li>
+<li><strong>LS-OBJ-005</strong> — Provide exercises, knowledge checks, practical laboratories, and integrated projects.</li>
+<li><strong>LS-OBJ-006</strong> — Record learner progress without misrepresenting activity as verified competence.</li>
+<li><strong>LS-OBJ-007</strong> — Allow learners to preserve and transfer their local learning records.</li>
+<li><strong>LS-OBJ-008</strong> — Preserve provenance and distinguish source material from interpretation.</li>
+<li><strong>LS-OBJ-009</strong> — Provide an extensible foundation for future authenticated and server-backed learning.</li>
+<li><strong>LS-OBJ-010</strong> — Support a maintainable, testable, and deployable website.</li>
+<li><strong>LS-OBJ-011</strong> — Provide accessible, responsive interfaces.</li>
+<li><strong>LS-OBJ-012</strong> — Ensure that each claimed capability can be traced to an implementation and verification result.</li>
+</ul>
+<h2 id="14-intended-users">1.4 Intended users</h2>
+<table>
+<thead>
+<tr>
+<th>User type</th>
+<th>Primary responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Learner</td>
+<td>Study content, complete exercises, save work, and track progress</td>
+</tr>
+<tr>
+<td>Curriculum author</td>
+<td>Create and revise course and lesson content</td>
+</tr>
+<tr>
+<td>Curriculum reviewer</td>
+<td>Review correctness, completeness, source quality, and instructional design</td>
+</tr>
+<tr>
+<td>Programme administrator</td>
+<td>Maintain programme structure and publication settings</td>
+</tr>
+<tr>
+<td>Assessment reviewer</td>
+<td>Evaluate evidence against defined criteria</td>
+</tr>
+<tr>
+<td>System maintainer</td>
+<td>Maintain the application, dependencies, deployment, and recovery</td>
+</tr>
+<tr>
+<td>Governance authority</td>
+<td>Approve changes within its defined authority</td>
+</tr>
+<tr>
+<td>Public visitor</td>
+<td>Explore publicly available learning information</td>
+</tr>
+</tbody>
+</table>
+<p>These are target responsibilities. The current static implementation does not provide a complete account system or role-based authorization mechanism.</p>
+<hr />
+<h1 id="2-system-scope-and-boundaries">2. SYSTEM SCOPE AND BOUNDARIES</h1>
+<h2 id="21-included-in-scope">2.1 Included in scope</h2>
+<p>The Learning Studio architecture includes:</p>
+<ol>
+<li>Frontend application.</li>
+<li>Navigation and interface components.</li>
+<li>Curriculum data.</li>
+<li>Course and lesson presentation.</li>
+<li>Learning activities.</li>
+<li>Practice laboratories.</li>
+<li>Integrated project briefs.</li>
+<li>Knowledge checks and assessment presentation.</li>
+<li>Learner profile and portfolio.</li>
+<li>Local progress management.</li>
+<li>JSON export and import.</li>
+<li>Curriculum-based local tutor.</li>
+<li>Theory collection import and validation.</li>
+<li>Competency presentation.</li>
+<li>Completion-document generation.</li>
+<li>PWA installation metadata and application-shell caching.</li>
+<li>Testing and verification.</li>
+<li>Deployment configuration.</li>
+<li>Future backend and integration boundaries.</li>
+<li>Documentation and requirements traceability.</li>
+</ol>
+<h2 id="22-excluded-from-the-current-implementation">2.2 Excluded from the current implementation</h2>
+<p>The following are not provided by the inspected standalone website:</p>
+<ul>
+<li>Authenticated user accounts.</li>
+<li>Server-side learner profiles.</li>
+<li>Cloud learner synchronization.</li>
+<li>A shared learner database.</li>
+<li>A live AI model connection.</li>
+<li>An accredited credential issuer.</li>
+<li>An independently verified identity system.</li>
+<li>A production authorization service.</li>
+<li>A complete curriculum authoring and approval backend.</li>
+<li>An authoritative, bundled 82-Theory registry.</li>
+<li>Automatic verification of external credentials.</li>
+</ul>
+<p>These capabilities may be introduced through separately specified development.</p>
+<h2 id="23-system-boundary">2.3 System boundary</h2>
+<p>The current runtime boundary is:</p>
+<p><strong>Browser → Learning Studio application → bundled curriculum data → browser-local learner storage.</strong></p>
+<p>The application may import and export files through browser APIs.</p>
+<p>The future target may add:</p>
+<p><strong>Browser → authenticated application API → application services → persistent database → governed curriculum and learner records.</strong></p>
+<p>The future architecture must not be described as operational until the relevant services exist and have been verified.</p>
+<h2 id="24-relationship-to-the-wider-ah-aios-ecosystem">2.4 Relationship to the wider AH-AIOS ecosystem</h2>
+<table>
+<thead>
+<tr>
+<th>System or domain</th>
+<th>Relationship to Learning Studio</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AH-AIOS Core</td>
+<td>Supplies foundational architectural concepts and learning material</td>
+</tr>
+<tr>
+<td>AI Harness</td>
+<td>Supplies AI integration, orchestration, tooling, evaluation, and reliability subjects</td>
+</tr>
+<tr>
+<td>WorldForge</td>
+<td>Supplies structured-world, source, claim, relationship, and governance learning</td>
+</tr>
+<tr>
+<td>Human Stewardship</td>
+<td>Cross-cutting responsibility for judgment, evidence, safety, and accountability</td>
+</tr>
+<tr>
+<td>External AI services</td>
+<td>Not connected in the current local tutor</td>
+</tr>
+<tr>
+<td>External identity services</td>
+<td>Not connected in the current implementation</td>
+</tr>
+<tr>
+<td>Future backend services</td>
+<td>Integration boundary reserved for later development</td>
+</tr>
+</tbody>
+</table>
+<p>Learning Studio is a learning application about the ecosystem. It is not a substitute for the operational systems it teaches.</p>
+<hr />
+<h1 id="3-architectural-principles">3. ARCHITECTURAL PRINCIPLES</h1>
+<ul>
+<li><strong>Structure before presentation.</strong> Authoritative learning information must be stored in structured records. The website interface should render those records rather than becoming the only place where essential curriculum information exists.</li>
+<li><strong>Source lineage.</strong> Material claims, lesson explanations, exercises, and assessments should retain references to their source material. A source reference identifies where a statement came from. It does not automatically establish that the statement is true or approved.</li>
+<li><strong>Explicit content status.</strong> Every governed curriculum artifact must have an identifiable status. Recommended states include: Proposed, Specified, Draft, Under Review, Approved, Published, Rejected, Superseded, Archived. Not every state must be exposed to learners. The underlying system must nevertheless distinguish them where the workflow requires it.</li>
+<li><strong>Learning is not certification.</strong> Reading a lesson, completing a checkbox, passing a knowledge check, saving a project, and demonstrating competency are different events. The application must not silently equate them.</li>
+<li><strong>Local data is not authenticated identity.</strong> A locally stored display name or progress record identifies information in a browser profile. It does not prove who the user is.</li>
+<li><strong>Validate before accepting imported data.</strong> Imported JSON must be parsed and validated before it replaces existing state. Invalid imports must not destroy valid learner data.</li>
+<li><strong>Separate current capabilities from future services.</strong> The local tutor must not be represented as a live AI service. Browser-local progress must not be represented as cloud storage. Printable completion documents must not be represented as accredited credentials.</li>
+<li><strong>Incremental implementation.</strong> The architecture must support the existing static application while allowing future services to be introduced without unnecessary rewrites.</li>
+<li><strong>Evidence-based verification.</strong> A feature is accepted only when its behavior can be demonstrated through a suitable test or documented inspection.</li>
+<li><strong>Controlled change.</strong> Changes to curriculum, data schemas, application behavior, and deployment configuration must be identifiable, reviewable, and reversible where practical.</li>
+</ul>
+<hr />
+<h1 id="4-system-context-architecture">4. SYSTEM CONTEXT ARCHITECTURE</h1>
+<h2 id="41-logical-architecture">4.1 Logical architecture</h2>
+<p>The system is organized into the following logical layers.</p>
+<p><strong>Layer 1 — Presentation.</strong> Responsibilities: Application shell; Sidebar and top navigation; Dashboard; Course and lesson views; Forms and dialogs; Responsive layout; Accessibility behavior.</p>
+<p><strong>Layer 2 — Interaction.</strong> Responsibilities: Navigation events; Course selection; Knowledge-check submission; Exercise saving; Project interaction; Lab interaction; Profile editing; Import and export controls.</p>
+<p><strong>Layer 3 — Learning domain.</strong> Responsibilities: Curriculum access; Course and lesson interpretation; Learning activity tracking; Assessment presentation; Competency presentation; Project and portfolio association.</p>
+<p><strong>Layer 4 — Data management.</strong> Responsibilities: Learner-state initialization; State validation; Local persistence; Progress serialization; Import and export; Curriculum record loading.</p>
+<p><strong>Layer 5 — Content and source management.</strong> Responsibilities: Course records; Lesson records; Source references; Content status; Theory collection validation; Curriculum lineage.</p>
+<p><strong>Layer 6 — Application platform.</strong> Responsibilities: Browser APIs; Local storage; File handling; Service worker; PWA manifest; Static hosting.</p>
+<p><strong>Layer 7 — Verification.</strong> Responsibilities: Data validation tests; Curriculum checks; Interaction tests; Browser tests; Accessibility checks; Deployment verification.</p>
+<p><strong>Layer 8 — Future service integration.</strong> Reserved responsibilities: Authentication; Authorization; Server-side persistence; Cloud synchronization; Live AI integration; Shared curriculum services; Credential verification.</p>
+<p><strong>Layer 9 — Cross-cutting trust and risk management.</strong> Responsibilities: Source integrity; Input validation; Data preservation; Privacy; Access boundaries; Change history; Error handling; Recovery; Accurate status reporting.</p>
+<p>Layer 9 applies across all other layers; it is not merely another sequential application-processing stage.</p>
+<h2 id="42-architecture-diagram">4.2 Architecture diagram</h2>
+<pre><code class="language-text">                    AH-AIOS LEARNING STUDIO
+                              |
+                    Application Interface
+                              |
+           +------------------+------------------+
+           |                  |                  |
+        LEARN               BUILD              GOVERN
+           |                  |                  |
+   Learning Paths          Labs             Governance Study
+   Courses and Lessons     Projects          Evidence Concepts
+   Curriculum Tutor        Portfolio         Source Lineage
+   Assessments             Exercises         Theory Validation
+           |                  |                  |
+           +------------------+----------------+
+                              |
+                       Learning Domain
+                              |
+                 Curriculum and State Services
+                              |
+               +--------------+--------------+
+               |                             |
+        Curriculum Data               Learner State
+        Courses and Lessons           Profile and Progress
+        Source References             Portfolio and Activity
+        Project Briefs                Sprint Completion
+               |                             |
+               +--------------+--------------+
+                              |
+                      Browser Runtime
+                              |
+             Local Storage / File Import-Export
+                              |
+                  Static Website and PWA
+                              |
+               Future Services — Not Current
+               Authentication / API / Database
+               Live AI / Cloud Sync / Credentials
+</code></pre>
+<hr />
+<h1 id="5-information-architecture">5. INFORMATION ARCHITECTURE</h1>
+<h2 id="51-navigation-registry">5.1 Navigation registry</h2>
+<p>The inspected implementation contains fourteen sidebar destinations.</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Destination</th>
+<th>Route fragment</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LS-NAV-001</td>
+<td>3-Day Sprint</td>
+<td><code>#sprint</code></td>
+<td>Guided engineering sprint</td>
+</tr>
+<tr>
+<td>LS-NAV-002</td>
+<td>Home</td>
+<td><code>#home</code></td>
+<td>Dashboard and progress overview</td>
+</tr>
+<tr>
+<td>LS-NAV-003</td>
+<td>Learning Paths</td>
+<td><code>#paths</code></td>
+<td>Domain and programme exploration</td>
+</tr>
+<tr>
+<td>LS-NAV-004</td>
+<td>Courses</td>
+<td><code>#courses</code></td>
+<td>Course catalogue</td>
+</tr>
+<tr>
+<td>LS-NAV-005</td>
+<td>Labs</td>
+<td><code>#labs</code></td>
+<td>Practical learning laboratories</td>
+</tr>
+<tr>
+<td>LS-NAV-006</td>
+<td>Integrated Projects</td>
+<td><code>#projects</code></td>
+<td>Applied project briefs</td>
+</tr>
+<tr>
+<td>LS-NAV-007</td>
+<td>AI Tutor</td>
+<td><code>#tutor</code></td>
+<td>Curriculum-based local assistance</td>
+</tr>
+<tr>
+<td>LS-NAV-008</td>
+<td>Assessments</td>
+<td><code>#assessments</code></td>
+<td>Knowledge checks and assessment framework</td>
+</tr>
+<tr>
+<td>LS-NAV-009</td>
+<td>Competencies</td>
+<td><code>#competencies</code></td>
+<td>Competency-related progress</td>
+</tr>
+<tr>
+<td>LS-NAV-010</td>
+<td>Certification Center</td>
+<td><code>#certifications</code></td>
+<td>Completion summaries and printable records</td>
+</tr>
+<tr>
+<td>LS-NAV-011</td>
+<td>Knowledge Library</td>
+<td><code>#library</code></td>
+<td>Learning references and knowledge resources</td>
+</tr>
+<tr>
+<td>LS-NAV-012</td>
+<td>Profile</td>
+<td><code>#profile</code></td>
+<td>Learner information and portfolio</td>
+</tr>
+<tr>
+<td>LS-NAV-013</td>
+<td>Settings</td>
+<td><code>#settings</code></td>
+<td>Preferences and local data controls</td>
+</tr>
+<tr>
+<td>LS-NAV-014</td>
+<td>Help</td>
+<td><code>#help</code></td>
+<td>Application guidance</td>
+</tr>
+</tbody>
+</table>
+<p>The primary action groups—Learn, Build, Govern, and Create—are additional interface shortcuts, not additional sidebar destinations.</p>
+<h2 id="52-navigation-requirements">5.2 Navigation requirements</h2>
+<ul>
+<li><strong>LS-NAV-REQ-001:</strong> Every sidebar destination must resolve to an existing section.</li>
+<li><strong>LS-NAV-REQ-002:</strong> Navigation must work using a pointer and keyboard.</li>
+<li><strong>LS-NAV-REQ-003:</strong> The active destination must be identifiable.</li>
+<li><strong>LS-NAV-REQ-004:</strong> Mobile navigation must remain usable at narrow viewport widths.</li>
+<li><strong>LS-NAV-REQ-005:</strong> Opening a modal must not permanently obstruct navigation.</li>
+<li><strong>LS-NAV-REQ-006:</strong> Closing a modal must restore the previous context.</li>
+<li><strong>LS-NAV-REQ-007:</strong> Invalid or missing destination fragments must fail gracefully.</li>
+<li><strong>LS-NAV-REQ-008:</strong> Navigation must not imply that a section is fully implemented merely because a link exists.</li>
+</ul>
+<h2 id="53-shared-interface-components">5.3 Shared interface components</h2>
+<p>The architecture defines the following reusable components:</p>
+<ul>
+<li>Application shell.</li>
+<li>Sidebar.</li>
+<li>Top navigation.</li>
+<li>Search field.</li>
+<li>Dashboard metric card.</li>
+<li>Learning-path card.</li>
+<li>Course card.</li>
+<li>Lesson reader.</li>
+<li>Source-reference panel.</li>
+<li>Status badge.</li>
+<li>Progress indicator.</li>
+<li>Practice editor.</li>
+<li>Knowledge-check component.</li>
+<li>Feedback region.</li>
+<li>Project brief card.</li>
+<li>Lab workspace.</li>
+<li>Portfolio record.</li>
+<li>Import dialog.</li>
+<li>Export action.</li>
+<li>Confirmation dialog.</li>
+<li>Modal container.</li>
+<li>Empty-state component.</li>
+<li>Error-state component.</li>
+<li>Help panel.</li>
+</ul>
+<p>Existing components may be implemented directly in HTML and JavaScript. This specification does not require a framework migration.</p>
+<hr />
+<h1 id="6-curriculum-architecture">6. CURRICULUM ARCHITECTURE</h1>
+<h2 id="61-programme-structure">6.1 Programme structure</h2>
+<p>The programme blueprint contains twenty-four courses and ninety-six lesson units.</p>
+<table>
+<thead>
+<tr>
+<th>Programme group</th>
+<th style="text-align: right;">Course count</th>
+<th style="text-align: right;">Lesson units</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AH-AIOS Core</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">24</td>
+</tr>
+<tr>
+<td>AI Harness</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">28</td>
+</tr>
+<tr>
+<td>WorldForge</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">32</td>
+</tr>
+<tr>
+<td>Human Stewardship</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td style="text-align: right;"><strong>24</strong></td>
+<td style="text-align: right;"><strong>96</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The four-lesson allocation per course reflects the current programme blueprint.</p>
+<p>The content model must allow future changes to course and lesson counts through versioned data rather than hard-coded assumptions.</p>
+<h2 id="62-course-entity">6.2 Course entity</h2>
+<p>Each course record should support the following fields.</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>course_id</code></td>
+<td>Stable unique identifier</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>Human-readable title</td>
+</tr>
+<tr>
+<td><code>domain_id</code></td>
+<td>Technical or cross-cutting domain</td>
+</tr>
+<tr>
+<td><code>summary</code></td>
+<td>Purpose and scope</td>
+</tr>
+<tr>
+<td><code>competency_level</code></td>
+<td>Target level, if defined</td>
+</tr>
+<tr>
+<td><code>learning_outcomes</code></td>
+<td>Expected learning results</td>
+</tr>
+<tr>
+<td><code>prerequisites</code></td>
+<td>Required prior knowledge</td>
+</tr>
+<tr>
+<td><code>lesson_ids</code></td>
+<td>Ordered lesson references</td>
+</tr>
+<tr>
+<td><code>source_refs</code></td>
+<td>Source lineage</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>Content lifecycle status</td>
+</tr>
+<tr>
+<td><code>version</code></td>
+<td>Course version</td>
+</tr>
+<tr>
+<td><code>created_at</code></td>
+<td>Creation timestamp where tracked</td>
+</tr>
+<tr>
+<td><code>updated_at</code></td>
+<td>Last update timestamp where tracked</td>
+</tr>
+</tbody>
+</table>
+<p>Fields that are not present in the current runtime schema are target architecture requirements, not claims about existing data.</p>
+<h2 id="63-lesson-entity">6.3 Lesson entity</h2>
+<p>Each lesson should support:</p>
+<ul>
+<li>Stable lesson ID.</li>
+<li>Parent course ID.</li>
+<li>Title.</li>
+<li>Learning outcomes.</li>
+<li>Prerequisites.</li>
+<li>Source references.</li>
+<li>Explanatory content.</li>
+<li>Worked example.</li>
+<li>Guided practice.</li>
+<li>Independent practice.</li>
+<li>Knowledge-check items.</li>
+<li>Answer explanations.</li>
+<li>Assessment evidence.</li>
+<li>Feedback and remediation.</li>
+<li>Safety boundaries.</li>
+<li>Content status.</li>
+<li>Version and lineage.</li>
+</ul>
+<h2 id="64-lesson-content-completeness-rules">6.4 Lesson content-completeness rules</h2>
+<p>A lesson must not be marked content-complete merely because its title and outline exist.</p>
+<p>The content-completeness validator must check the required lesson fields.</p>
+<p>A lesson can remain <code>specified_only</code> when its topic and source outline exist but the required teaching content is missing.</p>
+<p>A lesson can be <code>draft</code> when authored material exists but has not completed review.</p>
+<p>A lesson can be <code>approved</code> only after its defined review requirements have been satisfied.</p>
+<p>A lesson can be <code>published</code> only after explicit publication authorization.</p>
+<h2 id="65-source-references">6.5 Source references</h2>
+<p>A source-reference record should contain:</p>
+<ul>
+<li>Source identifier.</li>
+<li>Title.</li>
+<li>Source type.</li>
+<li>Repository or document location.</li>
+<li>Version or commit identifier where applicable.</li>
+<li>Relevant section or content location.</li>
+<li>Access date where appropriate.</li>
+<li>Relationship to the learning claim.</li>
+<li>Verification status.</li>
+</ul>
+<p>The source-reference model must distinguish a link to a source from a verified claim about that source.</p>
+<h2 id="66-curriculum-lifecycle">6.6 Curriculum lifecycle</h2>
+<pre><code class="language-text">Proposed
+   |
+   v
+Specified
+   |
+   v
+Draft
+   |
+   v
+Under Review
+   |
+   +-------&gt; Rejected
+   |
+   v
+Approved
+   |
+   v
+Published
+   |
+   v
+Superseded / Archived
+</code></pre>
+<p>Additional transitions may be defined for corrections and resubmissions.</p>
+<p>The lifecycle is a target governance workflow. The current static website does not implement a complete multi-user curriculum approval service.</p>
+<hr />
+<h1 id="7-functional-specifications">7. FUNCTIONAL SPECIFICATIONS</h1>
+<h2 id="71-home-dashboard">7.1 Home dashboard</h2>
+<p><strong>Purpose:</strong> Present the learner's current learning state.</p>
+<p>Required behavior:</p>
+<ul>
+<li>Display the learner's configured display name.</li>
+<li>Present available progress indicators.</li>
+<li>Provide entry points into learning paths and courses.</li>
+<li>Show available learning activities.</li>
+<li>Present continuation suggestions where the underlying data supports them.</li>
+<li>Handle a new learner with no saved progress.</li>
+<li>Avoid displaying misleading values when information is unavailable.</li>
+</ul>
+<p>Acceptance conditions:</p>
+<ul>
+<li>The dashboard renders without JavaScript errors.</li>
+<li>Missing state produces a valid empty state.</li>
+<li>Progress indicators reflect stored data.</li>
+<li>All primary actions resolve to working destinations.</li>
+</ul>
+<h2 id="72-learning-paths">7.2 Learning Paths</h2>
+<p>Required behavior:</p>
+<ul>
+<li>Display programme domains.</li>
+<li>Display associated courses.</li>
+<li>Display course and lesson counts.</li>
+<li>Show content status.</li>
+<li>Distinguish authored material from specified-only outlines.</li>
+<li>Open associated course and lesson information.</li>
+</ul>
+<p>Acceptance conditions:</p>
+<ul>
+<li>Counts are computed from the curriculum data.</li>
+<li>Cross-cutting Human Stewardship is not incorrectly presented as a fourth technical system domain.</li>
+<li>Missing content is not invented to fill a visual card.</li>
+</ul>
+<h2 id="73-course-catalogue">7.3 Course catalogue</h2>
+<p>Required behavior:</p>
+<ul>
+<li>Display available course records.</li>
+<li>Filter or search where supported.</li>
+<li>Open a course.</li>
+<li>Present lesson and exercise information.</li>
+<li>Present a knowledge check where configured.</li>
+<li>Save learner practice.</li>
+<li>Display answer feedback.</li>
+<li>Preserve existing progress after navigation.</li>
+</ul>
+<p>Acceptance conditions:</p>
+<ul>
+<li>Invalid course identifiers fail gracefully.</li>
+<li>Knowledge checks use the configured answer data.</li>
+<li>Saved work is associated with the correct course.</li>
+<li>User-provided text is safely rendered.</li>
+</ul>
+<h2 id="74-lesson-reader">7.4 Lesson reader</h2>
+<p>Required behavior:</p>
+<ul>
+<li>Display lesson identity and parent course.</li>
+<li>Display lesson content and source references.</li>
+<li>Display exercises and checks where available.</li>
+<li>Identify incomplete or specified-only content.</li>
+<li>Allow learner responses to be saved where supported.</li>
+</ul>
+<p>Acceptance conditions:</p>
+<ul>
+<li>A specified-only lesson is not represented as a complete authored lesson.</li>
+<li>Missing sources are visible as gaps rather than fabricated references.</li>
+<li>Lesson status is consistent between the catalogue and reader.</li>
+</ul>
+<h2 id="75-practice-laboratories">7.5 Practice laboratories</h2>
+<p>Required behavior:</p>
+<ul>
+<li>Present the lab objective.</li>
+<li>Provide the task prompt.</li>
+<li>Accept a learner response.</li>
+<li>Reject empty submissions where required.</li>
+<li>Save a submission to the portfolio.</li>
+<li>Preserve the relationship between submission and lab.</li>
+</ul>
+<p>The current three labs are:</p>
+<ol>
+<li>Agent Orchestration Lab.</li>
+<li>Governance Review Lab.</li>
+<li>Knowledge Graph Lab.</li>
+</ol>
+<p>Acceptance conditions:</p>
+<ul>
+<li>Each lab opens.</li>
+<li>Responses can be saved.</li>
+<li>Saved records remain available after a page reload when local storage is retained.</li>
+<li>The system does not claim that a saved response has been independently evaluated unless an evaluator actually performed that evaluation.</li>
+</ul>
+<h2 id="76-integrated-projects">7.6 Integrated projects</h2>
+<p>Required behavior:</p>
+<ul>
+<li>List available project briefs.</li>
+<li>Display project ID, title, level, and task information when supplied.</li>
+<li>Open the project brief.</li>
+<li>Allow the learner to create or revise a response.</li>
+<li>Save the response to the portfolio.</li>
+<li>Preserve project identity.</li>
+</ul>
+<p>Acceptance conditions:</p>
+<ul>
+<li>Project briefs are rendered from curriculum data.</li>
+<li>Missing project fields are handled gracefully.</li>
+<li>A project is not represented as reviewed, piloted, or approved without evidence.</li>
+</ul>
+<h2 id="77-local-curriculum-tutor">7.7 Local curriculum tutor</h2>
+<p>Required behavior for the current implementation:</p>
+<ul>
+<li>Provide local curriculum-oriented assistance.</li>
+<li>Use available application content.</li>
+<li>Avoid implying that an external model was contacted.</li>
+<li>Distinguish supplied curriculum material from generated interface responses.</li>
+</ul>
+<p>Future AI integration requirements:</p>
+<ul>
+<li>Explicitly configured provider.</li>
+<li>Server-side secret management.</li>
+<li>Request validation.</li>
+<li>Authorization.</li>
+<li>Rate limiting.</li>
+<li>Failure handling.</li>
+<li>Disclosure of external model use.</li>
+<li>Appropriate logging and privacy controls.</li>
+<li>Protection against instructions embedded in untrusted content.</li>
+</ul>
+<p>Acceptance conditions:</p>
+<ul>
+<li>The current tutor operates without claiming live model connectivity.</li>
+<li>Future remote requests are impossible unless the relevant integration is configured.</li>
+<li>No API secret is embedded in public static JavaScript.</li>
+</ul>
+<h2 id="78-assessments">7.8 Assessments</h2>
+<p>Required behavior:</p>
+<ul>
+<li>Present knowledge-check questions.</li>
+<li>Accept answer selection.</li>
+<li>Evaluate answers according to configured answer data.</li>
+<li>Present feedback.</li>
+<li>Preserve any recorded learning state.</li>
+<li>Display the common assessment framework.</li>
+</ul>
+<p>The common framework includes a four-point scale, seven dimensions, assessment rules, and remediation steps.</p>
+<p>Acceptance conditions:</p>
+<ul>
+<li>An answer is evaluated against the configured key.</li>
+<li>Feedback corresponds to the result.</li>
+<li>Missing assessment data is handled safely.</li>
+<li>Completion is not equated with verified competence.</li>
+<li>The common framework is not represented as a completed course-specific rubric.</li>
+</ul>
+<h2 id="79-competencies">7.9 Competencies</h2>
+<p>Required behavior:</p>
+<ul>
+<li>Present relevant competency categories.</li>
+<li>Link progress to the underlying learning records.</li>
+<li>Distinguish self-reported or activity-derived evidence from reviewed evidence.</li>
+<li>Identify missing evidence where applicable.</li>
+</ul>
+<p>Acceptance conditions:</p>
+<ul>
+<li>The interface does not infer competence solely from viewing a lesson.</li>
+<li>Competency labels correspond to defined criteria.</li>
+<li>Where criteria are not yet configured, the interface identifies the competency as unverified or unspecified.</li>
+</ul>
+<h2 id="710-certification-center">7.10 Certification Center</h2>
+<p>Required behavior:</p>
+<ul>
+<li>Present local completion information.</li>
+<li>Generate printable completion summaries where supported.</li>
+<li>Identify the source of the completion state.</li>
+<li>Avoid implying external accreditation.</li>
+</ul>
+<p>Acceptance conditions:</p>
+<ul>
+<li>Generated documents accurately describe the local record.</li>
+<li>No unconfigured issuer is invented.</li>
+<li>A completion summary does not claim independently verified competence without supporting evidence.</li>
+</ul>
+<h2 id="711-knowledge-library-and-theory-explorer">7.11 Knowledge Library and Theory Explorer</h2>
+<p>Required behavior:</p>
+<ul>
+<li>Present available knowledge resources.</li>
+<li>Support theory collection import.</li>
+<li>Validate imported structure.</li>
+<li>Reject malformed collections.</li>
+<li>Preserve source information.</li>
+<li>Report the distinction between structural validation and source verification.</li>
+</ul>
+<p>Acceptance conditions:</p>
+<ul>
+<li>The 82-Theory collection requires exactly 82 records.</li>
+<li>The expected classification counts are 68 registry records and 14 synthesized records.</li>
+<li>Each record has a non-empty ID and title.</li>
+<li>IDs are unique.</li>
+<li>Classification counts are validated.</li>
+<li>Invalid imports do not overwrite previously valid records.</li>
+<li>Structural validation is not represented as provenance authentication.</li>
+</ul>
+<h2 id="712-profile-and-portfolio">7.12 Profile and portfolio</h2>
+<p>Required behavior:</p>
+<ul>
+<li>Display and update the local learner name.</li>
+<li>Present saved learning artifacts.</li>
+<li>Associate artifacts with courses, labs, or projects.</li>
+<li>Allow review of saved work.</li>
+<li>Preserve records in local storage.</li>
+</ul>
+<p>Acceptance conditions:</p>
+<ul>
+<li>Profile changes are reflected in the interface.</li>
+<li>Saved work appears in the portfolio.</li>
+<li>The same artifact is not unintentionally duplicated when a workflow is intended to update an existing record.</li>
+<li>The interface explains the local nature of the data.</li>
+</ul>
+<h2 id="713-settings-and-progress-management">7.13 Settings and progress management</h2>
+<p>Required behavior:</p>
+<ul>
+<li>Support available interface preferences.</li>
+<li>Support progress export.</li>
+<li>Support progress import.</li>
+<li>Support a reset operation.</li>
+<li>Confirm destructive actions.</li>
+<li>Report errors without silently discarding data.</li>
+</ul>
+<p>Acceptance conditions:</p>
+<ul>
+<li>A valid export produces a usable JSON file.</li>
+<li>A valid import restores the expected records.</li>
+<li>An invalid import leaves current state unchanged.</li>
+<li>Resetting progress requires deliberate confirmation.</li>
+<li>The application returns to a valid state after reset.</li>
+</ul>
+<h2 id="714-help">7.14 Help</h2>
+<p>Required behavior:</p>
+<ul>
+<li>Explain application navigation.</li>
+<li>Explain local data persistence.</li>
+<li>Explain import and export.</li>
+<li>Explain relevant feature limitations.</li>
+<li>Explain how to recover from common user errors.</li>
+</ul>
+<p>Acceptance conditions:</p>
+<ul>
+<li>Help is accessible from the navigation.</li>
+<li>Instructions match the current implementation.</li>
+<li>Help does not claim unavailable services.</li>
+</ul>
+<hr />
+<h1 id="8-data-architecture">8. DATA ARCHITECTURE</h1>
+<h2 id="81-data-categories">8.1 Data categories</h2>
+<p>The architecture separates the following categories:</p>
+<ol>
+<li>Curriculum definitions.</li>
+<li>Source references.</li>
+<li>Lesson content.</li>
+<li>Assessment definitions.</li>
+<li>Learner profile.</li>
+<li>Learner progress.</li>
+<li>Learning activity.</li>
+<li>Portfolio artifacts.</li>
+<li>Lab submissions.</li>
+<li>Project responses.</li>
+<li>Sprint state.</li>
+<li>Imported theory records.</li>
+<li>Application preferences.</li>
+<li>Verification and audit records, where supported.</li>
+</ol>
+<h2 id="82-core-logical-entities">8.2 Core logical entities</h2>
+<p><strong>Domain.</strong> Represents a learning domain or cross-cutting programme group.</p>
+<p>Key fields: <code>domain_id</code>, <code>name</code>, <code>description</code>, <code>domain_type</code>. The <code>domain_type</code> distinguishes a technical domain from a cross-cutting programme dimension.</p>
+<p><strong>Course.</strong> Represents a learning course.</p>
+<p>Key fields: <code>course_id</code>, <code>domain_id</code>, <code>title</code>, <code>summary</code>, <code>level</code>, <code>status</code>, <code>version</code>.</p>
+<p><strong>Lesson.</strong> Represents a lesson within a course.</p>
+<p>Key fields: <code>lesson_id</code>, <code>course_id</code>, <code>title</code>, <code>content_status</code>, <code>learning_outcomes</code>, <code>content</code>, <code>source_refs</code>, <code>version</code>.</p>
+<p><strong>Source.</strong> Represents a referenced source document or artifact.</p>
+<p>Key fields: <code>source_id</code>, <code>title</code>, <code>source_type</code>, <code>location</code>, <code>version_ref</code>, <code>verification_status</code>.</p>
+<p><strong>Assessment.</strong> Represents a knowledge check or assessment definition.</p>
+<p>Key fields: <code>assessment_id</code>, <code>course_id</code> or <code>lesson_id</code>, <code>items</code>, <code>scoring_rules</code>, <code>status</code>.</p>
+<p><strong>Learner profile.</strong> Represents local learner preferences and display metadata.</p>
+<p>Key fields: <code>profile_id</code>, <code>display_name</code>, <code>preferences</code>. In the current local-only implementation, the profile identifier is not an authenticated account identifier.</p>
+<p><strong>Progress record.</strong> Represents learner progress against a learning object.</p>
+<p>Key fields: <code>progress_id</code>, <code>learning_object_id</code>, <code>state</code>, <code>updated_at</code>.</p>
+<p><strong>Portfolio artifact.</strong> Represents saved learner work.</p>
+<p>Key fields: <code>artifact_id</code>, <code>artifact_type</code>, <code>parent_object_id</code>, <code>title</code>, <code>text</code>, <code>created_at</code>, <code>updated_at</code>.</p>
+<p><strong>Theory record.</strong> Represents an imported theory item.</p>
+<p>Key fields: <code>id</code>, <code>title</code>, <code>classification</code>, <code>source_refs</code>. The exact field names and schema for existing runtime records must be aligned to the current implementation before a migration is applied.</p>
+<h2 id="83-relationship-model">8.3 Relationship model</h2>
+<pre><code class="language-text">Domain
+  └── Course
+       ├── Lesson
+       │    ├── Source References
+       │    ├── Practice Activities
+       │    └── Knowledge Checks
+       ├── Assessments
+       └── Projects
+
+Learner Profile
+  ├── Progress Records
+  ├── Activity Records
+  ├── Portfolio Artifacts
+  └── Sprint State
+
+Theory Collection
+  └── Theory Records
+       └── Source References
+</code></pre>
+<h2 id="84-identifier-requirements">8.4 Identifier requirements</h2>
+<ul>
+<li>IDs must be stable across ordinary content revisions.</li>
+<li>IDs must not be generated from mutable display titles alone.</li>
+<li>Imported IDs must be validated for uniqueness.</li>
+<li>Relationships must reference existing records.</li>
+<li>Version changes must not silently redirect a learner's saved work to an unrelated course.</li>
+<li>Record removal must be handled without corrupting dependent records.</li>
+</ul>
+<h2 id="85-schema-versioning">8.5 Schema versioning</h2>
+<p>Every exported learner-data file must include a schema version.</p>
+<p>The import mechanism must:</p>
+<ol>
+<li>Parse the file.</li>
+<li>Check the schema version.</li>
+<li>Validate required fields.</li>
+<li>Validate identifiers and relationships.</li>
+<li>Apply a supported migration if available.</li>
+<li>Reject unsupported versions without changing current state.</li>
+<li>Report a comprehensible error.</li>
+</ol>
+<p>A future schema migration must preserve a backup or allow recovery before destructive transformation.</p>
+<hr />
+<h1 id="9-state-management-and-persistence">9. STATE MANAGEMENT AND PERSISTENCE</h1>
+<h2 id="91-current-persistence-model">9.1 Current persistence model</h2>
+<p>The current application uses browser <code>localStorage</code>.</p>
+<p>This is appropriate for a standalone prototype and individual browser-local use.</p>
+<p>It does not provide centralized or cross-device persistence.</p>
+<h2 id="92-state-lifecycle">9.2 State lifecycle</h2>
+<pre><code class="language-text">Application Startup
+       |
+       v
+Read Local State
+       |
+       v
+Parse and Validate
+       |
+       +---- Invalid or Missing ----&gt; Initialize Safe Defaults
+       |
+       v
+Render Application
+       |
+       v
+User Interaction
+       |
+       v
+Validate Change
+       |
+       v
+Update State
+       |
+       v
+Persist Local State
+       |
+       v
+Render Updated Interface
+</code></pre>
+<h2 id="93-persistence-requirements">9.3 Persistence requirements</h2>
+<ul>
+<li><strong>LS-DATA-001:</strong> State must initialize safely when storage is empty.</li>
+<li><strong>LS-DATA-002:</strong> Malformed JSON must not crash the application.</li>
+<li><strong>LS-DATA-003:</strong> Invalid imports must not overwrite valid state.</li>
+<li><strong>LS-DATA-004:</strong> State updates must use a consistent schema.</li>
+<li><strong>LS-DATA-005:</strong> Export must produce valid JSON.</li>
+<li><strong>LS-DATA-006:</strong> Import must validate the complete supported structure.</li>
+<li><strong>LS-DATA-007:</strong> Reset must require deliberate user confirmation.</li>
+<li><strong>LS-DATA-008:</strong> Storage errors must be handled visibly.</li>
+<li><strong>LS-DATA-009:</strong> The interface must explain that browser data can be lost.</li>
+<li><strong>LS-DATA-010:</strong> Data migrations must preserve recoverability.</li>
+</ul>
+<h2 id="94-future-server-backed-model">9.4 Future server-backed model</h2>
+<p>If server-side persistence is introduced, the architecture must define:</p>
+<ul>
+<li>Authenticated learner identity.</li>
+<li>Record ownership.</li>
+<li>Access authorization.</li>
+<li>API validation.</li>
+<li>Database constraints.</li>
+<li>Transaction behavior.</li>
+<li>Conflict resolution.</li>
+<li>Audit history.</li>
+<li>Backup and restoration.</li>
+<li>Retention and deletion.</li>
+<li>Synchronization semantics.</li>
+</ul>
+<p>The existing browser-local model must not be described as already providing these properties.</p>
+<hr />
+<h1 id="10-learning-workflow-architecture">10. LEARNING WORKFLOW ARCHITECTURE</h1>
+<h2 id="101-standard-learning-workflow">10.1 Standard learning workflow</h2>
+<pre><code class="language-text">Choose Learning Path
+        |
+        v
+Select Course
+        |
+        v
+Open Lesson
+        |
+        v
+Study Content and Sources
+        |
+        v
+Complete Practice
+        |
+        v
+Submit Knowledge Check
+        |
+        v
+Review Feedback
+        |
+        v
+Save Learning Evidence
+        |
+        v
+Review Progress
+        |
+        v
+Continue or Revisit
+</code></pre>
+<h2 id="102-practice-workflow">10.2 Practice workflow</h2>
+<ol>
+<li>Learner opens an exercise.</li>
+<li>Application displays the exercise prompt.</li>
+<li>Learner enters a response.</li>
+<li>Application validates required input.</li>
+<li>Learner saves the response.</li>
+<li>Application associates the response with the learning object.</li>
+<li>Application confirms the result.</li>
+<li>The portfolio displays the saved artifact.</li>
+</ol>
+<p>Saving an exercise does not automatically mean the exercise passed review.</p>
+<h2 id="103-assessment-workflow">10.3 Assessment workflow</h2>
+<ol>
+<li>Application loads assessment items.</li>
+<li>Learner submits an answer.</li>
+<li>Application validates the submission.</li>
+<li>Assessment logic evaluates the response.</li>
+<li>Feedback is displayed.</li>
+<li>Any supported result is recorded.</li>
+<li>Learner may retry or follow remediation instructions.</li>
+</ol>
+<p>Assessment thresholds and scoring rules must be explicitly defined for each assessment. The existence of a shared four-point framework does not automatically establish course-specific pass criteria.</p>
+<h2 id="104-completion-model">10.4 Completion model</h2>
+<p>The system must distinguish:</p>
+<ul>
+<li>Not started.</li>
+<li>In progress.</li>
+<li>Activity submitted.</li>
+<li>Assessment attempted.</li>
+<li>Assessment passed.</li>
+<li>Completion criteria satisfied.</li>
+<li>Competency evidence reviewed.</li>
+<li>Credential issued by an authorized issuer.</li>
+</ul>
+<p>These are different states.</p>
+<p>The current local application may support only a subset. Unsupported states must not be inferred or fabricated.</p>
+<h2 id="105-sprint-workflow">10.5 Sprint workflow</h2>
+<p>The sprint tracks fifteen task checkboxes across the three-day engineering programme.</p>
+<p>The application calculates completion progress and persists the selected task state locally.</p>
+<p>A checked task means the learner marked it complete. It does not independently verify that the task was performed.</p>
+<hr />
+<h1 id="11-assessment-competency-and-credential-architecture">11. ASSESSMENT, COMPETENCY, AND CREDENTIAL ARCHITECTURE</h1>
+<h2 id="111-assessment-dimensions">11.1 Assessment dimensions</h2>
+<p>The shared assessment framework contains seven dimensions defined by the curriculum data.</p>
+<p>The application must render the authoritative dimension labels and explanations rather than duplicating them in unrelated hard-coded locations.</p>
+<h2 id="112-assessment-record">11.2 Assessment record</h2>
+<p>A target assessment result should distinguish:</p>
+<ol>
+<li>Assessment definition.</li>
+<li>Learner response.</li>
+<li>Scoring result.</li>
+<li>Feedback.</li>
+<li>Attempt timestamp.</li>
+<li>Evidence references.</li>
+<li>Evaluation method.</li>
+<li>Reviewer identity, if applicable.</li>
+<li>Review status.</li>
+<li>Assessment version.</li>
+</ol>
+<p>Fields requiring an authenticated reviewer cannot be treated as verified in the current anonymous local application.</p>
+<h2 id="113-competency-evidence">11.3 Competency evidence</h2>
+<p>A competency claim should identify:</p>
+<ol>
+<li>The competency being evaluated.</li>
+<li>The required criteria.</li>
+<li>The submitted evidence.</li>
+<li>The evaluation method.</li>
+<li>The evaluation result.</li>
+<li>Any remediation requirement.</li>
+<li>The reviewer or evaluation authority, if applicable.</li>
+<li>The version of the competency standard.</li>
+</ol>
+<p>Progress indicators alone are insufficient evidence of independent competency.</p>
+<h2 id="114-credential-boundary">11.4 Credential boundary</h2>
+<p>A local printable completion document may record that a local application reached a defined state.</p>
+<p>It must not imply:</p>
+<ul>
+<li>External accreditation.</li>
+<li>Government recognition.</li>
+<li>An authorized credential issuer.</li>
+<li>Identity verification.</li>
+<li>Independent professional qualification.</li>
+</ul>
+<p>A future credential service requires an explicit issuer, defined standards, verification mechanisms, and a separate implementation.</p>
+<hr />
+<h1 id="12-ai-tutor-architecture">12. AI TUTOR ARCHITECTURE</h1>
+<h2 id="121-current-implementation">12.1 Current implementation</h2>
+<p>The current tutor is local and rule-based.</p>
+<p>It does not call a live AI model.</p>
+<h2 id="122-logical-components">12.2 Logical components</h2>
+<p>The current or target tutor architecture separates:</p>
+<ul>
+<li>User question input.</li>
+<li>Available curriculum context.</li>
+<li>Local response logic.</li>
+<li>Response presentation.</li>
+<li>Error and fallback behavior.</li>
+</ul>
+<h2 id="123-future-model-integration">12.3 Future model integration</h2>
+<p>A future model-backed tutor should use a service boundary:</p>
+<pre><code class="language-text">Browser
+   |
+   v
+Tutor Interface
+   |
+   v
+Application API
+   |
+   v
+Tutor Service
+   |
+   +----&gt; Curriculum Retrieval
+   |
+   +----&gt; Source and Permission Checks
+   |
+   v
+Configured AI Provider
+   |
+   v
+Response Validation and Presentation
+</code></pre>
+<h2 id="124-required-controls-for-future-integration">12.4 Required controls for future integration</h2>
+<ul>
+<li>Provider configuration.</li>
+<li>Secret management outside public frontend code.</li>
+<li>Request validation.</li>
+<li>Rate limiting.</li>
+<li>Authorization.</li>
+<li>Data-minimization controls.</li>
+<li>Error handling.</li>
+<li>Disclosure that a model is being used.</li>
+<li>Appropriate handling of untrusted curriculum text.</li>
+<li>Source attribution where retrieval is used.</li>
+<li>Distinction between generated interpretation and approved learning content.</li>
+</ul>
+<p>The tutor must not write directly to authoritative curriculum records or change content status without a separately authorized workflow.</p>
+<hr />
+<h1 id="13-knowledge-library-and-theory-registry">13. KNOWLEDGE LIBRARY AND THEORY REGISTRY</h1>
+<h2 id="131-theory-collection">13.1 Theory collection</h2>
+<p>The intended Theory Explorer collection contains 82 records:</p>
+<ul>
+<li>68 registry records.</li>
+<li>14 synthesized records.</li>
+</ul>
+<h2 id="132-structural-validation">13.2 Structural validation</h2>
+<p>The validator must check:</p>
+<ul>
+<li>Collection shape.</li>
+<li>Exact record count.</li>
+<li>Record object structure.</li>
+<li>Required ID.</li>
+<li>Required title.</li>
+<li>Unique IDs.</li>
+<li>Classification validity.</li>
+<li>Expected classification counts.</li>
+</ul>
+<h2 id="133-provenance-validation">13.3 Provenance validation</h2>
+<p>Structural validation is not provenance validation.</p>
+<p>A structurally valid record can still contain an incorrect, unsupported, or misattributed claim.</p>
+<p>Source verification requires separate evidence and must be represented separately from the structural validation result.</p>
+<h2 id="134-import-behavior">13.4 Import behavior</h2>
+<p>The import workflow must:</p>
+<ol>
+<li>Read the selected file.</li>
+<li>Parse JSON.</li>
+<li>Validate the collection.</li>
+<li>Reject invalid input.</li>
+<li>Preserve current records on failure.</li>
+<li>Save valid records.</li>
+<li>Display the result.</li>
+<li>Preserve the distinction between imported and verified material.</li>
+</ol>
+<h2 id="135-future-source-registry">13.5 Future source registry</h2>
+<p>A future registry service may support:</p>
+<ul>
+<li>Source identifiers.</li>
+<li>Source versions.</li>
+<li>Source locations.</li>
+<li>Claim-to-source relationships.</li>
+<li>Verification records.</li>
+<li>Provenance history.</li>
+<li>Supersession and correction.</li>
+</ul>
+<p>These capabilities require additional implementation and are not implied by the current import validator.</p>
+<hr />
+<h1 id="14-uiux-and-design-system">14. UI/UX AND DESIGN SYSTEM</h1>
+<h2 id="141-design-objectives">14.1 Design objectives</h2>
+<p>The interface must be:</p>
+<ul>
+<li>Readable.</li>
+<li>Responsive.</li>
+<li>Consistent.</li>
+<li>Keyboard-accessible.</li>
+<li>Clear about state.</li>
+<li>Appropriate for long-form learning.</li>
+<li>Usable without unnecessary navigation.</li>
+<li>Explicit about missing and incomplete content.</li>
+</ul>
+<h2 id="142-layout">14.2 Layout</h2>
+<p>The target layout includes:</p>
+<ul>
+<li>Sidebar navigation.</li>
+<li>Main content region.</li>
+<li>Dashboard and feature cards.</li>
+<li>Course and curriculum views.</li>
+<li>Contextual modal dialogs.</li>
+<li>Responsive layouts for smaller screens.</li>
+</ul>
+<h2 id="143-responsive-behavior">14.3 Responsive behavior</h2>
+<p>The interface must remain usable across:</p>
+<ul>
+<li>Desktop monitors.</li>
+<li>Laptops.</li>
+<li>Tablets.</li>
+<li>Mobile browsers.</li>
+</ul>
+<p>Requirements:</p>
+<ul>
+<li>No critical horizontal overflow.</li>
+<li>Navigation must remain reachable.</li>
+<li>Forms must fit available space.</li>
+<li>Dialogs must remain scrollable.</li>
+<li>Content must reflow rather than shrink into unreadable text.</li>
+<li>Interactive targets must remain usable on touch devices.</li>
+</ul>
+<h2 id="144-accessibility">14.4 Accessibility</h2>
+<p>The target application should conform to WCAG 2.2 Level AA to the extent applicable.</p>
+<p>Required areas include:</p>
+<ul>
+<li>Semantic HTML.</li>
+<li>Correct heading hierarchy.</li>
+<li>Keyboard navigation.</li>
+<li>Visible focus indicators.</li>
+<li>Accessible form labels.</li>
+<li>Accessible dialog behavior.</li>
+<li>Screen-reader feedback.</li>
+<li>Sufficient contrast.</li>
+<li>Reduced reliance on color alone.</li>
+<li>Text alternatives for meaningful icons.</li>
+<li>Appropriate error messages.</li>
+</ul>
+<p>Accessibility acceptance requires actual testing. A specification statement is not proof of conformance.</p>
+<h2 id="145-interface-status-indicators">14.5 Interface status indicators</h2>
+<p>The UI should distinguish:</p>
+<ul>
+<li>Available.</li>
+<li>In progress.</li>
+<li>Specified only.</li>
+<li>Draft.</li>
+<li>Under review.</li>
+<li>Approved.</li>
+<li>Published.</li>
+<li>Saved locally.</li>
+<li>Import failed.</li>
+<li>Verification pending.</li>
+</ul>
+<p>A status badge must reflect the underlying record rather than merely the visual appearance of the component.</p>
+<hr />
+<h1 id="15-security-privacy-and-trust-architecture">15. SECURITY, PRIVACY, AND TRUST ARCHITECTURE</h1>
+<h2 id="151-current-trust-boundary">15.1 Current trust boundary</h2>
+<p>The application runs in the browser and stores learner state locally.</p>
+<p>Anyone with access to the relevant browser profile may potentially access its local application data.</p>
+<p>The current application does not establish a secure authenticated identity or server-enforced access control.</p>
+<h2 id="152-input-handling">15.2 Input handling</h2>
+<p>The application must treat user-entered text and imported files as untrusted input.</p>
+<p>Requirements:</p>
+<ul>
+<li>Escape text before inserting it into HTML contexts.</li>
+<li>Prefer safe DOM APIs for untrusted content.</li>
+<li>Validate JSON before use.</li>
+<li>Reject malformed structures.</li>
+<li>Validate identifiers and references.</li>
+<li>Avoid evaluating imported content as executable code.</li>
+<li>Avoid inserting untrusted content as raw HTML.</li>
+<li>Provide safe error messages.</li>
+</ul>
+<h2 id="153-import-safety">15.3 Import safety</h2>
+<ul>
+<li>Do not replace current state before successful validation.</li>
+<li>Validate required fields and expected record relationships.</li>
+<li>Reject unsupported schema versions.</li>
+<li>Preserve current data after an invalid import.</li>
+<li>Explain validation errors without exposing unnecessary internal details.</li>
+</ul>
+<h2 id="154-privacy">15.4 Privacy</h2>
+<p>The current application should minimize personal information.</p>
+<p>It should not imply that local profile information is transmitted to a server.</p>
+<p>Future remote services must define what information is sent, why it is needed, how long it is retained, and who can access it.</p>
+<h2 id="155-security-requirements-for-future-services">15.5 Security requirements for future services</h2>
+<p>Any backend must define:</p>
+<ul>
+<li>Authentication.</li>
+<li>Authorization.</li>
+<li>Session management.</li>
+<li>Access scopes.</li>
+<li>Input validation.</li>
+<li>Rate limiting.</li>
+<li>Secrets management.</li>
+<li>Audit logging.</li>
+<li>Backup protection.</li>
+<li>Data retention.</li>
+<li>Deletion and recovery.</li>
+<li>Security monitoring.</li>
+</ul>
+<p>These controls are future service requirements, not current static-application capabilities.</p>
+<h2 id="156-trust-and-content-integrity">15.6 Trust and content integrity</h2>
+<p>The application must distinguish:</p>
+<ul>
+<li>Source content.</li>
+<li>Generated explanation.</li>
+<li>Learner submission.</li>
+<li>Automated validation.</li>
+<li>Human review.</li>
+<li>Approved curriculum.</li>
+<li>Official credential.</li>
+</ul>
+<p>One state must not silently become another.</p>
+<hr />
+<h1 id="16-integration-architecture">16. INTEGRATION ARCHITECTURE</h1>
+<h2 id="161-current-integrations">16.1 Current integrations</h2>
+<p>The inspected standalone application uses local browser capabilities and bundled files.</p>
+<p>Its operation does not require a live backend.</p>
+<h2 id="162-future-integration-boundaries">16.2 Future integration boundaries</h2>
+<p>Future integrations may include:</p>
+<ul>
+<li>AH-AIOS backend services.</li>
+<li>Authenticated user identity.</li>
+<li>Curriculum management services.</li>
+<li>Shared learning progress.</li>
+<li>AI model services.</li>
+<li>External source registries.</li>
+<li>Credential verification.</li>
+</ul>
+<p>Each integration requires a defined interface contract.</p>
+<h2 id="163-interface-contract-requirements">16.3 Interface contract requirements</h2>
+<p>Each future interface must specify:</p>
+<ul>
+<li>Purpose.</li>
+<li>Endpoint or service identifier.</li>
+<li>Request schema.</li>
+<li>Response schema.</li>
+<li>Authentication method.</li>
+<li>Authorization requirements.</li>
+<li>Error responses.</li>
+<li>Timeout behavior.</li>
+<li>Retry behavior.</li>
+<li>Rate limits.</li>
+<li>Versioning.</li>
+<li>Data classification.</li>
+<li>Logging requirements.</li>
+</ul>
+<p>No external integration should be assumed merely because a module has a corresponding name in the sidebar.</p>
+<hr />
+<h1 id="17-deployment-architecture">17. DEPLOYMENT ARCHITECTURE</h1>
+<h2 id="171-deployment-model">17.1 Deployment model</h2>
+<p>The current Learning Studio is designed for static hosting.</p>
+<p>The intended deployment directory is:</p>
+<p><code>/learning-studio/</code></p>
+<p>This preserves the existing root application and prevents Learning Studio from replacing WorldForge.</p>
+<h2 id="172-runtime-files">17.2 Runtime files</h2>
+<p>The public runtime should include:</p>
+<pre><code class="language-text">learning-studio/
+├── index.html
+├── app.js
+├── styles.css
+├── curriculum-data.js
+├── theory-validation.js
+├── manifest.webmanifest
+├── sw.js
+└── icon.svg
+</code></pre>
+<p>The exact deployed file set must match the actual source imports and runtime dependencies.</p>
+<p>Tests, internal verification documents, and package archives do not need to be exposed as public runtime files.</p>
+<h2 id="173-hosting-requirements">17.3 Hosting requirements</h2>
+<ul>
+<li>Static files must be served over HTTPS in production.</li>
+<li>Relative asset paths must work under the <code>/learning-studio/</code> base path.</li>
+<li>The service worker scope must remain within the Learning Studio directory.</li>
+<li>The deployment must not overwrite unrelated site content.</li>
+<li>The deployment artifact must be traceable to a source revision.</li>
+<li>Rollback must be possible through the hosting or repository history.</li>
+</ul>
+<h2 id="174-pwa-requirements">17.4 PWA requirements</h2>
+<p>The PWA implementation includes:</p>
+<ul>
+<li>Web App Manifest.</li>
+<li>Application icon.</li>
+<li>Service worker.</li>
+<li>Application-shell caching.</li>
+<li>Versioned cache naming.</li>
+</ul>
+<p>The application must be tested in a supported browser to confirm installation and offline behavior.</p>
+<h2 id="175-release-procedure">17.5 Release procedure</h2>
+<p>The target release procedure is:</p>
+<ol>
+<li>Identify the intended source revision.</li>
+<li>Build or assemble the deployable artifact.</li>
+<li>Run the relevant automated tests.</li>
+<li>Verify required runtime files.</li>
+<li>Deploy to the intended location.</li>
+<li>Open the deployed site.</li>
+<li>Test navigation and core interactions.</li>
+<li>Confirm the correct version is served.</li>
+<li>Record the live URL and source revision.</li>
+<li>Preserve a rollback path.</li>
+</ol>
+<p>This is a practical deployment procedure, not a requirement to create unnecessary governance paperwork for every static file change.</p>
+<h2 id="176-deployment-status">17.6 Deployment status</h2>
+<p>This specification does not assert that a particular live deployment has succeeded.</p>
+<p>Deployment completion must be established by the actual hosting result and a successful live-site check.</p>
+<hr />
+<h1 id="18-testing-and-verification-architecture">18. TESTING AND VERIFICATION ARCHITECTURE</h1>
+<h2 id="181-test-categories">18.1 Test categories</h2>
+<p><strong>Unit tests.</strong> Verify isolated functions such as: Progress validation; Theory validation; Curriculum validation; Scoring logic; Serialization; Identifier checks.</p>
+<p><strong>Integration tests.</strong> Verify interactions between: Curriculum data and rendering; Course workflows and portfolio storage; Import validation and persistence; Sprint task state and progress display; Assessment definitions and feedback.</p>
+<p><strong>Browser tests.</strong> Verify: Application startup; Navigation; Modal interactions; Course opening; Lab submission; Profile changes; Progress export and import; Responsive behavior.</p>
+<p><strong>Accessibility tests.</strong> Verify: Keyboard operation; Focus order; Dialog focus management; Accessible labels; Screen-reader announcements; Contrast and text readability.</p>
+<p><strong>Deployment tests.</strong> Verify: Runtime files are present; Asset paths resolve; The application loads at the intended subdirectory; The service worker registers correctly; The live site serves the intended version.</p>
+<h2 id="182-core-acceptance-tests">18.2 Core acceptance tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test ID</th>
+<th>Test</th>
+<th>Expected result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LS-TST-001</td>
+<td>Load application</td>
+<td>Main interface renders without fatal error</td>
+</tr>
+<tr>
+<td>LS-TST-002</td>
+<td>Open all sidebar destinations</td>
+<td>Every destination resolves</td>
+</tr>
+<tr>
+<td>LS-TST-003</td>
+<td>Open course</td>
+<td>Correct course content appears</td>
+</tr>
+<tr>
+<td>LS-TST-004</td>
+<td>Submit knowledge check</td>
+<td>Correct evaluation and feedback appear</td>
+</tr>
+<tr>
+<td>LS-TST-005</td>
+<td>Save practice response</td>
+<td>Response appears in portfolio</td>
+</tr>
+<tr>
+<td>LS-TST-006</td>
+<td>Submit lab response</td>
+<td>Lab submission is saved</td>
+</tr>
+<tr>
+<td>LS-TST-007</td>
+<td>Save profile change</td>
+<td>Display name updates and persists</td>
+</tr>
+<tr>
+<td>LS-TST-008</td>
+<td>Export progress</td>
+<td>Valid JSON file is generated</td>
+</tr>
+<tr>
+<td>LS-TST-009</td>
+<td>Import valid progress</td>
+<td>Supported records are restored</td>
+</tr>
+<tr>
+<td>LS-TST-010</td>
+<td>Import invalid progress</td>
+<td>Existing state remains unchanged</td>
+</tr>
+<tr>
+<td>LS-TST-011</td>
+<td>Validate theory collection</td>
+<td>Count, fields, uniqueness, and classification rules are checked</td>
+</tr>
+<tr>
+<td>LS-TST-012</td>
+<td>Track sprint tasks</td>
+<td>Progress count and bar update</td>
+</tr>
+<tr>
+<td>LS-TST-013</td>
+<td>Reload application</td>
+<td>Saved local state is restored</td>
+</tr>
+<tr>
+<td>LS-TST-014</td>
+<td>Use mobile viewport</td>
+<td>Navigation and forms remain usable</td>
+</tr>
+<tr>
+<td>LS-TST-015</td>
+<td>Test keyboard access</td>
+<td>Core workflows can be operated by keyboard</td>
+</tr>
+<tr>
+<td>LS-TST-016</td>
+<td>Test PWA</td>
+<td>Manifest and service worker behave as intended</td>
+</tr>
+<tr>
+<td>LS-TST-017</td>
+<td>Deploy to subdirectory</td>
+<td>All required assets load under <code>/learning-studio/</code></td>
+</tr>
+<tr>
+<td>LS-TST-018</td>
+<td>Open deployed site</td>
+<td>Live URL serves the intended application version</td>
+</tr>
+</tbody>
+</table>
+<h2 id="183-acceptance-principle">18.3 Acceptance principle</h2>
+<p>A test is passed only when its result has been observed or recorded.</p>
+<p>The existence of a test file is not proof that the test passed.</p>
+<p>A successful automated test run is not proof of curriculum completeness, accessibility conformance, or production readiness unless those areas were explicitly tested.</p>
+<hr />
+<h1 id="19-requirements-traceability">19. REQUIREMENTS TRACEABILITY</h1>
+<h2 id="191-traceability-model">19.1 Traceability model</h2>
+<p>Each material requirement should map to:</p>
+<ol>
+<li>Requirement identifier.</li>
+<li>Architecture section.</li>
+<li>Implementation file or component.</li>
+<li>Test identifier.</li>
+<li>Verification result.</li>
+<li>Known limitation, if any.</li>
+</ol>
+<h2 id="192-example-traceability-table">19.2 Example traceability table</h2>
+<table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Implementation area</th>
+<th>Verification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LS-NAV-REQ-001 — Navigation targets resolve</td>
+<td><code>index.html</code>, <code>app.js</code></td>
+<td>LS-TST-002</td>
+</tr>
+<tr>
+<td>LS-DATA-003 — Invalid imports preserve data</td>
+<td><code>app.js</code></td>
+<td>LS-TST-010</td>
+</tr>
+<tr>
+<td>Theory collection structure</td>
+<td><code>theory-validation.js</code></td>
+<td>LS-TST-011</td>
+</tr>
+<tr>
+<td>Course interaction</td>
+<td><code>app.js</code>, <code>curriculum-data.js</code></td>
+<td>LS-TST-003</td>
+</tr>
+<tr>
+<td>Progress persistence</td>
+<td><code>app.js</code></td>
+<td>LS-TST-013</td>
+</tr>
+<tr>
+<td>PWA asset resolution</td>
+<td><code>manifest.webmanifest</code>, <code>sw.js</code></td>
+<td>LS-TST-016</td>
+</tr>
+<tr>
+<td>Subdirectory deployment</td>
+<td>Deployment configuration and runtime assets</td>
+<td>LS-TST-017</td>
+</tr>
+<tr>
+<td>Live deployment verification</td>
+<td>Hosting environment</td>
+<td>LS-TST-018</td>
+</tr>
+</tbody>
+</table>
+<p>The table is a target traceability model. Actual verification results must be populated from executed tests and observed behavior.</p>
+<h2 id="193-verification-states">19.3 Verification states</h2>
+<p>Use explicit verification states:</p>
+<ul>
+<li>Not Tested.</li>
+<li>In Progress.</li>
+<li>Passed.</li>
+<li>Failed.</li>
+<li>Blocked.</li>
+<li>Not Applicable.</li>
+</ul>
+<p>A feature must not be marked passed solely because it is specified or implemented.</p>
+<hr />
+<h1 id="20-operational-architecture">20. OPERATIONAL ARCHITECTURE</h1>
+<h2 id="201-routine-maintenance">20.1 Routine maintenance</h2>
+<p>Maintenance should cover:</p>
+<ul>
+<li>Correctness of curriculum references.</li>
+<li>Browser compatibility.</li>
+<li>JavaScript errors.</li>
+<li>Broken navigation.</li>
+<li>Dependency updates where applicable.</li>
+<li>Service-worker cache behavior.</li>
+<li>Import and export reliability.</li>
+<li>Accessibility regressions.</li>
+<li>Deployment integrity.</li>
+</ul>
+<h2 id="202-backup-and-recovery">20.2 Backup and recovery</h2>
+<p>For the current implementation:</p>
+<ul>
+<li>Learners should export progress periodically.</li>
+<li>The application should preserve existing state when imports fail.</li>
+<li>The source repository should preserve version history.</li>
+<li>Deployment changes should be reversible.</li>
+</ul>
+<p>The local progress export is a learner backup, not a centralized application backup.</p>
+<h2 id="203-error-handling">20.3 Error handling</h2>
+<p>Errors should be:</p>
+<ul>
+<li>Visible to the user when they affect a workflow.</li>
+<li>Understandable.</li>
+<li>Specific enough to support correction.</li>
+<li>Safe to display.</li>
+<li>Non-destructive whenever possible.</li>
+</ul>
+<p>The application should not silently ignore failed persistence, failed import, or invalid curriculum references.</p>
+<h2 id="204-monitoring">20.4 Monitoring</h2>
+<p>The static application has no required centralized monitoring service.</p>
+<p>Future server-backed deployments should define operational monitoring appropriate to their services, including error rates, service availability, backup success, and security events.</p>
+<hr />
+<h1 id="21-performance-and-reliability-requirements">21. PERFORMANCE AND RELIABILITY REQUIREMENTS</h1>
+<h2 id="211-performance-objectives">21.1 Performance objectives</h2>
+<p>The application should:</p>
+<ul>
+<li>Load the main interface promptly on a typical broadband connection.</li>
+<li>Avoid unnecessary blocking operations.</li>
+<li>Render large curriculum lists efficiently.</li>
+<li>Avoid repeated full-page reloads for ordinary interactions.</li>
+<li>Handle missing local storage gracefully.</li>
+<li>Avoid fatal errors when an optional feature lacks data.</li>
+</ul>
+<p>Exact numerical performance thresholds must be defined against the intended hosting environment and representative devices before formal performance acceptance.</p>
+<h2 id="212-reliability-requirements">21.2 Reliability requirements</h2>
+<ul>
+<li>A malformed learner record must not prevent the application from opening.</li>
+<li>An invalid import must not overwrite valid state.</li>
+<li>A missing optional content record must not crash unrelated modules.</li>
+<li>Navigation failures must be recoverable.</li>
+<li>Service-worker failures must not be mistaken for successful offline operation.</li>
+<li>A deployment must preserve the unrelated root application.</li>
+</ul>
+<hr />
+<h1 id="22-implementation-roadmap">22. IMPLEMENTATION ROADMAP</h1>
+<h2 id="phase-1-existing-static-application-stabilization">Phase 1 — Existing static application stabilization</h2>
+<p><strong>Goal:</strong> Establish the current website as a dependable, deployable application.</p>
+<p>Scope:</p>
+<ul>
+<li>Align navigation labels and documented counts.</li>
+<li>Verify all navigation destinations.</li>
+<li>Verify core interactions.</li>
+<li>Confirm progress import and export.</li>
+<li>Confirm theory validation.</li>
+<li>Confirm PWA assets and service-worker paths.</li>
+<li>Verify deployment under <code>/learning-studio/</code>.</li>
+</ul>
+<p><strong>Exit condition:</strong> Core application workflows pass their relevant acceptance tests.</p>
+<h2 id="phase-2-curriculum-completeness">Phase 2 — Curriculum completeness</h2>
+<p><strong>Goal:</strong> Convert the programme blueprint into complete learning content.</p>
+<p>Scope:</p>
+<ul>
+<li>Complete lesson explanations.</li>
+<li>Add worked examples.</li>
+<li>Add guided and independent exercises.</li>
+<li>Add knowledge checks and rationales.</li>
+<li>Add approved source references.</li>
+<li>Add lesson-specific assessment criteria.</li>
+<li>Review content and track publication status.</li>
+</ul>
+<p><strong>Exit condition:</strong> Each published lesson satisfies the defined completeness and review requirements.</p>
+<h2 id="phase-3-learning-evidence-and-competency">Phase 3 — Learning evidence and competency</h2>
+<p><strong>Goal:</strong> Improve the distinction between learner activity and demonstrated capability.</p>
+<p>Scope:</p>
+<ul>
+<li>Define competency criteria.</li>
+<li>Link evidence to criteria.</li>
+<li>Add explicit evaluation status.</li>
+<li>Define remediation.</li>
+<li>Distinguish local activity from reviewed evidence.</li>
+</ul>
+<p><strong>Exit condition:</strong> Competency displays are supported by clearly identified criteria and evidence.</p>
+<h2 id="phase-4-backend-and-identity">Phase 4 — Backend and identity</h2>
+<p><strong>Goal:</strong> Introduce shared, authenticated learning only when authorized and required.</p>
+<p>Scope:</p>
+<ul>
+<li>Define API contracts.</li>
+<li>Implement authentication.</li>
+<li>Implement authorization.</li>
+<li>Add persistent storage.</li>
+<li>Add learner synchronization.</li>
+<li>Add audit history.</li>
+<li>Add backup and recovery.</li>
+</ul>
+<p><strong>Exit condition:</strong> Server-backed workflows pass security, data-integrity, and functional acceptance tests.</p>
+<h2 id="phase-5-live-ai-and-external-integrations">Phase 5 — Live AI and external integrations</h2>
+<p><strong>Goal:</strong> Add external services without weakening trust boundaries.</p>
+<p>Scope:</p>
+<ul>
+<li>Define AI service interface.</li>
+<li>Implement secure provider configuration.</li>
+<li>Add request validation and rate limits.</li>
+<li>Add source-aware retrieval where required.</li>
+<li>Define failure behavior and privacy controls.</li>
+</ul>
+<p><strong>Exit condition:</strong> Integration behavior, security controls, and disclosure are verified.</p>
+<p>These phases describe the target development path. They do not mean that later-phase features currently exist.</p>
+<hr />
+<h1 id="23-risks-and-mitigations">23. RISKS AND MITIGATIONS</h1>
+<table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Impact</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Specified-only content presented as complete</td>
+<td>Misleads learners</td>
+<td>Display explicit content status</td>
+</tr>
+<tr>
+<td>Local progress lost</td>
+<td>Learner work lost</td>
+<td>Export, validation, and recovery guidance</td>
+</tr>
+<tr>
+<td>Invalid JSON accepted</td>
+<td>Corrupted state</td>
+<td>Strict schema validation</td>
+</tr>
+<tr>
+<td>Imported source treated as verified</td>
+<td>False provenance claims</td>
+<td>Separate structural and provenance validation</td>
+</tr>
+<tr>
+<td>Local completion treated as certification</td>
+<td>Misleading credential claim</td>
+<td>Explicit credential boundary</td>
+</tr>
+<tr>
+<td>Local tutor mistaken for live AI</td>
+<td>Misleading capability claim</td>
+<td>Clearly disclose local operation</td>
+</tr>
+<tr>
+<td>Stale service-worker cache</td>
+<td>Outdated interface</td>
+<td>Versioned cache and deployment testing</td>
+</tr>
+<tr>
+<td>Deployment overwrites root site</td>
+<td>Existing website disrupted</td>
+<td>Preserve subdirectory deployment</td>
+</tr>
+<tr>
+<td>Course identifiers change unexpectedly</td>
+<td>Broken learner records</td>
+<td>Stable IDs and controlled migrations</td>
+</tr>
+<tr>
+<td>Future API secrets exposed in frontend</td>
+<td>Service compromise</td>
+<td>Server-side secret management</td>
+</tr>
+<tr>
+<td>Accessibility defects</td>
+<td>Excludes users</td>
+<td>Accessibility testing and remediation</td>
+</tr>
+<tr>
+<td>Tests assumed to have passed</td>
+<td>False confidence</td>
+<td>Record actual test execution results</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h1 id="24-acceptance-criteria-for-the-complete-learning-studio">24. ACCEPTANCE CRITERIA FOR THE COMPLETE LEARNING STUDIO</h1>
+<p>The application can be accepted as a verified release only when the following applicable conditions have evidence.</p>
+<h2 id="241-functional-acceptance">24.1 Functional acceptance</h2>
+<ul>
+<li>All sidebar destinations work.</li>
+<li>Course and lesson workflows behave as specified.</li>
+<li>Practice and project submissions can be saved.</li>
+<li>Knowledge checks return appropriate feedback.</li>
+<li>Profile and settings actions work.</li>
+<li>Export and import preserve data integrity.</li>
+<li>Theory validation enforces the defined structural rules.</li>
+<li>Unsupported features are not represented as operational.</li>
+</ul>
+<h2 id="242-data-acceptance">24.2 Data acceptance</h2>
+<ul>
+<li>Curriculum identifiers are stable.</li>
+<li>Required relationships resolve.</li>
+<li>Content statuses are consistent.</li>
+<li>Import validation rejects malformed records.</li>
+<li>Existing state survives invalid imports.</li>
+<li>Data exports are valid and versioned.</li>
+</ul>
+<h2 id="243-user-experience-acceptance">24.3 User-experience acceptance</h2>
+<ul>
+<li>The application works at supported viewport sizes.</li>
+<li>Navigation remains usable.</li>
+<li>Forms provide understandable feedback.</li>
+<li>Keyboard interaction works for core workflows.</li>
+<li>Accessibility issues are tested and documented.</li>
+</ul>
+<h2 id="244-deployment-acceptance">24.4 Deployment acceptance</h2>
+<ul>
+<li>The intended source revision is identified.</li>
+<li>All runtime assets are present.</li>
+<li>The application loads at the intended URL.</li>
+<li>The root website remains intact.</li>
+<li>Service-worker behavior is tested.</li>
+<li>The live website is opened and checked.</li>
+<li>The deployed version can be traced to its source revision.</li>
+<li>A rollback path exists.</li>
+</ul>
+<h2 id="245-content-acceptance">24.5 Content acceptance</h2>
+<ul>
+<li>Published lessons satisfy the completeness standard.</li>
+<li>Source references are present where required.</li>
+<li>Review and publication status are explicit.</li>
+<li>Assessment criteria are defined.</li>
+<li>Credentials are not implied without an authorized issuer.</li>
+</ul>
+<hr />
+<h1 id="25-architecture-decisions">25. ARCHITECTURE DECISIONS</h1>
+<p>The following decisions establish the intended system direction.</p>
+<p><strong>LS-ADR-001 — Standalone static frontend.</strong> Decision: Preserve the current standalone browser application for the initial deployment. Reason: It allows the Learning Studio to operate without a backend and keeps deployment simple.</p>
+<p><strong>LS-ADR-002 — Separate deployment directory.</strong> Decision: Deploy Learning Studio under <code>/learning-studio/</code>. Reason: Preserve the existing root website and keep the application isolated.</p>
+<p><strong>LS-ADR-003 — Structured curriculum data.</strong> Decision: Keep curriculum records separate from interface markup. Reason: Curriculum can be validated, versioned, reviewed, and reused without rewriting the interface.</p>
+<p><strong>LS-ADR-004 — Local-first learner state.</strong> Decision: Retain browser-local persistence for the current implementation. Reason: The current application does not require accounts or shared storage. Constraint: Local storage must not be described as cloud synchronization or authenticated recordkeeping.</p>
+<p><strong>LS-ADR-005 — Tutor integration boundary.</strong> Decision: Treat the existing tutor as local functionality. Reason: No live model connection is established in the inspected implementation.</p>
+<p><strong>LS-ADR-006 — Explicit curriculum lifecycle.</strong> Decision: Separate specified, drafted, reviewed, approved, and published content. Reason: Curriculum availability and curriculum authority are different conditions.</p>
+<p><strong>LS-ADR-007 — Validation before persistence.</strong> Decision: Validate imports before replacing current state. Reason: Prevent invalid data from destroying valid learner information.</p>
+<p><strong>LS-ADR-008 — Separate competence from activity.</strong> Decision: Do not treat course viewing, checkboxes, or unsupervised completion as proof of verified competency. Reason: Competency claims require defined criteria and appropriate evidence.</p>
+<hr />
+<h1 id="26-canonical-requirements-register">26. CANONICAL REQUIREMENTS REGISTER</h1>
+<p>The following identifiers provide stable references for implementation and verification.</p>
+<table>
+<thead>
+<tr>
+<th>ID range</th>
+<th>Requirement category</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LS-OBJ</td>
+<td>Product objectives</td>
+</tr>
+<tr>
+<td>LS-SYS</td>
+<td>System scope and boundaries</td>
+</tr>
+<tr>
+<td>LS-ARCH</td>
+<td>System and component architecture</td>
+</tr>
+<tr>
+<td>LS-NAV</td>
+<td>Navigation and information architecture</td>
+</tr>
+<tr>
+<td>LS-CUR</td>
+<td>Curriculum and lesson content</td>
+</tr>
+<tr>
+<td>LS-FUNC</td>
+<td>Functional module requirements</td>
+</tr>
+<tr>
+<td>LS-DATA</td>
+<td>Data integrity and persistence</td>
+</tr>
+<tr>
+<td>LS-WF</td>
+<td>Learning workflows</td>
+</tr>
+<tr>
+<td>LS-ASSESS</td>
+<td>Assessment and competency</td>
+</tr>
+<tr>
+<td>LS-AI</td>
+<td>Tutor and AI integration</td>
+</tr>
+<tr>
+<td>LS-KB</td>
+<td>Knowledge library and theory registry</td>
+</tr>
+<tr>
+<td>LS-UI</td>
+<td>UI/UX and accessibility</td>
+</tr>
+<tr>
+<td>LS-SEC</td>
+<td>Security and privacy</td>
+</tr>
+<tr>
+<td>LS-INT</td>
+<td>External integrations</td>
+</tr>
+<tr>
+<td>LS-DEP</td>
+<td>Deployment</td>
+</tr>
+<tr>
+<td>LS-TST</td>
+<td>Testing and verification</td>
+</tr>
+<tr>
+<td>LS-OPS</td>
+<td>Operations and recovery</td>
+</tr>
+<tr>
+<td>LS-ADR</td>
+<td>Architecture decisions</td>
+</tr>
+</tbody>
+</table>
+<p>Every material implementation requirement should use one of these stable identifiers or an explicitly defined extension.</p>
+<hr />
+<h1 id="27-source-and-version-control">27. SOURCE AND VERSION CONTROL</h1>
+<h2 id="271-reference-sources">27.1 Reference sources</h2>
+<p>The architecture must be reconciled with the actual source files, including:</p>
+<ul>
+<li><code>docs/learning/architecture/LEARNING-STUDIO-WEBSITE-ARCHITECTURE-SPECIFICATION-v1.0.md</code></li>
+<li><code>learning-studio/index.html</code></li>
+<li><code>learning-studio/styles.css</code></li>
+<li><code>learning-studio/app.js</code></li>
+<li><code>learning-studio/curriculum-data.js</code></li>
+<li><code>learning-studio/theory-validation.js</code></li>
+<li><code>learning-studio/manifest.webmanifest</code></li>
+<li><code>learning-studio/sw.js</code></li>
+<li><code>learning-studio/package.json</code></li>
+<li><code>learning-studio/README.md</code></li>
+<li><code>learning-studio/DEPLOYMENT.md</code></li>
+<li><code>learning-studio/VERIFICATION.md</code></li>
+</ul>
+<p>Repository: <code>hydraporss/ah-aios-react-website</code></p>
+<p>Implementation reference commit: <code>b08ddd0bc46f86d6ab6c327f505bf23fb9892694</code></p>
+<h2 id="272-versioning-requirements">27.2 Versioning requirements</h2>
+<ul>
+<li>Preserve the original architecture specification as a source reference.</li>
+<li>Do not silently overwrite its meaning.</li>
+<li>Assign a version to each accepted architecture revision.</li>
+<li>Record substantive changes to requirements.</li>
+<li>Keep implementation and architecture versions distinguishable.</li>
+<li>Record verification evidence against a known source revision.</li>
+<li>Mark superseded specifications explicitly.</li>
+</ul>
+<h2 id="273-authority-of-this-document">27.3 Authority of this document</h2>
+<p>This document defines the comprehensive target architecture and the requirements needed to align the website with it.</p>
+<p>It does not automatically establish that every requirement has been implemented, reviewed, approved, or deployed.</p>
+<p>The existing implementation remains evidence of current behavior. Where the implementation differs from the target, the difference must be recorded as a gap and resolved through deliberate development.</p>
+<hr />
+<h1 id="28-final-system-definition">28. FINAL SYSTEM DEFINITION</h1>
+<p><strong>AH-AIOS Learning Studio is a structured, extensible educational application for the AH-AIOS ecosystem.</strong> It organizes learning across AH-AIOS Core, AI Harness, and WorldForge, with Human Stewardship as a cross-cutting dimension. It provides course and lesson access, practical laboratories, integrated projects, assessments, competency presentation, a local curriculum tutor, knowledge resources, learner portfolio, local progress management, and PWA functionality.</p>
+<p>Its architecture separates interface, learning workflows, curriculum data, learner state, source references, validation, deployment, and future service integration.</p>
+<p>The current implementation is a standalone browser application. It does not provide authenticated accounts, shared cloud progress, a live AI service, or an accredited credential issuer. The complete curriculum blueprint is represented in the application, but lesson authoring, review, and publication remain separate content-production responsibilities.</p>
+<p>The target system must preserve source lineage, validate imported data, distinguish activity from competence, distinguish generated interpretation from approved curriculum, and report implementation status accurately.</p>
+<p>Its governing learning direction is:</p>
+<p><strong>LEARN. BUILD. GOVERN. CREATE.</strong></p>
+<p>Its architectural rule is:</p>
+<p><strong>Specify completely. Implement deliberately. Validate continuously. Preserve evidence. Claim only what has been demonstrated.</strong></p>
+<p><strong>End of Specification.</strong></p></main></body></html>

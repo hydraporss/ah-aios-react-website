@@ -1,9 +1,27 @@
+# Python / Flask backend
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+optional-flask-backend/ah_webapp/*.db
+optional-flask-backend/instance/*
+!optional-flask-backend/instance/uploads/
+optional-flask-backend/instance/uploads/*
+!optional-flask-backend/instance/uploads/.gitkeep
+
+# Node / build output
 node_modules/
-dist/
+_site/
+
+# Secrets and local config
 .env
 .env.*
-!.env.example
-*.local
-.acceptance-run-*/
-*.sqlite3
-backups/
+*.pem
+*.key
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

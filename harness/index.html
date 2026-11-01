@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Harness — Command Builder</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .prototype-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(233, 69, 96, 0.05);
+            border: 2px dashed var(--accent);
+            pointer-events: none;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .prototype-overlay span {
+            background: var(--bg-card);
+            padding: 1rem 2rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            color: var(--accent);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo">
+                <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="48" height="48" rx="8" fill="#1a1a2e"/>
+                    <path d="M12 12h24v6H12z" fill="#e94560" opacity="0.3"/>
+                    <path d="M12 20h24v6H12z" fill="#e94560" opacity="0.2"/>
+                    <path d="M12 28h24v6H12z" fill="#e94560" opacity="0.15"/>
+                    <path d="M12 36h24v6H12z" fill="#e94560" opacity="0.1"/>
+                    <path d="M18 18l12 6-12 6z" fill="#7c3aed" opacity="0.3"/>
+                </svg>
+                <span>AI Harness</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.html" class="active">Command Builder</a>
+                <a href="../worldforge-app/index.html" class="gold">WorldForge Integration</a>
+                <a href="data/prompts.json">Prompt Library</a>
+                <a href="data/templates.json">Templates</a>
+                <a href="schemas/validation.schema.json">Validation</a>
+                <a href="../index.html">Hub</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="flash-messages">
+            <div class="flash flash-info">
+                Welcome to AI Harness Command Builder. This prototype demonstrates the proposed interface for the AI Harness domain within AH-AIOS.
+            </div>
+        </div>
+
+        <div class="prompt-builder">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Command Builder</h2>
+                    <div class="preview-actions">
+                        <button class="btn btn-secondary btn-sm" onclick="loadSample()">Load Sample</button>
+                        <button class="btn btn-gold btn-sm" onclick="validatePrompt()">Validate</button>
+                        <button class="btn btn-secondary btn-sm" onclick="exportPrompt()">Export</button>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <div class="form-group">
+                        <label for="templateSelect">Template</label>
+                        <select id="templateSelect" class="form-group" onchange="loadTemplate()">
+                            <option value="">Select a template...</option>
+                            <option value="research">Research Report</option>
+                            <option value="analysis">Analysis Report</option>
+                            <option value="summary">Executive Summary</option>
+                            <option value="status">Status Update</option>
+                            <option value="data">Data Analysis</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="modelSelect">Model Provider</label>
+                        <select id="modelSelect" class="form-group">
+                            <option value="gpt-4">GPT-4</option>
+                            <option value="gpt-3.5">GPT-3.5 Turbo</option>
+                            <option value="claude-3">Claude 3</option>
+                            <option value="gemini">Gemini</option>
+                            <option value="local">Local Model</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="field-group full">
+                    <div class="form-group">
+                        <label for="promptInput">Prompt Instructions</label>
+                        <textarea id="promptInput" class="form-group" placeholder="Enter your prompt instructions..."></textarea>
+                    </div>
+                </div>
+
+                <div class="instructions-panel">
+                    <div class="card">
+                        <h3>Available Variables</h3>
+                        <div class="variables-section" id="variablesSection">
+                            <span class="variable-tag" onclick="insertVariable('{{claim_id}}')">{{claim_id}}</span>
+                            <span class="variable-tag" onclick="insertVariable('{{source_data}}')">{{source_data}}</span>
+                            <span class="variable-tag" onclick="insertVariable('{{context_memory}}')">{{context_memory}}</span>
+                            <span class="variable-tag" onclick="insertVariable('{{execution_context}}')">{{execution_context}}</span>
+                            <span class="variable-tag" onclick="insertVariable('{{worldforge_entity}}')">{{worldforge_entity}}</span>
+                            <span class="variable-tag" onclick="insertVariable('{{evidence_ref}}')">{{evidence_ref}}</span>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Template Variables</h3>
+                        <div class="variables-section" id="templateVariables">
+                            <span class="variable-tag" onclick="insertVariable('{{template.title}}')">{{template.title}}</span>
+                            <span class="variable-tag" onclick="insertVariable('{{template.date}}')">{{template.date}}</span>
+                            <span class="variable-tag" onclick="insertVariable('{{template.author}}')">{{template.author}}</span>
+                            <span class="variable-tag" onclick="insertVariable('{{template.references}}')">{{template.references}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="preview-panel">
+                    <div class="card">
+                        <div class="preview-header">
+                            <h3>Live Preview</h3>
+                            <button class="btn btn-secondary btn-sm" onclick="copyPreview()">Copy</button>
+                        </div>
+                        <div class="preview-output" id="previewOutput">
+                            Select a template and add instructions to see the generated prompt.
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h3>Validation Results</h3>
+                        <div class="validation-results" id="validationResults">
+                            <div class="result-item pending">
+                                <span>Pending</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card">
+                <h3>Design System Status</h3>
+                <p class="text-secondary">This is a prototype demonstrating the proposed AI Harness interface with WorldForge integration.</p>
+                <div style="margin-top: 1rem;">
+                    <span class="badge badge-canon">Proposal</span>
+                    <span class="badge badge-interpretation">Awaiting Implementation</span>
+                </div>
+            </div>
+            <div class="card">
+                <h3>Next Steps</h3>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 0.5rem;">Implement command library</li>
+                    <li style="margin-bottom: 0.5rem;">Add WorldForge entity selector</li>
+                    <li style="margin-bottom: 0.5rem;">Connect to execution engine</li>
+                    <li>Add approval workflows</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Integration Points</h3>
+                <ul style="list-style: none;">
+                    <li style="margin-bottom: 0.5rem;">AH-AIOS Core (identity, policy)</li>
+                    <li style="margin-bottom: 0.5rem;">WorldForge (knowledge, entities)</li>
+                    <li>Model providers</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card" style="margin-top: 2rem;">
+            <h3>Prototype Notice</h3>
+            <p class="text-secondary">
+                This prototype demonstrates the proposed interface for AI Harness, the controlled intelligence execution and orchestration environment of AH-AIOS.
+                The included components (Command Builder, template system, validation engine) are part of the Phase 4 — Operational Website proposal and are not yet implemented.
+            </p>
+            <p class="text-secondary">
+                <a href="../docs/architecture-spec.html" class="gold">View Architecture Specification</a>
+            </p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 AFTER HUMANITY. AI Harness — Controlled Intelligence Execution Environment.</p>
+        </div>
+    </footer>
+
+    <script src="js/prompt-builder.js"></script>
+</body>
+</html>

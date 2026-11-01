@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}Race Form · AH-AIOS{% endblock %}
+{% block content %}
+<h1>{{ title|default('Race Submission') }}</h1><form method="post" class="panel"><label>Name</label><input name="name" required><label>Description</label><textarea name="description"></textarea><label>Rationale</label><textarea name="rationale"></textarea><button type="submit">Submit</button></form>
+{% endblock %}

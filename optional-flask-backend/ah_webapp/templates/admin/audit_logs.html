@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}Audit Logs · AH-AIOS{% endblock %}
+{% block content %}
+<h1>Audit Logs</h1><section class="panel">{% for log in logs %}<p>{{ log.created_at }} · {{ log.action or log.event_type or 'Event' }}</p>{% else %}<p class="muted">No logs.</p>{% endfor %}</section>
+{% endblock %}

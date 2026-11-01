@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard · AH-AIOS{% endblock %}
+{% block content %}
+<h1>Administration</h1><section class="panel"><pre>{{ stats }}</pre><p>Signed in as {{ user.email }}</p><p><a href="{{ url_for('admin.users') }}">Users</a> · <a href="{{ url_for('admin.audit_logs') }}">Audit logs</a></p></section>
+{% endblock %}

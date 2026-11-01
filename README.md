@@ -1,55 +1,60 @@
-# Learning Studio
+# AH-AIOS Learning Studio
 
-**Learning Studio** is the primary website and project in this repository. It is an interactive learning platform for the AH-AIOS ecosystem: learn, build, govern, and create.
+A local-first, no-build static site: Learning Studio (24 courses, 96 lessons planned), a theory explorer, instructor/admin workbenches, the AI Harness command builder, a WorldForge app, and landing pages. Progress is stored in the browser (`localStorage`). An optional Flask backend lives in `optional-flask-backend/`.
 
-## Current application
-
-The root of this repository is the Learning Studio website. Its current release candidate includes:
-
-- A responsive learning dashboard and navigation.
-- A source-traced 24-course / 96-lesson programme map.
-- Starter learning modules, lesson readers, knowledge checks, practice labs, integrated project briefs, and a local tutor.
-- Learner portfolio, profile, progress export/import, and browser-local persistence.
-- A structured 82-Theory import gate requiring 68 registry and 14 synthesized records.
-- PWA manifest and service-worker app-shell caching.
-- Automated curriculum, data-integrity, deployment, and browser smoke tests.
+**Status (0.5.1 candidate):** see `docs/learning-studio/RELEASE_0.5.1_VERIFICATION.md`. Partially implemented, not production-ready. See `docs/learning-studio/IMPLEMENTATION_AUDIT_AND_TEST_REPORT.md` and `LEARNING_STUDIO_KNOWN_LIMITATIONS.md`. In short: the 82-theory registry is empty until real records are imported, most lessons are specified but not written, and the workbenches are single-device with no authentication.
 
 ## Run locally
 
-Requirements: Node.js 24+ and pnpm 11.
+Open `index.html` (or `landing/index.html`) in a browser. No install needed. Service worker/PWA features need `http://localhost`, not `file://`:
 
-```sh
-pnpm install --frozen-lockfile
-pnpm dev
+```bash
+python3 -m http.server 8000   # then open http://localhost:8000/
 ```
 
-Build and verify:
+## Deploy to GitHub Pages
 
-```sh
-pnpm test
-pnpm build
-pnpm preview
+1. Create a repository and push this folder as the repository root (`index.html` at the top level).
+2. In **Settings → Pages**, set **Source** to **GitHub Actions**.
+3. Push to `main`. The `pages` workflow runs the tests, assembles the static site, checks its links, and deploys.
+
+The site is served at `https://<user>.github.io/<repo>/`. All paths are relative, so it works under that subpath.
+
+Pages publishes only the static site (`scripts/build-site.sh`). The Flask backend, tests, scripts and CI config stay in the repo but are not published, because Pages cannot run Python.
+
+## Develop
+
+```bash
+npm test               # learning + harness tests (Node 20+, no dependencies)
+npm run check:links    # every local link on the main pages resolves
+npm run sync           # copy learning/ into the Flask backend's copy
+npm run verify         # tests + links + sync check
 ```
 
-The production build is generated in `dist/`. GitHub Actions verifies the application and deploys the verified build to GitHub Pages.
+`learning/` is the source of truth. After editing it, run `npm run sync`; CI fails if the backend copy is stale.
 
-## Content and trust boundaries
+### Importing the 82 theories
 
-The curriculum catalogue defines 24 courses and 96 lesson units: 6 AH-AIOS Core, 7 AI Harness, 8 WorldForge, and 3 cross-cutting Human Stewardship courses. Current content status: **24 authored drafts, 72 specified-only, 0 reviewed, 0 published**. Drafts are not approved curriculum.
+The authoritative records are not in this repo and are never generated. Fill `learning/theories-source-template.csv` from your real source, then:
 
-The authoritative 82-Theory dataset is not bundled. The import validator checks the expected count, classification, unique IDs, and required titles; structural validation does not authenticate source provenance. No missing theory records are fabricated.
+```bash
+node scripts/build-theories.js your-source.csv theories-import.json
+```
 
-Learner progress and profile data are stored locally in the browser. This release has no account system, shared backend, cloud progress synchronization, or live AI model connection. Local completion summaries are not official credentials.
+It refuses incomplete data, missing provenance, placeholders and dangling relationships. Import the JSON in Learning Studio.
 
-## Preserved project material
+## Workflows
 
-Previous WorldForge work, source files, and AFTER HUMANITY visual/site assets remain in the repository history and preserved project directories. The Learning Studio is now the primary root application; preservation does not imply that legacy WorldForge functionality is part of this website's active runtime.
+| Workflow | Runs | Purpose |
+|---|---|---|
+| `ci` | pull requests, pushes to non-`main` branches | syntax checks, tests, links, sync check |
+| `pages` | push to `main` | run `ci`, build `_site`, verify links, deploy |
+| `backend` | changes under `optional-flask-backend/` | Flask tests (independent of the deploy) |
 
-## Project identity
+## Optional Flask backend
 
-- Project: **Learning Studio**
-- Website: **Learning Studio**
-- Repository target name: **learning-studio**
-- Default branch: `main`
+`optional-flask-backend/` needs Python 3 and `pip install -r ah_webapp/requirements.txt`. Launch with `start-flask-backend.command` (Mac/Linux) or `.bat` (Windows), then open `http://127.0.0.1:8080/hub`. The SQLite database is created on first run and is git-ignored.
 
-The repository name itself is a separate GitHub repository setting and will be aligned after this root-level project transition is reviewed and verified.
+## License
+
+No license has been chosen yet. Add a `LICENSE` file before making the repository public if you want others to be able to reuse it.

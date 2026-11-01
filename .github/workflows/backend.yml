@@ -1,0 +1,20 @@
+name: backend
+# Optional Flask backend tests. Independent of the Pages deploy (the static site does not need it).
+on:
+  pull_request:
+    paths: ['optional-flask-backend/**']
+  push:
+    paths: ['optional-flask-backend/**']
+
+jobs:
+  flask:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: optional-flask-backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - run: pip install -r ah_webapp/requirements.txt pytest
+      - run: python -m pytest ah_webapp/tests -q

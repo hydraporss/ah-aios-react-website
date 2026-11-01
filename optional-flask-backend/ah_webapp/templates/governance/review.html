@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}Review Proposal · AH-AIOS{% endblock %}
+{% block content %}
+<h1>Review Proposal</h1><section class="panel"><h2>{{ proposal.proposal_id }}</h2><p>{{ proposal.description }}</p><p>Status: {{ proposal.status }}</p><form method="post" action="{{ url_for('governance.make_decision',proposal_id=proposal.proposal_id) }}"><label>Decision</label><select name="decision"><option>APPROVED</option><option>REJECTED</option><option>RETURNED</option></select><label>Comments</label><textarea name="comments"></textarea><button type="submit">Record decision</button></form></section>
+{% endblock %}
