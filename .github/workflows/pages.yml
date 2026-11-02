@@ -30,10 +30,14 @@ jobs:
       - name: Verify links in the built site
         run: SITE_ROOT=_site node scripts/check-links.js
       - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - name: Archive exact site files for Pages
+        run: tar --dereference --hard-dereference --directory _site -cf "$RUNNER_TEMP/artifact.tar" .
+      - uses: actions/upload-artifact@v4
         with:
-          path: _site
-          include-hidden-files: true
+          name: github-pages
+          path: ${{ runner.temp }}/artifact.tar
+          retention-days: 1
+          if-no-files-found: error
 
   deploy:
     needs: build
