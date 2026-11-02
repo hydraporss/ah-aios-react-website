@@ -31,7 +31,9 @@ jobs:
         run: SITE_ROOT=_site node scripts/check-links.js
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
-        with: { path: _site }
+        with:
+          path: _site
+          include-hidden-files: true
 
   deploy:
     needs: build
