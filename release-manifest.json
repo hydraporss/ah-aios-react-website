@@ -150,6 +150,26 @@
       "sha256": "0b2849353d39592f21497a6e066d3cd3550520aa73798bbf66cfa58315ba7e34"
     },
     {
+      "path": "README.md",
+      "bytes": 5666,
+      "sha256": "5f3f65008939039a15c55f7a1a1b7d0f0957779725f01f8f6f67640ec2158a10"
+    },
+    {
+      "path": "README.txt",
+      "bytes": 3223,
+      "sha256": "de1b478801cf4b88eeaf431e310b51e87c6337184377aad7dc8cce004060a7ce"
+    },
+    {
+      "path": "archive/README.md",
+      "bytes": 1338,
+      "sha256": "23f3ee1359cecd88d25e03820104b696a5a7f2a2a13fe6edf1de48b8cb0493b9"
+    },
+    {
+      "path": "archive/after-humanity-prompt-builder-2026-10-29/README.md",
+      "bytes": 2493,
+      "sha256": "e466d05c1f3d9550ca9f3972219e5ae1bd8d5be0e68b0e88bf3ce53ddb3f5ee3"
+    },
+    {
       "path": "archive/after-humanity-prompt-builder-2026-10-29/app.js",
       "bytes": 27706,
       "sha256": "ac6fe8c4973add04271f9c8788ebe8a83c2b3e043d646c5bd61249188db260a4"
@@ -165,19 +185,14 @@
       "sha256": "46beb6207891991fb72c7589df4b60d8910d324afb9bd7561b9d10b20f6865a6"
     },
     {
-      "path": "archive/after-humanity-prompt-builder-2026-10-29/README.md",
-      "bytes": 2493,
-      "sha256": "e466d05c1f3d9550ca9f3972219e5ae1bd8d5be0e68b0e88bf3ce53ddb3f5ee3"
-    },
-    {
       "path": "archive/after-humanity-prompt-builder-2026-10-29/styles.css",
       "bytes": 19726,
       "sha256": "536597f3cf0035e0fbc501febdf3bc0080c0803ddf0504cca593d0f157629b5e"
     },
     {
-      "path": "archive/README.md",
-      "bytes": 1338,
-      "sha256": "23f3ee1359cecd88d25e03820104b696a5a7f2a2a13fe6edf1de48b8cb0493b9"
+      "path": "archive/worldforge-website-2026-10-28/README.md",
+      "bytes": 2227,
+      "sha256": "c224fc1053f44c3f631c03d9d0e981511d8555771cfc1f08ae08272e7319f49d"
     },
     {
       "path": "archive/worldforge-website-2026-10-28/architecture.html",
@@ -230,34 +245,14 @@
       "sha256": "f4aa2a5f3480bc711e85bab47ba36519c711e574bd64be098cb4dcfe5b93c143"
     },
     {
-      "path": "archive/worldforge-website-2026-10-28/README.md",
-      "bytes": 2227,
-      "sha256": "c224fc1053f44c3f631c03d9d0e981511d8555771cfc1f08ae08272e7319f49d"
-    },
-    {
       "path": "assets/hero.jpg",
       "bytes": 100616,
       "sha256": "3f0ee586199adb1319273022508b97f307ea9e36bb27512318b60002f7810549"
     },
     {
-      "path": "assets/pwa/apple-touch-icon.png",
-      "bytes": 12665,
-      "sha256": "eb50e81cc1f831c13fc56b0572f588fcf57a2d11dafac5cd121f9af83e5a6fd3"
-    },
-    {
-      "path": "assets/pwa/icon-192.png",
-      "bytes": 21414,
-      "sha256": "b29b7fe320592173d78d07bfeceddd11154f69056ea7dd4e0695c971f7f11c8e"
-    },
-    {
-      "path": "assets/pwa/icon-512.png",
-      "bytes": 60277,
-      "sha256": "e41fea9519d3b7362886364175de95cb32a467105089cb3d6895c94818991f57"
-    },
-    {
-      "path": "assets/pwa/icon-maskable-512.png",
-      "bytes": 34236,
-      "sha256": "5ae97f7aa126f4a244ec5665c38265aca6716f0542e00a453fd5ef45f932cad7"
+      "path": "desktop/README.md",
+      "bytes": 1502,
+      "sha256": "3adc0d380445cc941c9da3a936e1f5be2c90ba068c51784aa9bb5d7bdac136ee"
     },
     {
       "path": "desktop/build-windows.bat",
@@ -300,11 +295,6 @@
       "sha256": "7ba12db630db3b84ae9e6a69a2fc65fae0cab248d4b2d129e8c85599e8f63a45"
     },
     {
-      "path": "desktop/README.md",
-      "bytes": 1502,
-      "sha256": "3adc0d380445cc941c9da3a936e1f5be2c90ba068c51784aa9bb5d7bdac136ee"
-    },
-    {
       "path": "desktop/run-desktop.bat",
       "bytes": 323,
       "sha256": "101409e8ae5f776c8aff42daf57441921df0c871d05f0d476d5736c5af4beba4"
@@ -330,6 +320,26 @@
       "sha256": "62de5f22cb315f6bcbbfbb6974020a1e4703d1718a35f431b97308a7eed9ecbe"
     },
     {
+      "path": "docs/DEPLOYMENT-RUNBOOK.md",
+      "bytes": 17497,
+      "sha256": "0c854058e2767ae5f09d539233557b564448756aae873556f3964919b4c9ca17"
+    },
+    {
+      "path": "docs/LS-WB-ARCH-001.md",
+      "bytes": 32146,
+      "sha256": "d78e66ac0d0eb81cd906aa6247f57232ecaefc525e32bf1d3535202b49bed79e"
+    },
+    {
+      "path": "docs/LearningStudio-Complete-System-Architecture-Specification.md",
+      "bytes": 64780,
+      "sha256": "2898e2a4212fab3a8d663443bbe013a2f6ec2b9a2140c11baf4e6ccd8158b146"
+    },
+    {
+      "path": "docs/RECONCILIATION-2026-11-01.md",
+      "bytes": 9022,
+      "sha256": "3d90bcbc310b67c6461840ce8209c346fc4272983aa0e711d4c8743f7d7de618"
+    },
+    {
       "path": "docs/architecture-spec.html",
       "bytes": 85584,
       "sha256": "9b80c025ebbd3bdf365b86e812f1a787d4485ffd75c27fc44195e9efaaef296f"
@@ -343,11 +353,6 @@
       "path": "docs/core-design/README.md",
       "bytes": 1667,
       "sha256": "efe8063a851f0c0d45f9c66aac74555ab651ab87e71d9a8d3aa0604f3ce9dbf4"
-    },
-    {
-      "path": "docs/DEPLOYMENT-RUNBOOK.md",
-      "bytes": 17497,
-      "sha256": "0c854058e2767ae5f09d539233557b564448756aae873556f3964919b4c9ca17"
     },
     {
       "path": "docs/learning-app/AH-AIOS-LEARNING-APP-v1.1.md",
@@ -425,14 +430,9 @@
       "sha256": "01ee67af4f11a4a01e988167558641afb5d5b7c56be25e4500ae69b0c7629574"
     },
     {
-      "path": "docs/LearningStudio-Complete-System-Architecture-Specification.md",
-      "bytes": 64780,
-      "sha256": "2898e2a4212fab3a8d663443bbe013a2f6ec2b9a2140c11baf4e6ccd8158b146"
-    },
-    {
-      "path": "docs/LS-WB-ARCH-001.md",
-      "bytes": 32146,
-      "sha256": "d78e66ac0d0eb81cd906aa6247f57232ecaefc525e32bf1d3535202b49bed79e"
+      "path": "docs/notion-product-summary.html",
+      "bytes": 6607,
+      "sha256": "df0c6acdec5e4cf6ebd97fae4d68838d5d6d76e384bcdae5f0217c161a0d4855"
     },
     {
       "path": "docs/notion_product_summary.md",
@@ -440,24 +440,9 @@
       "sha256": "91a4d154a6ed1e4da035ca6f112d3c91230dc572e57296428448e8bdad1a689a"
     },
     {
-      "path": "docs/notion-product-summary.html",
-      "bytes": 6607,
-      "sha256": "df0c6acdec5e4cf6ebd97fae4d68838d5d6d76e384bcdae5f0217c161a0d4855"
-    },
-    {
       "path": "docs/original-readme.html",
       "bytes": 6870,
       "sha256": "e1f81cca273e5974109b0634168cc2de7510a9da9361b5e4f592611d1d3dd7ca"
-    },
-    {
-      "path": "docs/PWA_OPERATIONS_GUIDE.md",
-      "bytes": 44223,
-      "sha256": "18b635bbdd84b8913f46d54c005b0d3f6eba6dff889acd7431bcefa301ed1ac5"
-    },
-    {
-      "path": "docs/RECONCILIATION-2026-11-01.md",
-      "bytes": 9022,
-      "sha256": "3d90bcbc310b67c6461840ce8209c346fc4272983aa0e711d4c8743f7d7de618"
     },
     {
       "path": "docs/reconciliation/README.md",
@@ -613,6 +598,11 @@
       "path": "landing/styles.css",
       "bytes": 6520,
       "sha256": "2896eb264c8ac96c163e31c8d0e835621b5b2a73be41065502a650d44cfa1858"
+    },
+    {
+      "path": "learning/VERIFICATION.md",
+      "bytes": 21127,
+      "sha256": "4fa9d3d259fe5a6d0e2d0852676988477c784fdfdd73b140f3b7a69d928bcefa"
     },
     {
       "path": "learning/app.js",
@@ -815,11 +805,6 @@
       "sha256": "af1b5b2ed6d5d37af0d608f6426f47c20621341cd0b9249e8a70f3b158e2990d"
     },
     {
-      "path": "learning/VERIFICATION.md",
-      "bytes": 21127,
-      "sha256": "4fa9d3d259fe5a6d0e2d0852676988477c784fdfdd73b140f3b7a69d928bcefa"
-    },
-    {
       "path": "learning/workbench.css",
       "bytes": 522,
       "sha256": "d6fac8be51fad98388e206a785f2ead7f2ad7d061d929c3c4598a411d31f7e94"
@@ -838,6 +823,11 @@
       "path": "learning/worldforge/after-humanity-cover.jpg",
       "bytes": 262710,
       "sha256": "c057c27bab356924f21b38760f84639cae3549d90f09dda46a26e3c5dfbeabcf"
+    },
+    {
+      "path": "learning/worldforge/after-humanity-prompt-builder-archive/README.md",
+      "bytes": 2455,
+      "sha256": "e72fe20ee5771e978f77117561c5827876c45aa637bcf5020239fa98812b0a25"
     },
     {
       "path": "learning/worldforge/after-humanity-prompt-builder-archive/after-humanity-redesign-concept.webp",
@@ -868,11 +858,6 @@
       "path": "learning/worldforge/after-humanity-prompt-builder-archive/index.html",
       "bytes": 26569,
       "sha256": "9aa03055e2b4268d659266e485afa503ecb95639f9a03dcd2eea6770537ffc8a"
-    },
-    {
-      "path": "learning/worldforge/after-humanity-prompt-builder-archive/README.md",
-      "bytes": 2455,
-      "sha256": "e72fe20ee5771e978f77117561c5827876c45aa637bcf5020239fa98812b0a25"
     },
     {
       "path": "learning/worldforge/after-humanity-prompt-builder-archive/styles.css",
@@ -948,6 +933,16 @@
       "path": "learning/worldforge/universe-explorer.html",
       "bytes": 9819,
       "sha256": "0a6823b661e02039b94f0ee82e7f0d038d7c241817b2949f708893e6462e0993"
+    },
+    {
+      "path": "learning/worldforge/verified-2026-10-28/README.md",
+      "bytes": 1501,
+      "sha256": "82348291f2854759ce41fddb9e150ce8c4a46a86dc80fbb858e40d14245958a1"
+    },
+    {
+      "path": "learning/worldforge/verified-2026-10-28/WorldForge-Website-Verified-2026-10-28 (1).zip",
+      "bytes": 2639087,
+      "sha256": "3f5280762141f947ac6694cc655e045b46b12650594be5caff7fae34a9c3b59b"
     },
     {
       "path": "learning/worldforge/verified-2026-10-28/app.js",
@@ -1065,11 +1060,6 @@
       "sha256": "1a01f2dd4c1ad6ab25043ef128e7d88db679ccd1d71ae05a59f286ca0df46c34"
     },
     {
-      "path": "learning/worldforge/verified-2026-10-28/README.md",
-      "bytes": 1501,
-      "sha256": "82348291f2854759ce41fddb9e150ce8c4a46a86dc80fbb858e40d14245958a1"
-    },
-    {
       "path": "learning/worldforge/verified-2026-10-28/single-file.html",
       "bytes": 879515,
       "sha256": "b2eef82040b22bc786bfad10d775b9e9bdf7a59062ac2edce753c9eb52b43621"
@@ -1078,11 +1068,6 @@
       "path": "learning/worldforge/verified-2026-10-28/styles.css",
       "bytes": 27563,
       "sha256": "d14cdc4bffd36e2dd144181204bc454f309e2e538817e0f5e2ca637a2f290672"
-    },
-    {
-      "path": "learning/worldforge/verified-2026-10-28/WorldForge-Website-Verified-2026-10-28 (1).zip",
-      "bytes": 2639087,
-      "sha256": "3f5280762141f947ac6694cc655e045b46b12650594be5caff7fae34a9c3b59b"
     },
     {
       "path": "learning/worldforge/visual-archive-studio.html",
@@ -1115,19 +1100,34 @@
       "sha256": "7dbd0c140274b5613a341df255a4b43dd2e044b3e4ef6d157b2e380c12e62a3b"
     },
     {
-      "path": "manifest.webmanifest",
-      "bytes": 1401,
-      "sha256": "e320e1cdd47abe5197b0df1bcc68bbf49db6af3b3432f72e1d72046c5eae47cf"
-    },
-    {
-      "path": "offline.html",
-      "bytes": 777,
-      "sha256": "321dd01edd57f33e608388ffe3c35100f803a2451309356823c9985cb618f375"
-    },
-    {
       "path": "optional-flask-backend/.gitignore",
       "bytes": 167,
       "sha256": "d93bb16e712612bd4941730dd2d434a0ee2d8bc9026e525a8ec120db454edeae"
+    },
+    {
+      "path": "optional-flask-backend/CONNECTED-README.md",
+      "bytes": 3935,
+      "sha256": "b6b9ac4f542c79b6a85061954e064e72cb17ca832cf22971442ca51e6df3bd6c"
+    },
+    {
+      "path": "optional-flask-backend/LOCAL-README.md",
+      "bytes": 2299,
+      "sha256": "81816375790017bd8e97c33097055aa0bf494283654084c39f0a6dcda73bccdf"
+    },
+    {
+      "path": "optional-flask-backend/OPEN-LOCAL-WORKBENCH.bat",
+      "bytes": 708,
+      "sha256": "ba6a19613c02ba801e5fb921f8b84c79a0940903fadfc4adec5a4d779e69ae5b"
+    },
+    {
+      "path": "optional-flask-backend/README.md",
+      "bytes": 2739,
+      "sha256": "bd39d96bb3233bf59c8f0ee872e70e2b2f5b9e441a9e0a253413dd626cd4901f"
+    },
+    {
+      "path": "optional-flask-backend/VERSION",
+      "bytes": 6,
+      "sha256": "aba951626c8690ce493cbc8f018205bb468003f61fbf00fd3d3c71cebabc0177"
     },
     {
       "path": "optional-flask-backend/ah_webapp/__init__.py",
@@ -1208,6 +1208,11 @@
       "path": "optional-flask-backend/ah_webapp/connect.py",
       "bytes": 7804,
       "sha256": "1b74d53a8f0b680c124b45354eddeb0846dba0da6b33d5d09d4af5dc1b201502"
+    },
+    {
+      "path": "optional-flask-backend/ah_webapp/connected/learning/VERIFICATION.md",
+      "bytes": 21127,
+      "sha256": "4fa9d3d259fe5a6d0e2d0852676988477c784fdfdd73b140f3b7a69d928bcefa"
     },
     {
       "path": "optional-flask-backend/ah_webapp/connected/learning/app.js",
@@ -1380,11 +1385,6 @@
       "sha256": "af1b5b2ed6d5d37af0d608f6426f47c20621341cd0b9249e8a70f3b158e2990d"
     },
     {
-      "path": "optional-flask-backend/ah_webapp/connected/learning/VERIFICATION.md",
-      "bytes": 21127,
-      "sha256": "4fa9d3d259fe5a6d0e2d0852676988477c784fdfdd73b140f3b7a69d928bcefa"
-    },
-    {
       "path": "optional-flask-backend/ah_webapp/connected/learning/workbench.css",
       "bytes": 522,
       "sha256": "d6fac8be51fad98388e206a785f2ead7f2ad7d061d929c3c4598a411d31f7e94"
@@ -1403,6 +1403,11 @@
       "path": "optional-flask-backend/ah_webapp/connected/learning/worldforge/after-humanity-cover.jpg",
       "bytes": 262710,
       "sha256": "c057c27bab356924f21b38760f84639cae3549d90f09dda46a26e3c5dfbeabcf"
+    },
+    {
+      "path": "optional-flask-backend/ah_webapp/connected/learning/worldforge/after-humanity-prompt-builder-archive/README.md",
+      "bytes": 2455,
+      "sha256": "e72fe20ee5771e978f77117561c5827876c45aa637bcf5020239fa98812b0a25"
     },
     {
       "path": "optional-flask-backend/ah_webapp/connected/learning/worldforge/after-humanity-prompt-builder-archive/after-humanity-redesign-concept.webp",
@@ -1433,11 +1438,6 @@
       "path": "optional-flask-backend/ah_webapp/connected/learning/worldforge/after-humanity-prompt-builder-archive/index.html",
       "bytes": 26554,
       "sha256": "7262ded8330fae0f48c8d54b0fc669dfb0ef1b2016bfee37ce76cceed429ea98"
-    },
-    {
-      "path": "optional-flask-backend/ah_webapp/connected/learning/worldforge/after-humanity-prompt-builder-archive/README.md",
-      "bytes": 2455,
-      "sha256": "e72fe20ee5771e978f77117561c5827876c45aa637bcf5020239fa98812b0a25"
     },
     {
       "path": "optional-flask-backend/ah_webapp/connected/learning/worldforge/after-humanity-prompt-builder-archive/styles.css",
@@ -1513,6 +1513,16 @@
       "path": "optional-flask-backend/ah_webapp/connected/learning/worldforge/universe-explorer.html",
       "bytes": 9807,
       "sha256": "a2d8d15f58dd4e1248107a500f82f425dc00e839b526de4086e0346c3f2dd82f"
+    },
+    {
+      "path": "optional-flask-backend/ah_webapp/connected/learning/worldforge/verified-2026-10-28/README.md",
+      "bytes": 1501,
+      "sha256": "82348291f2854759ce41fddb9e150ce8c4a46a86dc80fbb858e40d14245958a1"
+    },
+    {
+      "path": "optional-flask-backend/ah_webapp/connected/learning/worldforge/verified-2026-10-28/WorldForge-Website-Verified-2026-10-28 (1).zip",
+      "bytes": 2639087,
+      "sha256": "3f5280762141f947ac6694cc655e045b46b12650594be5caff7fae34a9c3b59b"
     },
     {
       "path": "optional-flask-backend/ah_webapp/connected/learning/worldforge/verified-2026-10-28/app.js",
@@ -1630,11 +1640,6 @@
       "sha256": "90f3f9146bbb2f9b906a4186f78b79ae392ff8f8ac982fa035da5d05984e531f"
     },
     {
-      "path": "optional-flask-backend/ah_webapp/connected/learning/worldforge/verified-2026-10-28/README.md",
-      "bytes": 1501,
-      "sha256": "82348291f2854759ce41fddb9e150ce8c4a46a86dc80fbb858e40d14245958a1"
-    },
-    {
       "path": "optional-flask-backend/ah_webapp/connected/learning/worldforge/verified-2026-10-28/single-file.html",
       "bytes": 879500,
       "sha256": "40cb040e0de8e7fdc5ff68f303a3b09a1639ee1e460e577f21ddc3eb2bfce6be"
@@ -1643,11 +1648,6 @@
       "path": "optional-flask-backend/ah_webapp/connected/learning/worldforge/verified-2026-10-28/styles.css",
       "bytes": 27563,
       "sha256": "d14cdc4bffd36e2dd144181204bc454f309e2e538817e0f5e2ca637a2f290672"
-    },
-    {
-      "path": "optional-flask-backend/ah_webapp/connected/learning/worldforge/verified-2026-10-28/WorldForge-Website-Verified-2026-10-28 (1).zip",
-      "bytes": 2639087,
-      "sha256": "3f5280762141f947ac6694cc655e045b46b12650594be5caff7fae34a9c3b59b"
     },
     {
       "path": "optional-flask-backend/ah_webapp/connected/learning/worldforge/visual-archive-studio.html",
@@ -1865,24 +1865,19 @@
       "sha256": "11c90b2221d73a17b1ad7bec87e5666c9edaa6fcbb9cf8c1293d34ff33ac2df9"
     },
     {
-      "path": "optional-flask-backend/ah_webapp/tests/test_phase1_vertical_slice_optimized.py",
-      "bytes": 3809,
-      "sha256": "3b3400ed113de429e4a6df8edc76e5e22742f9c91927e7232be62414ba9434f7"
-    },
-    {
       "path": "optional-flask-backend/ah_webapp/tests/test_phase1_vertical_slice.py",
       "bytes": 3110,
       "sha256": "fc6cb07d919d1a2ef54ce2049c9f50f5ab7529aa984ddbeed981b39b7070ba2b"
     },
     {
+      "path": "optional-flask-backend/ah_webapp/tests/test_phase1_vertical_slice_optimized.py",
+      "bytes": 3809,
+      "sha256": "3b3400ed113de429e4a6df8edc76e5e22742f9c91927e7232be62414ba9434f7"
+    },
+    {
       "path": "optional-flask-backend/ah_webapp/wof_integration.py",
       "bytes": 3753,
       "sha256": "2872df69f0c1cb4066a0a82d48d57c87f98272d2a8a891f4cd3eaa5133a58fac"
-    },
-    {
-      "path": "optional-flask-backend/CONNECTED-README.md",
-      "bytes": 3935,
-      "sha256": "b6b9ac4f542c79b6a85061954e064e72cb17ca832cf22971442ca51e6df3bd6c"
     },
     {
       "path": "optional-flask-backend/docs/AH-AIOS-README.original.md",
@@ -1895,19 +1890,14 @@
       "sha256": "2898e2a4212fab3a8d663443bbe013a2f6ec2b9a2140c11baf4e6ccd8158b146"
     },
     {
-      "path": "optional-flask-backend/docs/notion_product_summary.md",
-      "bytes": 3707,
-      "sha256": "91a4d154a6ed1e4da035ca6f112d3c91230dc572e57296428448e8bdad1a689a"
-    },
-    {
       "path": "optional-flask-backend/docs/notion/notion_blocks_current.json",
       "bytes": 54334,
       "sha256": "69f2462a065b0ec0100c3e6f5b03f2e6c943c0c29cb8ad4ba6c776cedd5790b0"
     },
     {
-      "path": "optional-flask-backend/hermes_cli.py",
-      "bytes": 19106,
-      "sha256": "830a6b39133eaac8f08fd334b9f7b6ce1a49b9330f3673f4eede61b6503bdd15"
+      "path": "optional-flask-backend/docs/notion_product_summary.md",
+      "bytes": 3707,
+      "sha256": "91a4d154a6ed1e4da035ca6f112d3c91230dc572e57296428448e8bdad1a689a"
     },
     {
       "path": "optional-flask-backend/hermes.py",
@@ -1915,19 +1905,14 @@
       "sha256": "ce9428df7d60d77e027d5008cb70a3d586880db2cfbc30e84da2d11d67492d2f"
     },
     {
+      "path": "optional-flask-backend/hermes_cli.py",
+      "bytes": 19106,
+      "sha256": "830a6b39133eaac8f08fd334b9f7b6ce1a49b9330f3673f4eede61b6503bdd15"
+    },
+    {
       "path": "optional-flask-backend/instance/uploads/.gitkeep",
       "bytes": 0,
       "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-    },
-    {
-      "path": "optional-flask-backend/LOCAL-README.md",
-      "bytes": 2299,
-      "sha256": "81816375790017bd8e97c33097055aa0bf494283654084c39f0a6dcda73bccdf"
-    },
-    {
-      "path": "optional-flask-backend/OPEN-LOCAL-WORKBENCH.bat",
-      "bytes": 708,
-      "sha256": "ba6a19613c02ba801e5fb921f8b84c79a0940903fadfc4adec5a4d779e69ae5b"
     },
     {
       "path": "optional-flask-backend/pytest.ini",
@@ -1935,9 +1920,9 @@
       "sha256": "383530f53859ffd02bcd58491ef1da72fe4e0be961b7e2e9d7cc4f3c58073b84"
     },
     {
-      "path": "optional-flask-backend/README.md",
-      "bytes": 2739,
-      "sha256": "bd39d96bb3233bf59c8f0ee872e70e2b2f5b9e441a9e0a253413dd626cd4901f"
+      "path": "optional-flask-backend/reference/ah-aios-engines/README.md",
+      "bytes": 1032,
+      "sha256": "f7780ed66f9850932b95aa5eb2139b37946052540bb37270f757609c9463fcfc"
     },
     {
       "path": "optional-flask-backend/reference/ah-aios-engines/ah_aios/__init__.py",
@@ -2100,11 +2085,6 @@
       "sha256": "7c084d8710e00801cd2517996166e12b3c48237b240cc933d0e2ee42c1ad4621"
     },
     {
-      "path": "optional-flask-backend/reference/ah-aios-engines/README.md",
-      "bytes": 1032,
-      "sha256": "f7780ed66f9850932b95aa5eb2139b37946052540bb37270f757609c9463fcfc"
-    },
-    {
       "path": "optional-flask-backend/reference/ahaios-core-variants/ah_webapp/batch1_handlers.py",
       "bytes": 8477,
       "sha256": "d7fec16b7d1273abb6f310a4499c27f0fb6f17199884fa4e0ba7d1b29442d8d6"
@@ -2145,39 +2125,14 @@
       "sha256": "440ddca27bdaf290fe07eb547fc78568cfb3aa1849d5be590a53e1311386ef2d"
     },
     {
-      "path": "optional-flask-backend/VERSION",
-      "bytes": 6,
-      "sha256": "aba951626c8690ce493cbc8f018205bb468003f61fbf00fd3d3c71cebabc0177"
-    },
-    {
       "path": "package.json",
       "bytes": 806,
       "sha256": "e784890f9d99806a1c5b90991ea10b8bc8d0f02eb899d46fbf5b01af2adb946f"
     },
     {
-      "path": "pwa.js",
-      "bytes": 656,
-      "sha256": "181a2aaa940278613d44912a5a1e1ac792ba2a2e4204e74938e45e6d7a9f7a90"
-    },
-    {
-      "path": "README.md",
-      "bytes": 5666,
-      "sha256": "5f3f65008939039a15c55f7a1a1b7d0f0957779725f01f8f6f67640ec2158a10"
-    },
-    {
-      "path": "README.txt",
-      "bytes": 3223,
-      "sha256": "de1b478801cf4b88eeaf431e310b51e87c6337184377aad7dc8cce004060a7ce"
-    },
-    {
       "path": "scripts/add-home-button.js",
       "bytes": 2645,
       "sha256": "e3b3b94cacf29f381fe478ad331369d2c873aa81311fc6236d91db5f7320d328"
-    },
-    {
-      "path": "scripts/add-pwa.js",
-      "bytes": 2451,
-      "sha256": "3e6cd6ebfa2071d587994a4c984f06b00671a101743ded86ec73420164aaeeb9"
     },
     {
       "path": "scripts/build-site.sh",
@@ -2200,6 +2155,11 @@
       "sha256": "50f9e076ac2b02dddb5c62675e8dd79889cf342220b0f7eac099917dce1a1a54"
     },
     {
+      "path": "scripts/e2e/README.md",
+      "bytes": 629,
+      "sha256": "c2fce390526f6eaf0e95be445db94c30dacc38cc8e615d1ad94c1d6ae0ce1280"
+    },
+    {
       "path": "scripts/e2e/learning-studio.e2e.py",
       "bytes": 14853,
       "sha256": "838943f539a9c63a36b017e5914b63939d96d6ba498f6fec27e2ced13cb7cbdd"
@@ -2208,11 +2168,6 @@
       "path": "scripts/e2e/mobile-and-404.e2e.py",
       "bytes": 2082,
       "sha256": "e861cc9eb965f0e600d320bab94893035ca16f6816f54ae40223c072d93c040a"
-    },
-    {
-      "path": "scripts/e2e/README.md",
-      "bytes": 629,
-      "sha256": "c2fce390526f6eaf0e95be445db94c30dacc38cc8e615d1ad94c1d6ae0ce1280"
     },
     {
       "path": "scripts/e2e/worldforge.e2e.py",
@@ -2245,16 +2200,6 @@
       "sha256": "d5e76fb60cad586ef5349baecf69e888354a7d3242e9506f6996377a1be19162"
     },
     {
-      "path": "sw.js",
-      "bytes": 1898,
-      "sha256": "ba13970bec64c056e9ef294ddd24c0fc89665e83c8d813f2aed97c8ac729c007"
-    },
-    {
-      "path": "vercel.json",
-      "bytes": 187,
-      "sha256": "28e8ea0d139cee783ada244369e223d4f411aed3458327cb88f7825bcbec438b"
-    },
-    {
       "path": "workbench.html",
       "bytes": 16072,
       "sha256": "a42cfc95fbba108fab6f93d591bc2fe7fb048177e8bb11b29561814a184e5f46"
@@ -2278,6 +2223,61 @@
       "path": "worldforge-app/worldforge.svg",
       "bytes": 275,
       "sha256": "243e7efb03c94f000fc209b23d01207556835fd703f236cd917c199199f0d96e"
+    },
+    {
+      "path": "assets/pwa/apple-touch-icon.png",
+      "bytes": 12665,
+      "sha256": "eb50e81cc1f831c13fc56b0572f588fcf57a2d11dafac5cd121f9af83e5a6fd3"
+    },
+    {
+      "path": "assets/pwa/icon-192.png",
+      "bytes": 21414,
+      "sha256": "b29b7fe320592173d78d07bfeceddd11154f69056ea7dd4e0695c971f7f11c8e"
+    },
+    {
+      "path": "assets/pwa/icon-512.png",
+      "bytes": 60277,
+      "sha256": "e41fea9519d3b7362886364175de95cb32a467105089cb3d6895c94818991f57"
+    },
+    {
+      "path": "assets/pwa/icon-maskable-512.png",
+      "bytes": 34236,
+      "sha256": "5ae97f7aa126f4a244ec5665c38265aca6716f0542e00a453fd5ef45f932cad7"
+    },
+    {
+      "path": "manifest.webmanifest",
+      "bytes": 1401,
+      "sha256": "e320e1cdd47abe5197b0df1bcc68bbf49db6af3b3432f72e1d72046c5eae47cf"
+    },
+    {
+      "path": "offline.html",
+      "bytes": 777,
+      "sha256": "321dd01edd57f33e608388ffe3c35100f803a2451309356823c9985cb618f375"
+    },
+    {
+      "path": "pwa.js",
+      "bytes": 656,
+      "sha256": "181a2aaa940278613d44912a5a1e1ac792ba2a2e4204e74938e45e6d7a9f7a90"
+    },
+    {
+      "path": "scripts/add-pwa.js",
+      "bytes": 2451,
+      "sha256": "3e6cd6ebfa2071d587994a4c984f06b00671a101743ded86ec73420164aaeeb9"
+    },
+    {
+      "path": "sw.js",
+      "bytes": 1898,
+      "sha256": "ba13970bec64c056e9ef294ddd24c0fc89665e83c8d813f2aed97c8ac729c007"
+    },
+    {
+      "path": "docs/PWA_OPERATIONS_GUIDE.md",
+      "bytes": 44223,
+      "sha256": "18b635bbdd84b8913f46d54c005b0d3f6eba6dff889acd7431bcefa301ed1ac5"
+    },
+    {
+      "path": "vercel.json",
+      "bytes": 187,
+      "sha256": "28e8ea0d139cee783ada244369e223d4f411aed3458327cb88f7825bcbec438b"
     }
   ],
   "harnessSiteAddition": {
