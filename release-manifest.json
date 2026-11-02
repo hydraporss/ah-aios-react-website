@@ -126,8 +126,8 @@
     },
     {
       "path": ".github/workflows/pages.yml",
-      "bytes": 949,
-      "sha256": "d39c1db62c688ff11fedac81bb59315965914518eeecaac73eb7b7b7a39e95a9"
+      "bytes": 992,
+      "sha256": "055c7a823e73de46685b348a73ad825719aeb19f6aa8cdbbbcc5fed258f962ca"
     },
     {
       "path": ".gitignore",
@@ -776,8 +776,8 @@
     },
     {
       "path": "learning/tests/release-0.5.1.test.js",
-      "bytes": 9587,
-      "sha256": "afdb86fe84f6c7127cf1615e8c501a770b3da1d41845c888b3aacb1ab5f2cef8"
+      "bytes": 9708,
+      "sha256": "ba68d693e0fccf9a8eae2e0b4f3201805afbed44f2e07cacba98c7b875959c00"
     },
     {
       "path": "learning/tests/sync.test.js",
@@ -2136,8 +2136,8 @@
     },
     {
       "path": "scripts/build-site.sh",
-      "bytes": 388,
-      "sha256": "5a0eb0e0e1301adea7d9c14c971239be8e3f68cea831ef3a3c658d697db6feb9"
+      "bytes": 962,
+      "sha256": "e44bcb5c4bbb7bf8e4a66774d3db7986e67a8bb290fa8858d8fd23155430ad26"
     },
     {
       "path": "scripts/build-theories.js",
