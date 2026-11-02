@@ -1,0 +1,38 @@
+{
+  "name": "ah-aios-desktop",
+  "productName": "AH-AIOS",
+  "version": "0.5.1",
+  "private": true,
+  "description": "AH-AIOS Learning Studio, AI Harness and WorldForge as a Windows desktop app (local-first, no server).",
+  "author": "AH-AIOS",
+  "main": "main.js",
+  "scripts": {
+    "prepare-site": "node prepare.js",
+    "start": "node prepare.js && electron .",
+    "dist": "node prepare.js && electron-builder --win nsis portable --x64 --publish never",
+    "test": "node --test paths.test.js main.test.js"
+  },
+  "devDependencies": {
+    "electron": "^33.2.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "io.github.hydraporss.ahaios",
+    "productName": "AH-AIOS",
+    "copyright": "AH-AIOS",
+    "directories": { "output": "dist", "buildResources": "build" },
+    "files": ["main.js", "paths.js", "package.json", "app/**/*"],
+    "win": {
+      "icon": "build/icon.png",
+      "target": [{ "target": "nsis", "arch": ["x64"] }, { "target": "portable", "arch": ["x64"] }]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "artifactName": "AH-AIOS-Setup-${version}.${ext}"
+    },
+    "portable": { "artifactName": "AH-AIOS-Portable-${version}.${ext}" }
+  }
+}

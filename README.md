@@ -28,6 +28,16 @@ The site is served at `https://<user>.github.io/<repo>/`. All paths are relative
 
 Pages publishes only the static site (`scripts/build-site.sh`). The Flask backend, tests, scripts and CI config stay in the repo but are not published, because Pages cannot run Python.
 
+## Install as an app (PWA)
+
+Once the site is served over HTTPS (GitHub Pages) or `localhost`, browsers offer **Install** / **Add to Home Screen**. `manifest.webmanifest`, `sw.js` and `pwa.js` at the site root make every page installable and available offline after a first visit (pages are network-first, so online visitors always get the latest version). The Learning Studio keeps its own `/learning/` manifest and service worker. The single-file `AH-AIOS-Standalone.html` and the desktop app don't use a service worker.
+
+Maintainers: bump `VERSION` in `sw.js` on each release, and run `node scripts/add-pwa.js` after adding new pages (then refresh the embedded pages in the standalone file, `npm run sync` and `npm run update:manifest`). Full procedures, test sheet, rollback and risk register: [`docs/PWA_OPERATIONS_GUIDE.md`](docs/PWA_OPERATIONS_GUIDE.md).
+
+## Windows desktop app
+
+`desktop/` wraps the site as a Windows app (installer + portable `.exe`). Build it from the **desktop-windows** GitHub Actions workflow or with `desktop\build-windows.bat`. See `desktop/README.md`.
+
 ## Develop
 
 ```bash
@@ -69,3 +79,4 @@ No license has been chosen yet. Add a `LICENSE` file before making the repositor
 ## Changelog
 
 - **AI Harness page** (`learning/domains/harness.html`): capabilities, layers, applications and lifecycle steps are now interactive (detail panel, deep links `#cap-N`, keyboard arrows). Course links accept `learning/index.html?q=AH-HAR#courses`. Command Builder banner is dismissible and no longer covers the nav.
+- **Windows desktop app** (`desktop/`): Electron wrapper, GitHub Actions build for the `.exe`.

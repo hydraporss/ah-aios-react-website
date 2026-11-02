@@ -25,3 +25,8 @@ _site/
 Thumbs.db
 .idea/
 .vscode/
+
+# Desktop app build output (generated)
+desktop/app/
+desktop/dist/
+desktop/node_modules/

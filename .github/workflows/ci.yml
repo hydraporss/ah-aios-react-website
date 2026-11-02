@@ -17,7 +17,7 @@ jobs:
           for f in learning/app.js learning/explorer.js learning/workbench.js \
                    learning/theory-validation.js learning/sw.js \
                    learning/domains/harness.js learning/domains/core-module.js \
-                   harness/js/prompt-builder.js harness/js/site.js harness/js/site-data.js scripts/*.js; do
+                   harness/js/prompt-builder.js harness/js/site.js harness/js/site-data.js desktop/main.js desktop/paths.js desktop/prepare.js scripts/*.js; do
             node --check "$f"
           done
       - run: npm test

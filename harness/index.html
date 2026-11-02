@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Harness — Command Builder</title>
     <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/harness-theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
         .flash-messages{position:static;margin:0 0 1rem}
         .flash{display:flex;justify-content:space-between;gap:1rem;align-items:flex-start}
@@ -34,27 +35,33 @@
             font-size: 1.2rem;
         }
     </style>
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../assets/pwa/apple-touch-icon.png">
+<meta name="theme-color" content="#050d19">
+<script src="../pwa.js" defer data-ah-pwa></script>
 </head>
 <body>
     <nav class="navbar">
         <div class="container">
             <a href="../index.html" class="logo">
                 <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="48" height="48" rx="8" fill="#1a1a2e"/>
-                    <path d="M12 12h24v6H12z" fill="#e94560" opacity="0.3"/>
-                    <path d="M12 20h24v6H12z" fill="#e94560" opacity="0.2"/>
-                    <path d="M12 28h24v6H12z" fill="#e94560" opacity="0.15"/>
-                    <path d="M12 36h24v6H12z" fill="#e94560" opacity="0.1"/>
-                    <path d="M18 18l12 6-12 6z" fill="#7c3aed" opacity="0.3"/>
+                    <rect width="48" height="48" rx="8" fill="#06142d" stroke="#4fd8ff" stroke-opacity=".6"/>
+                    <path d="M12 12h24v6H12z" fill="#4fd8ff" opacity="0.3"/>
+                    <path d="M12 20h24v6H12z" fill="#4fd8ff" opacity="0.2"/>
+                    <path d="M12 28h24v6H12z" fill="#4fd8ff" opacity="0.15"/>
+                    <path d="M12 36h24v6H12z" fill="#4fd8ff" opacity="0.1"/>
+                    <path d="M18 18l12 6-12 6z" fill="#2f8cff" opacity="0.3"/>
                 </svg>
                 <span>AI Harness</span>
             </a>
             <div class="nav-links">
+                <a href="home.html">Overview</a>
                 <a href="index.html" class="active">Command Builder</a>
                 <a href="../worldforge-app/index.html" class="gold">WorldForge Integration</a>
                 <a href="data/prompts.json">Prompt Library</a>
                 <a href="data/templates.json">Templates</a>
                 <a href="schemas/validation.schema.json">Validation</a>
+                <a href="../learning/index.html">Learning Studio</a>
                 <a href="../index.html">Hub</a>
             </div>
         </div>
@@ -202,5 +209,8 @@
     </footer>
 
     <script src="js/prompt-builder.js"></script>
+<script src="../learning/selflink.js"></script><a class="ah-home" data-ah-home href="../index.html" aria-label="Home: AH-AIOS Learning App Studio"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h13V10M10 20v-5h4v5"/></svg>Home</a>
+<style>.ah-home{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:2147483000;display:inline-flex;align-items:center;gap:7px;padding:10px 16px;border-radius:999px;background:rgba(8,24,42,.94);color:#f1f7ff;border:1px solid #39c8ff;font:600 13px/1 system-ui,-apple-system,Segoe UI,Arial,sans-serif;text-decoration:none;box-shadow:0 0 18px rgba(57,200,255,.35);transition:background .2s}.ah-home:hover{background:#1597ff}.ah-home:focus-visible{outline:2px solid #fff;outline-offset:2px}.ah-home[hidden]{display:none}@media print{.ah-home{display:none}}</style>
+<script>if(self!==top){var h=document.querySelector('[data-ah-home]');if(h)h.hidden=true}</script>
 </body>
 </html>

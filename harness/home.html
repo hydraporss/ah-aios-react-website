@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Harness – Governed AI Execution Platform</title>
+<link rel="icon" href="../learning/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#030914;--panel:rgba(8,22,46,.82);--line:rgba(60,140,230,.35);--blue:#2f8cff;--cyan:#4fd8ff;--text:#e8f1ff;--mute:#8fa8c8;--green:#35e07a;--amber:#ffb629;--head:'Rajdhani','Montserrat',sans-serif}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font:400 14px/1.5 'Montserrat',system-ui,sans-serif;min-height:100vh}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.wrap{max-width:1400px;margin:0 auto;padding:0 28px}
+/* nav */
+header{position:sticky;top:0;z-index:20;background:rgba(3,9,20,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:28px;height:70px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand b{font:700 24px var(--head);letter-spacing:.14em;display:block;line-height:1}
+.brand small{font-size:10px;letter-spacing:.2em;color:var(--mute)}
+nav{display:flex;gap:26px;margin:0 auto}
+nav a{font-size:13px;padding:24px 0;border-bottom:2px solid transparent;color:#cfe0f7}
+nav a:hover,nav a.on{color:#fff;border-color:var(--blue)}
+.ok{font-size:10px;color:var(--mute);display:flex;gap:6px;align-items:center;white-space:nowrap}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:12px 22px;border:1px solid var(--blue);border-radius:4px;font-weight:600;font-size:14px;color:#fff;background:rgba(20,70,150,.35);transition:background .2s,box-shadow .2s}
+.btn:hover{background:rgba(47,140,255,.5);box-shadow:0 0 22px rgba(47,140,255,.5)}
+.btn.solid{background:linear-gradient(#2f9bff,#1668e0);border-color:#6bb8ff;box-shadow:0 0 24px rgba(47,140,255,.55)}
+.btn.sm{padding:9px 16px;font-size:13px}
+/* hero */
+.hero{position:relative;min-height:560px;overflow:hidden;border-bottom:1px solid var(--line);background:radial-gradient(ellipse 60% 70% at 50% 45%,#0b2a63 0%,#06142d 55%,#030914 100%)}
+.hero canvas,.hero .city{position:absolute;inset:0;width:100%;height:100%}
+.hero .city{top:auto;bottom:0;height:42%;opacity:.8}
+.hero-in{position:relative;display:grid;grid-template-columns:1fr minmax(320px,440px) 1fr;gap:20px;align-items:center;min-height:560px;padding-bottom:70px}
+.copy .tag{display:flex;align-items:center;gap:10px;color:var(--cyan);font:600 14px var(--head);letter-spacing:.2em;margin-bottom:6px}
+h1{font:700 clamp(52px,7vw,92px)/.95 var(--head);letter-spacing:.02em;text-shadow:0 0 40px rgba(79,216,255,.35)}
+.copy h2{font:500 clamp(18px,2vw,24px) var(--head);letter-spacing:.2em;margin:10px 0 20px;color:#dbe9ff}
+.copy p{max-width:360px;color:#cfe0f7;font-size:16px;margin-bottom:12px}
+.copy p strong{display:block;margin-top:14px;font-size:17px;color:#fff;font-weight:600}
+.cta{display:flex;gap:14px;margin:22px 0 28px;flex-wrap:wrap}
+.trust{display:flex;gap:20px;flex-wrap:wrap;font-size:10px;letter-spacing:.08em;color:var(--mute)}
+.trust span{display:flex;align-items:center;gap:8px}
+.trust svg{width:26px;height:26px;stroke:#bcd6ff;fill:none;stroke-width:1.4}
+.tower{position:relative;display:grid;place-items:center}
+.tower svg{width:100%;max-width:440px;filter:drop-shadow(0 0 30px rgba(47,140,255,.5))}
+.side{display:flex;flex-direction:column;gap:22px;align-items:flex-end}
+.live{width:100%;max-width:240px;background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:16px 18px;box-shadow:0 0 30px rgba(20,90,200,.25)}
+.live h3{display:flex;justify-content:space-between;font:600 13px var(--head);letter-spacing:.12em;color:var(--cyan);margin-bottom:10px}
+.live h3 i{font-style:normal;font-size:10px;color:var(--green);display:flex;gap:5px;align-items:center}
+.live div{display:flex;justify-content:space-between;padding:5px 0;font-size:13px;color:#cfe0f7}
+.live b{font:600 18px var(--head);color:#fff}
+.quote{font:500 15px/1.4 var(--head);letter-spacing:.14em;text-align:center;color:#dbe9ff;max-width:230px;margin-right:6px}
+.aside{font-size:11px;letter-spacing:.14em;color:var(--mute);max-width:130px;text-align:left;align-self:flex-end}
+/* panels */
+section{padding:26px 0 0}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr) 1fr 1.35fr;gap:14px}
+.card,.panel{background:var(--panel);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.card .img{height:96px;position:relative;border-bottom:1px solid var(--line)}
+.card .body{padding:14px 16px 16px;position:relative;min-height:128px}
+.card h3{font:600 17px var(--head);letter-spacing:.03em;margin-bottom:4px}
+.card p{font-size:12px;color:var(--mute);padding-right:30px}
+.card .go{position:absolute;right:12px;bottom:12px;width:26px;height:26px;border:1px solid var(--blue);border-radius:50%;display:grid;place-items:center;font-size:13px;color:var(--cyan)}
+.card:hover{border-color:var(--cyan);box-shadow:0 0 24px rgba(47,140,255,.3)}
+.panel{padding:16px 18px}
+.panel h3{font:600 14px var(--head);letter-spacing:.12em;color:var(--cyan);margin-bottom:12px;display:flex;justify-content:space-between}
+.panel h3 a{font:500 12px 'Montserrat';letter-spacing:0;color:var(--blue)}
+.met{display:grid;grid-template-columns:30px 1fr;gap:4px 10px;align-items:center;margin-bottom:10px}
+.met svg{width:26px;height:26px;stroke:#bcd6ff;fill:none;stroke-width:1.4;grid-row:span 2}
+.met small{font-size:10px;color:var(--cyan);line-height:1.1}
+.met b{font:600 22px/1 var(--head)}
+.exec{list-style:none;padding:0}
+.exec li{display:grid;grid-template-columns:14px 1fr auto auto;gap:8px;align-items:center;font-size:11px;padding:6px 0;color:#d8e6fb}
+.exec .dot{width:9px;height:9px;background:none;border:2px solid var(--green);box-shadow:none}
+.exec .st{font-size:10px;color:var(--green)}
+.exec .rv .dot{border-color:var(--amber)}.exec .rv .st{color:var(--amber)}
+.exec time{color:var(--mute);font-size:10px;min-width:44px;text-align:right}
+/* journey + workforce */
+.lower{display:grid;grid-template-columns:1.25fr 1fr;gap:34px}
+.lower h2{font:600 22px var(--head);letter-spacing:.1em;margin-bottom:2px}
+.lower .sub{font-size:11px;letter-spacing:.12em;color:var(--mute);margin-bottom:14px;display:flex;justify-content:space-between}
+.sub a{color:var(--blue);letter-spacing:0;font-size:12px}
+.steps{display:grid;grid-template-columns:repeat(9,1fr);gap:0}
+.step{text-align:left;font-size:11px;font-weight:600;line-height:1.3}
+.step span{display:block;font-weight:400;font-size:9px;color:var(--mute);margin-top:2px}
+.chev{height:62px;margin-bottom:10px;margin-right:-8px;clip-path:polygon(0 0,82% 0,100% 50%,82% 100%,0 100%,18% 50%);background:linear-gradient(90deg,#0d2d63,#154a9a);display:grid;place-items:center;border:0}
+.chev svg{width:26px;height:26px;stroke:#d6e8ff;fill:none;stroke-width:1.5}
+.chev.hot{background:linear-gradient(90deg,#5a3a0a,#a8700f)}
+.agents{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.ag{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:12px 4px;text-align:center;font-size:11px;font-weight:500}
+.ag svg{width:26px;height:26px;stroke:#bcd6ff;fill:none;stroke-width:1.4;margin-bottom:4px}
+.ag em{display:block;font-style:normal;font-size:9px;color:var(--green)}
+.ag b{display:block;font:600 16px var(--head)}
+.ag small{font-size:9px;color:var(--mute)}
+footer{margin-top:34px;border-top:1px solid var(--line);background:linear-gradient(#030914,#07204a);padding:26px 0}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;font-size:12px;color:var(--mute)}
+.foot strong{display:block;font:600 16px var(--head);letter-spacing:.18em;color:#cfe0f7}
+.foot .m{display:flex;gap:10px;align-items:center;font-size:11px;letter-spacing:.12em;color:#cfe0f7}
+.foot .r{text-align:right;letter-spacing:.18em;font-size:12px}
+.sr{position:absolute;left:-9999px}
+@media(max-width:1100px){
+ .hero-in{grid-template-columns:1fr;padding:40px 0 90px}.tower{order:-1}.side{align-items:flex-start}
+ .grid4{grid-template-columns:repeat(2,1fr)}.lower{grid-template-columns:1fr}
+ nav{display:none}.nav{justify-content:space-between}.steps{grid-template-columns:repeat(3,1fr);gap:14px}.chev{margin-right:0}}
+@media(max-width:640px){.agents{grid-template-columns:repeat(2,1fr)}.grid4{grid-template-columns:1fr}.ok{display:none}.foot .r{text-align:left}}
+/* hero v2: orchestration command center */
+.hx{position:relative;overflow:hidden;border-bottom:1px solid var(--line);padding:30px 0 24px;background:radial-gradient(ellipse 55% 75% at 50% 42%,#0b2a63 0%,#071735 55%,#030914 100%)}
+.hx canvas{position:absolute;inset:0;width:100%;height:100%}
+.hx-grid{position:relative;display:grid;grid-template-columns:minmax(250px,320px) 1fr minmax(230px,270px);gap:20px;align-items:center}
+.hx-tag{display:flex;align-items:center;gap:10px;color:var(--cyan);font:600 14px var(--head);letter-spacing:.2em;margin-bottom:6px}
+.hx-left h1{font:700 clamp(46px,5.4vw,76px)/.95 var(--head);letter-spacing:.02em;text-shadow:0 0 40px rgba(79,216,255,.35)}
+.hx-left h2{font:500 clamp(16px,1.6vw,21px) var(--head);letter-spacing:.14em;text-transform:uppercase;margin:10px 0 16px;color:#dbe9ff}
+.hx-verbs{font:700 clamp(22px,2.3vw,30px)/1.15 var(--head)!important;letter-spacing:.04em;margin:0 0 14px!important;color:#fff!important;background:linear-gradient(90deg,#4fd8ff,#ffb629);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hx-left p{color:#cfe0f7;font-size:14px;max-width:310px;margin-bottom:12px}
+.hx-left .cta{margin:18px 0 0}
+.stage{position:relative;aspect-ratio:760/560;width:100%;max-width:760px;margin:0 auto}
+.stage>svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 0 22px rgba(47,140,255,.35))}
+.stream{stroke-width:2;stroke-dasharray:5 11;animation:flow 1.6s linear infinite}
+.stream.glow{stroke-width:7;stroke-opacity:.14;stroke-dasharray:none;animation:none}
+@keyframes flow{to{stroke-dashoffset:-32}}
+.beam{animation:p 2.4s ease-in-out infinite}
+.node{position:absolute;width:23%;transform:translate(-50%,-50%);padding:9px 10px 10px;border-radius:8px;background:rgba(10,28,62,.6);backdrop-filter:blur(8px);border:1px solid color-mix(in srgb,var(--c) 60%,transparent);box-shadow:0 0 20px color-mix(in srgb,var(--c) 28%,transparent),inset 0 0 16px rgba(255,255,255,.03)}
+.node h3{font:700 clamp(10px,1.15vw,14px) var(--head);letter-spacing:.1em;margin-bottom:5px;color:var(--c);display:flex;align-items:center;gap:6px}
+.node h3:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--c);box-shadow:0 0 8px var(--c)}
+.node ul{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:3px}
+.node li{font-size:clamp(8px,.85vw,10.5px);line-height:1;padding:3px 5px;border-radius:3px;background:rgba(255,255,255,.07);color:#dbe9ff}
+.coreM{display:none}
+.hx-status{background:var(--panel);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:8px;padding:16px 18px;box-shadow:0 0 30px rgba(20,90,200,.25)}
+.hx-status h3{display:flex;justify-content:space-between;font:600 13px var(--head);letter-spacing:.12em;color:var(--cyan);margin-bottom:8px}
+.hx-status h3 i{font-style:normal;font-size:10px;color:var(--green);display:flex;gap:5px;align-items:center}
+.hx-status div{display:flex;justify-content:space-between;align-items:baseline;padding:7px 0;border-bottom:1px solid rgba(60,140,230,.15);font-size:13px;color:#cfe0f7}
+.hx-status b{font:600 22px var(--head);color:#fff}
+.hx-status svg{width:100%;height:46px;margin-top:10px}
+.flow{position:relative;display:flex;align-items:center;margin-top:22px;padding:12px 14px;border:1px solid var(--line);border-radius:8px;background:var(--panel);backdrop-filter:blur(10px)}
+.fc{flex:none;padding:9px 14px;border:1px solid var(--cyan);border-radius:5px;font:700 13px var(--head);letter-spacing:.14em;color:#e8f6ff;background:rgba(47,140,255,.14);box-shadow:0 0 14px rgba(79,216,255,.25);white-space:nowrap}
+.fc.gold{border-color:var(--amber);background:rgba(255,182,41,.12);box-shadow:0 0 16px rgba(255,182,41,.35);color:#ffe2a3}
+.fc.res{border-color:var(--green);background:rgba(53,224,122,.12);box-shadow:0 0 14px rgba(53,224,122,.3)}
+.hw{flex:1;min-width:14px;height:4px;margin:0 6px;border-radius:2px;background:linear-gradient(90deg,transparent,#4fd8ff,transparent) 0 0/60px 100%;background-color:rgba(79,216,255,.22);animation:hw 1.4s linear infinite;position:relative}
+.hw:after{content:"";position:absolute;right:-3px;top:-4px;border:6px solid transparent;border-left:8px solid #4fd8ff;border-right:0}
+.hw.gld{background:linear-gradient(90deg,transparent,#ffb629,transparent) 0 0/60px 100%;background-color:rgba(255,182,41,.25)}
+.hw.gld:after{border-left-color:#ffb629}
+@keyframes hw{to{background-position:60px 0}}
+@media(max-width:1100px){
+ .hx-grid{grid-template-columns:1fr}.stage{aspect-ratio:auto;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+ .stage>svg{display:none}.coreM{display:block;grid-column:1/-1;text-align:center;padding:18px;border:1px solid var(--cyan);border-radius:8px;background:radial-gradient(circle,#2f8cff55,#06142d)}
+ .coreM b{display:block;font:700 26px var(--head);letter-spacing:.14em}.coreM span{font-size:11px;letter-spacing:.2em;color:var(--cyan)}
+ .node{position:static!important;transform:none!important;width:auto!important}
+ .node h3{font-size:14px}.node li{font-size:10.5px}
+ .flow{flex-wrap:wrap;gap:8px}.hw{display:none}.fc{flex:1 1 40%;text-align:center}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+.pulse{animation:p 3s ease-in-out infinite}@keyframes p{50%{opacity:.55}}
+</style>
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../assets/pwa/apple-touch-icon.png">
+<meta name="theme-color" content="#050d19">
+<script src="../pwa.js" defer data-ah-pwa></script>
+</head>
+<body>
+<header><div class="wrap nav">
+ <a class="brand" href="home.html" aria-label="AI Harness home">
+  <svg width="42" height="42" viewBox="0 0 42 42" fill="none" stroke="#4fd8ff" stroke-width="1.6"><circle cx="21" cy="21" r="19"/><path d="M12 31 21 9l9 22M15.5 24h11" /></svg>
+  <span><b>AI HARNESS</b><small>EXECUTE · COORDINATE · AUTOMATE</small></span></a>
+ <nav aria-label="Primary">
+  <a class="on" href="home.html">Overview</a><a href="workbench.html#agents">Agents</a><a href="workbench.html#workflows">Workflows</a><a href="workbench.html#connectors">Connectors</a><a href="workbench.html#models">Models</a><a href="index.html">Tools</a><a href="overview.html#monitoring">Monitoring</a><a href="../hub.html">Governance</a><a href="../learning/domains/harness.html">Documentation</a>
+ </nav>
+ <a class="btn sm" href="workbench.html">Open Workbench &rarr;</a>
+</div></header>
+
+<main>
+<div class="hx">
+ <canvas id="stars" aria-hidden="true"></canvas>
+ <div class="wrap hx-grid">
+  <div class="hx-left">
+   <div class="hx-tag"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4fd8ff" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M7 17 12 6l5 11"/></svg>AH-AIOS</div>
+   <h1>AI HARNESS</h1>
+   <h2>Governed AI Execution Platform</h2>
+   <p class="hx-verbs">Execute.<br>Coordinate.<br>Automate.</p>
+   <p>Transform models, agents, tools, retrieval systems, workflows, and external services into a coordinated AI workforce.</p>
+   <div class="cta"><a class="btn solid" href="workbench.html">Launch Workbench &rarr;</a><a class="btn" href="overview.html">Explore Architecture</a></div>
+  </div>
+
+  <div class="stage" id="stage" role="group" aria-label="AI Harness orchestration engine and seven retrieval layers">
+   <svg viewBox="0 0 760 560" aria-hidden="true">
+    <defs>
+     <radialGradient id="aura"><stop offset="0" stop-color="#7fe3ff" stop-opacity=".55"/><stop offset=".45" stop-color="#2f8cff" stop-opacity=".28"/><stop offset="1" stop-color="#6a3dff" stop-opacity="0"/></radialGradient>
+     <linearGradient id="body" x1="0" x2="1"><stop offset="0" stop-color="#0a2a66"/><stop offset=".5" stop-color="#bff1ff"/><stop offset="1" stop-color="#0a2a66"/></linearGradient>
+    </defs>
+    <circle cx="380" cy="262" r="210" fill="url(#aura)"/>
+    <ellipse cx="380" cy="262" rx="290" ry="200" fill="none" stroke="#4fd8ff" stroke-opacity=".28" stroke-dasharray="3 9"/>
+    <ellipse cx="380" cy="262" rx="215" ry="145" fill="none" stroke="#ffb629" stroke-opacity=".3"/>
+    <g id="streams" fill="none" stroke-linecap="round"></g>
+    <g>
+     <ellipse cx="380" cy="352" rx="70" ry="16" fill="#4fd8ff" fill-opacity=".5"/>
+     <rect x="320" y="190" width="120" height="162" fill="url(#body)" opacity=".92"/>
+     <ellipse cx="380" cy="352" rx="60" ry="14" fill="#0a2a66"/>
+     <ellipse cx="380" cy="190" rx="60" ry="14" fill="#e6fbff"/>
+     <g class="beam"><path d="M380 176v-30M380 366v34" stroke="#bff1ff" stroke-width="3"/></g>
+     <g font-family="Rajdhani,sans-serif" text-anchor="middle" fill="#04122c" font-weight="700"><text x="380" y="262" font-size="20" letter-spacing="2">AI HARNESS</text><text x="380" y="282" font-size="10" letter-spacing="1.5">ORCHESTRATION</text><text x="380" y="295" font-size="10" letter-spacing="1.5">ENGINE</text></g>
+    </g>
+   </svg>
+   <div class="coreM"><b>AI HARNESS</b><span>Orchestration Engine</span></div>
+  </div>
+
+  <aside class="hx-status" aria-label="Live system status">
+   <h3>LIVE SYSTEM STATUS <i><span class="dot"></span>LIVE</i></h3>
+   <div><span>Active Agents</span><b data-n="128">128</b></div>
+   <div><span>Running Workflows</span><b data-n="42">42</b></div>
+   <div><span>Connected Models</span><b>12</b></div>
+   <div><span>Knowledge Nodes</span><b>250M+</b></div>
+   <div><span>RAG Requests</span><b>2.4M</b></div>
+   <div><span>System Health</span><b>99.98%</b></div>
+   <svg viewBox="0 0 200 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 30 15 24 30 28 50 14 70 20 90 8 110 16 130 6 150 14 170 4 200 10" fill="none" stroke="#4fd8ff" stroke-width="2"/><path d="M0 30 15 24 30 28 50 14 70 20 90 8 110 16 130 6 150 14 170 4 200 10V40H0z" fill="#2f8cff" fill-opacity=".18"/></svg>
+  </aside>
+ </div>
+
+ <div class="wrap"><div class="flow" role="list" aria-label="Execution flow">
+  <span class="fc" role="listitem">MODELS</span><i class="hw"></i><span class="fc" role="listitem">AGENTS</span><i class="hw"></i><span class="fc gold" role="listitem">RETRIEVAL INTELLIGENCE</span><i class="hw gld"></i><span class="fc" role="listitem">TOOLS</span><i class="hw"></i><span class="fc" role="listitem">WORKFLOWS</span><i class="hw gld"></i><span class="fc res" role="listitem">RESULTS</span>
+ </div></div>
+</div>
+
+<section><div class="wrap grid4">
+ <a class="card" href="workbench.html#agents"><div class="img" style="background:radial-gradient(circle at 30% 60%,#2f8cff55,transparent 55%),radial-gradient(circle at 70% 40%,#4fd8ff44,transparent 50%),#071a38"></div><div class="body"><h3>Agent Runtime</h3><p>Deploy. Manage. Coordinate. Specialized AI agents operating within governed boundaries.</p><span class="go">&rarr;</span></div></a>
+ <a class="card" href="overview.html"><div class="img" style="background:radial-gradient(circle at 50% 50%,#ffb62966,transparent 40%),radial-gradient(circle at 20% 30%,#2f8cff55,transparent 45%),#071a38"></div><div class="body"><h3>Orchestration Engine</h3><p>Plan. Route. Execute. Multi-agent task coordination and workflow orchestration.</p><span class="go">&rarr;</span></div></a>
+ <a class="card" href="workbench.html#workflows"><div class="img" style="background:linear-gradient(135deg,#ffb62933,transparent 50%),radial-gradient(circle at 70% 60%,#2f8cff55,transparent 50%),#071a38"></div><div class="body"><h3>Workflow Automation</h3><p>Triggers. Approvals. Automation. Repeatable execution pipelines with governance controls.</p><span class="go">&rarr;</span></div></a>
+ <a class="card" href="workbench.html#connectors"><div class="img" style="background:radial-gradient(circle at 50% 100%,#4fd8ff99,transparent 60%),#071a38"></div><div class="body"><h3>Connector Registry</h3><p>Models. Tools. Services. Enterprise. Unified integration management across internal and external systems.</p><span class="go">&rarr;</span></div></a>
+
+ <div class="panel"><h3>EXECUTION METRICS (24H)</h3>
+  <div class="met"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg><small>Executions Today</small><b>2.4M</b></div>
+  <div class="met"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-4 3-6 6-6s6 2 6 6M17 5a3 3 0 0 1 0 6M21 20c0-3-1-5-3-6"/></svg><small>Agent Invocations</small><b>38.7M</b></div>
+  <div class="met"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg><small>Workflow Success Rate</small><b>99.94%</b></div>
+  <div class="met"><svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 6 0l3-3a4 4 0 0 0-6-6l-1 1M14 10a4 4 0 0 0-6 0l-3 3a4 4 0 0 0 6 6l1-1"/></svg><small>Connector Availability</small><b>99.99%</b></div>
+  <div class="met" style="margin:0"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m8.5 12 2.5 2.5L16 9.5"/></svg><small>Validation Pass Rate</small><b>98.8%</b></div>
+ </div>
+ <div class="panel"><h3>ACTIVE EXECUTIONS <a href="overview.html#monitoring">View All &rarr;</a></h3>
+  <ul class="exec">
+   <li><i class="dot"></i><span>Research Agent — Knowledge Synthesis</span><span class="st">Running</span><time>2m ago</time></li>
+   <li><i class="dot"></i><span>Curriculum Agent — Lesson Generation</span><span class="st">Running</span><time>4m ago</time></li>
+   <li><i class="dot"></i><span>Development Agent — Code Analysis</span><span class="st">Running</span><time>6m ago</time></li>
+   <li><i class="dot"></i><span>Data Connector — External API Sync</span><span class="st">Running</span><time>8m ago</time></li>
+   <li class="rv"><i class="dot"></i><span>Quality Agent — Content Validation</span><span class="st">Review</span><time>12m ago</time></li>
+   <li><i class="dot"></i><span>Assessment Agent — Item Generation</span><span class="st">Running</span><time>14m ago</time></li>
+   <li><i class="dot"></i><span>Workflow — Learning Path Build</span><span class="st">Running</span><time>18m ago</time></li>
+  </ul></div>
+</div></section>
+
+<section><div class="wrap lower">
+ <div>
+  <h2>THE EXECUTION JOURNEY</h2><div class="sub">FROM REQUEST TO REAL-WORLD RESULTS</div>
+  <div class="steps" id="steps"></div>
+ </div>
+ <div>
+  <h2>AGENT WORKFORCE</h2><div class="sub">SPECIALIZED AI AGENTS. REAL RESULTS. <a href="workbench.html#agents">Manage Agents &rarr;</a></div>
+  <div class="agents" id="agents"></div>
+ </div>
+</div></section>
+</main>
+
+<footer><div class="wrap foot">
+ <div><strong>BUILT FOR A LARGER TOMORROW</strong>Scalable. Secure. Extensible. Governed.</div>
+ <div class="m">&infin; INTEGRATE<br>ANY MODEL</div><div class="m">&#9881; AUTOMATE<br>REAL WORK</div><div class="m">&#9775; AMPLIFY<br>HUMAN POTENTIAL</div>
+ <div class="r">EXECUTION TODAY.<br>A BRIGHTER TOMORROW.</div>
+</div></footer>
+
+<script>
+const ic={doc:'<path d="M7 3h8l4 4v14H7zM14 3v5h5M10 12h6M10 16h6"/>',shield:'<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m8.5 12 2.5 2.5L16 9.5"/>',db:'<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3 3 7 3s7-1.3 7-3V6M5 12c0 1.7 3 3 7 3s7-1.3 7-3"/>',net:'<circle cx="5" cy="6" r="2"/><circle cx="19" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="12" cy="11" r="2"/><path d="M7 6h10M6 8l5 2M18 8l-5 2M12 13v3"/>',play:'<path d="M8 5v14l11-7z"/>',chk:'<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>',rec:'<circle cx="12" cy="13" r="8"/><path d="M12 8v5l3 2M9 3h6"/>',box:'<path d="m12 3 8 4v10l-8 4-8-4V7zM4 7l8 4 8-4M12 11v10"/>',book:'<path d="M3 5c3-1 6-1 9 1 3-2 6-2 9-1v14c-3-1-6-1-9 1-3-2-6-2-9-1z"/>',cap:'<path d="m2 9 10-5 10 5-10 5zM6 11v5c3 2 9 2 12 0v-5"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-5 4-7 8-7s8 2 8 7"/>',chart:'<path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/>',code:'<path d="m8 8-5 4 5 4M16 8l5 4-5 4M14 5l-4 14"/>'};
+const svg=k=>`<svg viewBox="0 0 24 24" aria-hidden="true">${ic[k]}</svg>`;
+const J=[['doc','Receive','Authorized request'],['shield','Authorize','Verify permissions'],['db','Prepare','Assemble resources'],['net','Plan','Determine sequence'],['play','Execute','Run operations',1],['chk','Validate','Check results'],['rec','Recover','Handle failures'],['box','Complete','Return results',1],['doc','Record','Preserve evidence']];
+steps.innerHTML=J.map((s,i)=>`<div class="step"><div class="chev ${s[3]?'hot':''}">${svg(s[0])}</div>${i+1}. ${s[1]}<span>${s[2]}</span></div>`).join('');
+const A=[['book','Research','18,294'],['net','Knowledge','12,102'],['cap','Curriculum','4,021'],['user','Instructional','16,778'],['doc','Assessment','9,445'],['chart','Evaluation','7,331'],['code','Development','9,778']];
+agents.innerHTML=A.map(a=>`<a class="ag" href="workbench.html#agents">${svg(a[0])}<br>${a[1]}<em>● Online</em><b>${a[2]}</b><small>tasks</small></a>`).join('');
+
+const RAG=[['NATIVE RAG',['Documents','Embeddings','Vector Search','Retrieve & Rerank'],'#4fd8ff'],['RERANK RAG',['Retrieved Results','Relevance Scoring','Best Context'],'#ffb629'],['MULTIMODAL RAG',['Text','Images','Audio','Video','PDFs'],'#4fd8ff'],['GRAPH RAG',['Knowledge Graph','Relationships','Traversal'],'#b583ff'],['HYBRID RAG',['Vector','Graph','Keyword'],'#ffb629'],['AGENTIC RAG',['Tools','APIs','Decisions','Planning'],'#b583ff'],['MULTI-AGENT RAG',['Research','Knowledge','Quality','Evaluation'],'#4fd8ff']];
+(function(){const st=document.getElementById('stage'),g=document.getElementById('streams'),NS='http://www.w3.org/2000/svg';
+RAG.forEach((r,i)=>{const t=(-90+i*360/7)*Math.PI/180,x=380+290*Math.cos(t),y=262+200*Math.sin(t);
+ const n=document.createElement('div');n.className='node';n.style.cssText=`left:${x/7.6}%;top:${y/5.6}%;--c:${r[2]}`;
+ n.innerHTML='<h3>'+r[0]+'</h3><ul>'+r[1].map(s=>'<li>'+s+'</li>').join('')+'</ul>';st.appendChild(n);
+ const d=`M380 262Q${380+(x-380)*.35+(y-262)*.18} ${262+(y-262)*.35-(x-380)*.18} ${x} ${y}`;
+ ['glow','stream'].forEach(c=>{const p=document.createElementNS(NS,'path');p.setAttribute('d',d);p.setAttribute('class',c);p.setAttribute('stroke',r[2]);g.appendChild(p)})});})();
+// live counters drift slightly
+document.querySelectorAll('[data-n]').forEach(el=>{let n=+el.dataset.n;setInterval(()=>{n=Math.max(1,n+Math.round(Math.random()*4-2));el.textContent=n},2500)});
+// starfield
+const c=document.getElementById('stars'),x=c.getContext('2d');
+function draw(){c.width=c.offsetWidth;c.height=c.offsetHeight;x.fillStyle='#fff';for(let i=0;i<140;i++){x.globalAlpha=Math.random()*.7+.1;x.fillRect(Math.random()*c.width,Math.random()*c.height*.7,1.2,1.2)}}
+draw();addEventListener('resize',draw);
+</script>
+<a class="ah-home" data-ah-home href="../index.html" aria-label="Home: AH-AIOS Learning App Studio"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v10h13V10M10 20v-5h4v5"/></svg>Home</a>
+<style>.ah-home{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:2147483000;display:inline-flex;align-items:center;gap:7px;padding:10px 16px;border-radius:999px;background:rgba(8,24,42,.94);color:#f1f7ff;border:1px solid #39c8ff;font:600 13px/1 system-ui,-apple-system,Segoe UI,Arial,sans-serif;text-decoration:none;box-shadow:0 0 18px rgba(57,200,255,.35);transition:background .2s}.ah-home:hover{background:#1597ff}.ah-home:focus-visible{outline:2px solid #fff;outline-offset:2px}.ah-home[hidden]{display:none}@media print{.ah-home{display:none}}</style>
+<script>if(self!==top){var h=document.querySelector('[data-ah-home]');if(h)h.hidden=true}</script>
+</body>
+</html>

@@ -13,7 +13,7 @@
     $$("[data-k]").forEach(function (e) { var on = e.dataset.k === k; e.classList.toggle("on", on); e.setAttribute("aria-pressed", on); });
     panel.innerHTML = '<p class="k">' + esc(d.e) + "</p><h3>" + esc(d.t) + '</h3><p class="sum">' + esc(d.s) + "</p><p>" + esc(d.b) + '</p><div class="dl">' +
       d.L.map(function (l) { return '<a href="' + esc(l[1]) + '">' + esc(l[0]) + " \u2192</a>"; }).join("") + "</div>";
-    panel.classList.add("live");
+    panel.classList.remove("live"); void panel.offsetWidth; panel.classList.add("live"); /* re-click replays the highlight */
     if (o.hash !== false && history.replaceState) { try { history.replaceState(null, "", "#" + k); } catch (e) {} }
     if (o.scroll) { var r = panel.getBoundingClientRect(); if (r.top < 0 || r.bottom > innerHeight) panel.scrollIntoView({ block: "nearest", behavior: "smooth" }); }
     return true;
@@ -29,6 +29,7 @@
     var a = $$("[data-k]", caps), i = a.indexOf(document.activeElement); if (i < 0) return;
     e.preventDefault(); var n = a[(i + (e.key === "ArrowDown" ? 1 : a.length - 1)) % a.length]; n.focus(); select(n.dataset.k, { hash: false });
   });
+
   function fromHash() { var k = decodeURIComponent((location.hash || "").slice(1)); if (D[k]) select(k, { hash: false }); }
   window.addEventListener("hashchange", fromHash); fromHash();
 })();

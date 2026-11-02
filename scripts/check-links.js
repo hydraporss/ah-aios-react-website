@@ -14,7 +14,7 @@ function discover(dir, rel = '') {
   });
 }
 const pages = discover(root).sort();
-const REQUIRED = ['index.html', 'hub.html', 'workbench.html', 'learning/index.html', 'landing/index.html', 'harness/index.html', 'worldforge-app/index.html', '404.html'];
+const REQUIRED = ['index.html', 'hub.html', 'workbench.html', 'learning/index.html', 'landing/index.html', 'harness/index.html', 'harness/home.html', 'worldforge-app/index.html', '404.html'];
 const attr = /(?:href|src)\s*=\s*["']([^"']+)["']/gi;
 let bad = 0;
 for (const r of REQUIRED) if (!pages.includes(r)) { console.error(`MISSING REQUIRED PAGE: ${r}`); bad++; }

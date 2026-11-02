@@ -118,3 +118,14 @@ a.disc.on{box-shadow:0 0 44px #3b9dffcc,inset 0 0 28px #3b9dff55;border-color:va
 .detail .dl a:hover,.detail .dl a:focus-visible{background:#143a78;border-color:var(--ac2)}
 @keyframes dIn{from{opacity:.4;transform:translateY(4px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.detail.live{animation:none}}
+
+/* in-page viewer */
+#viewer{position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;background:#040a16;animation:dIn .18s ease-out}
+#viewer[hidden]{display:none}
+#viewer .vbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 16px;border-bottom:1px solid var(--ln);background:#071228}
+#viewer .vbar b{font:600 14px Inter,sans-serif;letter-spacing:.06em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#viewer .vbar span{display:flex;align-items:center;gap:8px;flex-shrink:0}
+#viewer button,#viewer .vbar a{font:inherit;font-size:13px;color:var(--tx,#e8f0ff);background:rgba(10,30,62,.7);border:1px solid var(--ln);border-radius:8px;padding:6px 12px;cursor:pointer;text-decoration:none}
+#viewer button:hover,#viewer .vbar a:hover{border-color:var(--ac2)}
+#viewer iframe{flex:1;border:0;width:100%;background:#fff}
+body.vopen{overflow:hidden}

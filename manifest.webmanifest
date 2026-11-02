@@ -1,0 +1,24 @@
+{
+  "id": "./index.html",
+  "name": "AH-AIOS Learning App Studio",
+  "short_name": "AH-AIOS",
+  "description": "Learn, build, govern, and create across the AH-AIOS ecosystem. Works offline once visited.",
+  "start_url": "./index.html?source=pwa",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#050d19",
+  "theme_color": "#050d19",
+  "categories": ["education", "productivity"],
+  "icons": [
+    { "src": "./assets/pwa/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./assets/pwa/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./assets/pwa/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "./learning/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ],
+  "shortcuts": [
+    { "name": "Hub", "short_name": "Hub", "url": "./hub.html", "icons": [{ "src": "./assets/pwa/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "Learning Studio", "short_name": "Learning", "url": "./learning/index.html", "icons": [{ "src": "./assets/pwa/icon-192.png", "sizes": "192x192", "type": "image/png" }] },
+    { "name": "AI Harness", "short_name": "Harness", "url": "./harness/home.html", "icons": [{ "src": "./assets/pwa/icon-192.png", "sizes": "192x192", "type": "image/png" }] }
+  ]
+}

@@ -39,7 +39,8 @@ const RULES = {
     ["HUB='../../hub.html'", "HUB='/hub'"],
   ],
   'domains/harness.html': [
-    ['href="../../harness/index.html"', 'href="/harness/"'],
+    // The new overview page (harness/home.html) is static-site only; Flask serves just the Command Builder at /harness/.
+    ['href="../../harness/home.html"', 'href="/harness/"', 2],
     // Flask serves only the Command Builder at /harness/ (no overview.html), so capability/overview links land there.
     ['href="../../harness/overview.html', 'href="/harness/', 8],
     ['href="../../docs/AH-CORE-ARCH-001.html#capability-maturity-levels"', 'href="/hub"'],
@@ -75,9 +76,12 @@ function walk(dir, base = dir, out = []) {
 
 function expectedContent(rel, src, rules) {
   const buf = fs.readFileSync(path.join(src, rel));
-  const list = rules[rel];
-  if (!list) return buf;
+  const list = rules[rel] || [];
+  const isHtml = /\.html$/i.test(rel);
+  if (!list.length && !isHtml) return buf;
   let text = buf.toString('utf8');
+  // The floating Home button points at the root index.html; Flask serves that page at /hub.
+  if (isHtml) text = text.replace(/(<a class="ah-home" data-ah-home href=")[^"]*(")/g, '$1/hub$2');
   for (const [from, to, want = 1] of list) {
     const n = text.split(from).length - 1;
     if (n !== want) throw new Error(`${rel}: expected exactly ${want} match${want === 1 ? '' : 'es'} for rewrite rule, found ${n}:\n    ${from}`);

@@ -104,6 +104,9 @@ footer{margin-top:36px;padding:20px;text-align:center;color:#7f98b2;font-size:12
 @media (max-width:400px){.feats{grid-template-columns:1fr}}
 @media (max-width:640px){.steps{flex-wrap:wrap;justify-content:center;gap:18px}.arrow{display:none}.step{flex:0 0 30%}.powered{grid-template-columns:1fr}.search{display:none}.burger{margin-left:auto}.modules{grid-template-columns:1fr}.laptop{display:none}}
 </style>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/pwa/apple-touch-icon.png">
+<script src="pwa.js" defer data-ah-pwa></script>
 </head>
 <body>
 <header>
@@ -117,7 +120,7 @@ footer{margin-top:36px;padding:20px;text-align:center;color:#7f98b2;font-size:12
     <div class="dd"><button type="button">Create <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="menu">
       <a href="learning/index.html#paths">Learning Paths<small>Three domains, 24-course programme</small></a>
       <a href="learning/index.html#labs">Practice Labs<small>Agent, governance, knowledge graph</small></a>
-      <a href="harness/index.html">Command Builder<small>AI Harness prompt builder</small></a>
+      <a href="harness/home.html">AI Harness<small>Execution platform overview</small></a><a href="harness/index.html">Command Builder<small>AI Harness prompt builder</small></a>
       <a href="worldforge-app/index.html">WorldForge App<small>Worlds, relationships, evidence</small></a></div></div>
     <div class="dd"><button type="button">Deliver <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button><div class="menu">
       <a href="learning/index.html#courses">Courses<small>Open a course and its lessons</small></a>
@@ -212,5 +215,5 @@ document.getElementById('q').addEventListener('keydown',function(e){
 /* Legacy deep link: the site root has no portfolio section; "#portfolio" lands on Learning Studio > My Portfolio. */
 (function(){if(location.hash==="#portfolio")location.replace("learning/index.html#portfolio");})();
 </script>
-</body>
+<script src="learning/selflink.js"></script></body>
 </html>

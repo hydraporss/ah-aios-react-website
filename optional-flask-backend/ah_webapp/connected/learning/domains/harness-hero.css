@@ -1,0 +1,16 @@
+.hh-hero{position:relative;overflow:hidden;margin:6px -4px 18px;border:1px solid rgba(60,140,230,.35);border-radius:8px;background:radial-gradient(ellipse 55% 80% at 50% 40%,#0b2a63,#06142d 60%,#030914)}
+.hh-city{position:absolute;left:0;bottom:0;width:100%;height:46%;opacity:.7}
+.hh-stars{position:absolute;inset:0;width:100%;height:100%}
+.hh-grid{position:relative;display:grid;grid-template-columns:1fr minmax(260px,380px) 1fr;gap:20px;align-items:center;padding:18px 24px}
+.hh-tower svg{width:100%;display:block;filter:drop-shadow(0 0 26px rgba(47,140,255,.5))}
+.hh-stats{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.hh-stats b{display:block;font-size:30px;line-height:1;color:#fff}
+.hh-stats span{font-size:12px;color:#9fb8d8}
+.hh-live{justify-self:end;width:100%;max-width:260px;background:rgba(8,22,46,.85);border:1px solid rgba(60,140,230,.4);border-radius:6px;padding:14px 16px}
+.hh-live h2{margin:0 0 8px;font-size:13px;display:flex;justify-content:space-between;color:#4fd8ff}
+.hh-live h2 i{font-style:normal;color:#35e07a;font-size:11px}
+.hh-live p{display:flex;justify-content:space-between;margin:0;padding:4px 0;font-size:13px;color:#cfe0f7}
+.hh-live p b{color:#fff}
+.hh-live .btn{margin-top:10px;display:block;text-align:center}
+@media(max-width:900px){.hh-grid{grid-template-columns:1fr}.hh-stats{grid-template-columns:repeat(3,1fr)}.hh-live{justify-self:stretch;max-width:none}}
+@media(prefers-reduced-motion:reduce){.hh-hero *{animation:none!important}}
