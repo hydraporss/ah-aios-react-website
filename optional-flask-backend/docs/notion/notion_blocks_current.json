@@ -1,0 +1,1765 @@
+{
+  "object": "list",
+  "results": [
+    {
+      "object": "block",
+      "id": "40a66662-b29d-8197-ba0b-fbd06fbe1a75",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Product summary — generated 31 October 2026 — from the combined archive: WorldForge (20 files) + AI Harness (9 files) + AH-AIOS Core (15 files) = 44 files.",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Product summary — generated 31 October 2026 — from the combined archive: WorldForge (20 files) + AI Harness (9 files) + AH-AIOS Core (15 files) = 44 files.",
+            "href": null
+          }
+        ],
+        "icon": null,
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-81c9-9cde-ea294ff14b92",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "heading_2",
+      "heading_2": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "1. Overview",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "1. Overview",
+            "href": null
+          }
+        ],
+        "is_toggleable": false,
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-81d6-b6fc-f59e5dc9ccc3",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "This record is the product summary for the complete, combined archive of the three AH-AIOS core domains: WorldForge, AI Harness, and AH-AIOS Core. The packages were combined into a single archive (WorldForge-AIHarness-AH-AIOS-Core-Complete.zip) on 31 October 2026. The archive delivers a set of static web assets plus the AH-AIOS backend command framework.",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "This record is the product summary for the complete, combined archive of the three AH-AIOS core domains: WorldForge, AI Harness, and AH-AIOS Core. The packages were combined into a single archive (WorldForge-AIHarness-AH-AIOS-Core-Complete.zip) on 31 October 2026. The archive delivers a set of static web assets plus the AH-AIOS backend command framework.",
+            "href": null
+          }
+        ],
+        "icon": null,
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-8106-920f-c272d3a0ab87",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "The three domains map to the AH-AIOS ecosystem as follows: WorldForge supplies structured-world, source, claim, relationship, and governance learning; AI Harness supplies AI integration, orchestration, tooling, evaluation, and reliability subjects; AH-AIOS Core supplies the foundation (commands, governance, models, CLI, versioning, tests).",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "The three domains map to the AH-AIOS ecosystem as follows: WorldForge supplies structured-world, source, claim, relationship, and governance learning; AI Harness supplies AI integration, orchestration, tooling, evaluation, and reliability subjects; AH-AIOS Core supplies the foundation (commands, governance, models, CLI, versioning, tests).",
+            "href": null
+          }
+        ],
+        "icon": null,
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-818f-b8f1-d45586afa067",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "heading_2",
+      "heading_2": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "2. Package inventory",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "2. Package inventory",
+            "href": null
+          }
+        ],
+        "is_toggleable": false,
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-81c8-a1da-d0a52031fe57",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": true,
+      "in_trash": false,
+      "type": "table",
+      "table": {
+        "table_width": 4,
+        "has_column_header": true,
+        "has_row_header": false
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-8153-8602-f662810c06a3",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "heading_2",
+      "heading_2": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "3. WorldForge package (20 files)",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "3. WorldForge package (20 files)",
+            "href": null
+          }
+        ],
+        "is_toggleable": false,
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-81ec-a771-ede53557ca88",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Static web app shell: index.html, css/style.css",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Static web app shell: index.html, css/style.css",
+            "href": null
+          }
+        ],
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-8174-861c-f1ac0e6f200f",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Data: data/prompts.json, data/templates.json",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Data: data/prompts.json, data/templates.json",
+            "href": null
+          }
+        ],
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-814b-addf-f07a25f6b3eb",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Prompt builder: js/prompt-builder.js, js/prompt-builder.test.js",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Prompt builder: js/prompt-builder.js, js/prompt-builder.test.js",
+            "href": null
+          }
+        ],
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-8137-bc22-dccf7b195b37",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Schemas: schemas/prompt.schema.json, template.schema.json, validation.schema.json",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Schemas: schemas/prompt.schema.json, template.schema.json, validation.schema.json",
+            "href": null
+          }
+        ],
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-8191-a078-cf19ca8b3891",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Backend command framework (shared with AI Harness): ah_webapp/commands.py, batch1_handlers.py, models.py, governance.py, main.py, admin.py, auth.py, wof_integration.py, __init__.py, requirements.txt, requirements-dev.txt",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Backend command framework (shared with AI Harness): ah_webapp/commands.py, batch1_handlers.py, models.py, governance.py, main.py, admin.py, auth.py, wof_integration.py, __init__.py, requirements.txt, requirements-dev.txt",
+            "href": null
+          }
+        ],
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-812b-9fc1-d3e343abdf7d",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "heading_2",
+      "heading_2": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "4. AI Harness package (9 files)",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "4. AI Harness package (9 files)",
+            "href": null
+          }
+        ],
+        "is_toggleable": false,
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-81dc-ab23-e4e1e5b1ba85",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Static web app shell: ah_webapp/app/static/index.html, css/style.css",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Static web app shell: ah_webapp/app/static/index.html, css/style.css",
+            "href": null
+          }
+        ],
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-810c-a2f3-c7b722efbe9e",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Prompt builder: js/prompt-builder.js, js/prompt-builder.test.js",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Prompt builder: js/prompt-builder.js, js/prompt-builder.test.js",
+            "href": null
+          }
+        ],
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-810d-88dd-f74c8020ea99",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Schemas: schemas/prompt.schema.json, template.schema.json, validation.schema.json",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Schemas: schemas/prompt.schema.json, template.schema.json, validation.schema.json",
+            "href": null
+          }
+        ],
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-8190-a995-e141e7723505",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Data: data/templates.json, data/prompts.json",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Data: data/templates.json, data/prompts.json",
+            "href": null
+          }
+        ],
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-814c-be8f-cee65cdf65db",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "heading_2",
+      "heading_2": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "5. AH-AIOS Core package (15 files)",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "5. AH-AIOS Core package (15 files)",
+            "href": null
+          }
+        ],
+        "is_toggleable": false,
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-8140-b3c8-e0dff882b308",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Backend command framework: ah_webapp/commands.py, batch1_handlers.py, requirements.txt, __init__.py, governance.py, main.py, models.py",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Backend command framework: ah_webapp/commands.py, batch1_handlers.py, requirements.txt, __init__.py, governance.py, main.py, models.py",
+            "href": null
+          }
+        ],
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-81ce-af49-f841c0c593c5",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "CLI entry points: hermes_cli.py, hermes.py, VERSION, README.md",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "CLI entry points: hermes_cli.py, hermes.py, VERSION, README.md",
+            "href": null
+          }
+        ],
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-81ca-9afd-d5e29baee5a1",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Tests: tests/test_batch1_read_only.py, tests/test_phase1_vertical_slice.py, tests/test_phase1_vertical_slice_optimized.py",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Tests: tests/test_batch1_read_only.py, tests/test_phase1_vertical_slice.py, tests/test_phase1_vertical_slice_optimized.py",
+            "href": null
+          }
+        ],
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-8151-9a50-eb10e268422e",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "heading_2",
+      "heading_2": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "6. Combined archive",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "6. Combined archive",
+            "href": null
+          }
+        ],
+        "is_toggleable": false,
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-81f3-a641-d8e98928c915",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "File: WorldForge-AIHarness-AH-AIOS-Core-Complete.zip",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "File: WorldForge-AIHarness-AH-AIOS-Core-Complete.zip",
+            "href": null
+          }
+        ],
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-813f-9b68-f5cc838714d1",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Total files: 44",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Total files: 44",
+            "href": null
+          }
+        ],
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-8145-9137-e2fd74c2361b",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Size: 357,876 bytes (350.6 KB)",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Size: 357,876 bytes (350.6 KB)",
+            "href": null
+          }
+        ],
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-81ec-b48c-f8719c5f94e4",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Integrity: testzip() = None (no corruption)",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Integrity: testzip() = None (no corruption)",
+            "href": null
+          }
+        ],
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-81ce-8e3c-ecfc8e4273b8",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "heading_2",
+      "heading_2": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "7. Relationship and boundaries",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "7. Relationship and boundaries",
+            "href": null
+          }
+        ],
+        "is_toggleable": false,
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-8195-bb5a-e1883f6cdba1",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "AH-AIOS has three distinct domains: AH-AIOS Core, AI Harness, and WorldForge. AFTER HUMANITY is the intellectual authority behind the ecosystem.",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "AH-AIOS has three distinct domains: AH-AIOS Core, AI Harness, and WorldForge. AFTER HUMANITY is the intellectual authority behind the ecosystem.",
+            "href": null
+          }
+        ],
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-81e2-9e3a-de3e7fba99c6",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "The combination is a delivery mechanism, not a merge of governance authority. Each domain retains its own status, versioning, and verification state.",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "The combination is a delivery mechanism, not a merge of governance authority. Each domain retains its own status, versioning, and verification state.",
+            "href": null
+          }
+        ],
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-8142-bc1a-ce5f7668343e",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Canon status, proposal status, implementation status, verification status, deployment status, and production readiness must remain explicit and never silently conflated.",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Canon status, proposal status, implementation status, verification status, deployment status, and production readiness must remain explicit and never silently conflated.",
+            "href": null
+          }
+        ],
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-811d-bd89-c250c63d065c",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "heading_2",
+      "heading_2": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "8. Key constraints",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "8. Key constraints",
+            "href": null
+          }
+        ],
+        "is_toggleable": false,
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-8121-9635-c0e330613fc5",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "WorldForge: do not treat a draft proposal or a specified-content outline as an approved or published artifact; preserve provenance and version history.",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "WorldForge: do not treat a draft proposal or a specified-content outline as an approved or published artifact; preserve provenance and version history.",
+            "href": null
+          }
+        ],
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-8108-a05d-f48402b34211",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "AI Harness: no live AI model is connected in the current local tutor; do not represent local tutor output as a live AI service.",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "AI Harness: no live AI model is connected in the current local tutor; do not represent local tutor output as a live AI service.",
+            "href": null
+          }
+        ],
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-8155-ac8b-cafe693534aa",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "AH-AIOS Core: local learner data is not authenticated identity; browser localStorage is not cloud synchronization or authenticated recordkeeping.",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "AH-AIOS Core: local learner data is not authenticated identity; browser localStorage is not cloud synchronization or authenticated recordkeeping.",
+            "href": null
+          }
+        ],
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-8189-83e9-f2b9866cc9a4",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "All domains: a test is passed only when its result has been observed or recorded; the existence of a test file is not proof that the test passed.",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "All domains: a test is passed only when its result has been observed or recorded; the existence of a test file is not proof that the test passed.",
+            "href": null
+          }
+        ],
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-81b2-b973-d6952cbf085b",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "heading_2",
+      "heading_2": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "9. Source reference",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "9. Source reference",
+            "href": null
+          }
+        ],
+        "is_toggleable": false,
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-8176-b4cd-d4a545d8d5ee",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Combined archive: WorldForge-AIHarness-AH-AIOS-Core-Complete.zip",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Combined archive: WorldForge-AIHarness-AH-AIOS-Core-Complete.zip",
+            "href": null
+          }
+        ],
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-81a7-9904-f086698e00bf",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Source packages: WorldForge-Package.zip, AI-HARNESS-Package.zip, AH-AIOS-Package.zip",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Source packages: WorldForge-Package.zip, AI-HARNESS-Package.zip, AH-AIOS-Package.zip",
+            "href": null
+          }
+        ],
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-81bf-838f-eecf74e2e547",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Document: LearningStudio-Complete-System-Architecture-Specification.md (LS-ARCH-WEB-001)",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Document: LearningStudio-Complete-System-Architecture-Specification.md (LS-ARCH-WEB-001)",
+            "href": null
+          }
+        ],
+        "color": "default"
+      },
+      "archived": false
+    },
+    {
+      "object": "block",
+      "id": "40a66662-b29d-81ae-9280-f721da9a4848",
+      "parent": {
+        "type": "page_id",
+        "page_id": "40a66662-b29d-817b-8e17-d1d79cd58637"
+      },
+      "created_time": "2026-10-31T04:50:00.000Z",
+      "last_edited_time": "2026-10-31T04:50:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "40a66662-b29d-81b4-a357-0027eb09d738"
+      },
+      "has_children": false,
+      "in_trash": false,
+      "type": "bulleted_list_item",
+      "bulleted_list_item": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Notion parent register: AH-AIOS / WorldForge — Cross-Workspace Alignment Register",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Notion parent register: AH-AIOS / WorldForge — Cross-Workspace Alignment Register",
+            "href": null
+          }
+        ],
+        "color": "default"
+      },
+      "archived": false
+    }
+  ],
+  "next_cursor": null,
+  "has_more": false,
+  "type": "block",
+  "block": {},
+  "request_id": "bd7d59af-9f17-446a-8380-b96a907bdda6"
+}

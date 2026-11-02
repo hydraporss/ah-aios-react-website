@@ -1,0 +1,4346 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AH-AIOS CORE Specification (AH-CORE-ARCH-001)</title>
+<style>body{margin:0;background:#0b0e14;color:#edf1f7;font:15px/1.65 system-ui,sans-serif}header{padding:12px 24px;background:#111722;border-bottom:1px solid #30394a;position:sticky;top:0;z-index:5}header a{color:#e4c985;text-decoration:none}header .mods{display:block;margin-top:6px;font-size:13px}header .mods a{color:#7fd0ff;margin-right:10px}main{max-width:900px;margin:24px auto;padding:0 20px 60px}h1,h2,h3,h4{color:#e4c985;scroll-margin-top:90px}a{color:#7fd0ff}code,pre{background:#111722;border-radius:6px}code{padding:2px 5px}pre{padding:14px;overflow:auto}table{border-collapse:collapse;width:100%;display:block;overflow:auto}td,th{border:1px solid #30394a;padding:6px 10px}blockquote{border-left:3px solid #d6b66f;margin:0;padding-left:14px;color:#b9c4d6}</style></head>
+<body><header><a href="../learning/domains/core.html">&larr; AH-AIOS CORE</a> &nbsp; <a href="../index.html">Home</a> &nbsp; <a href="AH-CORE-ARCH-001.md">Raw .md</a> &nbsp;<b style="color:#d6b66f">CORE Specification (AH-CORE-ARCH-001)</b><span class="mods">Modules: <a href="#module-01">01</a> <a href="#module-02">02</a> <a href="#module-03">03</a> <a href="#module-04">04</a> <a href="#module-05">05</a> <a href="#module-06">06</a> <a href="#module-07">07</a> <a href="#module-08">08</a> <a href="#module-09">09</a> <a href="#module-10">10</a> <a href="#module-11">11</a> <a href="#module-12">12</a> <a href="#module-13">13</a></span></header><main>
+<h1
+id="ah-aios-core--complete-workbench-specification--technical-architecture">AH-AIOS
+CORE — Complete Workbench Specification &amp; Technical
+Architecture</h1>
+<p><strong>Document ID:</strong> AH-CORE-ARCH-001 |
+<strong>Version:</strong> 1.0-Draft | <strong>Classification:</strong>
+Proposed Architecture Specification | <strong>Domain:</strong> AH-AIOS
+CORE</p>
+<p><strong>Document purpose:</strong> Define the complete functional,
+technical, security, governance, and operational architecture of the
+AH-AIOS CORE Workbench. This document is intended as the primary
+implementation specification for development, including use by Claude as
+an engineering implementation assistant.</p>
+<p><strong>Document status:</strong> Proposed Architecture
+Specification. This document does not independently authorize canon
+changes or claim that the described capabilities have been implemented,
+tested, or deployed.</p>
+<hr />
+<h2 id="1-system-definition">1. SYSTEM DEFINITION</h2>
+<h3 id="11-what-is-ah-aios-core">1.1 What is AH-AIOS CORE?</h3>
+<p>AH-AIOS CORE is the foundational control, governance, security, and
+assurance domain of the AFTER HUMANITY AI Operating System.</p>
+<p>CORE establishes the conditions under which the entire AH-AIOS
+ecosystem is identified, accessed, authorized, configured, governed,
+monitored, audited, and verified.</p>
+<p>It provides the common institutional and technical foundation that
+allows the other AH-AIOS domains to operate under consistent authority,
+security, accountability, and evidence requirements.</p>
+<p>CORE is not simply an administration dashboard. It is the central
+control environment of the AH-AIOS ecosystem.</p>
+<p>Its responsibilities include:</p>
+<ul>
+<li>System identity and registration.</li>
+<li>User and organizational identity.</li>
+<li>Authentication and session security.</li>
+<li>Authorization and permission enforcement.</li>
+<li>Governance policies and authority management.</li>
+<li>Security controls and incident management.</li>
+<li>Configuration and secrets management.</li>
+<li>Infrastructure and foundational services.</li>
+<li>Audit and accountability.</li>
+<li>Evidence and verification.</li>
+<li>Risk and compliance.</li>
+<li>Controlled changes and release assurance.</li>
+<li>Cross-domain authorization and control.</li>
+</ul>
+<h3 id="12-ah-aios-three-domain-architecture">1.2 AH-AIOS three-domain
+architecture</h3>
+<p>AH-AIOS consists of three distinct but integrated domains.</p>
+<p><strong>AH-AIOS CORE</strong> — Foundational Control · Governance ·
+Security · Assurance</p>
+<p><strong>AI HARNESS</strong> — AI execution, orchestration,
+automation, agents, tools, and workflows.</p>
+<p><strong>WORLDFORGE</strong> — Knowledge intelligence, world models,
+entities, relationships, evidence, and canon governance.</p>
+<p>Human stewardship and accountability apply across all three
+domains.</p>
+<p><strong>Domain responsibilities</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Domain</th>
+<th>Governing responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CORE</td>
+<td>Establishes authority, identity, security, policy, audit, and
+assurance.</td>
+</tr>
+<tr class="even">
+<td>HARNESS</td>
+<td>Executes bounded AI operations under CORE controls.</td>
+</tr>
+<tr class="odd">
+<td>WORLDFORGE</td>
+<td>Structures, connects, preserves, and governs knowledge.</td>
+</tr>
+</tbody>
+</table>
+<p>The domains exchange controlled requests, decisions, records, and
+evidence.</p>
+<h4 id="authority-boundary">1.2.1 CORE authority boundary</h4>
+<p>CORE is the governing control domain. It does not absorb the
+responsibilities of the other domains.</p>
+<ul>
+<li>CORE establishes permissions; HARNESS uses them.</li>
+<li>CORE establishes security requirements; each domain enforces
+applicable controls within its own environment.</li>
+<li>CORE defines system-wide governance boundaries; WORLDFORGE manages
+knowledge and canon workflows within those boundaries.</li>
+<li>CORE receives audit events and verification evidence; domain
+services remain responsible for generating accurate operational
+records.</li>
+<li>CORE can deny or suspend access when required by policy.</li>
+<li>CORE cannot independently declare a knowledge claim or creative
+interpretation to be established canon.</li>
+</ul>
+<h3 id="13-architectural-principles">1.3 Architectural principles</h3>
+<p>The CORE architecture follows these principles:</p>
+<ol type="1">
+<li><strong>Authority Before Execution</strong> — consequential actions
+require valid authority.</li>
+<li><strong>Identity Before Authorization</strong> — access decisions
+must refer to a verified identity or explicitly defined service
+principal.</li>
+<li><strong>Least Privilege</strong> — every identity receives only the
+permissions required for its assigned responsibilities.</li>
+<li><strong>Separation of Duties</strong> — critical actions must not
+depend on unrestricted authority held by one actor.</li>
+<li><strong>Governance by Enforcement</strong> — policies must be
+enforced by services, not merely displayed in documentation.</li>
+<li><strong>Evidence-Based Assurance</strong> — operational claims
+require supporting evidence.</li>
+<li><strong>Traceable Change</strong> — material changes must retain
+their origin, rationale, authorization, and history.</li>
+<li><strong>Secure by Default</strong> — unconfigured or invalid
+permissions must fail closed.</li>
+<li><strong>Controlled Integration</strong> — domains communicate
+through defined interfaces and authorization boundaries.</li>
+<li><strong>Recoverability</strong> — critical services and records must
+have documented backup and recovery procedures.</li>
+<li><strong>Human Accountability</strong> — automation does not
+eliminate responsibility for consequential decisions.</li>
+<li><strong>Explicit Status</strong> — proposed, implemented, verified,
+and operational capabilities must remain distinguishable.</li>
+</ol>
+<hr />
+<h2 id="2-core-workbench-overview">2. CORE WORKBENCH OVERVIEW</h2>
+<h3 id="21-workbench-definition">2.1 Workbench definition</h3>
+<p>The AH-AIOS CORE Workbench is the administrative and operational
+interface through which authorized users manage the foundational control
+environment of AH-AIOS.</p>
+<p>It provides:</p>
+<ul>
+<li>Centralized system administration.</li>
+<li>Identity and access management.</li>
+<li>Policy and governance administration.</li>
+<li>Security monitoring.</li>
+<li>Configuration management.</li>
+<li>Infrastructure visibility.</li>
+<li>Audit inspection.</li>
+<li>Evidence and verification management.</li>
+<li>Risk and compliance management.</li>
+<li>Controlled change and release management.</li>
+<li>Cross-domain system oversight.</li>
+</ul>
+<p>The Workbench must provide a unified experience while preserving the
+independence and boundaries of the three AH-AIOS domains.</p>
+<h3 id="22-primary-navigation--13-modules">2.2 Primary navigation — 13
+modules</h3>
+<p>The proposed primary navigation consists of thirteen modules.</p>
+<table>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Module</th>
+<th>Primary function</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>01</td>
+<td>CORE Dashboard</td>
+<td>Overall system visibility and operational status</td>
+</tr>
+<tr class="even">
+<td>02</td>
+<td>System Identity</td>
+<td>System identity, registration, architecture, and environment</td>
+</tr>
+<tr class="odd">
+<td>03</td>
+<td>Users &amp; Organizations</td>
+<td>User lifecycle, organizations, teams, and membership</td>
+</tr>
+<tr class="even">
+<td>04</td>
+<td>Identity &amp; Authentication</td>
+<td>Login, authentication, sessions, and account protection</td>
+</tr>
+<tr class="odd">
+<td>05</td>
+<td>Roles &amp; Permissions</td>
+<td>Roles, access policies, and permission enforcement</td>
+</tr>
+<tr class="even">
+<td>06</td>
+<td>Governance Center</td>
+<td>Policies, authority, decisions, and governance workflows</td>
+</tr>
+<tr class="odd">
+<td>07</td>
+<td>Security Center</td>
+<td>Security posture, incidents, vulnerabilities, and controls</td>
+</tr>
+<tr class="even">
+<td>08</td>
+<td>Configuration &amp; Secrets</td>
+<td>Environment configuration and protected secrets</td>
+</tr>
+<tr class="odd">
+<td>09</td>
+<td>Infrastructure &amp; Services</td>
+<td>Service registry, health, dependencies, and infrastructure</td>
+</tr>
+<tr class="even">
+<td>10</td>
+<td>Audit &amp; Accountability</td>
+<td>System activity, event records, and accountability</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>Evidence &amp; Verification</td>
+<td>Evidence registry, tests, verification, and provenance</td>
+</tr>
+<tr class="even">
+<td>12</td>
+<td>Risk &amp; Compliance</td>
+<td>Risk register, compliance controls, exceptions, and remediation</td>
+</tr>
+<tr class="odd">
+<td>13</td>
+<td>Change &amp; Release Management</td>
+<td>Change requests, approvals, versions, deployment, and rollback</td>
+</tr>
+</tbody>
+</table>
+<h3 id="23-global-workbench-interface">2.3 Global workbench
+interface</h3>
+<p>Every module must follow a consistent application shell.</p>
+<p><strong>A. Global navigation</strong></p>
+<p>The navigation panel contains:</p>
+<ul>
+<li>AH-AIOS CORE identity and logo.</li>
+<li>CORE Dashboard.</li>
+<li>Thirteen primary module links.</li>
+<li>Active module indicator.</li>
+<li>Expandable navigation groups where needed.</li>
+<li>User profile and account menu.</li>
+<li>System environment indicator.</li>
+</ul>
+<p><strong>B. Global header</strong></p>
+<p>The header contains:</p>
+<ul>
+<li>Current module title.</li>
+<li>Breadcrumb navigation.</li>
+<li>Global search.</li>
+<li>Notification center.</li>
+<li>Pending approval indicator.</li>
+<li>System health indicator.</li>
+<li>User identity and role.</li>
+<li>Help and documentation access.</li>
+</ul>
+<p><strong>C. Main workspace</strong></p>
+<p>The workspace supports:</p>
+<ul>
+<li>Dashboard cards.</li>
+<li>Data tables.</li>
+<li>Detail views.</li>
+<li>Record creation and editing.</li>
+<li>Search and filters.</li>
+<li>Approval workflows.</li>
+<li>Activity history.</li>
+<li>Evidence attachments.</li>
+<li>Configuration panels.</li>
+<li>Context-sensitive actions.</li>
+</ul>
+<p><strong>D. Global status indicators</strong></p>
+<p>Use consistent status labels:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Status</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Draft</td>
+<td>Record is being prepared.</td>
+</tr>
+<tr class="even">
+<td>Proposed</td>
+<td>Submitted for consideration.</td>
+</tr>
+<tr class="odd">
+<td>Under Review</td>
+<td>Awaiting assessment.</td>
+</tr>
+<tr class="even">
+<td>Approved</td>
+<td>Authorized by the required authority.</td>
+</tr>
+<tr class="odd">
+<td>Rejected</td>
+<td>Not approved.</td>
+</tr>
+<tr class="even">
+<td>Implemented</td>
+<td>Change has been applied.</td>
+</tr>
+<tr class="odd">
+<td>Verified</td>
+<td>Supporting verification has passed.</td>
+</tr>
+<tr class="even">
+<td>Operational</td>
+<td>Meets applicable operational requirements.</td>
+</tr>
+<tr class="odd">
+<td>Suspended</td>
+<td>Temporarily disabled.</td>
+</tr>
+<tr class="even">
+<td>Deprecated</td>
+<td>Retained but no longer recommended.</td>
+</tr>
+<tr class="odd">
+<td>Retired</td>
+<td>No longer active.</td>
+</tr>
+</tbody>
+</table>
+<p>A status transition must be recorded and authorized where
+applicable.</p>
+<h3 id="24-user-experience-requirements">2.4 User experience
+requirements</h3>
+<p>The interface must be:</p>
+<ul>
+<li>Responsive on desktop, tablet, and mobile.</li>
+<li>Keyboard accessible.</li>
+<li>Consistent across all thirteen modules.</li>
+<li>Searchable and filterable.</li>
+<li>Explicit about permissions and unavailable actions.</li>
+<li>Clear about pending approvals and unresolved issues.</li>
+<li>Capable of showing record history and provenance.</li>
+<li>Designed to avoid destructive actions without confirmation.</li>
+<li>Capable of exporting authorized records and reports.</li>
+</ul>
+<p>The desktop experience is the primary administration environment.
+Mobile support must preserve essential inspection, approval, and
+incident-response functions.</p>
+<hr />
+<h2 id="module-01">3. MODULE 01 — CORE DASHBOARD</h2>
+<h3 id="31-purpose">3.1 Purpose</h3>
+<p>The CORE Dashboard provides the central operational overview of
+AH-AIOS.</p>
+<p>It answers:</p>
+<ul>
+<li>Is the system healthy?</li>
+<li>Which services are operational?</li>
+<li>Are there security incidents?</li>
+<li>Are there pending approvals?</li>
+<li>Are governance controls functioning?</li>
+<li>Are verification tasks passing?</li>
+<li>Are there unresolved risks?</li>
+<li>Have any critical changes occurred?</li>
+</ul>
+<h3 id="32-dashboard-components">3.2 Dashboard components</h3>
+<p><strong>System overview</strong> — Display:</p>
+<ul>
+<li>System name and version.</li>
+<li>Active environment.</li>
+<li>Current deployment version.</li>
+<li>System availability.</li>
+<li>Service health.</li>
+<li>Last successful backup.</li>
+<li>Last verification run.</li>
+<li>Last configuration change.</li>
+</ul>
+<p><strong>Domain status</strong> — Display independent status for:</p>
+<ul>
+<li>AH-AIOS CORE.</li>
+<li>AI HARNESS.</li>
+<li>WORLDFORGE.</li>
+</ul>
+<p>Each domain must report its own health and implementation status.
+CORE must not infer that a domain is operational merely because its
+connection responds.</p>
+<p><strong>Security overview</strong> — Display:</p>
+<ul>
+<li>Open security incidents.</li>
+<li>Critical vulnerabilities.</li>
+<li>Failed authentication attempts.</li>
+<li>Suspicious access patterns.</li>
+<li>Active account suspensions.</li>
+<li>Security policy violations.</li>
+</ul>
+<p><strong>Governance overview</strong> — Display:</p>
+<ul>
+<li>Policies awaiting review.</li>
+<li>Pending approvals.</li>
+<li>Expiring exceptions.</li>
+<li>Unresolved governance findings.</li>
+<li>Recent authorization decisions.</li>
+</ul>
+<p><strong>Verification overview</strong> — Display:</p>
+<ul>
+<li>Latest automated test results.</li>
+<li>Failed verification checks.</li>
+<li>Unverified capabilities.</li>
+<li>Overdue verification tasks.</li>
+<li>Evidence awaiting review.</li>
+</ul>
+<p><strong>Audit activity</strong> — Display recent:</p>
+<ul>
+<li>Authentication events.</li>
+<li>Authorization decisions.</li>
+<li>Administrative changes.</li>
+<li>Configuration changes.</li>
+<li>Security events.</li>
+<li>Cross-domain actions.</li>
+</ul>
+<h3 id="33-dashboard-filters">3.3 Dashboard filters</h3>
+<p>Users may filter dashboard information by:</p>
+<ul>
+<li>Time period.</li>
+<li>Domain.</li>
+<li>Environment.</li>
+<li>Severity.</li>
+<li>Status.</li>
+<li>Organization.</li>
+<li>Service.</li>
+</ul>
+<h3 id="34-dashboard-actions">3.4 Dashboard actions</h3>
+<p>Authorized users may:</p>
+<ul>
+<li>Open detailed service health.</li>
+<li>Inspect a security incident.</li>
+<li>Review an approval request.</li>
+<li>Open a verification report.</li>
+<li>Inspect an audit event.</li>
+<li>Navigate to an affected module.</li>
+</ul>
+<p>Dashboard cards are informational entry points. They must not bypass
+the permission checks of the underlying module.</p>
+<h3 id="35-acceptance-criteria">3.5 Acceptance criteria</h3>
+<ul>
+<li>Dashboard loads without exposing unauthorized information.</li>
+<li>Domain status is sourced from domain health records.</li>
+<li>Critical incidents are prominently visible.</li>
+<li>Pending approvals are accurate.</li>
+<li>Dashboard metrics identify their reporting period and source.</li>
+<li>Failed data retrieval is displayed as unavailable, not as a false
+healthy state.</li>
+</ul>
+<hr />
+<h2 id="module-02">4. MODULE 02 — SYSTEM
+IDENTITY</h2>
+<h3 id="41-purpose">4.1 Purpose</h3>
+<p>System Identity establishes the identity and registration of the
+AH-AIOS installation.</p>
+<p>It ensures that services, domains, environments, integrations, and
+audit events can be associated with the correct system.</p>
+<h3 id="42-functional-areas">4.2 Functional areas</h3>
+<p><strong>System registration</strong> — Manage:</p>
+<ul>
+<li>System identifier.</li>
+<li>System name.</li>
+<li>System description.</li>
+<li>System owner.</li>
+<li>Registration date.</li>
+<li>System version.</li>
+<li>Deployment status.</li>
+<li>Architecture version.</li>
+</ul>
+<p><strong>Domain registration</strong> — Register:</p>
+<ul>
+<li>CORE.</li>
+<li>HARNESS.</li>
+<li>WORLDFORGE.</li>
+</ul>
+<p>Each domain record contains:</p>
+<ul>
+<li>Domain identifier.</li>
+<li>Domain name.</li>
+<li>Description.</li>
+<li>Domain owner.</li>
+<li>Service endpoint references.</li>
+<li>Integration status.</li>
+<li>Domain version.</li>
+<li>Current operational status.</li>
+<li>Last successful health check.</li>
+</ul>
+<p><strong>Environment registry</strong> — Support:</p>
+<ul>
+<li>Development.</li>
+<li>Testing.</li>
+<li>Staging.</li>
+<li>Production.</li>
+</ul>
+<p>Each environment must have an independent identifier and
+configuration.</p>
+<p>Development credentials must never be silently reused in
+production.</p>
+<p><strong>Service identities</strong> — Register non-human identities
+for:</p>
+<ul>
+<li>Backend services.</li>
+<li>Automation processes.</li>
+<li>Scheduled jobs.</li>
+<li>API integrations.</li>
+<li>Internal service-to-service communication.</li>
+</ul>
+<p>Service identities must have explicit scopes and expiration or
+rotation requirements.</p>
+<h3 id="43-architecture-registry">4.3 Architecture registry</h3>
+<p>Maintain records for:</p>
+<ul>
+<li>System architecture.</li>
+<li>Domain architecture.</li>
+<li>Service architecture.</li>
+<li>API contracts.</li>
+<li>Database schemas.</li>
+<li>Integration contracts.</li>
+<li>Deployment architecture.</li>
+<li>Architecture decisions.</li>
+</ul>
+<p>Each architecture record must include version, owner, status, source,
+and approval history.</p>
+<h3 id="44-acceptance-criteria">4.4 Acceptance criteria</h3>
+<ul>
+<li>Every registered domain has a unique identifier.</li>
+<li>Every environment has independent configuration.</li>
+<li>Service identities are distinguishable from human users.</li>
+<li>Architecture records preserve version history.</li>
+<li>No registration record automatically grants execution or
+administrative authority.</li>
+</ul>
+<hr />
+<h2 id="module-03">5. MODULE 03 — USERS &amp;
+ORGANIZATIONS</h2>
+<h3 id="51-purpose">5.1 Purpose</h3>
+<p>Manage human identities and organizational relationships across
+AH-AIOS.</p>
+<h3 id="52-user-management">5.2 User management</h3>
+<p>The module must support:</p>
+<ul>
+<li>User creation.</li>
+<li>Invitation.</li>
+<li>Account activation.</li>
+<li>Profile updates.</li>
+<li>Account suspension.</li>
+<li>Account deactivation.</li>
+<li>Account recovery.</li>
+<li>Account deletion or anonymization where legally and operationally
+appropriate.</li>
+<li>User status inspection.</li>
+<li>User activity history.</li>
+</ul>
+<p><strong>User profile fields</strong></p>
+<ul>
+<li>User ID.</li>
+<li>Display name.</li>
+<li>Email address.</li>
+<li>Organization ID.</li>
+<li>Account status.</li>
+<li>Authentication status.</li>
+<li>Assigned roles.</li>
+<li>Creation date.</li>
+<li>Last login.</li>
+<li>Last profile update.</li>
+</ul>
+<p>Sensitive authentication data must not be stored in ordinary profile
+records.</p>
+<h3 id="53-organization-management">5.3 Organization management</h3>
+<p>Support:</p>
+<ul>
+<li>Organization creation.</li>
+<li>Organization profiles.</li>
+<li>Organizational membership.</li>
+<li>Team creation.</li>
+<li>Team membership.</li>
+<li>Organization-level roles.</li>
+<li>Organization status.</li>
+<li>Organization activity.</li>
+</ul>
+<h3 id="54-membership-lifecycle">5.4 Membership lifecycle</h3>
+<p>Proposed lifecycle:</p>
+<p><code>Invited → Pending Acceptance → Active → Suspended → Deactivated</code></p>
+<p>A user may belong to multiple organizations, subject to explicit
+membership and authorization rules.</p>
+<h3 id="55-user-administration-controls">5.5 User administration
+controls</h3>
+<ul>
+<li>Administrators cannot grant themselves higher privileges without the
+required approval.</li>
+<li>Organization administrators cannot access unrelated
+organizations.</li>
+<li>Suspended users cannot perform protected actions.</li>
+<li>Account removal must preserve required audit and legal records.</li>
+<li>Membership changes must generate audit events.</li>
+</ul>
+<h3 id="56-acceptance-criteria">5.6 Acceptance criteria</h3>
+<ul>
+<li>User identities are unique.</li>
+<li>Membership is explicitly scoped.</li>
+<li>Organization boundaries are enforced.</li>
+<li>Account lifecycle changes are auditable.</li>
+<li>Deactivated identities cannot obtain new access tokens.</li>
+</ul>
+<hr />
+<h2 id="module-04">6. MODULE 04 — IDENTITY
+&amp; AUTHENTICATION</h2>
+<h3 id="61-purpose">6.1 Purpose</h3>
+<p>Provide secure identity verification and session management.</p>
+<p>Identity, authentication, and authorization are separate
+capabilities:</p>
+<ul>
+<li>Identity identifies the actor.</li>
+<li>Authentication verifies the actor.</li>
+<li>Authorization determines what the actor may do.</li>
+</ul>
+<h3 id="62-authentication-methods">6.2 Authentication methods</h3>
+<p>The architecture should support:</p>
+<ul>
+<li>Email and password authentication.</li>
+<li>Secure password recovery.</li>
+<li>Multi-factor authentication.</li>
+<li>Passkeys or WebAuthn where supported.</li>
+<li>OAuth or OpenID Connect integration.</li>
+<li>Enterprise single sign-on as a future integration.</li>
+<li>Service-to-service authentication.</li>
+</ul>
+<p>The implementation must use a trusted authentication provider or a
+security-reviewed authentication service rather than inventing custom
+cryptographic mechanisms.</p>
+<h3 id="63-session-management">6.3 Session management</h3>
+<p>Support:</p>
+<ul>
+<li>Session creation.</li>
+<li>Session expiration.</li>
+<li>Session revocation.</li>
+<li>Logout.</li>
+<li>Concurrent session visibility.</li>
+<li>Device/session inspection.</li>
+<li>Refresh-token rotation.</li>
+<li>Suspicious-session invalidation.</li>
+</ul>
+<p>Session cookies must use appropriate Secure, HttpOnly, and SameSite
+settings when cookie-based authentication is used.</p>
+<h3 id="64-authentication-protection">6.4 Authentication protection</h3>
+<p>Implement:</p>
+<ul>
+<li>Rate limiting.</li>
+<li>Brute-force protection.</li>
+<li>Credential-stuffing mitigation.</li>
+<li>Secure password hashing through a proven library or provider.</li>
+<li>MFA enforcement for privileged roles.</li>
+<li>Login anomaly monitoring.</li>
+<li>Account recovery controls.</li>
+<li>Secure token storage.</li>
+</ul>
+<h3 id="65-authentication-event-records">6.5 Authentication event
+records</h3>
+<p>Record:</p>
+<ul>
+<li>Actor or attempted identity.</li>
+<li>Event type.</li>
+<li>Timestamp.</li>
+<li>Result.</li>
+<li>Authentication method.</li>
+<li>Session identifier reference.</li>
+<li>Source metadata where appropriate.</li>
+<li>Risk classification.</li>
+</ul>
+<p>Do not store plaintext passwords, full authentication tokens, or
+secrets in logs.</p>
+<h3 id="66-acceptance-criteria">6.6 Acceptance criteria</h3>
+<ul>
+<li>Protected routes reject unauthenticated users.</li>
+<li>Expired and revoked sessions cannot access protected resources.</li>
+<li>Privileged accounts require stronger authentication.</li>
+<li>Authentication events are auditable.</li>
+<li>Failed authentication does not reveal whether an account
+exists.</li>
+</ul>
+<hr />
+<h2 id="module-05">7. MODULE 05 — ROLES &amp;
+PERMISSIONS</h2>
+<h3 id="71-purpose">7.1 Purpose</h3>
+<p>Control who can access which resources and perform which actions.</p>
+<h3 id="72-authorization-architecture">7.2 Authorization
+architecture</h3>
+<p>Use a combination of:</p>
+<ul>
+<li>Role-Based Access Control (RBAC).</li>
+<li>Resource-level permissions.</li>
+<li>Organization and domain scope.</li>
+<li>Attribute-based policy conditions where necessary.</li>
+</ul>
+<p>Authorization must be enforced on the server side.</p>
+<p>Hiding a button in the frontend is not authorization.</p>
+<h3 id="73-proposed-system-roles">7.3 Proposed system roles</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Role</th>
+<th>Primary responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>System Owner</td>
+<td>Overall system stewardship and highest authorized administrative
+responsibility</td>
+</tr>
+<tr class="even">
+<td>CORE Administrator</td>
+<td>CORE configuration and administration</td>
+</tr>
+<tr class="odd">
+<td>Security Administrator</td>
+<td>Security controls and incident response</td>
+</tr>
+<tr class="even">
+<td>Governance Administrator</td>
+<td>Policy and governance management</td>
+</tr>
+<tr class="odd">
+<td>Auditor</td>
+<td>Read-only audit and evidence inspection</td>
+</tr>
+<tr class="even">
+<td>Verification Officer</td>
+<td>Verification review and evidence assessment</td>
+</tr>
+<tr class="odd">
+<td>Domain Administrator</td>
+<td>Administration within an assigned domain</td>
+</tr>
+<tr class="even">
+<td>Organization Administrator</td>
+<td>Management of an assigned organization</td>
+</tr>
+<tr class="odd">
+<td>Standard User</td>
+<td>Authorized ordinary application use</td>
+</tr>
+<tr class="even">
+<td>Service Account</td>
+<td>Bounded automated service operations</td>
+</tr>
+</tbody>
+</table>
+<p>These roles are proposed defaults. Final assignments and approval
+authorities must be configured explicitly.</p>
+<h3 id="74-permission-model">7.4 Permission model</h3>
+<p>Permissions follow:</p>
+<p><code>subject + action + resource + scope + conditions</code></p>
+<p>Example:</p>
+<ul>
+<li>Subject: CORE Administrator.</li>
+<li>Action: update.</li>
+<li>Resource: security policy.</li>
+<li>Scope: production environment.</li>
+<li>Condition: approved change request exists.</li>
+</ul>
+<h3 id="75-permission-categories">7.5 Permission categories</h3>
+<ul>
+<li>Read.</li>
+<li>Create.</li>
+<li>Update.</li>
+<li>Delete.</li>
+<li>Approve.</li>
+<li>Reject.</li>
+<li>Suspend.</li>
+<li>Configure.</li>
+<li>Execute.</li>
+<li>Export.</li>
+<li>Administer.</li>
+</ul>
+<p>Sensitive permissions must be separated.</p>
+<p>Examples:</p>
+<ul>
+<li>Creating a policy does not automatically authorize its
+approval.</li>
+<li>Creating a user does not automatically permit granting system-owner
+privileges.</li>
+<li>Initiating a release does not automatically authorize its production
+deployment.</li>
+<li>Reviewing evidence does not automatically allow its author to
+approve their own evidence.</li>
+</ul>
+<h3 id="76-permission-administration">7.6 Permission administration</h3>
+<p>Provide:</p>
+<ul>
+<li>Role registry.</li>
+<li>Permission registry.</li>
+<li>Role-to-permission mapping.</li>
+<li>User-to-role assignment.</li>
+<li>Scope configuration.</li>
+<li>Policy conditions.</li>
+<li>Access review.</li>
+<li>Permission history.</li>
+<li>Emergency access management.</li>
+</ul>
+<h3 id="77-authorization-decision-flow">7.7 Authorization decision
+flow</h3>
+<ol type="1">
+<li>Identify the requesting actor.</li>
+<li>Authenticate the actor.</li>
+<li>Resolve assigned roles and permissions.</li>
+<li>Identify the target resource.</li>
+<li>Determine applicable scope.</li>
+<li>Evaluate policy conditions.</li>
+<li>Apply separation-of-duties restrictions.</li>
+<li>Return allow or deny.</li>
+<li>Record the decision.</li>
+<li>Execute only if authorized.</li>
+</ol>
+<h3 id="78-acceptance-criteria">7.8 Acceptance criteria</h3>
+<ul>
+<li>Unauthorized operations are rejected server-side.</li>
+<li>Permissions are scoped.</li>
+<li>Privileged role changes are auditable.</li>
+<li>Denied requests generate appropriate records.</li>
+<li>Separation-of-duties rules are enforced for designated actions.</li>
+<li>Default authorization behavior is deny.</li>
+</ul>
+<hr />
+<h2 id="module-06">8. MODULE 06 — GOVERNANCE
+CENTER</h2>
+<h3 id="81-purpose">8.1 Purpose</h3>
+<p>The Governance Center manages the rules, authority structures,
+policies, approvals, and controlled decisions that govern AH-AIOS.</p>
+<p>It translates governance requirements into reviewable records and
+enforceable controls.</p>
+<h3 id="82-governance-registry">8.2 Governance registry</h3>
+<p>Maintain structured records for:</p>
+<ul>
+<li>Governance policies.</li>
+<li>System principles.</li>
+<li>Authority definitions.</li>
+<li>Approval requirements.</li>
+<li>Control requirements.</li>
+<li>Governance decisions.</li>
+<li>Exceptions.</li>
+<li>Compliance obligations.</li>
+<li>Policy revisions.</li>
+<li>Governance reviews.</li>
+</ul>
+<p>Each policy record must include:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Policy ID</td>
+<td>Unique identifier</td>
+</tr>
+<tr class="even">
+<td>Title</td>
+<td>Policy name</td>
+</tr>
+<tr class="odd">
+<td>Domain</td>
+<td>CORE, HARNESS, WORLDFORGE, or cross-domain</td>
+</tr>
+<tr class="even">
+<td>Description</td>
+<td>Policy purpose and scope</td>
+</tr>
+<tr class="odd">
+<td>Owner</td>
+<td>Responsible authority</td>
+</tr>
+<tr class="even">
+<td>Version</td>
+<td>Policy revision</td>
+</tr>
+<tr class="odd">
+<td>Status</td>
+<td>Draft, proposed, approved, active, suspended, retired</td>
+</tr>
+<tr class="even">
+<td>Effective date</td>
+<td>Date policy becomes effective</td>
+</tr>
+<tr class="odd">
+<td>Review date</td>
+<td>Next scheduled review</td>
+</tr>
+<tr class="even">
+<td>Approval record</td>
+<td>Authorizing decision</td>
+</tr>
+<tr class="odd">
+<td>Enforcement reference</td>
+<td>Service or control implementing the policy</td>
+</tr>
+</tbody>
+</table>
+<h3 id="83-policy-lifecycle">8.3 Policy lifecycle</h3>
+<p><code>Draft → Proposed → Under Review → Approved → Active → Superseded / Retired</code></p>
+<p>Rejected and suspended states must also be supported.</p>
+<p>Approval must not automatically activate a policy if deployment or
+enforcement is a separate operation.</p>
+<h3 id="84-governance-workflows">8.4 Governance workflows</h3>
+<p>The module must support:</p>
+<ul>
+<li>Policy creation.</li>
+<li>Policy submission.</li>
+<li>Policy review.</li>
+<li>Approval or rejection.</li>
+<li>Policy publication.</li>
+<li>Enforcement mapping.</li>
+<li>Periodic policy review.</li>
+<li>Exception requests.</li>
+<li>Exception assessment.</li>
+<li>Exception approval.</li>
+<li>Exception expiration.</li>
+<li>Policy supersession.</li>
+</ul>
+<h3 id="85-governance-authority-registry">8.5 Governance authority
+registry</h3>
+<p>Define:</p>
+<ul>
+<li>Decision authority.</li>
+<li>Scope of authority.</li>
+<li>Required approvers.</li>
+<li>Delegation rules.</li>
+<li>Escalation paths.</li>
+<li>Effective periods.</li>
+<li>Revocation conditions.</li>
+</ul>
+<p>Authority must be explicitly recorded. A user's job title or
+administrative role alone must not imply unrestricted authority.</p>
+<h3 id="86-controlled-integration-governance">8.6 Controlled integration
+governance</h3>
+<p>CORE must implement system-wide support for the controlled
+integration principle:</p>
+<p><code>RECOVER → CLASSIFY → RECONSTRUCT → COMPARE → TEST → INTEGRATE → AUTHORIZE</code></p>
+<p>Every material integration or change must preserve:</p>
+<ul>
+<li>Original source.</li>
+<li>Classification.</li>
+<li>Reconstructed content.</li>
+<li>Comparison results.</li>
+<li>Test evidence.</li>
+<li>Integration record.</li>
+<li>Authorization.</li>
+<li>Revision history.</li>
+</ul>
+<p>The classification system must distinguish:</p>
+<ul>
+<li>CANON.</li>
+<li>INTERPRETATION.</li>
+<li>SUGGESTION.</li>
+<li>PROCESS.</li>
+</ul>
+<p>CORE controls the authority and evidence requirements. WORLDFORGE
+remains responsible for its knowledge and canon records.</p>
+<h3 id="87-governance-decision-records">8.7 Governance decision
+records</h3>
+<p>Every consequential decision must capture:</p>
+<ul>
+<li>Decision ID.</li>
+<li>Subject.</li>
+<li>Decision type.</li>
+<li>Requesting actor.</li>
+<li>Reviewing authority.</li>
+<li>Decision outcome.</li>
+<li>Rationale.</li>
+<li>Supporting evidence.</li>
+<li>Applicable policy.</li>
+<li>Timestamp.</li>
+<li>Effective date.</li>
+<li>Revision or supersession reference.</li>
+</ul>
+<h3 id="88-acceptance-criteria">8.8 Acceptance criteria</h3>
+<ul>
+<li>Policies have unique identifiers and version history.</li>
+<li>Approval authority is checked before approval.</li>
+<li>Exceptions have explicit scope and expiration.</li>
+<li>Governance decisions retain their rationale and evidence.</li>
+<li>Policy activation can be independently verified.</li>
+<li>No generated content becomes authorized policy or canon merely
+through generation.</li>
+</ul>
+<hr />
+<h2 id="module-07">9. MODULE 07 — SECURITY
+CENTER</h2>
+<h3 id="91-purpose">9.1 Purpose</h3>
+<p>The Security Center manages security posture, protective controls,
+security events, incidents, and remediation across AH-AIOS.</p>
+<h3 id="92-security-dashboard">9.2 Security dashboard</h3>
+<p>Display:</p>
+<ul>
+<li>Security posture.</li>
+<li>Critical vulnerabilities.</li>
+<li>Active incidents.</li>
+<li>Unresolved security findings.</li>
+<li>Authentication anomalies.</li>
+<li>Privileged access events.</li>
+<li>Failed security checks.</li>
+<li>Outstanding remediation.</li>
+<li>Security control status.</li>
+</ul>
+<p>Security posture must be calculated from actual control evidence, not
+manually selected labels.</p>
+<h3 id="93-security-domains">9.3 Security domains</h3>
+<p><strong>Application security</strong></p>
+<ul>
+<li>Secure coding requirements.</li>
+<li>Input validation.</li>
+<li>Output encoding.</li>
+<li>CSRF protection where applicable.</li>
+<li>Protection against injection.</li>
+<li>Secure session handling.</li>
+<li>API authorization.</li>
+<li>Dependency vulnerability scanning.</li>
+<li>Secure error handling.</li>
+</ul>
+<p><strong>Infrastructure security</strong></p>
+<ul>
+<li>Environment isolation.</li>
+<li>Network restrictions.</li>
+<li>Secure deployment configuration.</li>
+<li>Service identity protection.</li>
+<li>Encryption in transit.</li>
+<li>Backup protection.</li>
+<li>Administrative access controls.</li>
+</ul>
+<p><strong>Data security</strong></p>
+<ul>
+<li>Data classification.</li>
+<li>Encryption at rest where required.</li>
+<li>Access restrictions.</li>
+<li>Retention policies.</li>
+<li>Secure deletion.</li>
+<li>Backup integrity.</li>
+<li>Export controls.</li>
+</ul>
+<p><strong>AI-specific security</strong></p>
+<ul>
+<li>Prompt-injection defenses at trust boundaries.</li>
+<li>Untrusted document and tool-output handling.</li>
+<li>Model and provider credential protection.</li>
+<li>Tool permission restrictions.</li>
+<li>Sensitive information exposure controls.</li>
+<li>Human approval for consequential external actions.</li>
+<li>Auditability of AI-initiated operations.</li>
+</ul>
+<h3 id="94-security-incident-management">9.4 Security incident
+management</h3>
+<p>Incident lifecycle:</p>
+<p><code>Detected → Triaged → Investigating → Contained → Remediating → Resolved → Reviewed</code></p>
+<p>Support:</p>
+<ul>
+<li>Incident registration.</li>
+<li>Severity assignment.</li>
+<li>Incident ownership.</li>
+<li>Evidence collection.</li>
+<li>Containment actions.</li>
+<li>Remediation plans.</li>
+<li>Impact assessment.</li>
+<li>Stakeholder notification.</li>
+<li>Post-incident review.</li>
+<li>Closure approval.</li>
+</ul>
+<p>Severity levels:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Severity</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Critical</td>
+<td>Active compromise or severe system-wide impact</td>
+</tr>
+<tr class="even">
+<td>High</td>
+<td>Significant security exposure</td>
+</tr>
+<tr class="odd">
+<td>Medium</td>
+<td>Limited exposure requiring timely remediation</td>
+</tr>
+<tr class="even">
+<td>Low</td>
+<td>Minor weakness or low-impact event</td>
+</tr>
+<tr class="odd">
+<td>Informational</td>
+<td>Security-relevant observation</td>
+</tr>
+</tbody>
+</table>
+<h3 id="95-vulnerability-management">9.5 Vulnerability management</h3>
+<p>Record:</p>
+<ul>
+<li>Vulnerability ID.</li>
+<li>Affected service or component.</li>
+<li>Severity.</li>
+<li>Source.</li>
+<li>Discovery date.</li>
+<li>Affected version.</li>
+<li>Remediation owner.</li>
+<li>Target remediation date.</li>
+<li>Fix version.</li>
+<li>Verification result.</li>
+</ul>
+<p>A vulnerability must not be marked resolved solely because a patch
+was applied. Verification evidence is required.</p>
+<h3 id="96-security-response-controls">9.6 Security response
+controls</h3>
+<p>Authorized personnel may:</p>
+<ul>
+<li>Suspend an account.</li>
+<li>Revoke sessions.</li>
+<li>Disable a compromised service identity.</li>
+<li>Disable an affected integration.</li>
+<li>Restrict an affected endpoint.</li>
+<li>Initiate incident response.</li>
+<li>Request emergency changes.</li>
+</ul>
+<p>Emergency actions must be logged and reviewed after execution.</p>
+<h3 id="97-acceptance-criteria">9.7 Acceptance criteria</h3>
+<ul>
+<li>Security events are recorded.</li>
+<li>Incident lifecycle transitions are controlled.</li>
+<li>Critical findings cannot disappear without closure evidence or an
+authorized exception.</li>
+<li>Credentials are not exposed in logs or UI responses.</li>
+<li>Security actions are permission-checked.</li>
+<li>Security findings can be traced to affected services and remediation
+records.</li>
+</ul>
+<hr />
+<h2 id="module-08">10. MODULE 08 —
+CONFIGURATION &amp; SECRETS</h2>
+<h3 id="101-purpose">10.1 Purpose</h3>
+<p>Provide controlled management of application settings, environment
+configuration, and sensitive credentials.</p>
+<h3 id="102-configuration-registry">10.2 Configuration registry</h3>
+<p>Support:</p>
+<ul>
+<li>System settings.</li>
+<li>Domain settings.</li>
+<li>Service settings.</li>
+<li>Environment settings.</li>
+<li>Integration settings.</li>
+<li>Feature flags.</li>
+<li>Operational parameters.</li>
+</ul>
+<p>Every configuration record should include:</p>
+<ul>
+<li>Configuration ID.</li>
+<li>Key.</li>
+<li>Description.</li>
+<li>Value or protected reference.</li>
+<li>Environment.</li>
+<li>Owner.</li>
+<li>Version.</li>
+<li>Status.</li>
+<li>Last modified by.</li>
+<li>Last modified date.</li>
+</ul>
+<h3 id="103-environment-separation">10.3 Environment separation</h3>
+<p>Maintain distinct configurations for:</p>
+<ul>
+<li>Development.</li>
+<li>Testing.</li>
+<li>Staging.</li>
+<li>Production.</li>
+</ul>
+<p>The system must prevent accidental cross-environment credential
+reuse.</p>
+<h3 id="104-secrets-management">10.4 Secrets management</h3>
+<p>Secrets include:</p>
+<ul>
+<li>API keys.</li>
+<li>Database passwords.</li>
+<li>OAuth client secrets.</li>
+<li>Signing keys.</li>
+<li>Encryption keys.</li>
+<li>Service credentials.</li>
+<li>Webhook secrets.</li>
+</ul>
+<p>Requirements:</p>
+<ul>
+<li>Do not store secrets in source code.</li>
+<li>Do not expose secrets in browser-delivered configuration.</li>
+<li>Use a dedicated secrets manager or secure server-side secret
+store.</li>
+<li>Encrypt secrets at rest.</li>
+<li>Restrict secret access to authorized service identities.</li>
+<li>Rotate credentials.</li>
+<li>Record secret access metadata.</li>
+<li>Never log plaintext secrets.</li>
+<li>Support revocation and replacement.</li>
+</ul>
+<h3 id="105-configuration-change-workflow">10.5 Configuration change
+workflow</h3>
+<ol type="1">
+<li>Create a configuration change.</li>
+<li>Validate the requested value.</li>
+<li>Check permission and scope.</li>
+<li>Determine whether approval is required.</li>
+<li>Approve if required.</li>
+<li>Apply the configuration.</li>
+<li>Verify the resulting state.</li>
+<li>Record the result and audit event.</li>
+</ol>
+<h3 id="106-feature-flags">10.6 Feature flags</h3>
+<p>Feature flags must support:</p>
+<ul>
+<li>Enable/disable.</li>
+<li>Environment scope.</li>
+<li>Domain scope.</li>
+<li>User or organization targeting where justified.</li>
+<li>Scheduled activation where supported.</li>
+<li>Rollback.</li>
+<li>Change history.</li>
+</ul>
+<p>Feature flags must not be treated as substitutes for
+authorization.</p>
+<h3 id="107-acceptance-criteria">10.7 Acceptance criteria</h3>
+<ul>
+<li>Configuration is environment-scoped.</li>
+<li>Secret values are never returned to unauthorized clients.</li>
+<li>Changes are auditable.</li>
+<li>Invalid configurations are rejected.</li>
+<li>Production configuration changes follow the required approval
+workflow.</li>
+<li>Rollback restores a previously verified configuration version.</li>
+</ul>
+<hr />
+<h2 id="module-09">11. MODULE 09 —
+INFRASTRUCTURE &amp; SERVICES</h2>
+<h3 id="111-purpose">11.1 Purpose</h3>
+<p>Provide visibility and administrative control over the services
+required by AH-AIOS.</p>
+<h3 id="112-service-registry">11.2 Service registry</h3>
+<p>Maintain records for:</p>
+<ul>
+<li>CORE services.</li>
+<li>HARNESS services.</li>
+<li>WORLDFORGE services.</li>
+<li>Authentication providers.</li>
+<li>Databases.</li>
+<li>Storage systems.</li>
+<li>API gateways.</li>
+<li>External integrations.</li>
+<li>Monitoring services.</li>
+<li>Backup services.</li>
+</ul>
+<p>Each service record must include:</p>
+<ul>
+<li>Service ID.</li>
+<li>Name.</li>
+<li>Domain.</li>
+<li>Description.</li>
+<li>Owner.</li>
+<li>Environment.</li>
+<li>Endpoint reference.</li>
+<li>Version.</li>
+<li>Dependency references.</li>
+<li>Health-check configuration.</li>
+<li>Status.</li>
+<li>Last health check.</li>
+</ul>
+<h3 id="113-service-health-monitoring">11.3 Service health
+monitoring</h3>
+<p>Support:</p>
+<ul>
+<li>Availability checks.</li>
+<li>Health endpoints.</li>
+<li>Readiness checks.</li>
+<li>Dependency checks.</li>
+<li>Response time monitoring.</li>
+<li>Error-rate monitoring.</li>
+<li>Service status history.</li>
+</ul>
+<p>Service health states: <strong>Healthy | Degraded | Unavailable |
+Unknown | Maintenance</strong></p>
+<p>An unknown health result must never be represented as healthy.</p>
+<h3 id="114-dependency-registry">11.4 Dependency registry</h3>
+<p>Map relationships between:</p>
+<ul>
+<li>Applications.</li>
+<li>APIs.</li>
+<li>Databases.</li>
+<li>Authentication services.</li>
+<li>External providers.</li>
+<li>Internal services.</li>
+</ul>
+<p>Dependency relationships must identify whether they are required,
+optional, or conditional.</p>
+<h3 id="115-infrastructure-operations">11.5 Infrastructure
+operations</h3>
+<p>Provide controlled workflows for:</p>
+<ul>
+<li>Service registration.</li>
+<li>Service configuration.</li>
+<li>Maintenance windows.</li>
+<li>Service restart requests.</li>
+<li>Dependency inspection.</li>
+<li>Health-check execution.</li>
+<li>Incident linkage.</li>
+<li>Service retirement.</li>
+</ul>
+<p>CORE may orchestrate authorized infrastructure actions, but the
+actual operations must be performed by the appropriate deployment or
+infrastructure service.</p>
+<h3 id="116-acceptance-criteria">11.6 Acceptance criteria</h3>
+<ul>
+<li>Every registered service has an owner.</li>
+<li>Health results include timestamps.</li>
+<li>Dependencies can be inspected.</li>
+<li>Failed checks create visible findings.</li>
+<li>Service actions are authorized and audited.</li>
+<li>CORE does not claim control of infrastructure it cannot actually
+access.</li>
+</ul>
+<hr />
+<h2 id="module-10">12. MODULE 10 — AUDIT &amp;
+ACCOUNTABILITY</h2>
+<h3 id="121-purpose">12.1 Purpose</h3>
+<p>Maintain an attributable record of significant actions, decisions,
+changes, access events, and system outcomes.</p>
+<p>Audit is a foundational control, not merely an application activity
+log.</p>
+<h3 id="122-audit-event-categories">12.2 Audit event categories</h3>
+<ul>
+<li>Authentication.</li>
+<li>Authorization.</li>
+<li>User administration.</li>
+<li>Role and permission changes.</li>
+<li>Governance decisions.</li>
+<li>Policy changes.</li>
+<li>Security events.</li>
+<li>Configuration changes.</li>
+<li>Secret access metadata.</li>
+<li>Service operations.</li>
+<li>Cross-domain requests.</li>
+<li>Verification activity.</li>
+<li>Data imports and exports.</li>
+<li>Release and deployment activity.</li>
+<li>Emergency actions.</li>
+</ul>
+<h3 id="123-audit-event-schema">12.3 Audit event schema</h3>
+<p>Each audit event should contain:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Event ID</td>
+<td>Unique identifier</td>
+</tr>
+<tr class="even">
+<td>Event type</td>
+<td>Classification</td>
+</tr>
+<tr class="odd">
+<td>Actor ID</td>
+<td>Human or service identity</td>
+</tr>
+<tr class="even">
+<td>Actor type</td>
+<td>User, service, system</td>
+</tr>
+<tr class="odd">
+<td>Domain</td>
+<td>Originating domain</td>
+</tr>
+<tr class="even">
+<td>Resource type</td>
+<td>Affected resource category</td>
+</tr>
+<tr class="odd">
+<td>Resource ID</td>
+<td>Affected resource</td>
+</tr>
+<tr class="even">
+<td>Action</td>
+<td>Operation performed</td>
+</tr>
+<tr class="odd">
+<td>Outcome</td>
+<td>Success, denied, failed</td>
+</tr>
+<tr class="even">
+<td>Timestamp</td>
+<td>UTC event time</td>
+</tr>
+<tr class="odd">
+<td>Correlation ID</td>
+<td>Links related operations</td>
+</tr>
+<tr class="even">
+<td>Request ID</td>
+<td>Request traceability</td>
+</tr>
+<tr class="odd">
+<td>Environment</td>
+<td>Development, test, staging, production</td>
+</tr>
+<tr class="even">
+<td>Reason</td>
+<td>Rationale when required</td>
+</tr>
+<tr class="odd">
+<td>Evidence reference</td>
+<td>Supporting record</td>
+</tr>
+<tr class="even">
+<td>Integrity metadata</td>
+<td>Tamper-evidence information</td>
+</tr>
+</tbody>
+</table>
+<h3 id="124-audit-integrity">12.4 Audit integrity</h3>
+<p>The architecture should provide:</p>
+<ul>
+<li>Append-oriented audit storage.</li>
+<li>Restricted update and deletion privileges.</li>
+<li>Immutable or independently protected retention where required.</li>
+<li>Cryptographic integrity verification.</li>
+<li>Sequential or linked event integrity where appropriate.</li>
+<li>Backup and restoration verification.</li>
+<li>Access monitoring.</li>
+<li>Exportable audit evidence.</li>
+</ul>
+<p>A hash chain alone does not guarantee immutability if an
+administrator can rewrite both the records and the keys. Stronger
+assurance requires independent key protection, restricted retention, and
+externally protected evidence where appropriate.</p>
+<h3 id="125-audit-search-and-reporting">12.5 Audit search and
+reporting</h3>
+<p>Search by:</p>
+<ul>
+<li>Actor.</li>
+<li>Event type.</li>
+<li>Resource.</li>
+<li>Domain.</li>
+<li>Date range.</li>
+<li>Outcome.</li>
+<li>Environment.</li>
+<li>Correlation ID.</li>
+<li>Severity.</li>
+</ul>
+<p>Reports must support authorized export with provenance and generation
+metadata.</p>
+<h3 id="126-accountability-workflows">12.6 Accountability workflows</h3>
+<p>Provide:</p>
+<ul>
+<li>Activity investigation.</li>
+<li>Actor attribution.</li>
+<li>Decision reconstruction.</li>
+<li>Change reconstruction.</li>
+<li>Incident timeline.</li>
+<li>Evidence correlation.</li>
+<li>Accountability review.</li>
+</ul>
+<h3 id="127-acceptance-criteria">12.7 Acceptance criteria</h3>
+<ul>
+<li>Significant operations create attributable events.</li>
+<li>Events can be correlated across services.</li>
+<li>Audit access is restricted.</li>
+<li>Sensitive information is redacted.</li>
+<li>Integrity verification detects unauthorized alteration.</li>
+<li>Audit retention and export behavior are tested.</li>
+</ul>
+<hr />
+<h2 id="module-11">13. MODULE 11 — EVIDENCE
+&amp; VERIFICATION</h2>
+<h3 id="131-purpose">13.1 Purpose</h3>
+<p>Establish the evidence infrastructure through which AH-AIOS verifies
+its capabilities, controls, decisions, and operational claims.</p>
+<p>The central rule is:</p>
+<p><strong>A capability is not verified merely because its specification
+says it exists or its developer reports that it works.</strong></p>
+<p>Verification requires an identifiable test or inspection, an expected
+result, an observed result, and retained evidence.</p>
+<h3 id="132-evidence-registry">13.2 Evidence registry</h3>
+<p>Maintain records for:</p>
+<ul>
+<li>Requirements.</li>
+<li>Test cases.</li>
+<li>Automated test results.</li>
+<li>Manual test results.</li>
+<li>Security assessments.</li>
+<li>Architecture reviews.</li>
+<li>Configuration verification.</li>
+<li>Deployment verification.</li>
+<li>Backup and recovery tests.</li>
+<li>Compliance assessments.</li>
+<li>Operational readiness reviews.</li>
+<li>Approval records.</li>
+</ul>
+<h3 id="133-evidence-record-structure">13.3 Evidence record
+structure</h3>
+<p>Each evidence record contains:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Field</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Evidence ID</td>
+<td>Unique identifier</td>
+</tr>
+<tr class="even">
+<td>Title</td>
+<td>Evidence name</td>
+</tr>
+<tr class="odd">
+<td>Evidence type</td>
+<td>Test, inspection, report, artifact, decision</td>
+</tr>
+<tr class="even">
+<td>Related requirement</td>
+<td>Requirement reference</td>
+</tr>
+<tr class="odd">
+<td>Related capability</td>
+<td>Capability reference</td>
+</tr>
+<tr class="even">
+<td>Source artifact</td>
+<td>File, URL, test, commit, or record</td>
+</tr>
+<tr class="odd">
+<td>Version</td>
+<td>Tested version</td>
+</tr>
+<tr class="even">
+<td>Environment</td>
+<td>Where verification occurred</td>
+</tr>
+<tr class="odd">
+<td>Created by</td>
+<td>Evidence originator</td>
+</tr>
+<tr class="even">
+<td>Verified by</td>
+<td>Reviewer, if applicable</td>
+</tr>
+<tr class="odd">
+<td>Created at</td>
+<td>Timestamp</td>
+</tr>
+<tr class="even">
+<td>Result</td>
+<td>Pass, fail, partial, inconclusive</td>
+</tr>
+<tr class="odd">
+<td>Integrity reference</td>
+<td>Checksum or storage reference</td>
+</tr>
+<tr class="even">
+<td>Review status</td>
+<td>Pending, accepted, rejected</td>
+</tr>
+</tbody>
+</table>
+<h3 id="134-verification-lifecycle">13.4 Verification lifecycle</h3>
+<p><code>Planned → Executed → Evidence Submitted → Reviewed → Accepted / Rejected</code></p>
+<p>A failed result must remain visible. A later successful run creates a
+new evidence record rather than silently overwriting the failed
+result.</p>
+<h3 id="135-verification-categories">13.5 Verification categories</h3>
+<ul>
+<li><strong>Functional verification</strong> — Checks that a capability
+performs its required functions.</li>
+<li><strong>Integration verification</strong> — Checks that services
+exchange data correctly and respect their interface contracts.</li>
+<li><strong>Security verification</strong> — Checks authentication,
+authorization, isolation, input validation, and protection
+controls.</li>
+<li><strong>Data integrity verification</strong> — Checks schema
+constraints, relationships, transaction behavior, consistency, and
+recovery.</li>
+<li><strong>Operational verification</strong> — Checks monitoring,
+logging, backups, recovery, and service behavior.</li>
+<li><strong>Governance verification</strong> — Checks authority,
+approval requirements, policy enforcement, and audit traceability.</li>
+</ul>
+<h3 id="136-automated-verification-engine">13.6 Automated verification
+engine</h3>
+<p>The architecture must support:</p>
+<ul>
+<li>Test suite registration.</li>
+<li>Test execution requests.</li>
+<li>Scheduled test runs.</li>
+<li>CI/CD test integration.</li>
+<li>Test result collection.</li>
+<li>Evidence generation.</li>
+<li>Failure classification.</li>
+<li>Regression comparison.</li>
+<li>Verification reporting.</li>
+</ul>
+<p>Automated test execution must occur in an isolated, controlled
+environment.</p>
+<h3 id="137-capability-verification-matrix">13.7 Capability verification
+matrix</h3>
+<p>Every material CORE capability must map to:</p>
+<ol type="1">
+<li>Capability ID.</li>
+<li>Requirement ID.</li>
+<li>Implementation artifact.</li>
+<li>Test case.</li>
+<li>Test execution.</li>
+<li>Evidence record.</li>
+<li>Verification result.</li>
+<li>Reviewer or verification authority.</li>
+<li>Current capability status.</li>
+</ol>
+<h3 id="138-acceptance-criteria">13.8 Acceptance criteria</h3>
+<ul>
+<li>Evidence has unique identifiers.</li>
+<li>Evidence is linked to requirements and implementations.</li>
+<li>Test failures remain preserved.</li>
+<li>Verification results identify the tested version and
+environment.</li>
+<li>Unverified capabilities are clearly marked.</li>
+<li>Operational status requires the applicable verification
+evidence.</li>
+</ul>
+<hr />
+<h2 id="module-12">14. MODULE 12 — RISK &amp;
+COMPLIANCE</h2>
+<h3 id="141-purpose">14.1 Purpose</h3>
+<p>Manage operational, technical, security, governance, and compliance
+risks across AH-AIOS.</p>
+<h3 id="142-risk-register">14.2 Risk register</h3>
+<p>Each risk record contains:</p>
+<ul>
+<li>Risk ID.</li>
+<li>Title.</li>
+<li>Description.</li>
+<li>Risk category.</li>
+<li>Affected domain.</li>
+<li>Affected capability.</li>
+<li>Likelihood.</li>
+<li>Impact.</li>
+<li>Severity.</li>
+<li>Risk owner.</li>
+<li>Mitigation strategy.</li>
+<li>Contingency plan.</li>
+<li>Review date.</li>
+<li>Status.</li>
+<li>Residual risk.</li>
+<li>Acceptance authority.</li>
+</ul>
+<h3 id="143-risk-categories">14.3 Risk categories</h3>
+<ul>
+<li>Security.</li>
+<li>Privacy.</li>
+<li>Data integrity.</li>
+<li>Availability.</li>
+<li>Governance.</li>
+<li>Operational.</li>
+<li>Financial.</li>
+<li>Integration.</li>
+<li>AI reliability.</li>
+<li>Regulatory.</li>
+<li>Human and organizational.</li>
+<li>Reputational.</li>
+</ul>
+<h3 id="144-risk-assessment">14.4 Risk assessment</h3>
+<p>A proposed assessment model:</p>
+<p><code>Inherent Risk = Likelihood × Impact</code></p>
+<p>Use a defined numerical scale, for example 1–5 for each dimension.
+The resulting score is a prioritization aid, not a substitute for
+professional risk judgment.</p>
+<p>Assess:</p>
+<ul>
+<li>Inherent risk.</li>
+<li>Existing controls.</li>
+<li>Control effectiveness.</li>
+<li>Residual risk.</li>
+<li>Treatment decision.</li>
+</ul>
+<p>Treatment decisions:</p>
+<ul>
+<li>Mitigate.</li>
+<li>Avoid.</li>
+<li>Transfer.</li>
+<li>Accept.</li>
+<li>Monitor.</li>
+</ul>
+<p>Risk acceptance must be authorized at the appropriate level and
+documented.</p>
+<h3 id="145-compliance-control-registry">14.5 Compliance control
+registry</h3>
+<p>Maintain:</p>
+<ul>
+<li>Control ID.</li>
+<li>Control name.</li>
+<li>Requirement.</li>
+<li>Applicable domain.</li>
+<li>Control owner.</li>
+<li>Implementation reference.</li>
+<li>Evidence requirement.</li>
+<li>Assessment frequency.</li>
+<li>Last assessment.</li>
+<li>Current result.</li>
+<li>Exception reference.</li>
+</ul>
+<p>The system should support configurable compliance frameworks without
+claiming certification or legal compliance merely because a checklist
+exists.</p>
+<h3 id="146-exception-management">14.6 Exception management</h3>
+<p>Exception workflow:</p>
+<p><code>Requested → Assessed → Approved / Rejected → Active → Expired / Revoked / Closed</code></p>
+<p>Every exception must record:</p>
+<ul>
+<li>Justification.</li>
+<li>Scope.</li>
+<li>Affected control.</li>
+<li>Risk assessment.</li>
+<li>Compensating controls.</li>
+<li>Approver.</li>
+<li>Start date.</li>
+<li>Expiration date.</li>
+<li>Remediation plan.</li>
+<li>Closure evidence.</li>
+</ul>
+<p>Exceptions must not silently become permanent policy.</p>
+<h3 id="147-remediation-management">14.7 Remediation management</h3>
+<p>Track:</p>
+<ul>
+<li>Finding.</li>
+<li>Assigned owner.</li>
+<li>Remediation action.</li>
+<li>Priority.</li>
+<li>Due date.</li>
+<li>Dependencies.</li>
+<li>Progress.</li>
+<li>Validation.</li>
+<li>Closure evidence.</li>
+</ul>
+<h3 id="148-acceptance-criteria">14.8 Acceptance criteria</h3>
+<ul>
+<li>Every material risk has an owner.</li>
+<li>Risk acceptance is authorized.</li>
+<li>Exceptions have expiration dates.</li>
+<li>Compliance claims are evidence-backed.</li>
+<li>Overdue remediation is visible.</li>
+<li>Risk and compliance records are traceable to affected
+capabilities.</li>
+</ul>
+<hr />
+<h2 id="module-13">15. MODULE 13 — CHANGE
+&amp; RELEASE MANAGEMENT</h2>
+<h3 id="151-purpose">15.1 Purpose</h3>
+<p>Control the lifecycle of changes to AH-AIOS architecture, services,
+policies, configuration, data structures, and deployments.</p>
+<h3 id="152-change-registry">15.2 Change registry</h3>
+<p>Every material change must have:</p>
+<ul>
+<li>Change ID.</li>
+<li>Title.</li>
+<li>Description.</li>
+<li>Requesting actor.</li>
+<li>Responsible owner.</li>
+<li>Affected domain.</li>
+<li>Affected services.</li>
+<li>Change classification.</li>
+<li>Business or technical justification.</li>
+<li>Impact assessment.</li>
+<li>Risk assessment.</li>
+<li>Test plan.</li>
+<li>Rollback plan.</li>
+<li>Approval requirements.</li>
+<li>Implementation record.</li>
+<li>Verification evidence.</li>
+</ul>
+<h3 id="153-change-classification">15.3 Change classification</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Class</th>
+<th>Description</th>
+<th>Proposed approval</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>I — Editorial</td>
+<td>Documentation or non-substantive changes</td>
+<td>Document owner</td>
+</tr>
+<tr class="even">
+<td>II — Minor</td>
+<td>Limited technical or configuration impact</td>
+<td>Domain owner and relevant administrator</td>
+</tr>
+<tr class="odd">
+<td>III — Major</td>
+<td>Material architectural, security, or cross-domain impact</td>
+<td>Architecture and governance authority</td>
+</tr>
+<tr class="even">
+<td>IV — Strategic</td>
+<td>Changes to system direction or governing principles</td>
+<td>Designated executive and architecture authority</td>
+</tr>
+</tbody>
+</table>
+<p>Final authority must be configured in the governance registry.</p>
+<h3 id="154-change-lifecycle">15.4 Change lifecycle</h3>
+<p><code>Draft → Submitted → Assessed → Approved → Scheduled → Implemented → Verified → Closed</code></p>
+<p>Additional states:</p>
+<ul>
+<li>Rejected.</li>
+<li>On Hold.</li>
+<li>Failed.</li>
+<li>Rolled Back.</li>
+<li>Cancelled.</li>
+</ul>
+<h3 id="155-release-management">15.5 Release management</h3>
+<p>Support:</p>
+<ul>
+<li>Release registration.</li>
+<li>Version assignment.</li>
+<li>Release notes.</li>
+<li>Artifact references.</li>
+<li>Source commit references.</li>
+<li>Build evidence.</li>
+<li>Test evidence.</li>
+<li>Security assessment.</li>
+<li>Deployment approval.</li>
+<li>Deployment execution record.</li>
+<li>Post-deployment verification.</li>
+<li>Rollback record.</li>
+</ul>
+<h3 id="156-version-management">15.6 Version management</h3>
+<p>Version records must preserve:</p>
+<ul>
+<li>Version identifier.</li>
+<li>Prior version.</li>
+<li>Change set.</li>
+<li>Release date.</li>
+<li>Source commit.</li>
+<li>Build artifact checksum.</li>
+<li>Approval.</li>
+<li>Verification.</li>
+<li>Deployment environment.</li>
+<li>Supersession relationship.</li>
+</ul>
+<h3 id="157-rollback">15.7 Rollback</h3>
+<p>Rollback must be planned before high-impact deployment.</p>
+<p>Requirements:</p>
+<ul>
+<li>Identify the last known good version.</li>
+<li>Identify affected services and data.</li>
+<li>Preserve current state for investigation.</li>
+<li>Execute rollback through an authorized mechanism.</li>
+<li>Verify restored behavior.</li>
+<li>Record the rollback.</li>
+<li>Assess data compatibility and migrations.</li>
+</ul>
+<p>Database rollback must not be assumed safe. Destructive or
+irreversible data migrations require a separate recovery strategy.</p>
+<h3 id="158-acceptance-criteria">15.8 Acceptance criteria</h3>
+<ul>
+<li>Material changes have unique identifiers.</li>
+<li>Required approvals precede implementation.</li>
+<li>Releases identify exact source and artifacts.</li>
+<li>Failed deployments remain recorded.</li>
+<li>Rollbacks are authorized and verified.</li>
+<li>Release status is not equivalent to operational status.</li>
+</ul>
+<hr />
+<h2 id="16-cross-domain-integration-architecture">16. CROSS-DOMAIN
+INTEGRATION ARCHITECTURE</h2>
+<h3 id="161-purpose">16.1 Purpose</h3>
+<p>CORE provides shared control services to HARNESS and WORLDFORGE
+through defined, versioned, and enforceable interfaces.</p>
+<p>It must not require the domains to share unrestricted database
+access.</p>
+<h3 id="162-integration-principles">16.2 Integration principles</h3>
+<ol type="1">
+<li>Each domain owns its operational data.</li>
+<li>CORE owns system-wide identity, authority, and control records.</li>
+<li>Cross-domain operations use authenticated interfaces.</li>
+<li>Authorization is evaluated at the appropriate service boundary.</li>
+<li>Requests and responses are traceable.</li>
+<li>Integration failures must be explicit.</li>
+<li>Domain independence must be preserved.</li>
+<li>Contracts must be versioned and validated.</li>
+<li>A domain cannot override CORE policy through its own local
+configuration.</li>
+<li>CORE cannot claim successful execution solely from issuing a
+request.</li>
+</ol>
+<h3 id="163-coreharness-contract">16.3 CORE–HARNESS contract</h3>
+<p>CORE provides:</p>
+<ul>
+<li>Identity validation.</li>
+<li>Authorization decisions.</li>
+<li>Policy references.</li>
+<li>Permission scopes.</li>
+<li>Approval requirements.</li>
+<li>Security restrictions.</li>
+<li>Audit requirements.</li>
+<li>Verification requirements.</li>
+</ul>
+<p>HARNESS provides:</p>
+<ul>
+<li>Execution requests.</li>
+<li>Agent and tool identity.</li>
+<li>Requested action.</li>
+<li>Execution context.</li>
+<li>Execution result.</li>
+<li>Failure information.</li>
+<li>Resource usage.</li>
+<li>External side-effect records.</li>
+<li>Execution evidence.</li>
+</ul>
+<p><strong>Example execution authorization</strong></p>
+<ol type="1">
+<li>HARNESS submits an execution request.</li>
+<li>CORE identifies the requesting user or service.</li>
+<li>CORE evaluates the requested operation.</li>
+<li>CORE checks permission and applicable policy.</li>
+<li>CORE determines whether human approval is required.</li>
+<li>CORE returns an authorization decision.</li>
+<li>HARNESS executes only within the approved scope.</li>
+<li>HARNESS submits the execution outcome.</li>
+<li>CORE records the corresponding control and audit evidence.</li>
+</ol>
+<p>An authorization decision does not guarantee successful execution or
+prove the correctness of the result.</p>
+<h3 id="164-coreworldforge-contract">16.4 CORE–WORLDFORGE contract</h3>
+<p>CORE provides:</p>
+<ul>
+<li>User and service identity.</li>
+<li>Administrative authorization.</li>
+<li>Governance authority references.</li>
+<li>Security requirements.</li>
+<li>Audit requirements.</li>
+<li>Evidence requirements.</li>
+<li>Controlled change requirements.</li>
+</ul>
+<p>WORLDFORGE provides:</p>
+<ul>
+<li>Knowledge operation requests.</li>
+<li>Entity and relationship references.</li>
+<li>Source and provenance records.</li>
+<li>Claim and evidence records.</li>
+<li>Canon workflow events.</li>
+<li>Approval requests.</li>
+<li>Knowledge validation results.</li>
+<li>Change and continuity records.</li>
+</ul>
+<p><strong>Canon authority boundary</strong></p>
+<p>CORE can verify that the required authority and approval process has
+been satisfied.</p>
+<p>WORLDFORGE remains responsible for managing the actual knowledge
+model, canon status, continuity, and associated records.</p>
+<p>CORE must not convert an interpretation, generated story, or
+unapproved proposal into canon.</p>
+<h3 id="165-cross-domain-request-envelope">16.5 Cross-domain request
+envelope</h3>
+<p>A common integration request should contain:</p>
+<pre class="json"><code>{
+  &quot;request_id&quot;: &quot;uuid&quot;,
+  &quot;correlation_id&quot;: &quot;uuid&quot;,
+  &quot;source_domain&quot;: &quot;HARNESS&quot;,
+  &quot;target_domain&quot;: &quot;CORE&quot;,
+  &quot;actor&quot;: {
+    &quot;type&quot;: &quot;user&quot;,
+    &quot;id&quot;: &quot;actor-id&quot;
+  },
+  &quot;action&quot;: &quot;execution.authorize&quot;,
+  &quot;resource&quot;: {
+    &quot;type&quot;: &quot;tool&quot;,
+    &quot;id&quot;: &quot;tool-id&quot;
+  },
+  &quot;scope&quot;: {
+    &quot;environment&quot;: &quot;development&quot;
+  },
+  &quot;context&quot;: {},
+  &quot;timestamp&quot;: &quot;ISO-8601 UTC&quot;,
+  &quot;contract_version&quot;: &quot;1.0&quot;
+}</code></pre>
+<p>This is a proposed contract example. Production schemas must define
+required fields, enumerations, validation rules, authentication, and
+response structures.</p>
+<h3 id="166-integration-response-envelope">16.6 Integration response
+envelope</h3>
+<pre class="json"><code>{
+  &quot;request_id&quot;: &quot;uuid&quot;,
+  &quot;correlation_id&quot;: &quot;uuid&quot;,
+  &quot;decision&quot;: &quot;ALLOW&quot;,
+  &quot;policy_reference&quot;: &quot;POL-0001&quot;,
+  &quot;scope&quot;: {},
+  &quot;approval_required&quot;: false,
+  &quot;conditions&quot;: [],
+  &quot;reason&quot;: &quot;Authorized by applicable policy&quot;,
+  &quot;issued_at&quot;: &quot;ISO-8601 UTC&quot;,
+  &quot;expires_at&quot;: &quot;ISO-8601 UTC&quot;,
+  &quot;decision_id&quot;: &quot;decision-id&quot;
+}</code></pre>
+<p>Allowed decisions should include:</p>
+<ul>
+<li>ALLOW.</li>
+<li>DENY.</li>
+<li>REQUIRE_APPROVAL.</li>
+<li>DEFER.</li>
+<li>ERROR.</li>
+</ul>
+<p>A decision must have a bounded scope and appropriate validity period.
+High-risk operations should require short-lived authorization and, where
+appropriate, single-use authorization tokens.</p>
+<h3 id="167-integration-failure-handling">16.7 Integration failure
+handling</h3>
+<p>Support:</p>
+<ul>
+<li>Timeout.</li>
+<li>Retry with bounded limits.</li>
+<li>Idempotency.</li>
+<li>Duplicate request detection.</li>
+<li>Circuit breaking.</li>
+<li>Failure logging.</li>
+<li>Escalation.</li>
+<li>Manual review.</li>
+<li>Reconciliation of uncertain outcomes.</li>
+</ul>
+<p>A timeout must not be interpreted as permission.</p>
+<h3 id="168-acceptance-criteria">16.8 Acceptance criteria</h3>
+<ul>
+<li>All cross-domain requests are authenticated.</li>
+<li>Authorization is checked at the appropriate boundary.</li>
+<li>Requests are correlated with audit events.</li>
+<li>Duplicate operations are safely handled.</li>
+<li>Domain-owned data remains under its domain's authority.</li>
+<li>Failed or uncertain requests do not silently become successful
+operations.</li>
+</ul>
+<hr />
+<h2 id="17-technical-architecture">17. TECHNICAL ARCHITECTURE</h2>
+<h3 id="171-architectural-model">17.1 Architectural model</h3>
+<p>CORE should use a modular service architecture with explicit
+boundaries between its user interface, application services, policy
+enforcement, persistence, and external integrations.</p>
+<p>Proposed architecture:</p>
+<pre><code>                    AH-AIOS CORE WORKBENCH
+                              |
+                    Presentation Layer
+                              |
+                    Application Services
+                              |
+                   CORE Control Services
+                              |
+          +-------------------+-------------------+
+          |                   |                   |
+    Identity Service    Governance Service   Security Service
+          |                   |                   |
+    Access Control      Policy Engine        Incident Service
+          |                   |                   |
+          +-------------------+-------------------+
+                              |
+                    Audit &amp; Evidence Services
+                              |
+                    Data Access Layer
+                              |
+                   CORE Database &amp; Storage
+                              |
+          +-------------------+-------------------+
+          |                   |                   |
+       HARNESS            WORLDFORGE         External Services</code></pre>
+<p>Infrastructure monitoring, observability, and assurance operate
+across these components.</p>
+<h3 id="172-proposed-technology-stack">17.2 Proposed technology
+stack</h3>
+<p>The following is a proposed implementation baseline, not a mandatory
+technology decision.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Layer</th>
+<th>Proposed technology</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Frontend</td>
+<td>React</td>
+</tr>
+<tr class="even">
+<td>Build tooling</td>
+<td>Vite</td>
+</tr>
+<tr class="odd">
+<td>Language</td>
+<td>TypeScript</td>
+</tr>
+<tr class="even">
+<td>UI styling</td>
+<td>CSS / Tailwind CSS</td>
+</tr>
+<tr class="odd">
+<td>Backend</td>
+<td>Python FastAPI</td>
+</tr>
+<tr class="even">
+<td>API format</td>
+<td>REST / JSON</td>
+</tr>
+<tr class="odd">
+<td>API documentation</td>
+<td>OpenAPI</td>
+</tr>
+<tr class="even">
+<td>Database</td>
+<td>PostgreSQL</td>
+</tr>
+<tr class="odd">
+<td>Data access</td>
+<td>SQLAlchemy</td>
+</tr>
+<tr class="even">
+<td>Schema migrations</td>
+<td>Alembic</td>
+</tr>
+<tr class="odd">
+<td>Validation</td>
+<td>Pydantic</td>
+</tr>
+<tr class="even">
+<td>Authentication</td>
+<td>OIDC-compatible provider</td>
+</tr>
+<tr class="odd">
+<td>Authorization</td>
+<td>CORE policy service</td>
+</tr>
+<tr class="even">
+<td>Background jobs</td>
+<td>Worker service and queue</td>
+</tr>
+<tr class="odd">
+<td>Cache</td>
+<td>Redis where justified</td>
+</tr>
+<tr class="even">
+<td>Object storage</td>
+<td>S3-compatible storage</td>
+</tr>
+<tr class="odd">
+<td>Testing</td>
+<td>Pytest, Vitest, Playwright</td>
+</tr>
+<tr class="even">
+<td>CI/CD</td>
+<td>GitHub Actions</td>
+</tr>
+<tr class="odd">
+<td>Deployment</td>
+<td>Container-based deployment</td>
+</tr>
+<tr class="even">
+<td>Monitoring</td>
+<td>Structured logs, metrics, tracing</td>
+</tr>
+</tbody>
+</table>
+<p>The implementation should prefer existing infrastructure and working
+repository conventions over introducing unnecessary new
+technologies.</p>
+<h3 id="173-application-architecture">17.3 Application architecture</h3>
+<p><strong>Frontend responsibilities</strong></p>
+<p>The React frontend is responsible for:</p>
+<ul>
+<li>Rendering the thirteen modules.</li>
+<li>Navigation.</li>
+<li>Forms and validation feedback.</li>
+<li>Dashboard visualization.</li>
+<li>Record inspection.</li>
+<li>Approval interfaces.</li>
+<li>Search and filtering.</li>
+<li>User interaction.</li>
+<li>Displaying authorization results.</li>
+<li>Presenting audit and verification records.</li>
+</ul>
+<p>The frontend is not the authority for security, policy, or permission
+enforcement.</p>
+<p><strong>Backend responsibilities</strong></p>
+<p>FastAPI services are responsible for:</p>
+<ul>
+<li>Authentication integration.</li>
+<li>Authorization enforcement.</li>
+<li>Business rules.</li>
+<li>Governance workflows.</li>
+<li>Policy evaluation.</li>
+<li>Audit generation.</li>
+<li>Evidence management.</li>
+<li>Configuration management.</li>
+<li>Cross-domain interfaces.</li>
+<li>Database transactions.</li>
+<li>Data validation.</li>
+<li>Operational APIs.</li>
+</ul>
+<p><strong>Database responsibilities</strong></p>
+<p>PostgreSQL stores authoritative CORE records.</p>
+<p>It must enforce:</p>
+<ul>
+<li>Primary keys.</li>
+<li>Foreign keys.</li>
+<li>Unique constraints.</li>
+<li>Check constraints.</li>
+<li>Appropriate indexes.</li>
+<li>Transaction integrity.</li>
+<li>Tenant and organization boundaries where applicable.</li>
+</ul>
+<h3 id="174-backend-module-boundaries">17.4 Backend module
+boundaries</h3>
+<p>Organize the backend into independently testable modules.</p>
+<pre><code>core/
+├── main.py
+├── api/
+│   ├── router.py
+│   └── dependencies.py
+├── identity/
+├── users/
+├── organizations/
+├── authentication/
+├── authorization/
+├── governance/
+├── policies/
+├── security/
+├── configuration/
+├── secrets/
+├── infrastructure/
+├── audit/
+├── evidence/
+├── verification/
+├── risk/
+├── compliance/
+├── changes/
+├── releases/
+├── integrations/
+├── database/
+├── schemas/
+├── services/
+├── workers/
+├── monitoring/
+└── tests/</code></pre>
+<p>Each module should have:</p>
+<ul>
+<li>Models.</li>
+<li>Schemas.</li>
+<li>Repository or data-access logic.</li>
+<li>Service logic.</li>
+<li>API routes.</li>
+<li>Permission requirements.</li>
+<li>Tests.</li>
+</ul>
+<p>Avoid circular dependencies and unrestricted cross-module database
+operations.</p>
+<h3 id="175-frontend-module-organization">17.5 Frontend module
+organization</h3>
+<pre><code>src/
+├── app/
+│   ├── App.tsx
+│   ├── routes.tsx
+│   └── providers/
+├── components/
+│   ├── layout/
+│   ├── navigation/
+│   ├── tables/
+│   ├── forms/
+│   ├── dialogs/
+│   ├── status/
+│   └── charts/
+├── modules/
+│   ├── dashboard/
+│   ├── system-identity/
+│   ├── users-organizations/
+│   ├── authentication/
+│   ├── roles-permissions/
+│   ├── governance/
+│   ├── security/
+│   ├── configuration/
+│   ├── infrastructure/
+│   ├── audit/
+│   ├── evidence-verification/
+│   ├── risk-compliance/
+│   └── change-release/
+├── services/
+├── hooks/
+├── types/
+├── utils/
+└── styles/</code></pre>
+<p>Module-specific UI and API calls must remain separated from shared
+layout components.</p>
+<hr />
+<h2 id="18-data-architecture">18. DATA ARCHITECTURE</h2>
+<h3 id="181-purpose">18.1 Purpose</h3>
+<p>The CORE data architecture establishes authoritative records for
+identity, authority, governance, security, audit, verification, risk,
+and change management.</p>
+<p>The database must preserve relationships and historical
+accountability.</p>
+<h3 id="182-primary-entity-groups">18.2 Primary entity groups</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Group</th>
+<th>Main entities</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>System</td>
+<td>systems, domains, environments, architecture_records</td>
+</tr>
+<tr class="even">
+<td>Identity</td>
+<td>users, service_identities, organizations, teams, memberships</td>
+</tr>
+<tr class="odd">
+<td>Authentication</td>
+<td>auth_sessions, identity_providers, authentication_events</td>
+</tr>
+<tr class="even">
+<td>Authorization</td>
+<td>roles, permissions, role_permissions, assignments,
+access_policies</td>
+</tr>
+<tr class="odd">
+<td>Governance</td>
+<td>policies, policy_versions, decisions, authorities, delegations,
+exceptions</td>
+</tr>
+<tr class="even">
+<td>Security</td>
+<td>incidents, vulnerabilities, findings, security_controls</td>
+</tr>
+<tr class="odd">
+<td>Configuration</td>
+<td>configurations, configuration_versions, feature_flags,
+secret_references</td>
+</tr>
+<tr class="even">
+<td>Infrastructure</td>
+<td>services, dependencies, health_checks, service_events</td>
+</tr>
+<tr class="odd">
+<td>Audit</td>
+<td>audit_events, audit_integrity_records</td>
+</tr>
+<tr class="even">
+<td>Evidence</td>
+<td>evidence_records, evidence_reviews, test_cases, test_runs</td>
+</tr>
+<tr class="odd">
+<td>Risk</td>
+<td>risks, risk_assessments, treatments, compliance_controls</td>
+</tr>
+<tr class="even">
+<td>Change</td>
+<td>change_requests, approvals, releases, deployments,
+rollback_records</td>
+</tr>
+<tr class="odd">
+<td>Integration</td>
+<td>integration_clients, contracts, authorization_decisions,
+request_records</td>
+</tr>
+</tbody>
+</table>
+<h3 id="183-core-data-conventions">18.3 Core data conventions</h3>
+<p>All primary records should use stable identifiers, preferably
+UUIDs.</p>
+<p>All system timestamps should be stored in UTC.</p>
+<p>Every material record should include:</p>
+<ul>
+<li>Created timestamp.</li>
+<li>Updated timestamp.</li>
+<li>Created by.</li>
+<li>Updated by.</li>
+<li>Status.</li>
+<li>Version or revision where applicable.</li>
+</ul>
+<p>Historical records should not be silently overwritten.</p>
+<h3 id="184-data-ownership">18.4 Data ownership</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Data category</th>
+<th>Authoritative owner</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>System identity</td>
+<td>CORE</td>
+</tr>
+<tr class="even">
+<td>User identity and access</td>
+<td>CORE</td>
+</tr>
+<tr class="odd">
+<td>Authentication configuration</td>
+<td>CORE or designated identity provider</td>
+</tr>
+<tr class="even">
+<td>System permissions</td>
+<td>CORE</td>
+</tr>
+<tr class="odd">
+<td>System-wide governance policies</td>
+<td>CORE</td>
+</tr>
+<tr class="even">
+<td>HARNESS execution records</td>
+<td>HARNESS, with required audit events in CORE</td>
+</tr>
+<tr class="odd">
+<td>WorldForge knowledge entities</td>
+<td>WORLDFORGE</td>
+</tr>
+<tr class="even">
+<td>WorldForge canon records</td>
+<td>WORLDFORGE</td>
+</tr>
+<tr class="odd">
+<td>Cross-domain authorization decisions</td>
+<td>CORE</td>
+</tr>
+<tr class="even">
+<td>CORE audit records</td>
+<td>CORE</td>
+</tr>
+<tr class="odd">
+<td>Domain-specific operational evidence</td>
+<td>Originating domain, referenced by CORE</td>
+</tr>
+</tbody>
+</table>
+<p>A central dashboard may aggregate domain information, but aggregation
+does not transfer ownership of the source data.</p>
+<h3 id="185-data-integrity-requirements">18.5 Data integrity
+requirements</h3>
+<p>Implement:</p>
+<ul>
+<li>Referential integrity.</li>
+<li>Unique identifiers.</li>
+<li>Valid state transitions.</li>
+<li>Schema validation.</li>
+<li>Transactional updates.</li>
+<li>Idempotent request handling.</li>
+<li>Duplicate detection.</li>
+<li>Optimistic concurrency where appropriate.</li>
+<li>Explicit deletion and retention policies.</li>
+<li>Migration version control.</li>
+<li>Backup integrity checks.</li>
+</ul>
+<p>Critical records such as approvals, audit events, and release history
+should use append-oriented or version-preserving models.</p>
+<h3 id="186-database-transaction-requirements">18.6 Database transaction
+requirements</h3>
+<p>Operations that require multiple related updates must use database
+transactions.</p>
+<p>Example: approving a governance policy must ensure that:</p>
+<ol type="1">
+<li>The approver is authorized.</li>
+<li>The policy version is valid.</li>
+<li>Required review conditions are satisfied.</li>
+<li>The approval record is created.</li>
+<li>The policy state is updated if appropriate.</li>
+<li>The audit event is recorded.</li>
+</ol>
+<p>These changes must succeed or fail as a controlled transaction, with
+reliable handling for audit systems that use a separate event store.</p>
+<h3 id="187-data-retention-and-deletion">18.7 Data retention and
+deletion</h3>
+<p>The architecture must define retention by record category.</p>
+<p>Records subject to legal, security, or accountability requirements
+may require restricted deletion, archival, or anonymization rather than
+ordinary deletion.</p>
+<p>A deletion request must:</p>
+<ul>
+<li>Check authorization.</li>
+<li>Check retention obligations.</li>
+<li>Identify dependent records.</li>
+<li>Record the decision.</li>
+<li>Execute approved deletion or anonymization.</li>
+<li>Preserve required audit evidence.</li>
+</ul>
+<hr />
+<h2 id="19-api-architecture">19. API ARCHITECTURE</h2>
+<h3 id="191-api-conventions">19.1 API conventions</h3>
+<p>All APIs should:</p>
+<ul>
+<li>Use HTTPS in deployed environments.</li>
+<li>Use versioned paths.</li>
+<li>Validate request and response schemas.</li>
+<li>Enforce server-side authorization.</li>
+<li>Return predictable error structures.</li>
+<li>Use consistent pagination.</li>
+<li>Support filtering and sorting where applicable.</li>
+<li>Include request and correlation IDs.</li>
+<li>Apply rate limits.</li>
+<li>Document all public and internal contracts.</li>
+</ul>
+<p>Proposed base path: <code>/api/v1/</code></p>
+<h3 id="192-primary-endpoint-groups">19.2 Primary endpoint groups</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Endpoint</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>/system</td>
+<td>System registration and status</td>
+</tr>
+<tr class="even">
+<td>/domains</td>
+<td>Domain registry</td>
+</tr>
+<tr class="odd">
+<td>/environments</td>
+<td>Environment management</td>
+</tr>
+<tr class="even">
+<td>/users</td>
+<td>User administration</td>
+</tr>
+<tr class="odd">
+<td>/organizations</td>
+<td>Organizations and teams</td>
+</tr>
+<tr class="even">
+<td>/auth</td>
+<td>Authentication integration and sessions</td>
+</tr>
+<tr class="odd">
+<td>/roles</td>
+<td>Role management</td>
+</tr>
+<tr class="even">
+<td>/permissions</td>
+<td>Permission management</td>
+</tr>
+<tr class="odd">
+<td>/access-policies</td>
+<td>Authorization policies</td>
+</tr>
+<tr class="even">
+<td>/governance/policies</td>
+<td>Governance policy management</td>
+</tr>
+<tr class="odd">
+<td>/governance/decisions</td>
+<td>Governance decisions</td>
+</tr>
+<tr class="even">
+<td>/governance/exceptions</td>
+<td>Governance exceptions</td>
+</tr>
+<tr class="odd">
+<td>/security/incidents</td>
+<td>Security incidents</td>
+</tr>
+<tr class="even">
+<td>/security/vulnerabilities</td>
+<td>Vulnerability management</td>
+</tr>
+<tr class="odd">
+<td>/configurations</td>
+<td>Configuration registry</td>
+</tr>
+<tr class="even">
+<td>/services</td>
+<td>Infrastructure service registry</td>
+</tr>
+<tr class="odd">
+<td>/audit/events</td>
+<td>Audit event search</td>
+</tr>
+<tr class="even">
+<td>/evidence</td>
+<td>Evidence registry</td>
+</tr>
+<tr class="odd">
+<td>/verification/runs</td>
+<td>Verification execution records</td>
+</tr>
+<tr class="even">
+<td>/risks</td>
+<td>Risk register</td>
+</tr>
+<tr class="odd">
+<td>/compliance/controls</td>
+<td>Compliance controls</td>
+</tr>
+<tr class="even">
+<td>/changes</td>
+<td>Change management</td>
+</tr>
+<tr class="odd">
+<td>/releases</td>
+<td>Release management</td>
+</tr>
+<tr class="even">
+<td>/integrations/authorize</td>
+<td>Cross-domain authorization</td>
+</tr>
+<tr class="odd">
+<td>/health</td>
+<td>Service health</td>
+</tr>
+<tr class="even">
+<td>/readiness</td>
+<td>Service readiness</td>
+</tr>
+</tbody>
+</table>
+<h3 id="193-api-response-format">19.3 API response format</h3>
+<p>A consistent success response:</p>
+<pre class="json"><code>{
+  &quot;success&quot;: true,
+  &quot;data&quot;: {},
+  &quot;meta&quot;: {
+    &quot;request_id&quot;: &quot;uuid&quot;,
+    &quot;timestamp&quot;: &quot;ISO-8601 UTC&quot;
+  }
+}</code></pre>
+<p>A consistent error response:</p>
+<pre class="json"><code>{
+  &quot;success&quot;: false,
+  &quot;error&quot;: {
+    &quot;code&quot;: &quot;FORBIDDEN&quot;,
+    &quot;message&quot;: &quot;The requested operation is not authorized.&quot;,
+    &quot;details&quot;: []
+  },
+  &quot;meta&quot;: {
+    &quot;request_id&quot;: &quot;uuid&quot;,
+    &quot;timestamp&quot;: &quot;ISO-8601 UTC&quot;
+  }
+}</code></pre>
+<p>Do not return stack traces, credentials, internal secrets, or
+sensitive database information to clients.</p>
+<h3 id="194-api-authorization">19.4 API authorization</h3>
+<p>Each endpoint must declare:</p>
+<ul>
+<li>Required authentication.</li>
+<li>Required permission.</li>
+<li>Resource scope.</li>
+<li>Applicable policy.</li>
+<li>Approval requirement.</li>
+<li>Audit requirement.</li>
+</ul>
+<p>Public health endpoints must expose only minimal operational
+information.</p>
+<h3 id="195-api-documentation">19.5 API documentation</h3>
+<p>OpenAPI documentation must include:</p>
+<ul>
+<li>Endpoint description.</li>
+<li>Request schema.</li>
+<li>Response schema.</li>
+<li>Authentication requirements.</li>
+<li>Permission requirements.</li>
+<li>Error codes.</li>
+<li>Example requests.</li>
+<li>Example responses.</li>
+<li>Deprecation status.</li>
+</ul>
+<h3 id="196-acceptance-criteria">19.6 Acceptance criteria</h3>
+<ul>
+<li>API schemas are validated.</li>
+<li>Authorization is enforced at the backend.</li>
+<li>Errors use consistent structures.</li>
+<li>Request IDs support troubleshooting.</li>
+<li>Sensitive fields are excluded from responses.</li>
+<li>API versions are documented and tested.</li>
+</ul>
+<hr />
+<h2 id="20-security-privacy-and-trust-architecture">20. SECURITY,
+PRIVACY, AND TRUST ARCHITECTURE</h2>
+<h3 id="201-security-model">20.1 Security model</h3>
+<p>CORE must apply defense in depth.</p>
+<p>Security must exist across:</p>
+<ol type="1">
+<li>Identity.</li>
+<li>Authentication.</li>
+<li>Authorization.</li>
+<li>Application.</li>
+<li>API.</li>
+<li>Data.</li>
+<li>Infrastructure.</li>
+<li>Integrations.</li>
+<li>Monitoring.</li>
+<li>Recovery.</li>
+</ol>
+<h3 id="202-data-classification">20.2 Data classification</h3>
+<p>Proposed classification:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Level</th>
+<th>Classification</th>
+<th>Handling</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Public</td>
+<td>Approved for public disclosure</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Internal</td>
+<td>Restricted to authorized system users</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Confidential</td>
+<td>Limited access based on role and purpose</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Restricted</td>
+<td>Strongly controlled, sensitive, or security-critical</td>
+</tr>
+</tbody>
+</table>
+<p>The system must classify sensitive fields and records according to
+the applicable data policy.</p>
+<h3 id="203-privacy-requirements">20.3 Privacy requirements</h3>
+<p>Support:</p>
+<ul>
+<li>Data minimization.</li>
+<li>Purpose limitation.</li>
+<li>Access transparency.</li>
+<li>Retention controls.</li>
+<li>Secure deletion where appropriate.</li>
+<li>Subject-access workflows where applicable.</li>
+<li>Privacy incident handling.</li>
+<li>Data export controls.</li>
+</ul>
+<p>Legal compliance must be evaluated against applicable jurisdictions
+and actual operational practices. Technical implementation alone does
+not prove compliance.</p>
+<h3 id="204-secure-development-requirements">20.4 Secure development
+requirements</h3>
+<ul>
+<li>Dependency scanning.</li>
+<li>Secret scanning.</li>
+<li>Static analysis.</li>
+<li>Code review.</li>
+<li>Input validation.</li>
+<li>API authorization tests.</li>
+<li>Secure database access.</li>
+<li>Production configuration review.</li>
+<li>Vulnerability remediation.</li>
+<li>Build artifact integrity verification.</li>
+</ul>
+<h3 id="205-trust-boundaries">20.5 Trust boundaries</h3>
+<p>The architecture must explicitly distinguish:</p>
+<ul>
+<li>Trusted CORE services.</li>
+<li>Authenticated internal domain services.</li>
+<li>External providers.</li>
+<li>User-submitted content.</li>
+<li>AI-generated content.</li>
+<li>Retrieved external content.</li>
+<li>Unverified evidence.</li>
+<li>Approved evidence.</li>
+</ul>
+<p>External and AI-generated information must not automatically receive
+trusted status.</p>
+<h3 id="206-acceptance-criteria">20.6 Acceptance criteria</h3>
+<ul>
+<li>Sensitive records are classified.</li>
+<li>Security boundaries are documented.</li>
+<li>Access is enforced at the backend.</li>
+<li>Secrets are protected.</li>
+<li>Untrusted inputs are handled safely.</li>
+<li>Security verification is retained as evidence.</li>
+</ul>
+<hr />
+<h2 id="21-data-integrity-and-automated-verification-framework">21. DATA
+INTEGRITY AND AUTOMATED VERIFICATION FRAMEWORK</h2>
+<h3 id="211-purpose">21.1 Purpose</h3>
+<p>Data integrity and automated verification are mandatory architectural
+capabilities of CORE.</p>
+<p>The system must be able to determine whether:</p>
+<ul>
+<li>Records are structurally valid.</li>
+<li>Relationships are consistent.</li>
+<li>Changes are authorized.</li>
+<li>Transactions are complete.</li>
+<li>Audit records are attributable.</li>
+<li>Policies are enforced.</li>
+<li>Integrations honor their contracts.</li>
+<li>Backups can be restored.</li>
+<li>Deployments match their approved artifacts.</li>
+<li>Reported system status is supported by evidence.</li>
+</ul>
+<h3 id="212-verification-layers">21.2 Verification layers</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Layer</th>
+<th>Verification responsibility</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>L1 — Schema</td>
+<td>Field types, required fields, enumerations, formats</td>
+</tr>
+<tr class="even">
+<td>L2 — Database</td>
+<td>Constraints, relationships, uniqueness, transactions</td>
+</tr>
+<tr class="odd">
+<td>L3 — Business logic</td>
+<td>Valid workflows and state transitions</td>
+</tr>
+<tr class="even">
+<td>L4 — Authorization</td>
+<td>Roles, permissions, scopes, and policy decisions</td>
+</tr>
+<tr class="odd">
+<td>L5 — API</td>
+<td>Request validation, response correctness, error handling</td>
+</tr>
+<tr class="even">
+<td>L6 — Integration</td>
+<td>CORE–HARNESS–WORLDFORGE contracts</td>
+</tr>
+<tr class="odd">
+<td>L7 — Security</td>
+<td>Access control, secrets, injection, session security</td>
+</tr>
+<tr class="even">
+<td>L8 — Operations</td>
+<td>Monitoring, backup, restore, recovery, deployment</td>
+</tr>
+</tbody>
+</table>
+<p>Every layer must have corresponding verification cases.</p>
+<h3 id="213-automated-test-suites">21.3 Automated test suites</h3>
+<p>The implementation should include the following test suites.</p>
+<p><strong>Test suite A — Identity</strong></p>
+<ul>
+<li>Unique user identity.</li>
+<li>Valid account creation.</li>
+<li>Invalid account rejection.</li>
+<li>Suspended account restrictions.</li>
+<li>Session expiration.</li>
+<li>Session revocation.</li>
+<li>Service identity restrictions.</li>
+</ul>
+<p><strong>Test suite B — Authorization</strong></p>
+<ul>
+<li>Authorized read.</li>
+<li>Unauthorized read.</li>
+<li>Authorized write.</li>
+<li>Unauthorized write.</li>
+<li>Role scope enforcement.</li>
+<li>Organization isolation.</li>
+<li>Privileged action restrictions.</li>
+<li>Separation-of-duties enforcement.</li>
+<li>Expired authorization rejection.</li>
+</ul>
+<p><strong>Test suite C — Governance</strong></p>
+<ul>
+<li>Policy creation.</li>
+<li>Invalid policy rejection.</li>
+<li>Policy approval.</li>
+<li>Unauthorized approval rejection.</li>
+<li>Policy activation.</li>
+<li>Policy suspension.</li>
+<li>Exception expiration.</li>
+<li>Decision history preservation.</li>
+</ul>
+<p><strong>Test suite D — Audit</strong></p>
+<ul>
+<li>Audit event creation.</li>
+<li>Actor attribution.</li>
+<li>Timestamp validation.</li>
+<li>Correlation ID consistency.</li>
+<li>Sensitive data redaction.</li>
+<li>Audit integrity verification.</li>
+<li>Unauthorized audit modification rejection.</li>
+</ul>
+<p><strong>Test suite E — Evidence</strong></p>
+<ul>
+<li>Evidence registration.</li>
+<li>Evidence-to-requirement linkage.</li>
+<li>Evidence review.</li>
+<li>Failed test preservation.</li>
+<li>Version matching.</li>
+<li>Evidence integrity validation.</li>
+</ul>
+<p><strong>Test suite F — Configuration</strong></p>
+<ul>
+<li>Environment isolation.</li>
+<li>Invalid configuration rejection.</li>
+<li>Secret redaction.</li>
+<li>Configuration versioning.</li>
+<li>Approved production changes.</li>
+<li>Configuration rollback.</li>
+</ul>
+<p><strong>Test suite G — Integration</strong></p>
+<ul>
+<li>CORE authorization request.</li>
+<li>HARNESS execution request.</li>
+<li>WORLDFORGE governance request.</li>
+<li>Invalid identity rejection.</li>
+<li>Invalid contract rejection.</li>
+<li>Timeout handling.</li>
+<li>Duplicate request handling.</li>
+<li>Correlation and audit continuity.</li>
+</ul>
+<p><strong>Test suite H — Recovery</strong></p>
+<ul>
+<li>Backup creation.</li>
+<li>Backup integrity.</li>
+<li>Database restoration.</li>
+<li>Service recovery.</li>
+<li>Configuration recovery.</li>
+<li>Audit continuity after restoration.</li>
+</ul>
+<h3 id="214-cicd-verification-pipeline">21.4 CI/CD verification
+pipeline</h3>
+<p>Proposed pipeline:</p>
+<pre><code>Developer Commit
+       |
+       v
+Source Validation
+       |
+       v
+Dependency and Secret Scanning
+       |
+       v
+Static Code Analysis
+       |
+       v
+Unit Tests
+       |
+       v
+Database and Migration Tests
+       |
+       v
+Integration Tests
+       |
+       v
+Authorization and Security Tests
+       |
+       v
+Frontend Build
+       |
+       v
+End-to-End Tests
+       |
+       v
+Artifact Generation
+       |
+       v
+Artifact Integrity Check
+       |
+       v
+Deployment Approval
+       |
+       v
+Deployment
+       |
+       v
+Post-Deployment Verification
+       |
+       v
+Release Evidence and Status</code></pre>
+<p>A failed required gate must block the release unless a formally
+authorized exception permits a limited, explicitly documented
+deviation.</p>
+<h3 id="215-data-integrity-controls">21.5 Data integrity controls</h3>
+<p>Implement automated checks for:</p>
+<ul>
+<li>Duplicate identifiers.</li>
+<li>Orphaned foreign keys.</li>
+<li>Invalid state transitions.</li>
+<li>Missing required relationships.</li>
+<li>Unexpected null values.</li>
+<li>Conflicting versions.</li>
+<li>Invalid approval chains.</li>
+<li>Missing audit events.</li>
+<li>Broken evidence references.</li>
+<li>Invalid timestamps.</li>
+<li>Unexpected schema drift.</li>
+</ul>
+<p>Integrity checks should run:</p>
+<ul>
+<li>During relevant writes.</li>
+<li>During migrations.</li>
+<li>In scheduled verification jobs.</li>
+<li>Before and after critical imports.</li>
+<li>Before release.</li>
+<li>After restoration.</li>
+</ul>
+<h3 id="216-migration-verification">21.6 Migration verification</h3>
+<p>Every database migration must have:</p>
+<ul>
+<li>Migration ID.</li>
+<li>Source version.</li>
+<li>Target version.</li>
+<li>Change description.</li>
+<li>Preconditions.</li>
+<li>Execution result.</li>
+<li>Post-migration checks.</li>
+<li>Rollback or recovery strategy.</li>
+</ul>
+<p>Test migrations against a representative test database before
+production execution.</p>
+<h3 id="217-automated-verification-result-format">21.7 Automated
+verification result format</h3>
+<pre class="json"><code>{
+  &quot;verification_id&quot;: &quot;uuid&quot;,
+  &quot;suite_id&quot;: &quot;CORE-SECURITY-001&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;environment&quot;: &quot;testing&quot;,
+  &quot;started_at&quot;: &quot;ISO-8601 UTC&quot;,
+  &quot;completed_at&quot;: &quot;ISO-8601 UTC&quot;,
+  &quot;result&quot;: &quot;PASS&quot;,
+  &quot;tests&quot;: {
+    &quot;total&quot;: 20,
+    &quot;passed&quot;: 20,
+    &quot;failed&quot;: 0,
+    &quot;skipped&quot;: 0
+  },
+  &quot;evidence_reference&quot;: &quot;evidence-id&quot;,
+  &quot;source_commit&quot;: &quot;commit-sha&quot;
+}</code></pre>
+<p>Allowed overall results:</p>
+<ul>
+<li>PASS.</li>
+<li>FAIL.</li>
+<li>PARTIAL.</li>
+<li>INCONCLUSIVE.</li>
+<li>NOT_RUN.</li>
+</ul>
+<p>A skipped test must never be counted as passed.</p>
+<h3 id="218-acceptance-criteria">21.8 Acceptance criteria</h3>
+<ul>
+<li>Automated suites execute in CI.</li>
+<li>Failed tests block applicable release gates.</li>
+<li>Results identify the exact source commit.</li>
+<li>Evidence is preserved.</li>
+<li>Database migrations are tested.</li>
+<li>Recovery is demonstrated through actual restore tests.</li>
+<li>Verification history cannot be silently overwritten.</li>
+</ul>
+<hr />
+<h2 id="22-observability-and-operations">22. OBSERVABILITY AND
+OPERATIONS</h2>
+<h3 id="221-purpose">22.1 Purpose</h3>
+<p>CORE must provide operational visibility into its own services and
+the control environment of AH-AIOS.</p>
+<h3 id="222-observability-components">22.2 Observability components</h3>
+<p><strong>Logging</strong> — Use structured logs containing:</p>
+<ul>
+<li>Timestamp.</li>
+<li>Service.</li>
+<li>Environment.</li>
+<li>Severity.</li>
+<li>Request ID.</li>
+<li>Correlation ID.</li>
+<li>Event type.</li>
+<li>Outcome.</li>
+</ul>
+<p>Logs must not contain credentials or unnecessary personal
+information.</p>
+<p><strong>Metrics</strong> — Monitor:</p>
+<ul>
+<li>Request volume.</li>
+<li>Error rates.</li>
+<li>Response times.</li>
+<li>Database performance.</li>
+<li>Authentication failures.</li>
+<li>Authorization denials.</li>
+<li>Queue depth.</li>
+<li>Worker health.</li>
+<li>Service availability.</li>
+<li>Verification success and failure rates.</li>
+</ul>
+<p><strong>Distributed tracing</strong> — Trace related requests
+across:</p>
+<ul>
+<li>CORE.</li>
+<li>HARNESS.</li>
+<li>WORLDFORGE.</li>
+<li>Databases.</li>
+<li>External integrations.</li>
+</ul>
+<p>Trace data must be protected from unauthorized access.</p>
+<h3 id="223-alert-management">22.3 Alert management</h3>
+<p>Alert categories:</p>
+<ul>
+<li>Availability.</li>
+<li>Performance.</li>
+<li>Security.</li>
+<li>Data integrity.</li>
+<li>Backup failure.</li>
+<li>Verification failure.</li>
+<li>Integration failure.</li>
+<li>Capacity.</li>
+<li>Policy violation.</li>
+</ul>
+<p>Each alert should include:</p>
+<ul>
+<li>Alert ID.</li>
+<li>Severity.</li>
+<li>Affected service.</li>
+<li>Detection time.</li>
+<li>Description.</li>
+<li>Related incident.</li>
+<li>Recommended response.</li>
+<li>Current owner.</li>
+<li>Resolution state.</li>
+</ul>
+<h3 id="224-operational-runbooks">22.4 Operational runbooks</h3>
+<p>Maintain runbooks for:</p>
+<ul>
+<li>Service unavailable.</li>
+<li>Authentication provider unavailable.</li>
+<li>Database unavailable.</li>
+<li>Database integrity failure.</li>
+<li>Suspected credential compromise.</li>
+<li>Unauthorized access.</li>
+<li>Failed deployment.</li>
+<li>Failed migration.</li>
+<li>Backup failure.</li>
+<li>Restore operation.</li>
+<li>Cross-domain integration failure.</li>
+</ul>
+<p>Runbooks must identify required permissions, safe actions, escalation
+paths, and post-action verification.</p>
+<h3 id="225-acceptance-criteria">22.5 Acceptance criteria</h3>
+<ul>
+<li>Services expose appropriate health and readiness information.</li>
+<li>Logs can be correlated.</li>
+<li>Alerts have owners.</li>
+<li>Critical failures are visible.</li>
+<li>Operational runbooks exist.</li>
+<li>Monitoring failure is not misreported as service health.</li>
+</ul>
+<hr />
+<h2 id="23-backup-disaster-recovery-and-continuity">23. BACKUP, DISASTER
+RECOVERY, AND CONTINUITY</h2>
+<h3 id="231-purpose">23.1 Purpose</h3>
+<p>Preserve the availability, integrity, and recoverability of CORE and
+its authoritative records.</p>
+<h3 id="232-backup-scope">23.2 Backup scope</h3>
+<p>Back up:</p>
+<ul>
+<li>CORE database.</li>
+<li>Configuration records.</li>
+<li>Required application artifacts.</li>
+<li>Policy and governance records.</li>
+<li>Audit records.</li>
+<li>Evidence metadata and files.</li>
+<li>Release and deployment metadata.</li>
+<li>Necessary encryption and key-recovery metadata under secure
+controls.</li>
+</ul>
+<p>Secrets must be backed up only through an appropriate protected
+mechanism.</p>
+<h3 id="233-backup-types">23.3 Backup types</h3>
+<p>Support:</p>
+<ul>
+<li>Full backups.</li>
+<li>Incremental backups where supported.</li>
+<li>Point-in-time recovery where supported.</li>
+<li>Configuration exports.</li>
+<li>Evidence and artifact backups.</li>
+</ul>
+<h3 id="234-recovery-objectives">23.4 Recovery objectives</h3>
+<p>Define per-service:</p>
+<ul>
+<li>Recovery Time Objective (RTO).</li>
+<li>Recovery Point Objective (RPO).</li>
+<li>Maximum tolerable downtime.</li>
+<li>Maximum tolerable data loss.</li>
+<li>Recovery priority.</li>
+</ul>
+<p>These values must be established from operational requirements rather
+than invented as universal targets.</p>
+<h3 id="235-recovery-workflow">23.5 Recovery workflow</h3>
+<ol type="1">
+<li>Detect and classify the incident.</li>
+<li>Declare recovery authorization.</li>
+<li>Identify the last known good backup.</li>
+<li>Verify backup integrity.</li>
+<li>Restore into a controlled environment.</li>
+<li>Validate schema and relationships.</li>
+<li>Validate audit and evidence continuity.</li>
+<li>Restore service dependencies.</li>
+<li>Run functional and security checks.</li>
+<li>Obtain recovery acceptance.</li>
+<li>Return to service.</li>
+<li>Record the recovery event.</li>
+</ol>
+<h3 id="236-recovery-acceptance-criteria">23.6 Recovery acceptance
+criteria</h3>
+<ul>
+<li>Backups are scheduled and monitored.</li>
+<li>Failed backups trigger alerts.</li>
+<li>Restoration is tested.</li>
+<li>Recovery results are recorded.</li>
+<li>Data integrity checks run after restoration.</li>
+<li>Recovery objectives are measured against actual results.</li>
+</ul>
+<hr />
+<h2 id="24-workflow-and-approval-engine">24. WORKFLOW AND APPROVAL
+ENGINE</h2>
+<h3 id="241-purpose">24.1 Purpose</h3>
+<p>Provide a reusable workflow capability for CORE operations.</p>
+<p>The workflow engine must coordinate tasks and approvals without
+becoming an independent source of authority.</p>
+<h3 id="242-workflow-capabilities">24.2 Workflow capabilities</h3>
+<ul>
+<li>Workflow templates.</li>
+<li>Workflow instances.</li>
+<li>Step definitions.</li>
+<li>Conditions.</li>
+<li>Assigned actors.</li>
+<li>Approval requests.</li>
+<li>Rejection handling.</li>
+<li>Escalation.</li>
+<li>Deadlines.</li>
+<li>Notifications.</li>
+<li>Execution history.</li>
+<li>Workflow cancellation.</li>
+<li>Workflow versioning.</li>
+</ul>
+<h3 id="243-standard-workflow-patterns">24.3 Standard workflow
+patterns</h3>
+<ul>
+<li><strong>Administrative change:</strong> Request → Validate →
+Authorize → Apply → Verify → Record</li>
+<li><strong>Governance approval:</strong> Draft → Submit → Review →
+Decision → Publish → Verify Enforcement</li>
+<li><strong>Security incident:</strong> Detect → Triage → Contain →
+Investigate → Remediate → Verify → Close</li>
+<li><strong>Release:</strong> Build → Test → Review → Approve → Deploy →
+Verify → Release</li>
+<li><strong>Risk exception:</strong> Request → Assess → Review → Approve
+→ Monitor → Expire / Close</li>
+</ul>
+<h3 id="244-approval-engine-controls">24.4 Approval engine controls</h3>
+<ul>
+<li>Approval must be linked to a specific version of the requested
+action.</li>
+<li>Material changes after approval invalidate or require reassessment
+of the approval.</li>
+<li>Approval authority must be checked at decision time.</li>
+<li>Approvers must not approve their own requests where separation of
+duties applies.</li>
+<li>Expired approvals cannot authorize execution.</li>
+<li>Rejected requests cannot proceed without a new authorized
+submission.</li>
+<li>Every decision must have an audit record.</li>
+</ul>
+<h3 id="245-acceptance-criteria">24.5 Acceptance criteria</h3>
+<ul>
+<li>Workflow states are validated.</li>
+<li>Unauthorized transitions are rejected.</li>
+<li>Approval decisions are attributable.</li>
+<li>Workflow history is preserved.</li>
+<li>Pending and expired tasks are visible.</li>
+<li>Failed workflow execution does not silently advance to
+completion.</li>
+</ul>
+<hr />
+<h2 id="25-notifications-and-communication">25. NOTIFICATIONS AND
+COMMUNICATION</h2>
+<h3 id="251-purpose">25.1 Purpose</h3>
+<p>Provide timely notifications about actions, approvals, incidents,
+verification results, and operational events.</p>
+<h3 id="252-notification-types">25.2 Notification types</h3>
+<ul>
+<li>Approval requested.</li>
+<li>Approval granted.</li>
+<li>Approval rejected.</li>
+<li>Security incident detected.</li>
+<li>Account suspended.</li>
+<li>Policy changed.</li>
+<li>Configuration changed.</li>
+<li>Verification failed.</li>
+<li>Release deployed.</li>
+<li>Backup failed.</li>
+<li>Risk exception expiring.</li>
+<li>Service unavailable.</li>
+<li>Remediation overdue.</li>
+</ul>
+<h3 id="253-notification-channels">25.3 Notification channels</h3>
+<p>The architecture may support:</p>
+<ul>
+<li>In-application notifications.</li>
+<li>Email.</li>
+<li>Configured messaging integrations.</li>
+<li>Operational alert channels.</li>
+</ul>
+<h3 id="254-notification-controls">25.4 Notification controls</h3>
+<p>Users should be able to manage non-critical preferences, but
+security-critical and legally required notifications must follow system
+policy.</p>
+<p>Notifications must not disclose sensitive information to unauthorized
+recipients.</p>
+<p>Every notification should identify its source event and link to the
+relevant authorized record.</p>
+<hr />
+<h2 id="26-search-reporting-and-export">26. SEARCH, REPORTING, AND
+EXPORT</h2>
+<h3 id="261-global-search">26.1 Global search</h3>
+<p>Global search should support authorized discovery across:</p>
+<ul>
+<li>Users.</li>
+<li>Organizations.</li>
+<li>Services.</li>
+<li>Policies.</li>
+<li>Governance decisions.</li>
+<li>Security incidents.</li>
+<li>Audit events.</li>
+<li>Evidence.</li>
+<li>Risks.</li>
+<li>Changes.</li>
+<li>Releases.</li>
+</ul>
+<p>Search results must respect the same access restrictions as the
+underlying records.</p>
+<h3 id="262-search-capabilities">26.2 Search capabilities</h3>
+<ul>
+<li>Exact identifier lookup.</li>
+<li>Keyword search.</li>
+<li>Filtered search.</li>
+<li>Date-range search.</li>
+<li>Status filtering.</li>
+<li>Domain filtering.</li>
+<li>Environment filtering.</li>
+<li>Advanced query conditions.</li>
+</ul>
+<h3 id="263-reporting">26.3 Reporting</h3>
+<p>Provide reports for:</p>
+<ul>
+<li>System health.</li>
+<li>Identity and access reviews.</li>
+<li>Privileged access.</li>
+<li>Governance activity.</li>
+<li>Security incidents.</li>
+<li>Audit activity.</li>
+<li>Verification performance.</li>
+<li>Data integrity.</li>
+<li>Risk exposure.</li>
+<li>Compliance status.</li>
+<li>Change and release history.</li>
+<li>Backup and recovery.</li>
+</ul>
+<h3 id="264-export-formats">26.4 Export formats</h3>
+<p>Support appropriate formats:</p>
+<ul>
+<li>CSV for tabular data.</li>
+<li>JSON for structured records.</li>
+<li>PDF for formal reports.</li>
+<li>ZIP for approved evidence packages.</li>
+</ul>
+<h3 id="265-export-security">26.5 Export security</h3>
+<ul>
+<li>Check export permissions.</li>
+<li>Apply field-level restrictions.</li>
+<li>Record export events.</li>
+<li>Identify report generation time.</li>
+<li>Identify data scope.</li>
+<li>Include provenance where applicable.</li>
+<li>Prevent unauthorized bulk extraction.</li>
+<li>Protect generated files.</li>
+</ul>
+<hr />
+<h2 id="27-administration-and-system-settings">27. ADMINISTRATION AND
+SYSTEM SETTINGS</h2>
+<p>The CORE Workbench must provide administrative settings that are
+distinct from the thirteen primary modules but accessible through the
+global interface.</p>
+<h3 id="271-general-settings">27.1 General settings</h3>
+<ul>
+<li>System name.</li>
+<li>System description.</li>
+<li>Time zone display preference.</li>
+<li>Locale.</li>
+<li>Default pagination.</li>
+<li>Session preferences.</li>
+<li>Interface settings.</li>
+</ul>
+<p>System timestamps remain UTC regardless of display preference.</p>
+<h3 id="272-administrative-controls">27.2 Administrative controls</h3>
+<ul>
+<li>Administrator registry.</li>
+<li>Administrative role assignment.</li>
+<li>Privileged account review.</li>
+<li>Emergency access controls.</li>
+<li>Administrative activity history.</li>
+<li>Access review schedules.</li>
+</ul>
+<h3 id="273-platform-settings">27.3 Platform settings</h3>
+<ul>
+<li>API configuration.</li>
+<li>Service integration registry.</li>
+<li>Notification configuration.</li>
+<li>Monitoring configuration.</li>
+<li>Backup configuration.</li>
+<li>Retention configuration.</li>
+<li>Feature flags.</li>
+<li>Deployment environment references.</li>
+</ul>
+<h3 id="274-system-maintenance">27.4 System maintenance</h3>
+<ul>
+<li>Maintenance announcements.</li>
+<li>Scheduled maintenance.</li>
+<li>Service maintenance states.</li>
+<li>Maintenance history.</li>
+<li>Recovery notices.</li>
+</ul>
+<h3 id="275-administrative-acceptance-criteria">27.5 Administrative
+acceptance criteria</h3>
+<ul>
+<li>Settings are permission-protected.</li>
+<li>Material changes require audit records.</li>
+<li>Sensitive settings are not exposed to ordinary users.</li>
+<li>Production settings are independently controlled.</li>
+<li>Maintenance activities are visible and traceable.</li>
+</ul>
+<hr />
+<h2 id="28-implementation-roadmap">28. IMPLEMENTATION ROADMAP</h2>
+<p>The CORE Workbench should be developed incrementally. The first
+objective is to establish a reliable control foundation, not to
+implement every proposed capability simultaneously.</p>
+<h3 id="phase-1--foundation-and-workbench-shell">Phase 1 — Foundation
+and Workbench Shell</h3>
+<p><strong>Objective:</strong> Build the CORE application
+foundation.</p>
+<p>Deliverables:</p>
+<ul>
+<li>React and TypeScript application.</li>
+<li>Global layout.</li>
+<li>Navigation for all thirteen modules.</li>
+<li>Dashboard shell.</li>
+<li>FastAPI backend.</li>
+<li>Database connection.</li>
+<li>Environment configuration.</li>
+<li>Initial schema and migrations.</li>
+<li>Health and readiness endpoints.</li>
+<li>Development deployment pipeline.</li>
+</ul>
+<p>Completion criteria:</p>
+<ul>
+<li>Application starts.</li>
+<li>Navigation works.</li>
+<li>API responds.</li>
+<li>Database connectivity is verified.</li>
+<li>Environment configuration is separated.</li>
+<li>Initial automated tests pass.</li>
+</ul>
+<h3 id="phase-2--identity-and-access-control">Phase 2 — Identity and
+Access Control</h3>
+<p><strong>Objective:</strong> Establish the foundational identity and
+permission system.</p>
+<p>Deliverables:</p>
+<ul>
+<li>User registry.</li>
+<li>Organization registry.</li>
+<li>Authentication integration.</li>
+<li>Session management.</li>
+<li>Roles.</li>
+<li>Permissions.</li>
+<li>Scope enforcement.</li>
+<li>Protected routes.</li>
+<li>Access audit events.</li>
+</ul>
+<p>Completion criteria:</p>
+<ul>
+<li>Authenticated access works.</li>
+<li>Unauthorized access is denied.</li>
+<li>Roles and permissions are enforced server-side.</li>
+<li>Organization boundaries are tested.</li>
+<li>Authentication and authorization events are recorded.</li>
+</ul>
+<h3 id="phase-3--governance-and-policy">Phase 3 — Governance and
+Policy</h3>
+<p><strong>Objective:</strong> Establish system-wide governance
+operations.</p>
+<p>Deliverables:</p>
+<ul>
+<li>Policy registry.</li>
+<li>Policy versioning.</li>
+<li>Governance decisions.</li>
+<li>Authority registry.</li>
+<li>Approval workflows.</li>
+<li>Exception management.</li>
+<li>Policy enforcement references.</li>
+</ul>
+<p>Completion criteria:</p>
+<ul>
+<li>Policies can be created and reviewed.</li>
+<li>Unauthorized approval is rejected.</li>
+<li>Approval history is preserved.</li>
+<li>Exceptions have explicit scope and expiration.</li>
+<li>Governance decisions are auditable.</li>
+</ul>
+<h3 id="phase-4--security-and-configuration">Phase 4 — Security and
+Configuration</h3>
+<p><strong>Objective:</strong> Establish security and secure system
+administration.</p>
+<p>Deliverables:</p>
+<ul>
+<li>Security dashboard.</li>
+<li>Incident management.</li>
+<li>Vulnerability register.</li>
+<li>Configuration registry.</li>
+<li>Secrets integration.</li>
+<li>Environment separation.</li>
+<li>Feature flags.</li>
+<li>Security verification.</li>
+</ul>
+<p>Completion criteria:</p>
+<ul>
+<li>Secrets are protected.</li>
+<li>Configuration changes are controlled.</li>
+<li>Security incidents can be tracked.</li>
+<li>Critical security controls have tests.</li>
+<li>Sensitive information is redacted.</li>
+</ul>
+<h3 id="phase-5--audit-evidence-and-verification">Phase 5 — Audit,
+Evidence, and Verification</h3>
+<p><strong>Objective:</strong> Establish reliable evidence and
+assurance.</p>
+<p>Deliverables:</p>
+<ul>
+<li>Audit event service.</li>
+<li>Audit search.</li>
+<li>Evidence registry.</li>
+<li>Verification registry.</li>
+<li>Test execution integration.</li>
+<li>Verification reports.</li>
+<li>Evidence provenance.</li>
+</ul>
+<p>Completion criteria:</p>
+<ul>
+<li>Material actions generate audit events.</li>
+<li>Evidence links to requirements and versions.</li>
+<li>Test results are retained.</li>
+<li>Failed verification is visible.</li>
+<li>Audit integrity checks work.</li>
+</ul>
+<h3 id="phase-6--infrastructure-risk-and-compliance">Phase 6 —
+Infrastructure, Risk, and Compliance</h3>
+<p><strong>Objective:</strong> Establish operational oversight.</p>
+<p>Deliverables:</p>
+<ul>
+<li>Service registry.</li>
+<li>Dependency registry.</li>
+<li>Health monitoring.</li>
+<li>Alert management.</li>
+<li>Risk register.</li>
+<li>Compliance controls.</li>
+<li>Remediation workflows.</li>
+<li>Operational reports.</li>
+</ul>
+<p>Completion criteria:</p>
+<ul>
+<li>Service health is visible.</li>
+<li>Risks have owners.</li>
+<li>Alerts are traceable.</li>
+<li>Compliance status has supporting evidence.</li>
+<li>Operational findings can be assigned and resolved.</li>
+</ul>
+<h3 id="phase-7--change-and-release-management">Phase 7 — Change and
+Release Management</h3>
+<p><strong>Objective:</strong> Establish controlled change and release
+operations.</p>
+<p>Deliverables:</p>
+<ul>
+<li>Change registry.</li>
+<li>Approval workflows.</li>
+<li>Release registry.</li>
+<li>Version history.</li>
+<li>Deployment evidence.</li>
+<li>Rollback records.</li>
+<li>Release assurance dashboard.</li>
+</ul>
+<p>Completion criteria:</p>
+<ul>
+<li>Changes require appropriate authorization.</li>
+<li>Releases reference exact source commits and artifacts.</li>
+<li>Deployment results are recorded.</li>
+<li>Rollback is tested.</li>
+<li>Post-deployment verification is retained.</li>
+</ul>
+<h3 id="phase-8--cross-domain-integration">Phase 8 — Cross-Domain
+Integration</h3>
+<p><strong>Objective:</strong> Connect CORE to HARNESS and
+WORLDFORGE.</p>
+<p>Deliverables:</p>
+<ul>
+<li>Shared request contracts.</li>
+<li>Authentication for service identities.</li>
+<li>Authorization API.</li>
+<li>Policy decision API.</li>
+<li>Audit integration.</li>
+<li>Domain health interfaces.</li>
+<li>Integration monitoring.</li>
+<li>Contract tests.</li>
+</ul>
+<p>Completion criteria:</p>
+<ul>
+<li>HARNESS can request authorization.</li>
+<li>WORLDFORGE can request applicable governance authorization.</li>
+<li>CORE decisions are traceable.</li>
+<li>Domain ownership remains separate.</li>
+<li>Integration failures are handled safely.</li>
+</ul>
+<h3 id="phase-9--production-readiness">Phase 9 — Production
+Readiness</h3>
+<p><strong>Objective:</strong> Demonstrate that CORE is ready for
+controlled production operation.</p>
+<p>Deliverables:</p>
+<ul>
+<li>Security assessment.</li>
+<li>Data integrity assessment.</li>
+<li>Full regression tests.</li>
+<li>Backup and restoration tests.</li>
+<li>Operational runbooks.</li>
+<li>Monitoring and alerting.</li>
+<li>Deployment procedures.</li>
+<li>Disaster recovery plan.</li>
+<li>Production acceptance report.</li>
+</ul>
+<p>Completion criteria:</p>
+<ul>
+<li>All required release gates pass.</li>
+<li>Critical security findings are resolved or formally accepted.</li>
+<li>Recovery is demonstrated.</li>
+<li>Production configuration is verified.</li>
+<li>Operational ownership and support are established.</li>
+</ul>
+<hr />
+<h2 id="29-project-structure-and-deliverables">29. PROJECT STRUCTURE AND
+DELIVERABLES</h2>
+<p>A proposed repository structure:</p>
+<pre><code>ah-aios-core/
+│
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   ├── package.json
+│   └── vite.config.ts
+│
+├── backend/
+│   ├── core/
+│   ├── tests/
+│   ├── alembic/
+│   ├── requirements.txt
+│   └── pyproject.toml
+│
+├── contracts/
+│   ├── openapi/
+│   ├── schemas/
+│   └── integration/
+│
+├── infrastructure/
+│   ├── docker/
+│   ├── deployment/
+│   └── monitoring/
+│
+├── docs/
+│   ├── architecture/
+│   ├── api/
+│   ├── governance/
+│   ├── security/
+│   ├── operations/
+│   └── verification/
+│
+├── scripts/
+│
+├── .github/
+│   └── workflows/
+│
+├── .env.example
+├── .gitignore
+├── README.md
+└── docker-compose.yml</code></pre>
+<p>The exact structure may be adapted to an existing repository, but
+module boundaries and separation of concerns must be preserved.</p>
+<h3 id="291-required-deliverables">29.1 Required deliverables</h3>
+<table>
+<thead>
+<tr class="header">
+<th>Deliverable</th>
+<th>Expected result</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>CORE frontend</td>
+<td>Functional thirteen-module workbench</td>
+</tr>
+<tr class="even">
+<td>CORE backend</td>
+<td>API and application services</td>
+</tr>
+<tr class="odd">
+<td>Database</td>
+<td>Versioned schema and migrations</td>
+</tr>
+<tr class="even">
+<td>Identity system</td>
+<td>Authentication and account lifecycle</td>
+</tr>
+<tr class="odd">
+<td>Authorization</td>
+<td>Enforced role and permission model</td>
+</tr>
+<tr class="even">
+<td>Governance</td>
+<td>Policy and approval workflows</td>
+</tr>
+<tr class="odd">
+<td>Security</td>
+<td>Incident and control management</td>
+</tr>
+<tr class="even">
+<td>Audit</td>
+<td>Attributable activity records</td>
+</tr>
+<tr class="odd">
+<td>Evidence</td>
+<td>Verification and evidence registry</td>
+</tr>
+<tr class="even">
+<td>Risk</td>
+<td>Risk and compliance workflows</td>
+</tr>
+<tr class="odd">
+<td>Change management</td>
+<td>Controlled change and release records</td>
+</tr>
+<tr class="even">
+<td>Integration</td>
+<td>CORE–HARNESS–WORLDFORGE interfaces</td>
+</tr>
+<tr class="odd">
+<td>Automated tests</td>
+<td>Repeatable verification suites</td>
+</tr>
+<tr class="even">
+<td>CI/CD</td>
+<td>Build, test, and deployment pipeline</td>
+</tr>
+<tr class="odd">
+<td>Documentation</td>
+<td>Technical and operational documentation</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="30-acceptance-and-completion-framework">30. ACCEPTANCE AND
+COMPLETION FRAMEWORK</h2>
+<h3 id="301-functional-acceptance">30.1 Functional acceptance</h3>
+<p>The CORE Workbench must demonstrate:</p>
+<ul>
+<li>All thirteen modules are accessible to authorized users.</li>
+<li>Navigation works.</li>
+<li>Records can be created, inspected, and updated where permitted.</li>
+<li>Search and filters operate correctly.</li>
+<li>Workflows follow defined state transitions.</li>
+<li>Approval requirements are enforced.</li>
+<li>Reports use authoritative records.</li>
+</ul>
+<h3 id="302-security-acceptance">30.2 Security acceptance</h3>
+<p>Demonstrate:</p>
+<ul>
+<li>Authentication.</li>
+<li>Authorization.</li>
+<li>Least privilege.</li>
+<li>Organization isolation.</li>
+<li>Privileged account protection.</li>
+<li>Secret management.</li>
+<li>Session security.</li>
+<li>Input validation.</li>
+<li>Secure API behavior.</li>
+<li>Auditability.</li>
+</ul>
+<h3 id="303-data-acceptance">30.3 Data acceptance</h3>
+<p>Demonstrate:</p>
+<ul>
+<li>Database constraints.</li>
+<li>Referential integrity.</li>
+<li>Transaction correctness.</li>
+<li>Migration reliability.</li>
+<li>Duplicate handling.</li>
+<li>Version history.</li>
+<li>Backup integrity.</li>
+<li>Restoration.</li>
+<li>Data retention behavior.</li>
+</ul>
+<h3 id="304-integration-acceptance">30.4 Integration acceptance</h3>
+<p>Demonstrate:</p>
+<ul>
+<li>Authenticated service-to-service communication.</li>
+<li>Authorization requests.</li>
+<li>Valid response contracts.</li>
+<li>Correlation IDs.</li>
+<li>Failure handling.</li>
+<li>Idempotency.</li>
+<li>Domain ownership boundaries.</li>
+<li>Cross-domain audit continuity.</li>
+</ul>
+<h3 id="305-operational-acceptance">30.5 Operational acceptance</h3>
+<p>Demonstrate:</p>
+<ul>
+<li>Health monitoring.</li>
+<li>Readiness checks.</li>
+<li>Structured logging.</li>
+<li>Alert generation.</li>
+<li>Backup execution.</li>
+<li>Recovery procedures.</li>
+<li>Deployment verification.</li>
+<li>Release traceability.</li>
+<li>Operational runbooks.</li>
+</ul>
+<h3 id="306-evidence-requirements">30.6 Evidence requirements</h3>
+<p>Each acceptance test must retain:</p>
+<ul>
+<li>Test ID.</li>
+<li>Requirement ID.</li>
+<li>Test description.</li>
+<li>Expected result.</li>
+<li>Actual result.</li>
+<li>Environment.</li>
+<li>Source commit.</li>
+<li>Execution timestamp.</li>
+<li>Test status.</li>
+<li>Evidence reference.</li>
+<li>Reviewer where required.</li>
+</ul>
+<h3 id="307-completion-rule">30.7 Completion rule</h3>
+<p>CORE must not be declared complete because:</p>
+<ul>
+<li>The interface has been built.</li>
+<li>All thirteen menu links exist.</li>
+<li>The backend starts.</li>
+<li>The database connects.</li>
+<li>The application builds successfully.</li>
+<li>A demonstration appears to work.</li>
+</ul>
+<p>CORE completion requires evidence that the applicable functional,
+security, data integrity, governance, integration, and operational
+requirements have passed.</p>
+<hr />
+<h2 id="31-capability-maturity-and-release-status">31. CAPABILITY
+MATURITY AND RELEASE STATUS</h2>
+<h3 id="311-capability-status">31.1 Capability status</h3>
+<p>Every CORE capability must have an explicit implementation
+status.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Status</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Proposed</td>
+<td>Defined as a future capability</td>
+</tr>
+<tr class="even">
+<td>Approved</td>
+<td>Authorized for implementation</td>
+</tr>
+<tr class="odd">
+<td>Planned</td>
+<td>Assigned to a roadmap or delivery plan</td>
+</tr>
+<tr class="even">
+<td>In Development</td>
+<td>Implementation underway</td>
+</tr>
+<tr class="odd">
+<td>Implemented</td>
+<td>Code or configuration exists</td>
+</tr>
+<tr class="even">
+<td>Verified</td>
+<td>Required verification has passed</td>
+</tr>
+<tr class="odd">
+<td>Pilot</td>
+<td>Operating under controlled limited use</td>
+</tr>
+<tr class="even">
+<td>Operational</td>
+<td>Meets applicable operational acceptance requirements</td>
+</tr>
+<tr class="odd">
+<td>Deprecated</td>
+<td>No longer recommended</td>
+</tr>
+<tr class="even">
+<td>Retired</td>
+<td>Removed from active operation</td>
+</tr>
+</tbody>
+</table>
+<p>A capability may be implemented but not verified. It may be verified
+but not operational.</p>
+<p>These statuses must not be treated as interchangeable.</p>
+<h3 id="capability-maturity-levels">31.2 Capability maturity
+levels</h3>
+<p>Use the following maturity model:</p>
+<ul>
+<li><strong>CML-0 — Conceptual:</strong> Vision or concept only.</li>
+<li><strong>CML-1 — Defined:</strong> Requirements and architecture are
+documented.</li>
+<li><strong>CML-2 — Development:</strong> Implementation is
+underway.</li>
+<li><strong>CML-3 — Functional:</strong> Functionality has passed
+defined tests.</li>
+<li><strong>CML-4 — Governed:</strong> Applicable governance, security,
+provenance, audit, and operational controls are implemented.</li>
+<li><strong>CML-5 — Enterprise Ready:</strong> Scalable, monitored,
+auditable, supportable, and operationally ready.</li>
+</ul>
+<p>Capability status and maturity level must be recorded
+independently.</p>
+<hr />
+<h2 id="32-architectural-decisions-and-open-items">32. ARCHITECTURAL
+DECISIONS AND OPEN ITEMS</h2>
+<p>The following decisions require explicit resolution before or during
+implementation.</p>
+<table>
+<thead>
+<tr class="header">
+<th>ID</th>
+<th>Decision</th>
+<th>Proposed direction</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>ADR-CORE-001</td>
+<td>Backend architecture</td>
+<td>FastAPI modular backend</td>
+</tr>
+<tr class="even">
+<td>ADR-CORE-002</td>
+<td>Primary database</td>
+<td>PostgreSQL</td>
+</tr>
+<tr class="odd">
+<td>ADR-CORE-003</td>
+<td>Frontend architecture</td>
+<td>React + TypeScript + Vite</td>
+</tr>
+<tr class="even">
+<td>ADR-CORE-004</td>
+<td>Authentication</td>
+<td>Trusted OIDC-compatible provider</td>
+</tr>
+<tr class="odd">
+<td>ADR-CORE-005</td>
+<td>Authorization</td>
+<td>CORE-controlled server-side RBAC with scoped policies</td>
+</tr>
+<tr class="even">
+<td>ADR-CORE-006</td>
+<td>Audit integrity</td>
+<td>Append-oriented records with independently protected integrity
+evidence</td>
+</tr>
+<tr class="odd">
+<td>ADR-CORE-007</td>
+<td>Evidence storage</td>
+<td>Database metadata plus protected object storage</td>
+</tr>
+<tr class="even">
+<td>ADR-CORE-008</td>
+<td>Cross-domain integration</td>
+<td>Versioned authenticated APIs</td>
+</tr>
+<tr class="odd">
+<td>ADR-CORE-009</td>
+<td>Automated testing</td>
+<td>Pytest, Vitest, Playwright, and CI integration</td>
+</tr>
+<tr class="even">
+<td>ADR-CORE-010</td>
+<td>Deployment</td>
+<td>Containerized deployment with environment isolation</td>
+</tr>
+</tbody>
+</table>
+<p>These are proposed decisions, not approved architecture
+decisions.</p>
+<p>Before implementation, the engineering team must inspect the existing
+repositories, dependencies, deployment arrangements, and working
+services. Existing verified infrastructure should be reused when
+appropriate.</p>
+<p>Additional decisions include:</p>
+<ul>
+<li>Identity provider selection.</li>
+<li>Database hosting.</li>
+<li>Secret management provider.</li>
+<li>Backup retention.</li>
+<li>Audit retention.</li>
+<li>Recovery objectives.</li>
+<li>Notification provider.</li>
+<li>Monitoring infrastructure.</li>
+<li>Production hosting.</li>
+<li>Organizational and legal requirements.</li>
+</ul>
+<p>Each decision should become an Architecture Decision Record (ADR)
+with rationale, alternatives, consequences, and approval status.</p>
+<hr />
+<h2 id="33-non-functional-requirements">33. NON-FUNCTIONAL
+REQUIREMENTS</h2>
+<p>CORE must satisfy measurable non-functional requirements.</p>
+<table>
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Reliability</td>
+<td>Critical services expose health and readiness</td>
+</tr>
+<tr class="even">
+<td>Security</td>
+<td>All protected operations enforce server-side authorization</td>
+</tr>
+<tr class="odd">
+<td>Performance</td>
+<td>Response targets are defined and tested against expected
+workloads</td>
+</tr>
+<tr class="even">
+<td>Scalability</td>
+<td>Services and data access support planned growth</td>
+</tr>
+<tr class="odd">
+<td>Availability</td>
+<td>Service objectives are defined by operational importance</td>
+</tr>
+<tr class="even">
+<td>Maintainability</td>
+<td>Modular architecture and documented interfaces</td>
+</tr>
+<tr class="odd">
+<td>Accessibility</td>
+<td>Keyboard and assistive-technology support</td>
+</tr>
+<tr class="even">
+<td>Compatibility</td>
+<td>Supported desktop and mobile browsers</td>
+</tr>
+<tr class="odd">
+<td>Observability</td>
+<td>Structured logs, metrics, traces, and alerts</td>
+</tr>
+<tr class="even">
+<td>Recoverability</td>
+<td>Tested backup and restoration procedures</td>
+</tr>
+<tr class="odd">
+<td>Integrity</td>
+<td>Database and evidence consistency checks</td>
+</tr>
+<tr class="even">
+<td>Auditability</td>
+<td>Material actions are attributable and traceable</td>
+</tr>
+<tr class="odd">
+<td>Interoperability</td>
+<td>Versioned and documented APIs</td>
+</tr>
+<tr class="even">
+<td>Portability</td>
+<td>Deployment configuration is documented and reproducible</td>
+</tr>
+</tbody>
+</table>
+<p>Numerical service-level objectives must be established during
+deployment planning and validated against actual infrastructure
+capacity.</p>
+<hr />
+<h2 id="34-implementation-governance-and-engineering-rules">34.
+IMPLEMENTATION GOVERNANCE AND ENGINEERING RULES</h2>
+<p>The implementation team must follow these rules throughout
+development.</p>
+<p><strong>Rule 1 — Preserve domain boundaries.</strong> Do not combine
+CORE, HARNESS, and WORLDFORGE into one undifferentiated application
+module. They may share platform services, but their responsibilities and
+authoritative data ownership must remain clear.</p>
+<p><strong>Rule 2 — Do not invent existing functionality.</strong>
+Before implementing a capability, inspect the existing repository and
+identify:</p>
+<ul>
+<li>Existing files.</li>
+<li>Existing services.</li>
+<li>Existing database structures.</li>
+<li>Existing workflows.</li>
+<li>Existing integrations.</li>
+<li>Existing tests.</li>
+<li>Existing deployment configuration.</li>
+</ul>
+<p>Do not recreate working functionality unnecessarily.</p>
+<p><strong>Rule 3 — No mock functionality presented as
+operational.</strong> A placeholder, mock response, demonstration card,
+or local-only interaction must be explicitly labeled. A working frontend
+button is not proof of a working backend operation.</p>
+<p><strong>Rule 4 — Protect data integrity.</strong> Do not perform
+destructive migrations, overwrite records, or remove existing
+functionality without examining dependencies and preserving
+recoverability.</p>
+<p><strong>Rule 5 — Verify every implementation stage.</strong> Each
+completed module must have:</p>
+<ul>
+<li>Requirements.</li>
+<li>Implementation.</li>
+<li>Tests.</li>
+<li>Test results.</li>
+<li>Evidence.</li>
+<li>Known limitations.</li>
+<li>Status.</li>
+</ul>
+<p><strong>Rule 6 — Preserve version history.</strong> All significant
+changes must be traceable to source commits, migrations, approvals, and
+releases.</p>
+<p><strong>Rule 7 — Do not silently expand scope.</strong> New
+functionality must be classified as:</p>
+<ul>
+<li>Required by this specification.</li>
+<li>Required by an existing authoritative specification.</li>
+<li>Approved change.</li>
+<li>Proposed enhancement.</li>
+</ul>
+<p><strong>Rule 8 — Do not confuse specification with
+implementation.</strong> The presence of an architectural description
+does not establish that a feature exists.</p>
+<p><strong>Rule 9 — Stop safely when evidence is missing.</strong> When
+the engineering team encounters an unknown dependency, missing
+credential, ambiguous authority, or destructive operation, it must stop
+and report the issue rather than invent a solution.</p>
+<p><strong>Rule 10 — Keep the system usable throughout
+development.</strong> Build incrementally. Maintain a working
+application, working database migrations, and a repeatable test pipeline
+at each major milestone.</p>
+<hr />
+<h2 id="35-final-system-definition">35. FINAL SYSTEM DEFINITION</h2>
+<p>AH-AIOS CORE is the foundational control, governance, security, and
+assurance domain of the AFTER HUMANITY AI Operating System.</p>
+<p>It provides the system-wide capabilities required to establish
+identity, authenticate actors, authorize actions, enforce governance,
+secure resources, manage infrastructure, preserve accountability,
+maintain evidence, assess risk, and control changes.</p>
+<p>Through its thirteen-module Workbench, CORE provides an integrated
+administrative and operational environment for the governance of
+AH-AIOS.</p>
+<p>CORE governs the conditions under which AI HARNESS performs execution
+and WORLDFORGE manages structured knowledge and canon.</p>
+<p>It establishes the authority and control framework without absorbing
+the independent responsibilities of either domain.</p>
+<p>Its governing purpose is to ensure that AH-AIOS operates through
+explicit authority, controlled access, secure infrastructure, traceable
+decisions, preserved evidence, verified capabilities, and accountable
+change.</p>
+<p><strong>CORE governs. HARNESS executes. WORLDFORGE structures and
+governs knowledge. Human stewardship provides direction, judgment, and
+accountability across all three.</strong></p>
+<hr />
+<h2 id="36-implementation-handoff--claude-engineering-instructions">36.
+IMPLEMENTATION HANDOFF — CLAUDE ENGINEERING INSTRUCTIONS</h2>
+<p>The following is the instruction to use when giving this
+specification to Claude.</p>
+<h3 id="claude-implementation-directive--ah-aios-core-workbench">CLAUDE
+IMPLEMENTATION DIRECTIVE — AH-AIOS CORE WORKBENCH</h3>
+<p>You are the engineering implementation assistant for AH-AIOS
+CORE.</p>
+<p>Use the attached AH-CORE-ARCH-001 — Complete Workbench Specification
+&amp; Technical Architecture, Version 1.0-Draft as the primary proposed
+technical specification.</p>
+<p><strong>Objective</strong></p>
+<p>Develop the complete AH-AIOS CORE Workbench as the foundational
+control, governance, security, and assurance application of AH-AIOS.</p>
+<p>The application must implement the thirteen specified modules and
+preserve the boundaries between CORE, AI HARNESS, and WORLDFORGE.</p>
+<p><strong>Mandatory instructions</strong></p>
+<ol type="1">
+<li>Inspect the existing project and repository before changing
+files.</li>
+<li>Identify the existing architecture, implementation status, database,
+dependencies, and deployment configuration.</li>
+<li>Preserve existing working functionality.</li>
+<li>Do not assume that proposed architecture has already been
+implemented.</li>
+<li>Do not fabricate users, operational records, approvals, security
+results, or verification evidence.</li>
+<li>Do not expose credentials or secrets.</li>
+<li>Do not perform destructive migrations without an explicit recovery
+plan.</li>
+<li>Implement backend authorization. Frontend visibility is not a
+security control.</li>
+<li>Use version-controlled database migrations.</li>
+<li>Build automated tests alongside implementation.</li>
+<li>Preserve audit history and provenance.</li>
+<li>Do not independently authorize changes to established AH-AIOS
+canon.</li>
+<li>Do not declare any capability operational without supporting
+verification evidence.</li>
+</ol>
+<p><strong>Required development sequence</strong></p>
+<p>Proceed incrementally:</p>
+<ul>
+<li><strong>Milestone 1:</strong> Repository inspection, architecture
+reconciliation, and implementation plan.</li>
+<li><strong>Milestone 2:</strong> Application shell, navigation,
+database foundation, and CI pipeline.</li>
+<li><strong>Milestone 3:</strong> Identity, authentication,
+organizations, roles, and permissions.</li>
+<li><strong>Milestone 4:</strong> Governance Center and policy
+workflows.</li>
+<li><strong>Milestone 5:</strong> Security Center and configuration
+management.</li>
+<li><strong>Milestone 6:</strong> Infrastructure, audit, evidence, and
+verification.</li>
+<li><strong>Milestone 7:</strong> Risk, compliance, change, and release
+management.</li>
+<li><strong>Milestone 8:</strong> CORE–HARNESS–WORLDFORGE
+integration.</li>
+<li><strong>Milestone 9:</strong> Security, data integrity, recovery,
+and production-readiness verification.</li>
+</ul>
+<p><strong>Required milestone reporting</strong></p>
+<p>At the end of each milestone, report:</p>
+<ul>
+<li>What was inspected.</li>
+<li>What was implemented.</li>
+<li>Files created or changed.</li>
+<li>Database changes.</li>
+<li>Tests executed.</li>
+<li>Actual test results.</li>
+<li>Verification evidence.</li>
+<li>Known limitations.</li>
+<li>Outstanding decisions.</li>
+<li>Next milestone.</li>
+</ul>
+<p>Do not report a test as passed if it was not executed.</p>
+<p>Do not report a feature as complete if it is only a frontend
+placeholder.</p>
+<p><strong>First action</strong></p>
+<p>Do not begin by generating the entire application in one pass.</p>
+<p>Start with a repository inspection and a reconciliation report
+against AH-CORE-ARCH-001.</p>
+<p>Identify the smallest safe implementation milestone, then proceed one
+milestone at a time.</p>
+<p>The objective is a functioning, secure, verifiable AH-AIOS CORE
+Workbench — not merely a visually complete dashboard.</p>
+<hr />
+<h2 id="document-governance-notice">Document governance notice</h2>
+<p><strong>PROPOSED — NOT YET APPROVED</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Attribute</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Document ID</td>
+<td>AH-CORE-ARCH-001</td>
+</tr>
+<tr class="even">
+<td>Version</td>
+<td>1.0-Draft</td>
+</tr>
+<tr class="odd">
+<td>Document type</td>
+<td>Complete Workbench Specification &amp; Technical Architecture</td>
+</tr>
+<tr class="even">
+<td>Domain</td>
+<td>AH-AIOS CORE</td>
+</tr>
+<tr class="odd">
+<td>Status</td>
+<td>Proposed Architecture Specification</td>
+</tr>
+<tr class="even">
+<td>Scope</td>
+<td>Thirteen workbench modules and supporting architecture</td>
+</tr>
+<tr class="odd">
+<td>Implementation status</td>
+<td>Not established by this document</td>
+</tr>
+<tr class="even">
+<td>Canon status</td>
+<td>Not independently established by this document</td>
+</tr>
+</tbody>
+</table>
+<p>The established three-domain scope remains the governing system
+definition. This document expands the proposed technical architecture of
+CORE without changing that scope.</p>
+<p>The next engineering milestone is repository inspection and
+architecture reconciliation — not immediately generating code.</p>
+
+</main></body></html>

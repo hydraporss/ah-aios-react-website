@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}Artifacts · AH-AIOS{% endblock %}
+{% block content %}
+<h1>Artifacts</h1><section class="panel">{% for artifact in artifacts %}<p><b>{{ artifact.name }}</b> — {{ artifact.description or '' }}</p>{% else %}<p class="muted">No artifacts recorded.</p>{% endfor %}</section>
+{% endblock %}

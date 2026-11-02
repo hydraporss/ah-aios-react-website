@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}Canon Registry · AH-AIOS{% endblock %}
+{% block content %}
+<h1>Canon Registry</h1><section class="panel">{% for item in items %}<p>{{ item.name }} · {{ item.classification }}</p>{% else %}<p class="muted">No classified items recorded.</p>{% endfor %}</section>
+{% endblock %}

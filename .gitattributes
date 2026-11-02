@@ -1,0 +1,14 @@
+# Keep line endings stable across Windows/macOS/Linux so release-manifest.json hashes match on every checkout.
+* text=auto eol=lf
+*.bat text eol=crlf
+*.command text eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.zip binary
+*.woff binary
+*.woff2 binary

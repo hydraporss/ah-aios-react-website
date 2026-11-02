@@ -1,0 +1,17 @@
+{
+  "name": "ah-aios-local-site",
+  "version": "0.5.1",
+  "private": true,
+  "description": "AH-AIOS Learning Studio local-first site (static, no build step).",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node --test learning/tests/*.test.js harness/js/prompt-builder.test.js harness/js/site-data.test.js",
+    "check:links": "node scripts/check-links.js",
+    "check:sync": "node scripts/sync-flask-learning.js --check",
+    "check:release": "node scripts/check-release.js",
+    "update:manifest": "node scripts/check-release.js --write",
+    "sync": "node scripts/sync-flask-learning.js",
+    "build:site": "bash scripts/build-site.sh",
+    "verify": "npm test && npm run check:links && npm run check:sync && npm run check:release"
+  }
+}
