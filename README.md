@@ -4,7 +4,7 @@ A local-first, no-build static site: Learning Studio (24 courses, 96 lessons pla
 
 **Status (0.5.1 candidate):** see `docs/learning-studio/RELEASE_0.5.1_VERIFICATION.md`. Partially implemented, not production-ready. See `docs/learning-studio/IMPLEMENTATION_AUDIT_AND_TEST_REPORT.md` and `LEARNING_STUDIO_KNOWN_LIMITATIONS.md`. In short: the 82-theory registry is empty until real records are imported, most lessons are specified but not written, and the workbenches are single-device with no authentication.
 
-**Reconciliation (r7):** `docs/learning-app/` holds the owner's Learning App specs (AH-LRN-APP-001 v1.0 and v1.1; both Specified, not adopted) and their reconciliation against this release; not published to Pages. See `docs/learning-app/AH-LEARNING-APP-RECONCILIATION.md`.
+**Reconciliation (r7):** `docs/learning-app/` holds the owner's Learning App specs (AH-LRN-APP-001 v1.0 and v1.1; both Specified, not adopted) and their reconciliation against this release. See `docs/learning-app/AH-LEARNING-APP-RECONCILIATION.md`.
 
 **Reconciliation (r4):** `docs/AH-AIOS-ARCHIVE-RECONCILIATION.md` compares the full `AH-AIOS.zip` working tree with this release (nothing merged). `docs/reconciliation/` holds an 82-record theory import candidate, not yet approved or loaded. Reference-only material from that tree sits in `optional-flask-backend/reference/` (Core engines, Supabase SQL) and `docs/worldforge-reference/`.
 
@@ -26,7 +26,7 @@ python3 -m http.server 8000   # then open http://localhost:8000/
 
 The site is served at `https://<user>.github.io/<repo>/`. All paths are relative, so it works under that subpath.
 
-Pages publishes only the static site (`scripts/build-site.sh`). The Flask backend, tests, scripts and CI config stay in the repo but are not published, because Pages cannot run Python.
+GitHub Pages publishes a file-for-file mirror of the repository contents using `scripts/build-site.sh`. Pages serves these files statically; it does not execute the optional Flask backend.
 
 ## Install as an app (PWA)
 
