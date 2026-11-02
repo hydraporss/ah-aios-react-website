@@ -115,7 +115,10 @@ test("404 page resolves links from the site root, not the missing URL", () => {
 test("build mirrors all tracked files in the published site", () => {
   const sh = fs.readFileSync(path.join(__dirname, "../../scripts/build-site.sh"), "utf8");
   assert.match(sh, /SOURCE_SNAPSHOT=5766c2284986840fdf0e5b71afdaee2617b78c6d/);
-  assert.match(sh, /git archive --format=tar "\$SOURCE_SNAPSHOT" \| tar -xf - -C _site/);
+  assert.match(sh, /git ls-tree -rz --full-tree "\$SOURCE_SNAPSHOT"/);
+  assert.match(sh, /git cat-file blob "\$oid"/);
+  assert.match(sh, /git hash-object --no-filters/);
+  assert.match(sh, /file_count.*435/);
   assert.doesNotMatch(sh, /--exclude=/);
 });
 
