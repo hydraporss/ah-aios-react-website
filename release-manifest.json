@@ -151,8 +151,8 @@
     },
     {
       "path": "README.md",
-      "bytes": 5686,
-      "sha256": "65279fd6308e95ec0f9446c73114087efb82703c30a58374ef3c6c35ee477573"
+      "bytes": 5666,
+      "sha256": "5f3f65008939039a15c55f7a1a1b7d0f0957779725f01f8f6f67640ec2158a10"
     },
     {
       "path": "README.txt",
@@ -776,8 +776,8 @@
     },
     {
       "path": "learning/tests/release-0.5.1.test.js",
-      "bytes": 9424,
-      "sha256": "430515b890fb4b8fe44e717ec549a31d9db03f1145f53fc34e02b5168dd079aa"
+      "bytes": 9492,
+      "sha256": "f2142713db7909e51efdf656c6766c75c3f55dd91e5b1904563de68f1e36dee5"
     },
     {
       "path": "learning/tests/sync.test.js",
@@ -2136,8 +2136,8 @@
     },
     {
       "path": "scripts/build-site.sh",
-      "bytes": 988,
-      "sha256": "ad0877daded44acdcc93264a78d674f36d033ddde966f3ccb7a6157ebc82dd5e"
+      "bytes": 314,
+      "sha256": "2130cceb0aeee2fb68b868fe6bffe2da22678f8b23f7633678e0dc803c3987ce"
     },
     {
       "path": "scripts/build-theories.js",

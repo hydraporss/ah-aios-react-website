@@ -112,9 +112,10 @@ test("404 page resolves links from the site root, not the missing URL", () => {
   const h = fs.readFileSync(path.join(__dirname, "../../404.html"), "utf8");
   assert.match(h, /github\\\.io/); assert.match(h, /getElementById\("home"\)/);
 });
-test("build excludes nested zip archives from the published site", () => {
+test("build mirrors all tracked files in the published site", () => {
   const sh = fs.readFileSync(path.join(__dirname, "../../scripts/build-site.sh"), "utf8");
-  assert.match(sh, /--exclude='\*\.zip'/);
+  assert.match(sh, /git archive --format=tar HEAD \| tar -xf - -C _site/);
+  assert.doesNotMatch(sh, /--exclude=/);
 });
 
 /* ---------- WorldForge built bundle (source project not in this package; patched in the artifact) ---------- */
