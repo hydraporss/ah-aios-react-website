@@ -102,7 +102,7 @@
     "Supply WorldForge source project or accept built-artifact patching",
     "Approve deployment (push to main triggers Pages)"
   ],
-  "fileCount": 434,
+  "fileCount": 435,
   "files": [
     {
       "path": ".gitattributes",
@@ -2273,6 +2273,11 @@
       "path": "docs/PWA_OPERATIONS_GUIDE.md",
       "bytes": 44223,
       "sha256": "18b635bbdd84b8913f46d54c005b0d3f6eba6dff889acd7431bcefa301ed1ac5"
+    },
+    {
+      "path": "vercel.json",
+      "bytes": 187,
+      "sha256": "28e8ea0d139cee783ada244369e223d4f411aed3458327cb88f7825bcbec438b"
     }
   ],
   "harnessSiteAddition": {
