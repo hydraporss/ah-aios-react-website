@@ -102,7 +102,7 @@
     "Supply WorldForge source project or accept built-artifact patching",
     "Approve deployment (push to main triggers Pages)"
   ],
-  "fileCount": 435,
+  "fileCount": 437,
   "files": [
     {
       "path": ".gitattributes",
@@ -2126,8 +2126,8 @@
     },
     {
       "path": "package.json",
-      "bytes": 806,
-      "sha256": "e784890f9d99806a1c5b90991ea10b8bc8d0f02eb899d46fbf5b01af2adb946f"
+      "bytes": 856,
+      "sha256": "6cc63fad100ae17518f7e03f4b8f8ad39158ec265019bf43ead0820cb0f633b1"
     },
     {
       "path": "scripts/add-home-button.js",
@@ -2278,6 +2278,16 @@
       "path": "vercel.json",
       "bytes": 187,
       "sha256": "28e8ea0d139cee783ada244369e223d4f411aed3458327cb88f7825bcbec438b"
+    },
+    {
+      "path": "scripts/canon-kernel-reconciliation-guard.js",
+      "bytes": 24060,
+      "sha256": "455a3e2e6819166ce6afdd6964d4669f66e50002c2b4706366c7e3905be61fea"
+    },
+    {
+      "path": "scripts/canon-kernel-reconciliation-guard.test.js",
+      "bytes": 7604,
+      "sha256": "bbcf8bb6bda52ae043e8b5fd63f01c73ecaa8aa56ac5bc7e57359a7a3bee5ecf"
     }
   ],
   "harnessSiteAddition": {
