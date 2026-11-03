@@ -1,16 +1,14 @@
 import { createHash } from "node:crypto";
 
-const canonical = (value) => JSON.stringify(value, Object.keys(value).sort());
-
 export class MemoryAuditLedger {
   #events = [];
 
   append(event) {
     const previousHash = this.#events.at(-1)?.hash ?? "GENESIS";
     const payload = {
+      ...event,
       sequence: this.#events.length + 1,
-      previousHash,
-      ...event
+      previousHash
     };
     const hash = createHash("sha256").update(JSON.stringify(payload)).digest("hex");
     const record = Object.freeze({ ...payload, hash });
