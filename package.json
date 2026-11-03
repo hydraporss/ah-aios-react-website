@@ -7,7 +7,8 @@
     "node": ">=20"
   },
   "scripts": {
-    "test": "node --test learning/tests/*.test.js harness/js/prompt-builder.test.js harness/js/site-data.test.js desktop/paths.test.js desktop/main.test.js",
+    "test": "node --test learning/tests/*.test.js harness/js/prompt-builder.test.js harness/js/site-data.test.js desktop/paths.test.js desktop/main.test.js kernel/tests/*.test.js",
+    "test:kernel": "node --test kernel/tests/*.test.js",
     "check:links": "node scripts/check-links.js",
     "check:sync": "node scripts/sync-flask-learning.js --check",
     "check:release": "node scripts/check-release.js",
