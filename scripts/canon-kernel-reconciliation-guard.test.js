@@ -104,6 +104,15 @@ test('rejects candidate pairs promoted to evidence or reviewed relationships', (
   assert.ok(report.errors.some(error => /passage locator/.test(error)));
 });
 
+test('rejects JSON key drift instead of silently reading an empty summary', () => {
+  const data = fixture();
+  data.resultJson.sourceReconciliation = data.resultJson.source_reconciliation;
+  delete data.resultJson.source_reconciliation;
+  const report = validateEvidence(data, { expected: data.expected });
+  assert.equal(report.status, 'CONSISTENCY_FAIL');
+  assert.ok(report.errors.some(error => /missing source_reconciliation\.summary/.test(error)));
+});
+
 test('rejects a missing-source-hash list that disagrees with the theory CSV', () => {
   const data = fixture();
   data.resultJson.theory_reconciliation.summary.records_with_no_valid_source_hash_in_kernel = [];
