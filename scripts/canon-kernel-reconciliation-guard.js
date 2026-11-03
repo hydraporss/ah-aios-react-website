@@ -83,8 +83,9 @@ function parseCsv(text) {
 }
 
 function asInteger(value, label, errors) {
-  const n = Number(String(value).trim());
-  if (!Number.isSafeInteger(n) || n < 0) {
+  const raw = String(value).trim();
+  const n = Number(raw);
+  if (!raw || !Number.isSafeInteger(n) || n < 0) {
     errors.push(label + ' must be a non-negative safe integer; got ' + JSON.stringify(value) + '.');
     return null;
   }
@@ -161,13 +162,22 @@ function validateEvidence(input, options = {}) {
   requireHeaders(pairs, HEADERS.pairs, 'theory-source-candidate-pairs CSV', errors);
 
   const theoryIds = new Set();
-  const theoryById = new Map();
+  const missingSourceHashIds = [];
+  let theoryEvidenceTotal = 0;
   for (const row of theories) {
     if (!row.id || !row.id.trim()) { errors.push('Theory row has an empty id.'); continue; }
     if (theoryIds.has(row.id)) errors.push('Duplicate theory id: ' + row.id + '.');
     theoryIds.add(row.id);
-    theoryById.set(row.id, row);
     if (row.kernel_status !== 'PRESENT') errors.push('Theory ' + row.id + ' is not PRESENT in the kernel.');
+    const hasHash = asBoolean(row.kernel_has_valid_source_hash, 'Theory ' + row.id + ' source-hash flag', errors);
+    if (hasHash === false) missingSourceHashIds.push(row.id);
+    const total = asInteger(row.kernel_evidence_rows_total, 'Theory ' + row.id + ' total evidence rows', errors);
+    const registry = asInteger(row.kernel_evidence_rows_to_registry_sources, 'Theory ' + row.id + ' registry evidence rows', errors);
+    const books = asInteger(row.kernel_evidence_rows_to_book_files, 'Theory ' + row.id + ' book evidence rows', errors);
+    if (total !== null && registry !== null && books !== null) {
+      theoryEvidenceTotal += total;
+      if (total !== registry + books) errors.push('Theory ' + row.id + ' evidence total does not equal registry + book evidence rows.');
+    }
   }
   if (theories.length !== expected.theories) errors.push('Expected ' + expected.theories + ' theory rows; found ' + theories.length + '.');
 
@@ -289,6 +299,15 @@ function validateEvidence(input, options = {}) {
     const evidenceBooks = theories.reduce((n, r) => n + Number(r.kernel_evidence_rows_to_book_files), 0);
     if (theorySummary.records_with_kernel_evidence_to_registry_source !== evidenceRegistry) errors.push('JSON registry-evidence count disagrees with theory CSV.');
     if (theorySummary.records_with_kernel_evidence_to_a_book_file !== evidenceBooks) errors.push('JSON book-evidence count disagrees with theory CSV.');
+    if (theoryEvidenceTotal !== evidenceRegistry + evidenceBooks) errors.push('Theory evidence-row totals do not reconcile to their registry/book subtotals.');
+    const withCandidates = theories.filter(row => Number(row.candidate_file_count) > 0).length;
+    if (theorySummary.records_with_candidates_derived_from_notion_table !== withCandidates) errors.push('JSON candidate-associated theory count disagrees with theory CSV.');
+    if (theorySummary.records_without_candidates_derived_from_notion_table !== theories.length - withCandidates) errors.push('JSON theory-without-candidates count disagrees with theory CSV.');
+    const declaredMissing = Array.isArray(theorySummary.records_with_no_valid_source_hash_in_kernel)
+      ? [...theorySummary.records_with_no_valid_source_hash_in_kernel].sort() : [];
+    if (JSON.stringify(declaredMissing) !== JSON.stringify([...missingSourceHashIds].sort())) {
+      errors.push('JSON missing-source-hash ID list disagrees with theory CSV.');
+    }
   }
   if (sourceSummary) {
     if (sourceSummary.notion_files !== files.length || sourceSummary.kernel_book_rows !== files.length) errors.push('JSON source-row counts disagree with file CSV.');
@@ -296,6 +315,8 @@ function validateEvidence(input, options = {}) {
     if (sourceSummary.kernel_book_bytes_total !== totalBytes) errors.push('JSON byte total disagrees with file CSV.');
     if (sourceSummary.kernel_distinct_sha256 !== hashes.size) errors.push('JSON distinct-hash count disagrees with file CSV.');
     if (sourceSummary.files_with_kernel_evidence_link !== evidenceRowsOnFiles) errors.push('JSON book-evidence count disagrees with file CSV.');
+    if (sourceSummary.kernel_hashes_valid_hex64 !== files.filter(row => /^[a-f0-9]{64}$/i.test(row.kernel_sha256 || '')).length) errors.push('JSON valid-hash count disagrees with file CSV.');
+    if (sourceSummary.files_registered_without_evidence_link !== files.length - files.filter(row => Number(row.kernel_evidence_rows) > 0).length) errors.push('JSON candidate-only registration count disagrees with file CSV.');
   }
   if (pairSummary) {
     if (pairSummary.candidate_pairs !== pairs.length) errors.push('JSON candidate-pair count disagrees with pair CSV.');
@@ -331,6 +352,7 @@ function validateEvidence(input, options = {}) {
     differingTitles: theories.filter(r => r.title_compare === 'DIFFERS').length,
     registryEvidenceRows: theories.reduce((n, r) => n + Number(r.kernel_evidence_rows_to_registry_sources || 0), 0),
     bookEvidenceRows: theories.reduce((n, r) => n + Number(r.kernel_evidence_rows_to_book_files || 0), 0),
+    theoriesMissingSourceHash: missingSourceHashIds,
     files: files.length,
     bytes: totalBytes,
     zeroByteFiles,
