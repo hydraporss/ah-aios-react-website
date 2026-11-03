@@ -92,7 +92,7 @@ test('rejects a candidate list that does not agree with the pair crosswalk', () 
   data.fileCsv = data.fileCsv.replace('[""T1"",""T2""]', '[""T1""]');
   const report = validateEvidence(data, { expected: data.expected });
   assert.equal(report.status, 'CONSISTENCY_FAIL');
-  assert.ok(report.errors.some(error => /missing candidate pair for T2/.test(error)));
+  assert.ok(report.errors.some(error => /undeclared candidate pair for T2/.test(error)));
 });
 
 test('rejects candidate pairs promoted to evidence or reviewed relationships', () => {
