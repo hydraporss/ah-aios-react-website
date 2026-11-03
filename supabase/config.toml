@@ -1,0 +1,5 @@
+# Supabase CLI project configuration for the AH-AIOS Knowledge Kernel.
+# Link this local project to the intended Supabase project with the CLI.
+# This file contains no credentials and does not provision remote resources.
+
+project_id = "ah-aios-kernel"
