@@ -6,7 +6,6 @@
 // inspect book contents, prove Notion claims, or recompute hashes from the original books.
 
 const fs = require('node:fs');
-const path = require('node:path');
 
 const DEFAULT_EXPECTED = Object.freeze({
   theories: 82,
@@ -184,7 +183,7 @@ function validateEvidence(input, options = {}) {
   const fileByOrdinal = new Map();
   const fileByName = new Map();
   const fileCandidateIds = new Map();
-  let totalBytes = 0, zeroByteFiles = 0, evidenceRowsOnFiles = 0;
+  let totalBytes = 0, zeroByteFiles = 0, evidenceRowsOnFiles = 0, filesWithEvidenceLink = 0;
   const hashes = new Set();
 
   for (const row of files) {
@@ -213,7 +212,10 @@ function validateEvidence(input, options = {}) {
     else errors.push('File ' + row.name + ' has an invalid SHA-256 hex string.');
     if (hashFlag !== true) errors.push('File ' + row.name + ' does not mark its SHA-256 syntax as valid.');
     if (verified === true) errors.push('File ' + row.name + ' is flagged source-verified despite candidate-only reconciliation.');
-    if (evidenceCount !== null) evidenceRowsOnFiles += evidenceCount;
+    if (evidenceCount !== null) {
+      evidenceRowsOnFiles += evidenceCount;
+      if (evidenceCount > 0) filesWithEvidenceLink++;
+    }
     if (row.match !== 'EXACT') errors.push('File ' + row.name + ' does not have an EXACT filename match.');
     if (row.link_level !== 'REGISTERED_CANDIDATE_ONLY') errors.push('File ' + row.name + ' is not candidate-only.');
     fileCandidateIds.set(ordinal, parseStringArray(row.candidate_theory_ids, 'File ' + row.name + ' candidate_theory_ids', errors));
@@ -295,11 +297,13 @@ function validateEvidence(input, options = {}) {
     if (theorySummary.notion_records !== theories.length) errors.push('JSON theory count disagrees with theory CSV.');
     if (theorySummary.title_compare_counts?.EXACT !== theories.filter(r => r.title_compare === 'EXACT').length) errors.push('JSON exact-title count disagrees with theory CSV.');
     if (theorySummary.title_compare_counts?.DIFFERS !== theories.filter(r => r.title_compare === 'DIFFERS').length) errors.push('JSON differing-title count disagrees with theory CSV.');
-    const evidenceRegistry = theories.reduce((n, r) => n + Number(r.kernel_evidence_rows_to_registry_sources), 0);
-    const evidenceBooks = theories.reduce((n, r) => n + Number(r.kernel_evidence_rows_to_book_files), 0);
-    if (theorySummary.records_with_kernel_evidence_to_registry_source !== evidenceRegistry) errors.push('JSON registry-evidence count disagrees with theory CSV.');
-    if (theorySummary.records_with_kernel_evidence_to_a_book_file !== evidenceBooks) errors.push('JSON book-evidence count disagrees with theory CSV.');
-    if (theoryEvidenceTotal !== evidenceRegistry + evidenceBooks) errors.push('Theory evidence-row totals do not reconcile to their registry/book subtotals.');
+    const evidenceRegistryRows = theories.reduce((n, r) => n + Number(r.kernel_evidence_rows_to_registry_sources), 0);
+    const evidenceBookRows = theories.reduce((n, r) => n + Number(r.kernel_evidence_rows_to_book_files), 0);
+    const evidenceRegistryRecords = theories.filter(r => Number(r.kernel_evidence_rows_to_registry_sources) > 0).length;
+    const evidenceBookRecords = theories.filter(r => Number(r.kernel_evidence_rows_to_book_files) > 0).length;
+    if (theorySummary.records_with_kernel_evidence_to_registry_source !== evidenceRegistryRecords) errors.push('JSON registry-evidence record count disagrees with theory CSV.');
+    if (theorySummary.records_with_kernel_evidence_to_a_book_file !== evidenceBookRecords) errors.push('JSON book-evidence record count disagrees with theory CSV.');
+    if (theoryEvidenceTotal !== evidenceRegistryRows + evidenceBookRows) errors.push('Theory evidence-row totals do not reconcile to their registry/book subtotals.');
     const withCandidates = theories.filter(row => Number(row.candidate_file_count) > 0).length;
     if (theorySummary.records_with_candidates_derived_from_notion_table !== withCandidates) errors.push('JSON candidate-associated theory count disagrees with theory CSV.');
     if (theorySummary.records_without_candidates_derived_from_notion_table !== theories.length - withCandidates) errors.push('JSON theory-without-candidates count disagrees with theory CSV.');
@@ -314,9 +318,9 @@ function validateEvidence(input, options = {}) {
     if (sourceSummary.kernel_book_rows_zero_byte !== zeroByteFiles) errors.push('JSON zero-byte count disagrees with file CSV.');
     if (sourceSummary.kernel_book_bytes_total !== totalBytes) errors.push('JSON byte total disagrees with file CSV.');
     if (sourceSummary.kernel_distinct_sha256 !== hashes.size) errors.push('JSON distinct-hash count disagrees with file CSV.');
-    if (sourceSummary.files_with_kernel_evidence_link !== evidenceRowsOnFiles) errors.push('JSON book-evidence count disagrees with file CSV.');
+    if (sourceSummary.files_with_kernel_evidence_link !== filesWithEvidenceLink) errors.push('JSON book-evidence file count disagrees with file CSV.');
     if (sourceSummary.kernel_hashes_valid_hex64 !== files.filter(row => /^[a-f0-9]{64}$/i.test(row.kernel_sha256 || '')).length) errors.push('JSON valid-hash count disagrees with file CSV.');
-    if (sourceSummary.files_registered_without_evidence_link !== files.length - files.filter(row => Number(row.kernel_evidence_rows) > 0).length) errors.push('JSON candidate-only registration count disagrees with file CSV.');
+    if (sourceSummary.files_registered_without_evidence_link !== files.length - filesWithEvidenceLink) errors.push('JSON candidate-only registration count disagrees with file CSV.');
   }
   if (pairSummary) {
     if (pairSummary.candidate_pairs !== pairs.length) errors.push('JSON candidate-pair count disagrees with pair CSV.');
@@ -352,6 +356,7 @@ function validateEvidence(input, options = {}) {
     differingTitles: theories.filter(r => r.title_compare === 'DIFFERS').length,
     registryEvidenceRows: theories.reduce((n, r) => n + Number(r.kernel_evidence_rows_to_registry_sources || 0), 0),
     bookEvidenceRows: theories.reduce((n, r) => n + Number(r.kernel_evidence_rows_to_book_files || 0), 0),
+    filesWithEvidenceLink,
     theoriesMissingSourceHash: missingSourceHashIds,
     files: files.length,
     bytes: totalBytes,
