@@ -89,7 +89,7 @@ test('real evidence schema (snake_case) passes cross-artifact consistency checks
 
 test('rejects a candidate list that does not agree with the pair crosswalk', () => {
   const data = fixture();
-  data.fileCsv = data.fileCsv.replace('["T1","T2"]', '["T1"]');
+  data.fileCsv = data.fileCsv.replace('[""T1"",""T2""]', '[""T1""]');
   const report = validateEvidence(data, { expected: data.expected });
   assert.equal(report.status, 'CONSISTENCY_FAIL');
   assert.ok(report.errors.some(error => /missing candidate pair for T2/.test(error)));
