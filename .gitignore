@@ -12,11 +12,14 @@ optional-flask-backend/instance/uploads/*
 
 # Node / build output
 node_modules/
-_site/
+/_site/
+dist/
+build/
 
 # Secrets and local config
 .env
 .env.*
+!.env.example
 *.pem
 *.key
 
