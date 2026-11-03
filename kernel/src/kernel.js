@@ -1,3 +1,5 @@
+import { randomUUID } from "node:crypto";
+
 export class AHAIOSKernel {
   constructor({ providers, policy, audit }) {
     if (!providers || !policy || !audit) {
@@ -9,7 +11,7 @@ export class AHAIOSKernel {
   }
 
   async invoke({ actor, capability, input, providerId, correlationId }) {
-    const requestId = correlationId ?? crypto.randomUUID();
+    const requestId = correlationId ?? randomUUID();
     const base = {
       requestId,
       actorId: actor?.id ?? null,
