@@ -33,7 +33,10 @@ function fixture() {
       notion_records: 3,
       title_compare_counts: { EXACT: 2, DIFFERS: 1 },
       records_with_kernel_evidence_to_registry_source: 2,
-      records_with_kernel_evidence_to_a_book_file: 0
+      records_with_kernel_evidence_to_a_book_file: 0,
+      records_with_candidates_derived_from_notion_table: 3,
+      records_without_candidates_derived_from_notion_table: 0,
+      records_with_no_valid_source_hash_in_kernel: ['T3']
     }},
     source_reconciliation: { summary: {
       notion_files: 2, kernel_book_rows: 2, kernel_book_rows_zero_byte: 1,
@@ -99,6 +102,13 @@ test('rejects candidate pairs promoted to evidence or reviewed relationships', (
   assert.equal(report.status, 'CONSISTENCY_FAIL');
   assert.ok(report.errors.some(error => /assigned relationship class/.test(error)));
   assert.ok(report.errors.some(error => /passage locator/.test(error)));
+});
+
+test('rejects a missing-source-hash list that disagrees with the theory CSV', () => {
+  const data = fixture();
+  data.resultJson.theory_reconciliation.summary.records_with_no_valid_source_hash_in_kernel = [];
+  const report = validateEvidence(data, { expected: data.expected });
+  assert.ok(report.errors.some(error => /missing-source-hash ID list disagrees/.test(error)));
 });
 
 test('rejects false summary totals and duplicate pair identifiers', () => {
